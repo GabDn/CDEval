@@ -6,8 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
-	<title>Centro de Docencia</title>
+	<title>Centro de Docencia Evaluaciones</title>
     <!--Made with love by Mutiullah Samim -->
     <link rel="icon" type="image/icon" href="{{ asset('/img/cdd.ico') }}" />	
 	<!--Bootsrap 4 CDN-->
@@ -19,13 +18,13 @@
 	<!--Custom styles-->
 	<link rel="stylesheet" type="text/css" href="{{ asset('/css/style.css') }}">
 </head>
+
 <body>
 <div class="container">
 	<div class="d-flex justify-content-center h-100">
 		<div class="card">
 			<div class="card-header">
 				<h3>Ingresar</h3>
-		
 			</div>
 			<div class="card-body">
 				<form>
@@ -34,7 +33,6 @@
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
 						</div>
 						<input type="text" class="form-control" placeholder="RFC">
-						
 					</div>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
