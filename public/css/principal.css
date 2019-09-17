@@ -1,4 +1,86 @@
+html,body{
+    background-image: url("/img/CDD_back1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+    
+    }
+    
+
+    /*
+    * Top navigation
+    * Hide default border to remove 1px line.
+    */
+.navbar-fixed-top {
+        border: 0;
+}
 .img-cdd{
     width: 50px;
     height: 50px;
 }
+.navbar-fixed-top {
+    border: 0;
+}
+.sidebar {
+    font-size: 20px;
+    position: fixed;
+    top: 90px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #c9a60cc0;
+    border-right: 1px solid rgba(85, 58, 0, 0.596);
+    width: 230px;
+    height: 450px;
+}
+
+.navbar-header{
+    background-color: #c9a60cc0;
+    width: 100000px;
+    height: auto;
+}
+  /* Sidebar navigation */
+  .nav-sidebar {
+    margin-right: -21px; /* 20px padding + 1px border */
+    margin-bottom: 20px;
+    margin-left: -20px;
+}
+.nav-sidebar > li > a {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+    color: #fff;
+    background-color: #428bca;
+}
+
+
+/*
+* Main content
+*/
+.main {
+    padding: 20px;
+}
+
+@media (min-width: 768px) {
+    .main {
+        padding-right: 40px;
+        padding-left: 220px;
+    }
+}
+.main .page-header {
+    margin-top: 0;
+}
+
+@media (min-width: 768px) {
+    .main {
+        padding-right: 40px;
+        padding-left: 220px; /* 180 + 40 */
+    }
