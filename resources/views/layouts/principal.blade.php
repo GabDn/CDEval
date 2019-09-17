@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/img/cdd.ico') }}" />
     <meta charset="UTF-8">
@@ -10,38 +11,54 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/font-awesome.min.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/principal.css') }}">
 </head>
+
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-                    <a class="navbar-brand" href="Login.aspx" style="vertical-align: middle">
-                    <img class="img-cdd" src="/img/cdd.png" style="vertical-align: left" /></a>
-                    <label class="navbar-text text-center text-primary" style="font-size:30px">Centro de Docencia - Evaluaciones</label>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Salir</a></li>  
-          </ul>
-        </div>
-      </div>
-</nav>
-<div class="container-fluid">
-        <div class="row">
-            <div class="sidebar">
-                <ul class="nav nav-sidebar">
-                <li><a href="#">Información Personal</a></li>
-                <li><a href="#">Cursos Impartidos</a></li>
-                <li><a href="#">Cursos Inscritos</a></li>
+    <div class="wrap">
+        <nav class="nav-bar navbar-inverse" role="navigation">
+            <div id="top-menu" class="container-fluid active">
+                <a class="navbar-brand" href="#">Centro de Docencia - Evaluaciones</a>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown movable">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span><span class="fa fa-2x fa-user-circle"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            
+                            <li>
+                            <a href="#">
+                            Salir</a>
+                            </li>
+
+
+                        </ul>
+                    </li>
                 </ul>
             </div>
-            <div class="col-sm-14 main">
-                <h1 class="page-header">Contenido</h1>
-            </div>
-        </div>
-    </div>
+        </nav>
+        <aside id="side-menu" class="aside" role="navigation">
+            <ul class="nav nav-list accordion">
+                <li class="nav-header">
+                    <div class="link"><i class="fa fa-lg fa-book"></i>Información Personal<i class="fa fa-chevron-down"></i></div>
+                    <ul class="submenu">
+                        <li><a href="#">Cursos programados</a></li>
+                    </ul>
+                </li>
 
-    <br>
-    <footer class="content-inner">
+                <li class="nav-header">
+                    <div class="link"><i class="fa fa-users"></i>Cursos Impartidos<i class="fa fa-chevron-down"></i></div>
+                    <ul class="submenu">
+                        <li><a href="#">submenu</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-header">
+                    <div class="link"><i class="fa fa-users"></i>Cursos Inscritos<i class="fa fa-chevron-down"></i></div>
+                    <ul class="submenu">
+                        <li><a href="#">submenu</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+
+        <footer class="content-inner">
         <div class="panel panel-default">
             <div class="panel-heading">
                 Hecho en México, Universidad Nacional Autónoma de México, Facultad de Ingeniería, Unidad de servicios de cómputo académico, Departamento de Investigación y Desarrollo.
@@ -49,29 +66,11 @@
             </div>
         </div>
     </footer>
-<!--
-<div class="wrap">
-<nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="Login.aspx" style="vertical-align: middle">
-                    <img class="img-cdd" src="/img/cdd.png" style="vertical-align: middle" /></a>
-                <label class="navbar-text text-center text-primary" style="vertical-align:10px;font-size:medium">Evaluaciones Centro de Docencia</label>
-            </div>
-        </div>
-    </nav>
-    <div class="container-sidebar">
-        <div id="sidebar">
-            <ul>
-                <li><a href="#">Información Personal</a></li>
-                <li><a href="#">Cursos Impartidos</a></li>
-                <li><a href="#">Cursos Inscritos</a></li>
-                <li><a href="#">Sign Out</a></li>
-            </ul>
-        </div>
     </div>
-
-</div>
--->
+<script src="{{ asset ('/js/jquery.js') }}"></script>
+<script src="{{ asset ('/js/admin.js') }}"></script>
+<script src="{{ asset ('/dist/jquery.fancybox.min.js') }}"></script>
+<script src="{{ asset('/js/bootstrap.min.js') }}"></script>
 </body>
+
 </html>
