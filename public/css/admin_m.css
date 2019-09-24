@@ -6,6 +6,9 @@
   width: 150px;
   height: 100px;
 }
+
+
+
 .logos{
   font-size: 20px;
 }
@@ -16,6 +19,7 @@
 
 .wrap {
   position: relative;
+
 }
 
 .wrap .nav-bar .navbar-brand {
@@ -80,8 +84,8 @@
 .wrap #side-menu {
   position: absolute;
   z-index: -1;
-  background: #9e7900;
-  width: 13em;
+  background: #043858;
+  width: 22em;
   padding-top: 40px;
   padding-right: 20px;
   padding-left: 10px;
@@ -278,3 +282,7 @@
   visibility: visible;
   opacity: 1;
 }
+
+
+
+

@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('layouts.principal');
 });
+
+Route::get('/admin', 'HomeController@index')->name('home');
