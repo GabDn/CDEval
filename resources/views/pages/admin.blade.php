@@ -17,14 +17,15 @@
     <br>
       <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>Bienvenido {{ auth()->user()->usuario }}</h3>
+                    <h3>Bienvenido </h3>
                     <h4>Coordinación de Gestión y Vinculación</h4>
                 </div>
                 <div class="panel-body">
 
                 <div class="logos col-md-12 col-center">
                     <img class="img-escudo" src="{{ asset('img/cdd.png') }}">
-                    Manejo y Gestión de información del centro de docencia.</h3>
+                    Manejo y Gestión de información del centro de docencia.
+                    </h3>
                 
                 </div>
 
@@ -37,22 +38,13 @@
                 <th>Correo</th>
                 <th>Fecha de nacimiento</th>
                 </tr>
-                @if( empty($profesors))
-                        @foreach($profesors as $profesor)
-                            <tr>
-                                <td>{{ $profesor->nombres }} {{ $profesor->apellido_paterno }} {{ $profesor->apellido_materno }}</td>
-                                <td>{{ $profesor->email}}</td>
-                                <td>{{ $profesor->fechaFormato()}}</td>
-                            </tr>
-                        @endforeach
-                    </table>
-                @else
+                
                 <table class="table table-hover">
                             <tr>
                                 <td>No hay cumpleaños por el momento</td>
                             </tr>
                     </table>
-                @endif
+                
                 </div>
 
      </section>
