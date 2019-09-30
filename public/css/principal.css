@@ -25,7 +25,7 @@ admin
     position: relative;
   
   }
-  
+
   .wrap .nav-bar .navbar-brand {
     margin-top: 15px;
   }
@@ -51,7 +51,7 @@ admin
     padding: 8px;
   }
   .wrap .nav-bar .nav .dropdown-menu > li > a:hover {
-    background: #3355ff;
+    background: #FFF;
   }
   .wrap .side-menu-link {
     left: 21em;
