@@ -18,7 +18,7 @@ class AutentificarController extends Controller{
                 //El profesor está en la BD
                 if ($profesor->numero_trabajador == $request->numTrabajador) {
                     //El profesor está en la BD y las credenciales son correctas
-                    return view("pages.xsesion")
+                    return view("pages.final_curso")
                     ->with("profesor",$profesor);
                             
                 } else {

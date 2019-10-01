@@ -14,7 +14,7 @@
       </a>      
     </div>
     <section class="content-inner">
-    <br>
+    
       <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2><span class="fa fa-check-square-o"></span>    Evaluación por sesión de curso </h3>
@@ -22,6 +22,31 @@
 
                 <div class="panel-body">
                     <br>
+                    <div class="form-group row">
+                        <label for="staticCurso" class="col-sm-2 col-form-label">Nombre del curso</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" id="curso" value="Nombre Curso">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticParticipante" class="col-sm-2 col-form-label">Nombre del participante</label>
+                        <div class="col-md-10">
+                            <input type="text" readonly class="form-control-plaintext" id="participante" value="Nombre Participante">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticInstructor" class="col-sm-2 col-form-label">Nombre del instructor</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" id="instructor" value="Nombre Instructor">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticFecha" class="col-sm-2 col-form-label">Fecha</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" id="fecha" value="fecha">
+                        </div>
+                    </div>
+
                     <table class="table table-hover">
                     <tr>
                         <th width="42%" align="justify">ASPECTOS A EVALUAR. MARQUE LA OPCIÓN QUE REPRESENTE A SU PARECER, EL DESARROLLO DEL TRABAJO EN LA SESIÓN</th>
@@ -239,7 +264,7 @@
                     </table>
                     </table>
                 </div>
-
+    
      </section>
-     
+     <br>
 @endsection
