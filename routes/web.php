@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('layouts.principal');
+    return view('welcome');
 });
 
 Route::get('/admin', 'HomeController@index')->name('home');
+Route::get('reportecursosimpartidos', 'RCI@index')->name('reporte_cursos_impartidos');

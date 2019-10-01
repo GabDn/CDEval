@@ -21,8 +21,11 @@
             <ul class="nav navbar-nav">
 
                 <li class="dropdown movable">
-                    
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>  <span class="fa fa-2x fa-user-circle"></span></a>
+                    <!--Boton de usuario esquina superior derecha-->
+                    <a href="#"  class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <i id="usericon" class="fa fa-2x fa-user-circle"></i>
+                    </a>
                     <ul class="dropdown-menu" role="menu">
 
 

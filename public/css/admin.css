@@ -2,13 +2,6 @@
   width: 100px;
   height: 100px;
 }
-.img-unica{
-  width: 150px;
-  height: 100px;
-}
-.logos{
-  font-size: 20px;
-}
 
 .col-center{
  float: none;
@@ -17,9 +10,21 @@
 .wrap {
   position: relative;
 }
-
+#top-menu{
+  background-color: rgb(26, 79, 141);
+  border-radius: 0px 0px 10px 0px;
+-moz-border-radius: 0px 0px 10px 0px;
+-webkit-border-radius: 0px 0px 10px 0px;
+  border: 0px solid #000000;
+}
+ #usericon{
+  padding-top: 15%;
+  color: #FFF;
+}
 .wrap .nav-bar .navbar-brand {
   margin-top: 15px;
+  color: rgb(245, 235, 235);
+  
 }
 .wrap .nav-bar .navbar-form {
   margin-top: 25px;
@@ -81,10 +86,10 @@
   position: absolute;
   z-index: -1;
   background: #9e7900;
-  width: 13em;
-  padding-top: 40px;
-  padding-right: 20px;
-  padding-left: 10px;
+  width: 13%;
+  padding-top: 0.5%;
+  padding-right: 0.5%;
+  padding-left: 1%;
   float: left;
   display: block;
   left: 0;
@@ -189,6 +194,8 @@
   .wrap .nav-bar .navbar-brand {
     margin-top: 0;
     padding-left: 0;
+    
+
   }
   .wrap .side-menu-link {
     display: inline-block;
