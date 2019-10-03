@@ -822,7 +822,7 @@
                             <td><textarea class="form-control" id="sugerencias" rows="2"></textarea></td>
                         </tr>
                         <tr>
-                            <td width="40%" align="justify">¿Qué otros cursos, talleres, seminarios o temáticos le gustaría que se impartiesen o tomasen en cuenta para próximas actividades </td>
+                            <td width="40%" align="justify">¿Qué otros cursos, talleres, seminarios o temáticos le gustaría que se impartiesen o tomasen en cuenta para próximas actividades? </td>
                             <td><textarea class="form-control" id="sugerencias" rows="2"></textarea></td>
                         </tr>
                     </table> 
@@ -864,6 +864,7 @@
                             <td><input type="text" class="form-control" id="intersemestral" placeholder=""></td></td>
                         </tr>
                     </table> 
+                    <button type="button" class="btn btn-primary active">Enviar evaluación</button>
                 </div>
     
      </section>

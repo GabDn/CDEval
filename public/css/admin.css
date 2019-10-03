@@ -6,9 +6,6 @@
   width: 150px;
   height: 100px;
 }
-
-
-
 .logos{
   font-size: 20px;
 }
@@ -19,7 +16,6 @@
 
 .wrap {
   position: relative;
-
 }
 
 .wrap .nav-bar .navbar-brand {
@@ -92,7 +88,7 @@
   float: left;
   display: block;
   left: 0;
-  height: 1000px;
+  height: 1010px;
 }
 #top-menu{
   background: #043858;

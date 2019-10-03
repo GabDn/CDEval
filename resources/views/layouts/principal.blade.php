@@ -48,19 +48,14 @@
                 </ul>
             </li>
 
-            <li class="nav-header">
-                <div class="link"><i class="fa fa-users"></i>Cursos Impartidos<i class="fa fa-chevron-down"></i></div>
-                <ul class="submenu">
-                    <li><a href="#">submenus</a></li>
-
-                </ul>
-            </li>
+    
 
             <li class="nav-header">
                 <div class="link"><i class="fa fa-pencil"></i>Cursos Inscritos<i class="fa fa-chevron-down"></i></div>
                 <ul class="submenu">
-                    <li><a href="#">submenus</a></li>
-                   
+                @foreach($infoCursos as $infoCurso)
+                    <li><a href="{{ route('evaluacion.index',[ $profesor->id,$infoCurso[0]->id,$infoCurso[1]->id] ) }}">{{ $infoCurso[1]->nombre_curso }}</a></li>
+                @endforeach
                 </ul>
             </li>
             

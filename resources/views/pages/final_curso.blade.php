@@ -61,7 +61,7 @@
                         <th align="right">Excelente</th>
                     </tr>
                     <tr>
-                        <td align="justify">La participación de los asistentes fue </td>
+                        <td align="justify">Las actividades de aprendizaje estuvieron vinculadas a los objetivos y contenidos de manera </td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="materialUnchecked">
@@ -89,7 +89,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">La temática central del EDITAR TODO ESTOxdxd fue</td>
+                        <td align="justify">La suficiencia de los contenidos para el logro de los objetivos propuestos fue</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="materialUnchecked">
@@ -117,7 +117,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">La información útil que aportó el xdxdxd a su práctica docente fue</td>
+                        <td align="justify">La utilidad del material proporcionado durante el curso fue</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="materialUnchecked">
@@ -145,7 +145,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">La moderación del xdxd se desarrolló de manera</td>
+                        <td align="justify">La motivación para el estudio independiente de las sesiones fue</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="materialUnchecked">
@@ -173,7 +173,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">Las conclusiones a las que se llegó en el xdxd son aplicables en mi desarrollo académico de forma</td>
+                        <td align="justify">La aplicación de los temas tratados en mi desarrollo académico es</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="materialUnchecked">
@@ -296,7 +296,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">Mi asimilación en este xdxd</td>
+                        <td align="justify">La forma en la que aprovecharé este curso será</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="materialUnchecked">
@@ -598,7 +598,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">El manejo del control de grupo por parte del instructor(a) fue</td>
+                        <td align="justify">Las técnicas grupales utilizadas por el (la) instructor(a) fueron</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="materialUnchecked">
@@ -654,7 +654,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">La actitud del instructor(a) fue</td>
+                        <td align="justify">La actitud del (de la) instructor(a) fue</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="materialUnchecked">
@@ -769,7 +769,327 @@
                     <br>
                     <table class="table table-hover">
                     <tr>
-                        <th align="center">5. ¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?</th>  
+                        <th width="42%" align="justify">5. INSTRUCTOR(A) DOS</th>
+                        <th align="right">Mala</th>
+                        <th align="right">Regular</th>
+                        <th align="right">Buena</th>
+                        <th align="right">Muy buena</th>
+                        <th align="right">Excelente</th>
+                    </tr>
+                    <tr>
+                        <td align="justify">Considero la experiencia del instructor como </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">La planeación y organización de las sesiones y lecturas de acuerdo a los temas fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">La puntualidad del instructor fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">La forma de utilizar el equipo y materiales de apoyo al curso fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">La manera de aclarar las dudas planteadas por los participantes fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">Las técnicas grupales utilizadas por el (la) instructor(a) fueron</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">La forma de interesar a los participantes durante el curso fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">La actitud del (de la) instructor(a) fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">El manejo de las relaciones interpersonales del instructor(a) fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">La calidad del trato humano hacia los participantes fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">El manejo de las emociones en las sesiones por parte del instructor(a) fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    </table>
+                    <br>
+                    
+                    <table class="table table-hover">
+                    <tr>
+                        <th align="center">6. ¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?</th>  
                     </tr>
                     <tr>
                             <td align="center">
@@ -787,7 +1107,7 @@
                     <br>
                     <table class="table table-hover">
                         <tr>
-                        <th align="center">6. ¿CÓMO SE ENTERÓ DEL CURSO?</th>
+                        <th align="center">7. ¿CÓMO SE ENTERÓ DEL CURSO?</th>
                         </tr>
                         <tr>
                         <td>
@@ -814,7 +1134,7 @@
                     </table>
                     <table class="table table-hover">
                         <tr>
-                            <td width="40%" align="justify">Lo que me aportó el xdxdxd fue: </td>
+                            <td width="40%" align="justify">Lo mejor del curso fue: </td>
                             <td><textarea class="form-control" id="contenido" rows="2"></textarea></td>
                         </tr>
                         <tr>
@@ -822,7 +1142,7 @@
                             <td><textarea class="form-control" id="sugerencias" rows="2"></textarea></td>
                         </tr>
                         <tr>
-                            <td width="40%" align="justify">¿Qué otros cursos, talleres, seminarios o temáticos le gustaría que se impartiesen o tomasen en cuenta para próximas actividades </td>
+                            <td width="40%" align="justify">¿Qué otros cursos, talleres, seminarios o temáticos le gustaría que se impartiesen o tomasen en cuenta para próximas actividades? </td>
                             <td><textarea class="form-control" id="sugerencias" rows="2"></textarea></td>
                         </tr>
                     </table> 
@@ -864,6 +1184,7 @@
                             <td><input type="text" class="form-control" id="intersemestral" placeholder=""></td></td>
                         </tr>
                     </table> 
+                    <button type="button" class="btn btn-primary active">Enviar evaluación</button>
                 </div>
     
      </section>
