@@ -19,7 +19,7 @@
                     <h4> Instructor:  {{ $profesor->nombres }} {{ $profesor->apellido_paterno }} {{ $profesor->apellido_materno }}</h4>
                     <h4> Tipo:  {{ $catalogoCurso->tipo }}</h4>
                     <h5> Fecha de Inicio:  {{ $curso->fecha_inicio }}</h5>
-                    <h5> Fecha de Inicio:  {{ $curso->fecha_fin }}</h5>
+                    <h5> Fecha de Fin:  {{ $curso->fecha_fin }}</h5>
 
 
                     <h4> Fecha:  {{ getdate()['year'] }}</h4>
