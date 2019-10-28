@@ -1,18 +1,6 @@
+@extends('layouts.principal')
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/img/cdd.ico') }}" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>CDEval</title>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('dist/jquery.fancybox.min.css') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/font-awesome.min.css') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin.css') }}"/>
-
-</head>
-<body>
+@section('contenido')
 
 
   <div class="content">
@@ -28,11 +16,18 @@
       <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3> Curso:  {{ $catalogoCurso->nombre_curso }}</h3>
-                    <h4> Instructor:  </h4>
-                </div>
+                    <h4> Instructor:  {{ $profesor->nombres }} {{ $profesor->apellido_paterno }} {{ $profesor->apellido_materno }}</h4>
+                    <h4> Tipo:  {{ $catalogoCurso->tipo }}</h4>
+                    <h5> Fecha de Inicio:  {{ $curso->fecha_inicio }}</h5>
+                    <h5> Fecha de Inicio:  {{ $curso->fecha_fin }}</h5>
 
-                <button href="{{ route('evaluacion.porSesion',[ $profesor->id,$curso->id,$catalogoCurso->id] ) }}" type="button" class="btn btn-primary active"> Evaluación por día</button>
-                <button href="{{ route('evaluacion.porCurso',[ $profesor->id,$curso->id,$catalogoCurso->id] ) }}" type="button" class="btn btn-primary active">Evaluación por curso</button>
+
+                    <h4> Fecha:  {{ getdate()['year'] }}</h4>
+
+
+                </div>
+                <button><a href="{{ route('evaluacion.porSesion',[ $profesor->id,$curso->id,$catalogoCurso->id] ) }}" type="button" class="btn btn-primary active"> Evaluación por día</a></button>
+                <button><a href="{{ route('evaluacion.porCurso',[ $profesor->id,$curso->id,$catalogoCurso->id] ) }}" type="button" class="btn btn-primary active">Evaluación por curso</a></button>
 
                 <div class="panel-body">
 
@@ -43,9 +38,4 @@
      </section>
      
 
-<script src="{{ asset ('/js/jquery.js') }}"></script>
-<script src="{{ asset ('/js/admin.js') }}"></script>
-<script src="{{ asset ('/dist/jquery.fancybox.min.js') }}"></script>
-<script src="{{ asset('/js/bootstrap.min.js') }}"></script>
-</body>
-</html>
+     @endsection

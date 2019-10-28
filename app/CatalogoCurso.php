@@ -13,7 +13,7 @@ protected $table = 'catalogo_cursos';
 * @var array
 */
 protected $fillable = [
-'nombre_curso','duracion_curso','coordinacion_id','tipo','tipo_curso_diploma_instructor','presentacion',
+'id','nombre_curso','duracion_curso','coordinacion_id','tipo','tipo_curso_diploma_instructor','presentacion',
 'tipo_difusion','dirigido','objetivo','contenido','sintesis','metodologia','acreditacion','evaluacion',
 'bibliografia','antecedentes','consecuentes','fecha_disenio','clave_curso'
 ];

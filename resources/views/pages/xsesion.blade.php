@@ -88,169 +88,169 @@
                         <td align="justify">La manera en que el instructor dominó y manejó el tema fue</td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
+                                    <input type="radio" name="p1" value="1" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p1" value="2" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p1" value="3" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p1" value="4" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p1" value="5" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
                     </tr>
                     <tr>
                         <td align="justify">La claridad en la exposición fue</td>
                         <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
+                        <div class="form-check">
+                                    <input type="radio" name="p2" value="1" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p2" value="2" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p2" value="3" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p2" value="4" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p2" value="5" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
                     </tr>
                     <tr>
                         <td align="justify">La habilidad para el manejo de material y recursos didácticos fue</td>
                         <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
+                        <div class="form-check">
+                                    <input type="radio" name="p3" value="1" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p3" value="2" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p3" value="3" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p3" value="4" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p3" value="5" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
                     </tr>
                     <tr>
                         <td align="justify">La forma en que se plantearon los problemas o actividades fue</td>
                         <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
+                        <div class="form-check">
+                                    <input type="radio" name="p4" value="1" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p4" value="2" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p4" value="3" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p4" value="4" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p4" value="5" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
                     </tr>
                     <tr>
                         <td align="justify">Los ejemplos utilizados favorecieron la comprensión del tema de una manera</td>
                         <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
+                        <div class="form-check">
+                                    <input type="radio" name="p5" value="1" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p5" value="2" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p5" value="3" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p5" value="4" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p5" value="5" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
                     </tr>
                     <tr>
                         <td align="justify">La forma en que se fomentó la participación grupal fue</td>
                         <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
+                        <div class="form-check">
+                                    <input type="radio" name="p6" value="1" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p6" value="2" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p6" value="3" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p6" value="4" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p6" value="5" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
                     </tr>
                     <table class="table table-hover">
                         <tr>

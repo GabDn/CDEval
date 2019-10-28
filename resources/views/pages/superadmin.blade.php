@@ -17,7 +17,7 @@
     <br>
       <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>Bienvenido Prof(a). {{ $profesor->nombres }} {{ $profesor->apellido_paterno }}</h3>
+                    <h3>Bienvenido Coordinador</h3>
                 </div>
                 <div class="panel-body">
 

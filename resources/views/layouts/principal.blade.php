@@ -40,14 +40,6 @@
 
     <aside id="side-menu" class="aside" role="navigation">
         <ul class="nav nav-list accordion">
-            <li class="nav-header">
-                <div class="link"><i class="fa fa-info"></i>Información Personal<i class="fa fa-chevron-down"></i></div>
-                <ul class="submenu">
-                    <li><a href="#">submenu</a></li>
-              
-                </ul>
-            </li>
-
     
 
             <li class="nav-header">
