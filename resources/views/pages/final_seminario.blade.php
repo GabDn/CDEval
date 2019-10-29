@@ -4,7 +4,8 @@
 
 @section('contenido')
   <!--Body content-->
-<form action="">
+  <form method="POST" action="evaluar/finals">
+  <input type="hidden" name="_token" value="{!! csrf_token() !!}">
   <div class="content">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
@@ -863,11 +864,17 @@
                             <td width="40%" align="justify">Horarios Intersemestrales: </td>
                             <td><input name="horarioi" type="text" class="form-control" id="intersemestral" placeholder=""></td></td>
                         </tr>
-                    </table> 
-                    <button type="button" class="btn btn-primary active">Enviar evaluación</button>
+                    </table>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary active">Enviar evaluación</button>
+                    </div>
+                    
+                
+                
                 </div>
-    
+                </form>
      </section>
      <br>
-     </form>
+   
 @endsection

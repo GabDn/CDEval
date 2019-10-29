@@ -2,7 +2,7 @@
 @extends('layouts.principal')
 
 @section('contenido')
-
+<form action="evaluar/xseminario" method="POST">
   <div class="content">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
@@ -125,6 +125,11 @@
                     </tr>
                     
             </table>
+                <div class="form-group">
+                            <button type="submit" class="btn btn-primary active">Enviar evaluación</button>
+                        </div>
+    </div>
      </section>
-
+    <br>
+    </form>
 @endsection

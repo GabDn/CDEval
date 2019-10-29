@@ -4,7 +4,7 @@
 
 @section('contenido')
   <!--Body content-->
-
+    <form action="evaluar/xcurso" method="POST">
   <div class="content">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
@@ -263,9 +263,12 @@
                         </tr>
                     </table>
                     </table>
-                    <button type="button" class="btn btn-primary active">Enviar evaluación</button>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary active">Enviar evaluación</button>
+                    </div>
                 </div>
     
      </section>
      <br>
+     </form>
 @endsection

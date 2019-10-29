@@ -5,14 +5,14 @@ use App\Profesor;
 use App\Curso;
 use App\CatalogoCurso;
 use App\ParticipantesCurso;
-//Tablas de la BD
+
 use App\EvaluacionFinalCurso;
 use App\EvaluacionFinalSeminario;
 use App\EvaluacionXCurso;
 use App\EvaluacionXSeminario;
-// fin xd
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class EvaluacionController extends Controller{
@@ -111,7 +111,7 @@ class EvaluacionController extends Controller{
 
      public function saveFinal_Curso(Request $request){
           $eval_fcurso = new EvaluacionFinalCurso;
-          return $request;
+          return $request->all();
           //1. DESARROLLO DEL CURSO
           $eval_fcurso->p1_1 = $request->p1_1;
           $eval_fcurso->p1_2 = $request->p1_2;
@@ -175,7 +175,7 @@ class EvaluacionController extends Controller{
 
      public function saveFinal_Seminario(Request $request){
           $eval_fseminario = new EvaluacionFinalSeminario;
-          return $request;
+          return $request->all();
           //1. DESARROLLO DEL CURSO
           $eval_fseminario->p1_1 = $request->p1_1;
           $eval_fseminario->p1_2 = $request->p1_2;

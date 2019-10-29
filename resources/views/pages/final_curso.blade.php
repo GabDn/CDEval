@@ -3,7 +3,7 @@
 
 @section('contenido')
   <!--Body content-->
-<form action="" method="post" action=('EvaluacionController@saveFinal_Curso')>
+<form method="POST" action="final.curso">
   <div class="content">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
