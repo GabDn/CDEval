@@ -175,7 +175,8 @@ class EvaluacionController extends Controller{
 
      public function saveFinal_Seminario(Request $request){
           $eval_fseminario = new EvaluacionFinalSeminario;
-          return $request->all();
+          return $request;
+          //return view(pages.final_seminario);
           //1. DESARROLLO DEL CURSO
           $eval_fseminario->p1_1 = $request->p1_1;
           $eval_fseminario->p1_2 = $request->p1_2;
@@ -223,6 +224,8 @@ class EvaluacionController extends Controller{
           $eval_fseminario->horarios = $request->horarios;	
           //Horarios Intersemestrales:
           $eval_fseminario->horarioi = $request->horarioi;
+          $eval_fseminario->save();
+          return view("pages.final_curso")->with($request);
      }
 
      public function saveXCurso(Request $request){
@@ -238,6 +241,7 @@ class EvaluacionController extends Controller{
      }
 
      public function saveXSeminario(Request $request){
+          return $request;
           $eval_xseminario = new EvaluacionXSeminario;
           $eval_xseminario->p1=$request->p1;
           $eval_xseminario->p1_arg=$request->p1_arg;

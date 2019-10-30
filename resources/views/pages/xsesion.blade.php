@@ -4,7 +4,7 @@
 
 @section('contenido')
   <!--Body content-->
-    <form action="evaluar/xcurso" method="POST">
+    <form action="{{ action('EvaluacionController@saveXCurso') }}" method="POST">
   <div class="content">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 

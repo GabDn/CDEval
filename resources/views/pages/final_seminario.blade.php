@@ -4,7 +4,7 @@
 
 @section('contenido')
   <!--Body content-->
-  <form method="POST" action="evaluar/finals">
+  <form method="POST" action="{{ action('EvaluacionController@saveFinal_Seminario') }}">
   <input type="hidden" name="_token" value="{!! csrf_token() !!}">
   <div class="content">
     <div class="top-bar">       
@@ -26,7 +26,7 @@
                     <div class="form-group row">
                         <label for="staticCurso" class="col-sm-2 col-form-label">Nombre del curso</label>
                         <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" id="curso" value="Nombre Curso">
+                            <input type="text" readonly class="form-control-plaintext" id="curso" value="{{ $catalogoCurso->nombre_curso }}">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -793,22 +793,22 @@
                         <tr>
                         <td>
                         <div class="form-check">
-                                <input width="20%" name="p6[]" type="checkbox" class="form-check-input" id="materialUnchecked"> Internet
+                                <input width="20%" name="p6[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="internet"> Internet
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input name="p6[]" type="checkbox" class="form-check-input" id="materialUnchecked"> Publicidad de la FI
+                                <input name="p6[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="fi"> Publicidad de la FI
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input name="p6[]" type="checkbox" class="form-check-input" id="materialUnchecked"> Jefes de División
+                                <input name="p6[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="jefesd"> Jefes de División
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input name="p6[]" type="checkbox" class="form-check-input" id="materialUnchecked"> Otro
+                                <input name="p6[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="otro"> Otro
                             </div><input name="p6[]" type="otro" class="form-control" id="otro" placeholder="Otro">
                         </td>
                         </tr>
@@ -833,16 +833,16 @@
                         </tr>
                         <tr>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked"> Didáctico Pedagógico
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="didactico"> Didáctico Pedagógico
                             </div></td>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked"> Desarrollo humano
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="desarrollo"> Desarrollo humano
                             </div></td>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked"> Cómputo
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="computo"> Cómputo
                             </div></td>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked"> Otro
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="otro"> Otro
                             </div></td>
                         </tr>
                     </table>   

@@ -2,7 +2,7 @@
 @extends('layouts.principal')
 
 @section('contenido')
-<form action="evaluar/xseminario" method="POST">
+<form action="{{ action('EvaluacionController@saveXSeminario') }}" method="POST">
   <div class="content">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 

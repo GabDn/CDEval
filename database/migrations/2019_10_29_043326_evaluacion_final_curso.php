@@ -71,9 +71,9 @@ class EvaluacionFinalCurso extends Migration
             $table->string('tematica',300);
             //¿En qué horarios le gustaría que se impartiesen los cursos, talleres, seminarios o diplomados?
             //Horarios Semestrales:
-            $table->string('horarios',5);
+            $table->string('horarios',15);
             //Horarios Intersemestrales:
-            $table->string('horarioi',5);
+            $table->string('horarioi',15);
           });
       }
   

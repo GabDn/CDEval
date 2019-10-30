@@ -13,7 +13,7 @@ Route::get('evaluarSesion/{profesor_id}/{curso_id}/{catalogoCurso_id}','Evaluaci
 Route::get('evaluarCurso/{profesor_id}/{curso_id}/{catalogoCurso_id}','EvaluacionController@evaluacionPorCurso')->name('evaluacion.porCurso');
 
 Route::post('evaluar/finalc',"EvaluacionController@saveFinal_Curso")->name('final.curso');
-Route::post('evaluar/finals',"EvaluacionController@saveFinal_Seminario")->name('final.seminario');
+Route::post('/finals','EvaluacionController@saveFinal_Seminario')->name('final.seminario');
 Route::post('evaluar/xcurso',"EvaluacionController@saveXCurso")->name('x.curso');
 Route::post('evaluar/xseminario',"EvaluacionController@saveXSeminario")->name('x.seminario');
 

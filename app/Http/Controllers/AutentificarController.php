@@ -27,7 +27,6 @@ class AutentificarController extends Controller{
                     array_push($tupla,$catalogoCursos);
                     array_push($infoCursos, $tupla);
                 }
-                return $profesor;
                 return view("pages.superadmin")
                 ->with("profesor",$profesor)
                 ->with('infoCursos',$infoCursos);
