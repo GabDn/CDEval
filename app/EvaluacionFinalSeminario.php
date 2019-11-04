@@ -43,4 +43,9 @@ class EvaluacionFinalSeminario extends Model
     'horarios',
     'horarioi'
    ];
+   protected $casts = [
+      'p6' => 'array',
+      'conocimiento' => 'array'
+  ];
+  public $timestamps = false;
 }

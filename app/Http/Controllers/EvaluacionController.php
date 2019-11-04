@@ -10,7 +10,7 @@ use App\EvaluacionFinalCurso;
 use App\EvaluacionFinalSeminario;
 use App\EvaluacionXCurso;
 use App\EvaluacionXSeminario;
-
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -41,6 +41,20 @@ class EvaluacionController extends Controller{
       ->with('catalogoCurso',$catalogoCurso)
       ->with('infoCursos',$infoCursos);
      }
+     
+     public function enviarCorreo($profesor_id, $curso_id, $catalogoCurso_id){
+          $data = array(
+              'name'=>"CDEval",
+          );
+          Mail::send('emails.welcome',$data, function ($message) {
+              $message->from('cdevalresultados@gmail.com');
+              $message->to($profesor_id->email)->subject('Resultados de Encuesta');
+          });
+          return "Email enviado correctamente";
+         
+         }
+
+
 
 
 
@@ -175,7 +189,7 @@ class EvaluacionController extends Controller{
 
      public function saveFinal_Seminario(Request $request){
           $eval_fseminario = new EvaluacionFinalSeminario;
-          return $request;
+          //return $request;
           //return view(pages.final_seminario);
           //1. DESARROLLO DEL CURSO
           $eval_fseminario->p1_1 = $request->p1_1;
@@ -206,9 +220,9 @@ class EvaluacionController extends Controller{
           $eval_fseminario->p4_10 = $request->p4_10;
           $eval_fseminario->p4_11 = $request->p4_11;
           //5.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
-          $eval_fseminario->p5 = $request->p6;
+          $eval_fseminario->p5 = $request->p5;
           //6. ¿CÓMO SE ENTERÓ DEL SEMINARIO?
-          $eval_fseminario->p6 = $request->p7;
+          $eval_fseminario->p6 = $request->p6;
           //Lo que me aportó el seminario fue:
           $eval_fseminario->aporto = $request->aporto;
           //Sugerencias y recomendaciones:	
@@ -225,8 +239,9 @@ class EvaluacionController extends Controller{
           //Horarios Intersemestrales:
           $eval_fseminario->horarioi = $request->horarioi;
           $eval_fseminario->save();
-          return view("pages.final_curso")->with($request);
+          return "Registrado";
      }
+     
 
      public function saveXCurso(Request $request){
           $eval_xcurso = new EvaluacionXCurso;
@@ -241,7 +256,8 @@ class EvaluacionController extends Controller{
      }
 
      public function saveXSeminario(Request $request){
-          return $request;
+          //return $request;
+          
           $eval_xseminario = new EvaluacionXSeminario;
           $eval_xseminario->p1=$request->p1;
           $eval_xseminario->p1_arg=$request->p1_arg;
@@ -253,6 +269,9 @@ class EvaluacionController extends Controller{
           $eval_xseminario->p4_arg=$request->p4_arg;
           $eval_xseminario->p5=$request->p5;
           $eval_xseminario->p5_arg=$request->p5_arg;
+          $eval_xseminario->save();
+          return "Registrado";
+          
      }
        
 

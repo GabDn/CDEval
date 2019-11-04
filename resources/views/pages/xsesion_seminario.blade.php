@@ -3,6 +3,7 @@
 
 @section('contenido')
 <form action="{{ action('EvaluacionController@saveXSeminario') }}" method="POST">
+<input type="hidden" name="_token" value="{!! csrf_token() !!}">
   <div class="content">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 

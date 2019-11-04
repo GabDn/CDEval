@@ -46,7 +46,7 @@ class EvaluacionFinalSeminario extends Migration
           //5.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
           $table->char('p5',1);
           //6. ¿CÓMO SE ENTERÓ DEL SEMINARIO?  //es un arreglo :v puede que seleccione más de una opción xd
-          $table->string('p6',15);
+          $table->string('p6',100);
           //Lo que me aportó el seminario fue:
           $table->string('aporto',300);
           //Sugerencias y recomendaciones:	
@@ -59,9 +59,9 @@ class EvaluacionFinalSeminario extends Migration
           $table->string('tematica',300);
           //¿En qué horarios le gustaría que se impartiesen los cursos, talleres, seminarios o diplomados?
           //Horarios Semestrales:
-          $table->string('horarios',15);
+          $table->string('horarios',100);
           //Horarios Intersemestrales:
-          $table->string('horarioi',15);
+          $table->string('horarioi',100);
         });
     }
 

@@ -793,22 +793,22 @@
                         <tr>
                         <td>
                         <div class="form-check">
-                                <input width="20%" name="p6[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="internet"> Internet
+                                <input width="20%" name="p6[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="1"> Internet
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input name="p6[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="fi"> Publicidad de la FI
+                                <input name="p6[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="2"> Publicidad de la FI
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input name="p6[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="jefesd"> Jefes de División
+                                <input name="p6[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="3"> Jefes de División
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input name="p6[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="otro"> Otro
+                                <input name="p6[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="4"> Otro
                             </div><input name="p6[]" type="otro" class="form-control" id="otro" placeholder="Otro">
                         </td>
                         </tr>
@@ -833,16 +833,16 @@
                         </tr>
                         <tr>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="didactico"> Didáctico Pedagógico
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="1"> Didáctico Pedagógico
                             </div></td>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="desarrollo"> Desarrollo humano
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="2"> Desarrollo humano
                             </div></td>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="computo"> Cómputo
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="3"> Cómputo
                             </div></td>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="otro"> Otro
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="4"> Otro
                             </div></td>
                         </tr>
                     </table>   
