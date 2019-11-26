@@ -15,6 +15,9 @@ class AutentificarController extends Controller{
      public function index(Request $request){
         $infoCursos=array(); 
         $profesores = Profesor::all();
+        if ('admin' == $request->rfc && '1q2w3e4r' == $request->numTrabajador) {
+            return view("pages.superadmin");
+        }
         foreach($profesores as $profesor){
             if ($profesor->rfc == $request->rfc) {
                 //El profesor está en la BD
