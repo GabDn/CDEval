@@ -261,8 +261,6 @@ class EvaluacionController extends Controller{
      }
 
      public function saveXSeminario(Request $request){
-          //return $request;
-          
           $eval_xseminario = new EvaluacionXSeminario;
           $eval_xseminario->p1=$request->p1;
           $eval_xseminario->p1_arg=$request->p1_arg;

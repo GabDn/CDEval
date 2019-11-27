@@ -12,6 +12,8 @@ use App\Http\Controllers\Controller;
 class AutentificarController extends Controller{
 # 2143246
 # DOMJ7201011Q9
+# 2143231
+# RAGJ720101T72
      public function index(Request $request){
         $infoCursos=array(); 
         $profesores = Profesor::all();
@@ -32,6 +34,7 @@ class AutentificarController extends Controller{
                         array_push($tupla,$catalogoCursos);
                         array_push($infoCursos, $tupla);
                     }
+                    return $infoCursos;
                     return view("pages.admin")
                     ->with("profesor",$profesor)
                     ->with('infoCursos',$infoCursos);
