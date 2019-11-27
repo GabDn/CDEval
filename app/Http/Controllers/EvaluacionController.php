@@ -185,6 +185,8 @@ class EvaluacionController extends Controller{
           $eval_fcurso->horarios = $request->horarios;	
           //Horarios Intersemestrales:
           $eval_fcurso->horarioi = $request->horarioi;
+          $eval_fcurso->save();
+          return "Registrado";
      }
 
      public function saveFinal_Seminario(Request $request){
@@ -251,8 +253,11 @@ class EvaluacionController extends Controller{
           $eval_xcurso->p4=$request->p4;
           $eval_xcurso->p5=$request->p5;
           $eval_xcurso->p6=$request->p6;
+          $eval_xcurso->p7=$request->p7;
           $eval_xcurso->contenido=$request->contenido;
           $eval_xcurso->sug=$request->sug;
+          $eval_xcurso->save();
+          return "Registrado";
      }
 
      public function saveXSeminario(Request $request){
