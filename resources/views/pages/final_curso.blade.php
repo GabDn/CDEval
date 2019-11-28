@@ -4,6 +4,7 @@
 @section('contenido')
   <!--Body content-->
 <form method="POST" action="{{ action('EvaluacionController@saveFinal_Curso') }}">
+<input type="hidden" name="_token" value="{!! csrf_token() !!}">
   <div class="content">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
@@ -1183,7 +1184,7 @@
                             <td><input name="horarioi" type="text" class="form-control" id="intersemestral" placeholder=""></td></td>
                         </tr>
                     </table> 
-                    <button type="button" class="btn btn-primary active">Enviar evaluación</button>
+                    <button type="submit" class="btn btn-primary active">Enviar evaluación</button>
                 </div>
     
      </section>

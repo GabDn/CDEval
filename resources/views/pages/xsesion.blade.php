@@ -256,11 +256,11 @@
                     <table class="table table-hover">
                         <tr>
                             <td width="40%" align="justify">De los contenidos abordados. ¿Cuáles considera que puede incorporar a su práctica docente?</td>
-                            <td><textarea class="form-control" id="contenido" rows="2"></textarea></td>
+                            <td><textarea name="contenido" class="form-control" id="contenido" rows="2"></textarea></td>
                         </tr>
                         <tr>
                             <td width="40%" align="justify">Comentarios y Sugerencias</td>
-                            <td><textarea class="form-control" id="sugerencias" rows="2"></textarea></td>
+                            <td><textarea name="sug" class="form-control" id="sug" rows="2"></textarea></td>
                         </tr>
                     </table>
                     </table>

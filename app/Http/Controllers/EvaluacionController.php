@@ -5,7 +5,7 @@ use App\Profesor;
 use App\Curso;
 use App\CatalogoCurso;
 use App\ParticipantesCurso;
-
+use DB;    
 use App\EvaluacionFinalCurso;
 use App\EvaluacionFinalSeminario;
 use App\EvaluacionXCurso;
@@ -125,23 +125,44 @@ class EvaluacionController extends Controller{
 
      public function saveFinal_Curso(Request $request){
           $eval_fcurso = new EvaluacionFinalCurso;
-          return $request->all();
+          //$promedio_p1 = new EvaluacionFinalCurso;
+          //return $request->all();
           //1. DESARROLLO DEL CURSO
           $eval_fcurso->p1_1 = $request->p1_1;
           $eval_fcurso->p1_2 = $request->p1_2;
           $eval_fcurso->p1_3 = $request->p1_3;
           $eval_fcurso->p1_4 = $request->p1_4;
           $eval_fcurso->p1_5 = $request->p1_5;
+          
+          $promedio_p1 = [
+               (int)$eval_fcurso->p1_1,
+               (int)$eval_fcurso->p1_2,
+               (int)$eval_fcurso->p1_3,
+               (int)$eval_fcurso->p1_4,
+               (int)$eval_fcurso->p1_5];
+          
           //2. AUTOEVALUACION
           $eval_fcurso->p2_1 = $request->p2_1;
           $eval_fcurso->p2_2 = $request->p2_2;
           $eval_fcurso->p2_3 = $request->p2_3;
           $eval_fcurso->p2_4 = $request->p2_4;
+          $promedio_p2 =[
+               (int)$eval_fcurso->p2_1,
+               (int)$eval_fcurso->p2_2,
+               (int)$eval_fcurso->p2_3,
+               (int)$eval_fcurso->p2_4 ];
+
           //3. COORDINACION DEL CURSO
           $eval_fcurso->p3_1 = $request->p3_1;
           $eval_fcurso->p3_2 = $request->p3_2;
           $eval_fcurso->p3_3 = $request->p3_3;
           $eval_fcurso->p3_4 = $request->p3_4;
+          $promedio_p3=[
+               (int)$eval_fcurso->p3_1,
+               (int)$eval_fcurso->p3_2,
+               (int)$eval_fcurso->p3_3,
+               (int)$eval_fcurso->p3_4];
+
           //4. INSTRUCTOR UNO
           $eval_fcurso->p4_1 = $request->p4_1;
           $eval_fcurso->p4_2 = $request->p4_2;
@@ -154,6 +175,20 @@ class EvaluacionController extends Controller{
           $eval_fcurso->p4_9 = $request->p4_9;
           $eval_fcurso->p4_10 = $request->p4_10;
           $eval_fcurso->p4_11 = $request->p4_11;
+          $promedio_p4=[
+               (int)$eval_fcurso->p4_1,
+               (int)$eval_fcurso->p4_2,
+               (int)$eval_fcurso->p4_3,
+               (int)$eval_fcurso->p4_4,
+               (int)$eval_fcurso->p4_5,
+               (int)$eval_fcurso->p4_6,
+               (int)$eval_fcurso->p4_7,
+               (int)$eval_fcurso->p4_8,
+               (int)$eval_fcurso->p4_9,
+               (int)$eval_fcurso->p4_10,
+               (int)$eval_fcurso->p4_11
+          ];
+
           //5. INSTRUCTOR DOS
           $eval_fcurso->p5_1 = $request->p5_1;
           $eval_fcurso->p5_2 = $request->p5_2;
@@ -166,6 +201,19 @@ class EvaluacionController extends Controller{
           $eval_fcurso->p5_9 = $request->p5_9;
           $eval_fcurso->p5_10 = $request->p5_10;
           $eval_fcurso->p5_11 = $request->p5_11;
+          $promedio_p5=[
+               (int)$eval_fcurso->p5_1,
+               (int)$eval_fcurso->p5_2,
+               (int)$eval_fcurso->p5_3,
+               (int)$eval_fcurso->p5_4,
+               (int)$eval_fcurso->p5_5,
+               (int)$eval_fcurso->p5_6,
+               (int)$eval_fcurso->p5_7,
+               (int)$eval_fcurso->p5_8,
+               (int)$eval_fcurso->p5_9,
+               (int)$eval_fcurso->p5_10,
+               (int)$eval_fcurso->p5_11
+          ];
           //6.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
           $eval_fcurso->p6 = $request->p6;
           //7. ¿CÓMO SE ENTERÓ DEL CURSO?
@@ -186,11 +234,22 @@ class EvaluacionController extends Controller{
           //Horarios Intersemestrales:
           $eval_fcurso->horarioi = $request->horarioi;
           $eval_fcurso->save();
+          $p1=collect($promedio_p1)->average()*2*10;
+          $p2=collect($promedio_p2)->average()*2*10;
+          $p3=collect($promedio_p3)->average()*2*10;
+          $p4=collect($promedio_p4)->average()*2*10;
+          $p5=collect($promedio_p5)->average()*2*10;
+          //$avp1=
+          
+          return 'P1: '.$p1.'      P2: '.$p2.'       P3: '.$p3.'        P4: '.$p4.'         P5: '.$p5;
+          //$avg_p1 = DB::table('_evaluacion_final_curso') ->avg((int)'p1_1'+(int)'p1_2'+(int)'p1_3'+(int)'p1_4'+(int)'p1_5');
+          //return $avg_p1;
           return "Registrado";
      }
 
      public function saveFinal_Seminario(Request $request){
           $eval_fseminario = new EvaluacionFinalSeminario;
+          $promedio_p1 = new EvaluacionFinalSeminario;
           //return $request;
           //return view(pages.final_seminario);
           //1. DESARROLLO DEL CURSO

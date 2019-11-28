@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EvaluacionXSeminario extends Model
+class EvaluacionXCurso extends Model
 {
-   protected $table = '_evaluacion_x_seminario';
+   protected $table = '_evaluacion_x_curso';
 
    protected $fillable = [
       'p1',
