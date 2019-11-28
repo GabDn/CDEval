@@ -234,6 +234,44 @@ class EvaluacionController extends Controller{
           //Horarios Intersemestrales:
           $eval_fcurso->horarioi = $request->horarioi;
           $eval_fcurso->save();
+          $promedio=[
+               (int)$eval_fcurso->p1_1,
+               (int)$eval_fcurso->p1_2,
+               (int)$eval_fcurso->p1_3,
+               (int)$eval_fcurso->p1_4,
+               (int)$eval_fcurso->p1_5,
+               (int)$eval_fcurso->p2_1,
+               (int)$eval_fcurso->p2_2,
+               (int)$eval_fcurso->p2_3,
+               (int)$eval_fcurso->p2_4,
+               (int)$eval_fcurso->p3_1,
+               (int)$eval_fcurso->p3_2,
+               (int)$eval_fcurso->p3_3,
+               (int)$eval_fcurso->p3_4,
+               (int)$eval_fcurso->p4_1,
+               (int)$eval_fcurso->p4_2,
+               (int)$eval_fcurso->p4_3,
+               (int)$eval_fcurso->p4_4,
+               (int)$eval_fcurso->p4_5,
+               (int)$eval_fcurso->p4_6,
+               (int)$eval_fcurso->p4_7,
+               (int)$eval_fcurso->p4_8,
+               (int)$eval_fcurso->p4_9,
+               (int)$eval_fcurso->p4_10,
+               (int)$eval_fcurso->p4_11,
+               (int)$eval_fcurso->p5_1,
+               (int)$eval_fcurso->p5_2,
+               (int)$eval_fcurso->p5_3,
+               (int)$eval_fcurso->p5_4,
+               (int)$eval_fcurso->p5_5,
+               (int)$eval_fcurso->p5_6,
+               (int)$eval_fcurso->p5_7,
+               (int)$eval_fcurso->p5_8,
+               (int)$eval_fcurso->p5_9,
+               (int)$eval_fcurso->p5_10,
+               (int)$eval_fcurso->p5_11
+               ];
+          $pg=collect($promedio)->average()*2*10;
           $p1=collect($promedio_p1)->average()*2*10;
           $p2=collect($promedio_p2)->average()*2*10;
           $p3=collect($promedio_p3)->average()*2*10;
@@ -241,7 +279,7 @@ class EvaluacionController extends Controller{
           $p5=collect($promedio_p5)->average()*2*10;
           //$avp1=
           
-          return 'P1: '.$p1.'      P2: '.$p2.'       P3: '.$p3.'        P4: '.$p4.'         P5: '.$p5;
+          return 'Registrado --->        P1: '.$p1.'      P2: '.$p2.'       P3: '.$p3.'        P4: '.$p4.'         P5: '.$p5.'         PG: '.$pg;
           //$avg_p1 = DB::table('_evaluacion_final_curso') ->avg((int)'p1_1'+(int)'p1_2'+(int)'p1_3'+(int)'p1_4'+(int)'p1_5');
           //return $avg_p1;
           return "Registrado";
@@ -258,6 +296,7 @@ class EvaluacionController extends Controller{
           $eval_fseminario->p1_3 = $request->p1_3;
           $eval_fseminario->p1_4 = $request->p1_4;
           $eval_fseminario->p1_5 = $request->p1_5;
+
           //2. AUTOEVALUACION
           $eval_fseminario->p2_1 = $request->p2_1;
           $eval_fseminario->p2_2 = $request->p2_2;
@@ -300,6 +339,68 @@ class EvaluacionController extends Controller{
           //Horarios Intersemestrales:
           $eval_fseminario->horarioi = $request->horarioi;
           $eval_fseminario->save();
+          $promedio_p1 = [
+               (int)$eval_fseminario->p1_1,
+               (int)$eval_fseminario->p1_2,
+               (int)$eval_fseminario->p1_3,
+               (int)$eval_fseminario->p1_4,
+               (int)$eval_fseminario->p1_5];
+$promedio_p2 =[
+               (int)$eval_fseminario->p2_1,
+               (int)$eval_fseminario->p2_2,
+               (int)$eval_fseminario->p2_3,
+               (int)$eval_fseminario->p2_4];
+ $promedio_p3=[
+               (int)$eval_fseminario->p3_1,
+               (int)$eval_fseminario->p3_2,
+               (int)$eval_fseminario->p3_3,
+               (int)$eval_fseminario->p3_4];
+$promedio_p4=[
+               (int)$eval_fseminario->p4_1,
+               (int)$eval_fseminario->p4_2,
+               (int)$eval_fseminario->p4_3,
+               (int)$eval_fseminario->p4_4,
+               (int)$eval_fseminario->p4_5,
+               (int)$eval_fseminario->p4_6,
+               (int)$eval_fseminario->p4_7,
+               (int)$eval_fseminario->p4_8,
+               (int)$eval_fseminario->p4_9,
+               (int)$eval_fseminario->p4_10,
+               (int)$eval_fseminario->p4_11];
+               $promedio=[
+               (int)$eval_fseminario->p1_1,
+               (int)$eval_fseminario->p1_2,
+               (int)$eval_fseminario->p1_3,
+               (int)$eval_fseminario->p1_4,
+               (int)$eval_fseminario->p1_5,
+               (int)$eval_fseminario->p2_1,
+               (int)$eval_fseminario->p2_2,
+               (int)$eval_fseminario->p2_3,
+               (int)$eval_fseminario->p2_4,
+               (int)$eval_fseminario->p3_1,
+               (int)$eval_fseminario->p3_2,
+               (int)$eval_fseminario->p3_3,
+               (int)$eval_fseminario->p3_4,
+               (int)$eval_fseminario->p4_1,
+               (int)$eval_fseminario->p4_2,
+               (int)$eval_fseminario->p4_3,
+               (int)$eval_fseminario->p4_4,
+               (int)$eval_fseminario->p4_5,
+               (int)$eval_fseminario->p4_6,
+               (int)$eval_fseminario->p4_7,
+               (int)$eval_fseminario->p4_8,
+               (int)$eval_fseminario->p4_9,
+               (int)$eval_fseminario->p4_10,
+               (int)$eval_fseminario->p4_11
+               ];
+
+          $p1=collect($promedio_p1)->average()*2*10;
+          $p2=collect($promedio_p2)->average()*2*10;
+          $p3=collect($promedio_p3)->average()*2*10;
+          $p4=collect($promedio_p4)->average()*2*10;
+          $pg=collect($promedio)->average()*2*10;
+
+          return 'Registrado --->        P1: '.$p1.'      P2: '.$p2.'       P3: '.$p3.'        P4: '.$p4.'       PG:'.$pg;
           return "Registrado";
      }
      
@@ -316,6 +417,17 @@ class EvaluacionController extends Controller{
           $eval_xcurso->contenido=$request->contenido;
           $eval_xcurso->sug=$request->sug;
           $eval_xcurso->save();
+          $promedio=[
+               (int)$eval_xcurso->p1,
+               (int)$eval_xcurso->p2,
+               (int)$eval_xcurso->p3,
+               (int)$eval_xcurso->p4,
+               (int)$eval_xcurso->p5,
+               (int)$eval_xcurso->p6,
+               (int)$eval_xcurso->p7
+          ];
+          $pg=collect($promedio)->average()*2*10;
+          return 'Registrado --->       PG:'.$pg;
           return "Registrado";
      }
 
