@@ -1,0 +1,33 @@
+--------CDEval---------------
+Nueva area de conocimiento: disciplinar 
+Martes tres de diciembre promedios, calculos --> 9:30 AM
+Pasar datos de los datos del curso al formulario de contestacion
+numero de instructores igual a numero de evaluaciones debe 
+mostrar la parte del formulario automaticamente
+foraneas en la base y cambio de tipos
+ampliar char de fechas propuestas evaluar opciones
+arreglar la autenticacion
+Mensajes de contestacion de encuesta registrada
+correos con fornulario contestado
+validacion de un solo contestar una encuesta por dia 
+validacion de activacion del otro boton, solo activarlo cuando es la fecha fin 
+retornar el valor TRUE de la hoja de evaluacion 
+entregamos version 4
+
+
+
+------MAGESTIC---------------
+Añadir hasta cinco firmas
+calificacion punto decimal
+identificadores
+diplomados añadir curso 
+diplomados inscribir
+diplomado dar de baja curso 
+responsividad del nombre en la vista de ver curso 
+reconocimiento para el coordinador del seminario, añadir pestañita. 
+no urge juntar reconocimientos en un pdf, queda pendiente hasta el final 
+modificar base de datos para la serializacion, si alguien se da de baja al final de un modulo,
+en los siguientes ya no debe aparecer y se debe actualizar la lista 
+reconocimientos ----> enviado el 15 de 11 y falta diplomas 
+siguiente minuto 06/12/19  ----> 9 AM posible cambio a las 12 PM 
+entregamos version 12
