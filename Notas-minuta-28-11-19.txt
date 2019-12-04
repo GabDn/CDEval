@@ -1,22 +1,27 @@
---------CDEval---------------
-Nueva area de conocimiento: disciplinar 
-Martes tres de diciembre promedios, calculos --> 9:30 AM
-Pasar datos de los datos del curso al formulario de contestacion
-numero de instructores igual a numero de evaluaciones debe 
-mostrar la parte del formulario automaticamente
-foraneas en la base y cambio de tipos
-ampliar char de fechas propuestas evaluar opciones
-arreglar la autenticacion
+---------------CDEval---------------
+-- entregamos version 4
+--Nueva area de conocimiento: disciplinar 
+--Martes tres de diciembre promedios, calculos --> 9:30 AM
+--Pasar datos de los datos del curso al formulario de contestacion
+--Desplegar nombres de los cursos en la plantilla
+--foraneas en la base
+--cambio de tipos en la bd
+--ampliar char de fechas propuestas evaluar opciones
+--numero de instructores igual a numero de evaluaciones debe mostrar la parte del formulario automaticamente
 Mensajes de contestacion de encuesta registrada
-correos con fornulario contestado
-validacion de un solo contestar una encuesta por dia 
-validacion de activacion del otro boton, solo activarlo cuando es la fecha fin 
+
+correos con formulario contestado
+
+*    validacion de un solo contestar una encuesta por dia 
+*    validacion de activacion del otro boton, solo activarlo cuando es la fecha fin 
 retornar el valor TRUE de la hoja de evaluacion 
-entregamos version 4
+
+**arreglar la autentificacion
 
 
 
-------MAGESTIC---------------
+
+---------------MAGESTICD---------------
 Añadir hasta cinco firmas
 calificacion punto decimal
 identificadores

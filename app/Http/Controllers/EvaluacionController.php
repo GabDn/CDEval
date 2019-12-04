@@ -6,6 +6,7 @@ use App\Curso;
 use App\CatalogoCurso;
 use App\ParticipantesCurso;
 use DB;    
+use App\ProfesoresCurso;
 use App\EvaluacionFinalCurso;
 use App\EvaluacionFinalSeminario;
 use App\EvaluacionXCurso;
@@ -24,25 +25,31 @@ class EvaluacionController extends Controller{
       $curso = Curso::find($curso_id);
       $catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
 
+      $count = ProfesoresCurso::select($curso_id)
+      ->where('curso_id',$curso_id)
+      ->count();
+
       $participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
       $infoCursos = array();
       foreach($participantesCurso as $participanteCurso){
-              $curso = Curso::find($participanteCurso->id);
+              $curso = Curso::find($participanteCurso->curso_id);
+              //return $curso;
               $catalogoCursos = CatalogoCurso::find($curso->id);
                        
                $tupla = array();
                   array_push($tupla,$curso);
                   array_push($tupla,$catalogoCursos);
-               array_push($infoCursos, $tupla);
+                  array_push($infoCursos, $tupla);
      }
       return view("pages.evaluacionIndex")
       ->with("profesor",$profesor)
       ->with("curso",$curso)
       ->with('catalogoCurso',$catalogoCurso)
-      ->with('infoCursos',$infoCursos);
+      ->with('infoCursos',$infoCursos)
+      ->with('count',$count);
      }
      
-     public function enviarCorreo($profesor_id, $curso_id, $catalogoCurso_id){
+   /*  public function enviarCorreo($profesor_id, $curso_id, $catalogoCurso_id){
           $data = array(
               'name'=>"CDEval",
           );
@@ -52,21 +59,18 @@ class EvaluacionController extends Controller{
           });
           return "Email enviado correctamente";
          
-         }
+         }*/
 
-
-
-
-
-     public function evaluacionPorSesion($profesor_id, $curso_id, $catalogoCurso_id){
-          
+     public function evaluacionPorSesion($profesor_id, $curso_id, $catalogoCurso_id,$count){
           $profesor = Profesor::find($profesor_id);
           $curso = Curso::find($curso_id);
           $catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
           $participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
           $infoCursos = array();
+
+
           foreach($participantesCurso as $participanteCurso){
-                  $curso = Curso::find($participanteCurso->id);
+                  $curso = Curso::find($participanteCurso->curso_id);
                   $catalogoCursos = CatalogoCurso::find($curso->id);
                            
                    $tupla = array();
@@ -91,15 +95,16 @@ class EvaluacionController extends Controller{
                
          }
 
-         public function evaluacionPorCurso($profesor_id, $curso_id, $catalogoCurso_id){
+         public function evaluacionPorCurso($profesor_id, $curso_id, $catalogoCurso_id,$count){
  
           $profesor = Profesor::find($profesor_id);
           $curso = Curso::find($curso_id);
           $catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
           $participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
           $infoCursos = array();
+        
           foreach($participantesCurso as $participanteCurso){
-                  $curso = Curso::find($participanteCurso->id);
+                  $curso = Curso::find($participanteCurso->curso_id);
                   $catalogoCursos = CatalogoCurso::find($curso->id);
                            
                    $tupla = array();
@@ -108,21 +113,51 @@ class EvaluacionController extends Controller{
                    array_push($infoCursos, $tupla);
          }
          if($catalogoCurso->tipo == "Actualizacion"){
-          return view("pages.final_seminario")
-          ->with("profesor",$profesor)
-          ->with("curso",$curso)
-          ->with('catalogoCurso',$catalogoCurso)
-          ->with('infoCursos',$infoCursos);
+               if($count==1){
+                    return view("pages.final_seminario_1")
+                    ->with("profesor",$profesor)
+                    ->with("curso",$curso)
+                    ->with('catalogoCurso',$catalogoCurso)
+                    ->with('infoCursos',$infoCursos);
+               }elseif($count==2){
+                    return view("pages.final_seminario_2")
+                    ->with("profesor",$profesor)
+                    ->with("curso",$curso)
+                    ->with('catalogoCurso',$catalogoCurso)
+                    ->with('infoCursos',$infoCursos);
+               }elseif($count==3){
+                    return view("pages.final_seminario_3")
+                    ->with("profesor",$profesor)
+                    ->with("curso",$curso)
+                    ->with('catalogoCurso',$catalogoCurso)
+                    ->with('infoCursos',$infoCursos);
+               }     
          
      }else{
-          return view("pages.final_curso")
-          ->with("profesor",$profesor)
-          ->with("curso",$curso)
-          ->with('catalogoCurso',$catalogoCurso)
-          ->with('infoCursos',$infoCursos);
-     }         }
-//Lo que debe de contener cada tabla
-
+          if($count==1){
+               return view("pages.final_curso_1")
+               ->with("profesor",$profesor)
+               ->with("curso",$curso)
+               ->with('catalogoCurso',$catalogoCurso)
+               ->with('infoCursos',$infoCursos);
+          }elseif($count==2){
+               return view("pages.final_curso_2")
+               ->with("profesor",$profesor)
+               ->with("curso",$curso)
+               ->with('catalogoCurso',$catalogoCurso)
+               ->with('infoCursos',$infoCursos);
+          }elseif($count==3){
+               return view("pages.final_curso_3")
+               ->with("profesor",$profesor)
+               ->with("curso",$curso)
+               ->with('catalogoCurso',$catalogoCurso)
+               ->with('infoCursos',$infoCursos);
+          }
+          
+     }         
+}
+//Guardar evaluaciones en la BD
+//Finales
      public function saveFinal_Curso(Request $request){
           $eval_fcurso = new EvaluacionFinalCurso;
           //$promedio_p1 = new EvaluacionFinalCurso;
@@ -214,10 +249,35 @@ class EvaluacionController extends Controller{
                (int)$eval_fcurso->p5_10,
                (int)$eval_fcurso->p5_11
           ];
-          //6.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
-          $eval_fcurso->p6 = $request->p6;
-          //7. ¿CÓMO SE ENTERÓ DEL CURSO?
+          //6. INSTRUCTOR TRES
+          $eval_fcurso->p6_1 = $request->p6_1;
+          $eval_fcurso->p6_2 = $request->p6_2;
+          $eval_fcurso->p6_3 = $request->p6_3;
+          $eval_fcurso->p6_4 = $request->p6_4;
+          $eval_fcurso->p6_5 = $request->p6_5;
+          $eval_fcurso->p6_6 = $request->p6_6;
+          $eval_fcurso->p6_7 = $request->p6_7;
+          $eval_fcurso->p6_8 = $request->p6_8;
+          $eval_fcurso->p6_9 = $request->p6_9;
+          $eval_fcurso->p6_10 = $request->p6_10;
+          $eval_fcurso->p6_11 = $request->p6_11;
+          $promedio_p6=[
+               (int)$eval_fcurso->p6_1,
+               (int)$eval_fcurso->p6_2,
+               (int)$eval_fcurso->p6_3,
+               (int)$eval_fcurso->p6_4,
+               (int)$eval_fcurso->p6_5,
+               (int)$eval_fcurso->p6_6,
+               (int)$eval_fcurso->p6_7,
+               (int)$eval_fcurso->p6_8,
+               (int)$eval_fcurso->p6_9,
+               (int)$eval_fcurso->p6_10,
+               (int)$eval_fcurso->p6_11
+          ];
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
           $eval_fcurso->p7 = $request->p7;
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          $eval_fcurso->p8 = $request->p8;
           //Lo mejor del curso fue:
           $eval_fcurso->mejor = $request->mejor;
           //Sugerencias y recomendaciones:	
@@ -319,10 +379,61 @@ class EvaluacionController extends Controller{
           $eval_fseminario->p4_9 = $request->p4_9;
           $eval_fseminario->p4_10 = $request->p4_10;
           $eval_fseminario->p4_11 = $request->p4_11;
-          //5.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
-          $eval_fseminario->p5 = $request->p5;
-          //6. ¿CÓMO SE ENTERÓ DEL SEMINARIO?
-          $eval_fseminario->p6 = $request->p6;
+          //5. INSTRUCTOR DOS
+          $eval_fseminario->p5_1 = $request->p5_1;
+          $eval_fseminario->p5_2 = $request->p5_2;
+          $eval_fseminario->p5_3 = $request->p5_3;
+          $eval_fseminario->p5_4 = $request->p5_4;
+          $eval_fseminario->p5_5 = $request->p5_5;
+          $eval_fseminario->p5_6 = $request->p5_6;
+          $eval_fseminario->p5_7 = $request->p5_7;
+          $eval_fseminario->p5_8 = $request->p5_8;
+          $eval_fseminario->p5_9 = $request->p5_9;
+          $eval_fseminario->p5_10 = $request->p5_10;
+          $eval_fseminario->p5_11 = $request->p5_11;
+          $promedio_p5=[
+               (int)$eval_fseminario->p5_1,
+               (int)$eval_fseminario->p5_2,
+               (int)$eval_fseminario->p5_3,
+               (int)$eval_fseminario->p5_4,
+               (int)$eval_fseminario->p5_5,
+               (int)$eval_fseminario->p5_6,
+               (int)$eval_fseminario->p5_7,
+               (int)$eval_fseminario->p5_8,
+               (int)$eval_fseminario->p5_9,
+               (int)$eval_fseminario->p5_10,
+               (int)$eval_fseminario->p5_11
+          ];
+          //6. INSTRUCTOR TRES
+          $eval_fseminario->p6_1 = $request->p6_1;
+          $eval_fseminario->p6_2 = $request->p6_2;
+          $eval_fseminario->p6_3 = $request->p6_3;
+          $eval_fseminario->p6_4 = $request->p6_4;
+          $eval_fseminario->p6_5 = $request->p6_5;
+          $eval_fseminario->p6_6 = $request->p6_6;
+          $eval_fseminario->p6_7 = $request->p6_7;
+          $eval_fseminario->p6_8 = $request->p6_8;
+          $eval_fseminario->p6_9 = $request->p6_9;
+          $eval_fseminario->p6_10 = $request->p6_10;
+          $eval_fseminario->p6_11 = $request->p6_11;
+          $promedio_p6=[
+               (int)$eval_fseminario->p6_1,
+               (int)$eval_fseminario->p6_2,
+               (int)$eval_fseminario->p6_3,
+               (int)$eval_fseminario->p6_4,
+               (int)$eval_fseminario->p6_5,
+               (int)$eval_fseminario->p6_6,
+               (int)$eval_fseminario->p6_7,
+               (int)$eval_fseminario->p6_8,
+               (int)$eval_fseminario->p6_9,
+               (int)$eval_fseminario->p6_10,
+               (int)$eval_fseminario->p6_11
+          ];
+          //6.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          $eval_fseminario->p7 = $request->p7;
+          //7. ¿CÓMO SE ENTERÓ DEL CURSO?
+          $eval_fseminario->p8 = $request->p8;
+
           //Lo que me aportó el seminario fue:
           $eval_fseminario->aporto = $request->aporto;
           //Sugerencias y recomendaciones:	
@@ -404,7 +515,7 @@ $promedio_p4=[
           return "Registrado";
      }
      
-
+//Por sesiones
      public function saveXCurso(Request $request){
           $eval_xcurso = new EvaluacionXCurso;
           $eval_xcurso->p1=$request->p1;

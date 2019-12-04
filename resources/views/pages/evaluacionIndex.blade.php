@@ -1,7 +1,21 @@
 @extends('layouts.principal')
 
 @section('contenido')
-
+<script>
+  var f = new Date();
+  //console.log(document.write(f))
+  if ($curso->fecha_fin < f.getDate()){
+    document.getElementById("dia").disabled = false; // deshabilitar
+    document.getElementById("final").disabled = true; // habilitar
+  } elseif($curso->fecha_fin = f.getDate()){
+    document.getElementById("dia").disabled = false; // habilitar
+    document.getElementById("final").disabled = false; // habilitar
+  } 
+  else {
+    document.getElementById("dia").disabled = true; // deshabilitar
+    document.getElementById("final").disabled = true; // habilitar
+  }
+</script>
 
   <div class="content">
     <div class="top-bar">       
@@ -20,22 +34,14 @@
                     <h4> Tipo:  {{ $catalogoCurso->tipo }}</h4>
                     <h5> Fecha de Inicio:  {{ $curso->fecha_inicio }}</h5>
                     <h5> Fecha de Fin:  {{ $curso->fecha_fin }}</h5>
-
-
-                    <h4> Fecha:  {{ getdate()['year'] }}</h4>
-
-
+                    <h4> Fecha:  {{ getdate()['month'] }}</h4>
                 </div>
-                <button><a href="{{ route('evaluacion.porSesion',[ $profesor->id,$curso->id,$catalogoCurso->id] ) }}" type="button" class="btn btn-primary active"> Evaluación por día</a></button>
-                <button><a href="{{ route('evaluacion.porCurso',[ $profesor->id,$curso->id,$catalogoCurso->id] ) }}" type="button" class="btn btn-primary active">Evaluación por curso</a></button>
-
                 <div class="panel-body">
-
-                
-                
+                  <button><a id="dia" href="{{ route('evaluacion.porSesion',[ $profesor->id,$curso->id,$catalogoCurso->id,$count] ) }}" type="button" class="btn btn-primary active"> Evaluación por día</a></button>
+                  <button><a id="final" href="{{ route('evaluacion.porCurso',[ $profesor->id,$curso->id,$catalogoCurso->id,$count] ) }}" type="button" class="btn btn-primary active">Evaluación por curso</a></button> 
                 </div>
 
      </section>
      
-
+    <br><br>
      @endsection

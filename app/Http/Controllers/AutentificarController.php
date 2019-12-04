@@ -26,7 +26,13 @@ class AutentificarController extends Controller{
                 if ($profesor->numero_trabajador == $request->numTrabajador) {
                     //El profesor está en la BD y las credenciales son correctas
                     $participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-                    $cursos=Curso::all();
+                    //return $participantesCurso;
+                    $cursos=array();
+                    foreach($participantesCurso as $participanteCurso){
+                        $curso=Curso::findorFail($participanteCurso->curso_id);
+                        array_push($cursos,$curso); 
+                    }
+                    //$cursos=Curso::all();
                     foreach($cursos as $curso){
                        $catalogoCursos = CatalogoCurso::find($curso->id);
                        $tupla = array();
