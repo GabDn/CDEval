@@ -59,11 +59,13 @@ class EvaluacionController extends Controller{
      
      public function enviarCorreo($profesor_id, $curso_id){
           $profesor = Profesor::find($profesor_id);
+          $curso = CatalogoCurso::find($curso_id);
+          $semestre=Curso::find($curso_id);
           $data = array(
               'name'=>"CDEval",
           );
           
-          $pdf = PDF::loadView('pages.validacion');
+          $pdf = PDF::loadView('pages.validacion',array('curso' => $curso,'profesor'=>$profesor,'semestre'=>$semestre));
           
           Mail::send('pages.mensaje',$data, function ($message) use($profesor,$pdf){
               $message->from('cdevalresultados@gmail.com','CDEval');

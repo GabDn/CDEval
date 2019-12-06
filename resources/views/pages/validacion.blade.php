@@ -67,8 +67,8 @@ body {
 		</table>
         <br>
         <div align="center">
-            <div style="float: left; width: 100%; font-size: 22px;">Nombre del curso</div>
-            <div style="float: right; width: 15%">semestre</div>
+            <div style="float: left; width: 100%; font-size: 22px;">{{ $curso->nombre_curso  }}</div>
+            <div style="float: right; width: 15%">{{ $semestre->semestre_anio }}</div>
             <div style="clear: both"></div>
             <hr>
         </div>
@@ -80,7 +80,7 @@ body {
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">a) Instructor</td>
-                <td class="n">{nombre}</td>
+                <td class="n">{{ $profesor->nombres}} {{$profesor->apellido_paterno}} {{$profesor->apellido_materno}}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">b) Fecha de impartición</td>
@@ -96,7 +96,7 @@ body {
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">d) Lugar</td>
-                <td class="n">{place}</td>
+                <td class="n">{lugar}</td>
                 
             </tr>     
         </table>
