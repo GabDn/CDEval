@@ -174,7 +174,6 @@ class EvaluacionController extends Controller{
      public function saveFinal_Curso(Request $request,$profesor_id,$curso_id){
           $eval_fcurso = new EvaluacionFinalCurso;
           $correo = new EvaluacionController(); 
-          $hoja = new ParticipantesCurso;
           $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
           //return $participante[0]->contesto_hoja_evaluacion;
           $eval_fcurso->participante_curso_id=$participante[0]->id;
@@ -370,10 +369,14 @@ class EvaluacionController extends Controller{
      public function saveFinal_Seminario(Request $request,$profesor_id,$curso_id){
           $eval_fseminario = new EvaluacionFinalSeminario;
           $promedio_p1 = new EvaluacionFinalSeminario;
-          $correo = new EvaluacionController(); 
+          
           $participante = ParticipantesCurso::find($profesor_id);
           $eval_fseminario->participante_curso_id=$participante->id;
-     
+          $correo = new EvaluacionController(); 
+          $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
+          $eval_fseminario->participante_curso_id=$participante[0]->id;
+          
+          
           //1. DESARROLLO DEL CURSO
           $eval_fseminario->p1_1 = $request->p1_1;
           $eval_fseminario->p1_2 = $request->p1_2;
@@ -535,6 +538,13 @@ $promedio_p4=[
           $p4=collect($promedio_p4)->average()*2*10;
           $pg=collect($promedio)->average()*2*10;
 
+          $correo->enviarCorreo($profesor_id,$curso_id);
+          //Actualizar tabla en la bd
+          DB::table('participante_curso')
+          ->where('id', $participante[0]->id)
+          ->where('curso_id',$curso_id)
+          ->update(['contesto_hoja_evaluacion' => true]);
+
           return redirect()->back()
           ->with('msj', 'Evaluación enviada');
      }
@@ -579,7 +589,10 @@ $promedio_p4=[
 
      public function saveXSeminario(Request $request,$profesor_id,$curso_id){
           $eval_xseminario = new EvaluacionXSeminario;
-          $eval_xseminario->participante_curso_id=1;
+          $correo = new EvaluacionController(); 
+          $participante = ParticipantesCurso::find($profesor_id);
+          $eval_xseminario->participante_curso_id=$participante->id;
+          //$eval_xseminario->participante_curso_id=1;
           $eval_xseminario->p1=$request->p1;
           $eval_xseminario->p1_arg=$request->p1_arg;
           $eval_xseminario->p2=$request->p2;
@@ -591,6 +604,7 @@ $promedio_p4=[
           $eval_xseminario->p5=$request->p5;
           $eval_xseminario->p5_arg=$request->p5_arg;
           $eval_xseminario->save();
+          $correo->enviarCorreo($profesor_id,$curso_id);
           return redirect()->back()
           ->with('msj', 'Evaluación enviada');
           

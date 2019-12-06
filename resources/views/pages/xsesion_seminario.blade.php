@@ -25,24 +25,26 @@
                 <div class="panel-body">
                     <br>
                     <div class="form-group row">
-                        <label for="staticCurso" class="col-sm-2 col-form-label">Nombre del seminario</label>
                         <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" id="curso" value="Nombre Curso">
+                        <h4> Curso:  {{ $catalogoCurso->nombre_curso }}</h4>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="staticFacilitador" class="col-sm-2 col-form-label">Nombre del facilitador del seminario</label>
+                            <div class="col-sm-10">
+                                <h4>Instructor: </h4>
+                            </div> 
+                    </div>
+                    <div class="form-group row">
                         <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" id="facilitador" value="Nombre Facilitador">
+                        <h4> Participante:  {{ $profesor->nombres }} {{ $profesor->apellido_paterno }} {{ $profesor->apellido_materno }}</h4>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="staticFecha" class="col-sm-2 col-form-label">Fecha</label>
                         <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" id="fecha" value="fecha">
+                            <h4>Fecha: {{ getdate()['month'] }}/{{ getdate()['year'] }}</h4>
                         </div>
                     </div>
-
+                    <br>
                     <table class="table table-hover">
                     <tr>
                         <th width="42%">ASPECTOS A EVALUAR. MARQUE LA OPCIÓN QUE REPRESENTE A SU PARECER, EL DESARROLLO DEL TRABAJO EN LA SESIÓN</th>
