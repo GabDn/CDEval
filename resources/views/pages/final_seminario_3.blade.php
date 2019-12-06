@@ -4,7 +4,7 @@
 
 @section('contenido')
   <!--Body content-->
-  <form method="POST" action="{{ action('EvaluacionController@saveFinal_Seminario') }}">
+  <form method="POST" action="{{ action('EvaluacionController@saveFinal_Seminario',['profesor_id' => $profesor->id,'curso_id'=> $curso->id]) }}">
   <input type="hidden" name="_token" value="{!! csrf_token() !!}">
   <div class="content">
     <div class="top-bar">       
@@ -17,6 +17,9 @@
     <section class="content-inner">
     
       <div class="panel panel-default">
+      @if(session()->has('msj'))
+        <div class="alert alert-success" role='alert'>{{session('msj')}}</div>
+      @endif
                 <div class="panel-heading">
                     <h2><span class="fa fa-check-square-o"></span>    Evaluación final de seminario </h3>
                 </div>

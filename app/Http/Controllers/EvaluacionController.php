@@ -15,7 +15,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use Mail;
+use PDF;
 class EvaluacionController extends Controller{
 
 
@@ -49,17 +50,22 @@ class EvaluacionController extends Controller{
       ->with('count',$count);
      }
      
-   /*  public function enviarCorreo($profesor_id, $curso_id, $catalogoCurso_id){
+     public function enviarCorreo($profesor_id, $curso_id){
+          $profesor = Profesor::find($profesor_id);
           $data = array(
               'name'=>"CDEval",
           );
-          Mail::send('emails.welcome',$data, function ($message) {
-              $message->from('cdevalresultados@gmail.com');
-              $message->to($profesor_id->email)->subject('Resultados de Encuesta');
+          
+          $pdf = PDF::loadView('pages.email');
+          
+          Mail::send('pages.mensaje',$data, function ($message) use($profesor,$pdf){
+              $message->from('cdevalresultados@gmail.com','CDEval');
+              $message->to($profesor->email)->subject('Resultados de Encuesta');
+              $message->attachData($pdf->output(), 'test.pdf');
           });
-          return "Email enviado correctamente";
-         
-         }*/
+          return redirect()->back()
+          ->with('msj', 'Evaluación enviada');
+         }
 
      public function evaluacionPorSesion($profesor_id, $curso_id, $catalogoCurso_id,$count){
           $profesor = Profesor::find($profesor_id);
@@ -158,10 +164,14 @@ class EvaluacionController extends Controller{
 }
 //Guardar evaluaciones en la BD
 //Finales
-     public function saveFinal_Curso(Request $request){
+     public function saveFinal_Curso(Request $request,$profesor_id,$curso_id){
           $eval_fcurso = new EvaluacionFinalCurso;
-          //$promedio_p1 = new EvaluacionFinalCurso;
-          //return $request->all();
+          $correo = new EvaluacionController(); 
+          $hoja = new ParticipantesCurso;
+          $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
+          //return $participante[0]->contesto_hoja_evaluacion;
+          $eval_fcurso->participante_curso_id=$participante[0]->id;
+          
           //1. DESARROLLO DEL CURSO
           $eval_fcurso->p1_1 = $request->p1_1;
           $eval_fcurso->p1_2 = $request->p1_2;
@@ -170,11 +180,11 @@ class EvaluacionController extends Controller{
           $eval_fcurso->p1_5 = $request->p1_5;
           
           $promedio_p1 = [
-               (int)$eval_fcurso->p1_1,
-               (int)$eval_fcurso->p1_2,
-               (int)$eval_fcurso->p1_3,
-               (int)$eval_fcurso->p1_4,
-               (int)$eval_fcurso->p1_5];
+               $eval_fcurso->p1_1,
+               $eval_fcurso->p1_2,
+               $eval_fcurso->p1_3,
+               $eval_fcurso->p1_4,
+               $eval_fcurso->p1_5];
           
           //2. AUTOEVALUACION
           $eval_fcurso->p2_1 = $request->p2_1;
@@ -182,10 +192,10 @@ class EvaluacionController extends Controller{
           $eval_fcurso->p2_3 = $request->p2_3;
           $eval_fcurso->p2_4 = $request->p2_4;
           $promedio_p2 =[
-               (int)$eval_fcurso->p2_1,
-               (int)$eval_fcurso->p2_2,
-               (int)$eval_fcurso->p2_3,
-               (int)$eval_fcurso->p2_4 ];
+               $eval_fcurso->p2_1,
+               $eval_fcurso->p2_2,
+               $eval_fcurso->p2_3,
+               $eval_fcurso->p2_4 ];
 
           //3. COORDINACION DEL CURSO
           $eval_fcurso->p3_1 = $request->p3_1;
@@ -193,10 +203,10 @@ class EvaluacionController extends Controller{
           $eval_fcurso->p3_3 = $request->p3_3;
           $eval_fcurso->p3_4 = $request->p3_4;
           $promedio_p3=[
-               (int)$eval_fcurso->p3_1,
-               (int)$eval_fcurso->p3_2,
-               (int)$eval_fcurso->p3_3,
-               (int)$eval_fcurso->p3_4];
+               $eval_fcurso->p3_1,
+               $eval_fcurso->p3_2,
+               $eval_fcurso->p3_3,
+               $eval_fcurso->p3_4];
 
           //4. INSTRUCTOR UNO
           $eval_fcurso->p4_1 = $request->p4_1;
@@ -211,17 +221,17 @@ class EvaluacionController extends Controller{
           $eval_fcurso->p4_10 = $request->p4_10;
           $eval_fcurso->p4_11 = $request->p4_11;
           $promedio_p4=[
-               (int)$eval_fcurso->p4_1,
-               (int)$eval_fcurso->p4_2,
-               (int)$eval_fcurso->p4_3,
-               (int)$eval_fcurso->p4_4,
-               (int)$eval_fcurso->p4_5,
-               (int)$eval_fcurso->p4_6,
-               (int)$eval_fcurso->p4_7,
-               (int)$eval_fcurso->p4_8,
-               (int)$eval_fcurso->p4_9,
-               (int)$eval_fcurso->p4_10,
-               (int)$eval_fcurso->p4_11
+               $eval_fcurso->p4_1,
+               $eval_fcurso->p4_2,
+               $eval_fcurso->p4_3,
+               $eval_fcurso->p4_4,
+               $eval_fcurso->p4_5,
+               $eval_fcurso->p4_6,
+               $eval_fcurso->p4_7,
+               $eval_fcurso->p4_8,
+               $eval_fcurso->p4_9,
+               $eval_fcurso->p4_10,
+               $eval_fcurso->p4_11
           ];
 
           //5. INSTRUCTOR DOS
@@ -237,17 +247,17 @@ class EvaluacionController extends Controller{
           $eval_fcurso->p5_10 = $request->p5_10;
           $eval_fcurso->p5_11 = $request->p5_11;
           $promedio_p5=[
-               (int)$eval_fcurso->p5_1,
-               (int)$eval_fcurso->p5_2,
-               (int)$eval_fcurso->p5_3,
-               (int)$eval_fcurso->p5_4,
-               (int)$eval_fcurso->p5_5,
-               (int)$eval_fcurso->p5_6,
-               (int)$eval_fcurso->p5_7,
-               (int)$eval_fcurso->p5_8,
-               (int)$eval_fcurso->p5_9,
-               (int)$eval_fcurso->p5_10,
-               (int)$eval_fcurso->p5_11
+               $eval_fcurso->p5_1,
+               $eval_fcurso->p5_2,
+               $eval_fcurso->p5_3,
+               $eval_fcurso->p5_4,
+               $eval_fcurso->p5_5,
+               $eval_fcurso->p5_6,
+               $eval_fcurso->p5_7,
+               $eval_fcurso->p5_8,
+               $eval_fcurso->p5_9,
+               $eval_fcurso->p5_10,
+               $eval_fcurso->p5_11
           ];
           //6. INSTRUCTOR TRES
           $eval_fcurso->p6_1 = $request->p6_1;
@@ -262,17 +272,17 @@ class EvaluacionController extends Controller{
           $eval_fcurso->p6_10 = $request->p6_10;
           $eval_fcurso->p6_11 = $request->p6_11;
           $promedio_p6=[
-               (int)$eval_fcurso->p6_1,
-               (int)$eval_fcurso->p6_2,
-               (int)$eval_fcurso->p6_3,
-               (int)$eval_fcurso->p6_4,
-               (int)$eval_fcurso->p6_5,
-               (int)$eval_fcurso->p6_6,
-               (int)$eval_fcurso->p6_7,
-               (int)$eval_fcurso->p6_8,
-               (int)$eval_fcurso->p6_9,
-               (int)$eval_fcurso->p6_10,
-               (int)$eval_fcurso->p6_11
+               $eval_fcurso->p6_1,
+               $eval_fcurso->p6_2,
+               $eval_fcurso->p6_3,
+               $eval_fcurso->p6_4,
+               $eval_fcurso->p6_5,
+               $eval_fcurso->p6_6,
+               $eval_fcurso->p6_7,
+               $eval_fcurso->p6_8,
+               $eval_fcurso->p6_9,
+               $eval_fcurso->p6_10,
+               $eval_fcurso->p6_11
           ];
           //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
           $eval_fcurso->p7 = $request->p7;
@@ -295,41 +305,41 @@ class EvaluacionController extends Controller{
           $eval_fcurso->horarioi = $request->horarioi;
           $eval_fcurso->save();
           $promedio=[
-               (int)$eval_fcurso->p1_1,
-               (int)$eval_fcurso->p1_2,
-               (int)$eval_fcurso->p1_3,
-               (int)$eval_fcurso->p1_4,
-               (int)$eval_fcurso->p1_5,
-               (int)$eval_fcurso->p2_1,
-               (int)$eval_fcurso->p2_2,
-               (int)$eval_fcurso->p2_3,
-               (int)$eval_fcurso->p2_4,
-               (int)$eval_fcurso->p3_1,
-               (int)$eval_fcurso->p3_2,
-               (int)$eval_fcurso->p3_3,
-               (int)$eval_fcurso->p3_4,
-               (int)$eval_fcurso->p4_1,
-               (int)$eval_fcurso->p4_2,
-               (int)$eval_fcurso->p4_3,
-               (int)$eval_fcurso->p4_4,
-               (int)$eval_fcurso->p4_5,
-               (int)$eval_fcurso->p4_6,
-               (int)$eval_fcurso->p4_7,
-               (int)$eval_fcurso->p4_8,
-               (int)$eval_fcurso->p4_9,
-               (int)$eval_fcurso->p4_10,
-               (int)$eval_fcurso->p4_11,
-               (int)$eval_fcurso->p5_1,
-               (int)$eval_fcurso->p5_2,
-               (int)$eval_fcurso->p5_3,
-               (int)$eval_fcurso->p5_4,
-               (int)$eval_fcurso->p5_5,
-               (int)$eval_fcurso->p5_6,
-               (int)$eval_fcurso->p5_7,
-               (int)$eval_fcurso->p5_8,
-               (int)$eval_fcurso->p5_9,
-               (int)$eval_fcurso->p5_10,
-               (int)$eval_fcurso->p5_11
+               $eval_fcurso->p1_1,
+               $eval_fcurso->p1_2,
+               $eval_fcurso->p1_3,
+               $eval_fcurso->p1_4,
+               $eval_fcurso->p1_5,
+               $eval_fcurso->p2_1,
+               $eval_fcurso->p2_2,
+               $eval_fcurso->p2_3,
+               $eval_fcurso->p2_4,
+               $eval_fcurso->p3_1,
+               $eval_fcurso->p3_2,
+               $eval_fcurso->p3_3,
+               $eval_fcurso->p3_4,
+               $eval_fcurso->p4_1,
+               $eval_fcurso->p4_2,
+               $eval_fcurso->p4_3,
+               $eval_fcurso->p4_4,
+               $eval_fcurso->p4_5,
+               $eval_fcurso->p4_6,
+               $eval_fcurso->p4_7,
+               $eval_fcurso->p4_8,
+               $eval_fcurso->p4_9,
+               $eval_fcurso->p4_10,
+               $eval_fcurso->p4_11,
+               $eval_fcurso->p5_1,
+               $eval_fcurso->p5_2,
+               $eval_fcurso->p5_3,
+               $eval_fcurso->p5_4,
+               $eval_fcurso->p5_5,
+               $eval_fcurso->p5_6,
+               $eval_fcurso->p5_7,
+               $eval_fcurso->p5_8,
+               $eval_fcurso->p5_9,
+               $eval_fcurso->p5_10,
+               $eval_fcurso->p5_11
                ];
           $pg=collect($promedio)->average()*2*10;
           $p1=collect($promedio_p1)->average()*2*10;
@@ -338,18 +348,25 @@ class EvaluacionController extends Controller{
           $p4=collect($promedio_p4)->average()*2*10;
           $p5=collect($promedio_p5)->average()*2*10;
           //$avp1=
-          
-          return 'Registrado --->        P1: '.$p1.'      P2: '.$p2.'       P3: '.$p3.'        P4: '.$p4.'         P5: '.$p5.'         PG: '.$pg;
-          //$avg_p1 = DB::table('_evaluacion_final_curso') ->avg((int)'p1_1'+(int)'p1_2'+(int)'p1_3'+(int)'p1_4'+(int)'p1_5');
-          //return $avg_p1;
-          return "Registrado";
+          $correo->enviarCorreo($profesor_id,$curso_id);
+
+          //Actualizar campo de hoja de evaluacion
+          DB::table('participante_curso')
+          ->where('id', $participante[0]->id)
+          ->where('curso_id',$curso_id)
+          ->update(['contesto_hoja_evaluacion' => true]);
+
+          return redirect()->back()
+          ->with('msj', 'Evaluación enviada');
      }
 
-     public function saveFinal_Seminario(Request $request){
+     public function saveFinal_Seminario(Request $request,$profesor_id,$curso_id){
           $eval_fseminario = new EvaluacionFinalSeminario;
           $promedio_p1 = new EvaluacionFinalSeminario;
-          //return $request;
-          //return view(pages.final_seminario);
+          $correo = new EvaluacionController(); 
+          $participante = ParticipantesCurso::find($profesor_id);
+          $eval_fseminario->participante_curso_id=$participante->id;
+     
           //1. DESARROLLO DEL CURSO
           $eval_fseminario->p1_1 = $request->p1_1;
           $eval_fseminario->p1_2 = $request->p1_2;
@@ -392,17 +409,17 @@ class EvaluacionController extends Controller{
           $eval_fseminario->p5_10 = $request->p5_10;
           $eval_fseminario->p5_11 = $request->p5_11;
           $promedio_p5=[
-               (int)$eval_fseminario->p5_1,
-               (int)$eval_fseminario->p5_2,
-               (int)$eval_fseminario->p5_3,
-               (int)$eval_fseminario->p5_4,
-               (int)$eval_fseminario->p5_5,
-               (int)$eval_fseminario->p5_6,
-               (int)$eval_fseminario->p5_7,
-               (int)$eval_fseminario->p5_8,
-               (int)$eval_fseminario->p5_9,
-               (int)$eval_fseminario->p5_10,
-               (int)$eval_fseminario->p5_11
+               $eval_fseminario->p5_1,
+               $eval_fseminario->p5_2,
+               $eval_fseminario->p5_3,
+               $eval_fseminario->p5_4,
+               $eval_fseminario->p5_5,
+               $eval_fseminario->p5_6,
+               $eval_fseminario->p5_7,
+               $eval_fseminario->p5_8,
+               $eval_fseminario->p5_9,
+               $eval_fseminario->p5_10,
+               $eval_fseminario->p5_11
           ];
           //6. INSTRUCTOR TRES
           $eval_fseminario->p6_1 = $request->p6_1;
@@ -417,17 +434,17 @@ class EvaluacionController extends Controller{
           $eval_fseminario->p6_10 = $request->p6_10;
           $eval_fseminario->p6_11 = $request->p6_11;
           $promedio_p6=[
-               (int)$eval_fseminario->p6_1,
-               (int)$eval_fseminario->p6_2,
-               (int)$eval_fseminario->p6_3,
-               (int)$eval_fseminario->p6_4,
-               (int)$eval_fseminario->p6_5,
-               (int)$eval_fseminario->p6_6,
-               (int)$eval_fseminario->p6_7,
-               (int)$eval_fseminario->p6_8,
-               (int)$eval_fseminario->p6_9,
-               (int)$eval_fseminario->p6_10,
-               (int)$eval_fseminario->p6_11
+               $eval_fseminario->p6_1,
+               $eval_fseminario->p6_2,
+               $eval_fseminario->p6_3,
+               $eval_fseminario->p6_4,
+               $eval_fseminario->p6_5,
+               $eval_fseminario->p6_6,
+               $eval_fseminario->p6_7,
+               $eval_fseminario->p6_8,
+               $eval_fseminario->p6_9,
+               $eval_fseminario->p6_10,
+               $eval_fseminario->p6_11
           ];
           //6.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
           $eval_fseminario->p7 = $request->p7;
@@ -451,58 +468,58 @@ class EvaluacionController extends Controller{
           $eval_fseminario->horarioi = $request->horarioi;
           $eval_fseminario->save();
           $promedio_p1 = [
-               (int)$eval_fseminario->p1_1,
-               (int)$eval_fseminario->p1_2,
-               (int)$eval_fseminario->p1_3,
-               (int)$eval_fseminario->p1_4,
-               (int)$eval_fseminario->p1_5];
+               $eval_fseminario->p1_1,
+               $eval_fseminario->p1_2,
+               $eval_fseminario->p1_3,
+               $eval_fseminario->p1_4,
+               $eval_fseminario->p1_5];
 $promedio_p2 =[
-               (int)$eval_fseminario->p2_1,
-               (int)$eval_fseminario->p2_2,
-               (int)$eval_fseminario->p2_3,
-               (int)$eval_fseminario->p2_4];
+               $eval_fseminario->p2_1,
+               $eval_fseminario->p2_2,
+               $eval_fseminario->p2_3,
+               $eval_fseminario->p2_4];
  $promedio_p3=[
-               (int)$eval_fseminario->p3_1,
-               (int)$eval_fseminario->p3_2,
-               (int)$eval_fseminario->p3_3,
-               (int)$eval_fseminario->p3_4];
+               $eval_fseminario->p3_1,
+               $eval_fseminario->p3_2,
+               $eval_fseminario->p3_3,
+               $eval_fseminario->p3_4];
 $promedio_p4=[
-               (int)$eval_fseminario->p4_1,
-               (int)$eval_fseminario->p4_2,
-               (int)$eval_fseminario->p4_3,
-               (int)$eval_fseminario->p4_4,
-               (int)$eval_fseminario->p4_5,
-               (int)$eval_fseminario->p4_6,
-               (int)$eval_fseminario->p4_7,
-               (int)$eval_fseminario->p4_8,
-               (int)$eval_fseminario->p4_9,
-               (int)$eval_fseminario->p4_10,
-               (int)$eval_fseminario->p4_11];
+               $eval_fseminario->p4_1,
+               $eval_fseminario->p4_2,
+               $eval_fseminario->p4_3,
+               $eval_fseminario->p4_4,
+               $eval_fseminario->p4_5,
+               $eval_fseminario->p4_6,
+               $eval_fseminario->p4_7,
+               $eval_fseminario->p4_8,
+               $eval_fseminario->p4_9,
+               $eval_fseminario->p4_10,
+               $eval_fseminario->p4_11];
                $promedio=[
-               (int)$eval_fseminario->p1_1,
-               (int)$eval_fseminario->p1_2,
-               (int)$eval_fseminario->p1_3,
-               (int)$eval_fseminario->p1_4,
-               (int)$eval_fseminario->p1_5,
-               (int)$eval_fseminario->p2_1,
-               (int)$eval_fseminario->p2_2,
-               (int)$eval_fseminario->p2_3,
-               (int)$eval_fseminario->p2_4,
-               (int)$eval_fseminario->p3_1,
-               (int)$eval_fseminario->p3_2,
-               (int)$eval_fseminario->p3_3,
-               (int)$eval_fseminario->p3_4,
-               (int)$eval_fseminario->p4_1,
-               (int)$eval_fseminario->p4_2,
-               (int)$eval_fseminario->p4_3,
-               (int)$eval_fseminario->p4_4,
-               (int)$eval_fseminario->p4_5,
-               (int)$eval_fseminario->p4_6,
-               (int)$eval_fseminario->p4_7,
-               (int)$eval_fseminario->p4_8,
-               (int)$eval_fseminario->p4_9,
-               (int)$eval_fseminario->p4_10,
-               (int)$eval_fseminario->p4_11
+               $eval_fseminario->p1_1,
+               $eval_fseminario->p1_2,
+               $eval_fseminario->p1_3,
+               $eval_fseminario->p1_4,
+               $eval_fseminario->p1_5,
+               $eval_fseminario->p2_1,
+               $eval_fseminario->p2_2,
+               $eval_fseminario->p2_3,
+               $eval_fseminario->p2_4,
+               $eval_fseminario->p3_1,
+               $eval_fseminario->p3_2,
+               $eval_fseminario->p3_3,
+               $eval_fseminario->p3_4,
+               $eval_fseminario->p4_1,
+               $eval_fseminario->p4_2,
+               $eval_fseminario->p4_3,
+               $eval_fseminario->p4_4,
+               $eval_fseminario->p4_5,
+               $eval_fseminario->p4_6,
+               $eval_fseminario->p4_7,
+               $eval_fseminario->p4_8,
+               $eval_fseminario->p4_9,
+               $eval_fseminario->p4_10,
+               $eval_fseminario->p4_11
                ];
 
           $p1=collect($promedio_p1)->average()*2*10;
@@ -511,13 +528,20 @@ $promedio_p4=[
           $p4=collect($promedio_p4)->average()*2*10;
           $pg=collect($promedio)->average()*2*10;
 
-          return 'Registrado --->        P1: '.$p1.'      P2: '.$p2.'       P3: '.$p3.'        P4: '.$p4.'       PG:'.$pg;
-          return "Registrado";
+          return redirect()->back()
+          ->with('msj', 'Evaluación enviada');
      }
      
 //Por sesiones
-     public function saveXCurso(Request $request){
+     public function saveXCurso(Request $request,$profesor_id,$curso_id){
           $eval_xcurso = new EvaluacionXCurso;
+          $correo = new EvaluacionController(); 
+          //return $correo->enviarCorreo($profesor_id,$curso_id);
+          //$participante_curso_id = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->select(DB::raw("id"))->get();
+          $participante = ParticipantesCurso::find($profesor_id);
+          //return $participante;
+          //return $participante_curso_id;
+          $eval_xcurso->participante_curso_id=$participante->id;
           $eval_xcurso->p1=$request->p1;
           $eval_xcurso->p2=$request->p2;
           $eval_xcurso->p3=$request->p3;
@@ -528,22 +552,27 @@ $promedio_p4=[
           $eval_xcurso->contenido=$request->contenido;
           $eval_xcurso->sug=$request->sug;
           $eval_xcurso->save();
+
           $promedio=[
-               (int)$eval_xcurso->p1,
-               (int)$eval_xcurso->p2,
-               (int)$eval_xcurso->p3,
-               (int)$eval_xcurso->p4,
-               (int)$eval_xcurso->p5,
-               (int)$eval_xcurso->p6,
-               (int)$eval_xcurso->p7
+               $eval_xcurso->p1,
+               $eval_xcurso->p2,
+               $eval_xcurso->p3,
+               $eval_xcurso->p4,
+               $eval_xcurso->p5,
+               $eval_xcurso->p6,
+               $eval_xcurso->p7
           ];
           $pg=collect($promedio)->average()*2*10;
-          return 'Registrado --->       PG:'.$pg;
-          return "Registrado";
+          
+          $correo->enviarCorreo($profesor_id,$curso_id);
+          
+          return redirect()->back()
+          ->with('msj', 'Evaluación enviada');
      }
 
-     public function saveXSeminario(Request $request){
+     public function saveXSeminario(Request $request,$profesor_id,$curso_id){
           $eval_xseminario = new EvaluacionXSeminario;
+          $eval_xseminario->participante_curso_id=1;
           $eval_xseminario->p1=$request->p1;
           $eval_xseminario->p1_arg=$request->p1_arg;
           $eval_xseminario->p2=$request->p2;
@@ -555,7 +584,8 @@ $promedio_p4=[
           $eval_xseminario->p5=$request->p5;
           $eval_xseminario->p5_arg=$request->p5_arg;
           $eval_xseminario->save();
-          return "Registrado";
+          return redirect()->back()
+          ->with('msj', 'Evaluación enviada');
           
      }
        

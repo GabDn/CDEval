@@ -1,8 +1,6 @@
 <!-- Guardado en resources/views/pages/admin.blade.php -->
 
-@extends('layouts.principal')
 
-@section('contenido')
   <!--Body content-->
 
   <div class="content">
@@ -30,5 +28,3 @@
                 
                 </div>
      </section>
-     
-@endsection

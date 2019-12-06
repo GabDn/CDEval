@@ -14,6 +14,10 @@ class AutentificarController extends Controller{
 # DOMJ7201011Q9
 # 2143231
 # RAGJ720101T72
+
+#JUFM720101M74 
+#2143235
+
      public function index(Request $request){
         $infoCursos=array(); 
         $profesores = Profesor::all();

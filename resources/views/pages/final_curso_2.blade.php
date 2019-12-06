@@ -3,7 +3,7 @@
 
 @section('contenido')
   <!--Body content-->
-<form method="POST" action="{{ action('EvaluacionController@saveFinal_Curso') }}">
+<form method="POST" action="{{ action('EvaluacionController@saveFinal_Curso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id]) }}">
 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
   <div class="content">
     <div class="top-bar">       
@@ -16,6 +16,9 @@
     <section class="content-inner">
     
       <div class="panel panel-default">
+      @if(session()->has('msj'))
+        <div class="alert alert-success" role='alert'>{{session('msj')}}</div>
+      @endif
                 <div class="panel-heading">
                     <h2><span class="fa fa-check-square-o"></span>    Evaluación final de curso </h3>
                 </div>
@@ -1109,22 +1112,22 @@
                         <tr>
                         <td>
                             <div class="form-check">
-                                <input width="20%" name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="internet"> Internet
+                                <input width="20%" name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="1"> Internet
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="fi"> Publicidad de la FI
+                                <input name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="2"> Publicidad de la FI
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="jefesd"> Jefes de División
+                                <input name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="3"> Jefes de División
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="otro"> Otro
+                                <input name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="4"> Otro
                             </div><input name="p8[]" type="otro" class="form-control" id="otro" placeholder="Otro">
                         </td>
                         </tr>

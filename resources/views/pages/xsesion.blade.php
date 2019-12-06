@@ -3,8 +3,8 @@
 @extends('layouts.principal')
 
 @section('contenido')
-  <!--Body content-->
-    <form action="{{ action('EvaluacionController@saveXCurso') }}" method="POST">
+  <!--Body content   , 'curso_id' => $curso->id-->
+    <form action="{{ action('EvaluacionController@saveXCurso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id]) }}" method="POST">
     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
   <div class="content">
     <div class="top-bar">       
@@ -14,9 +14,13 @@
         <span class='burger_inside' id='bgrThree'></span>
       </a>      
     </div>
+   
     <section class="content-inner">
     
       <div class="panel panel-default">
+      @if(session()->has('msj'))
+        <div class="alert alert-success" role='alert'>{{session('msj')}}</div>
+      @endif
                 <div class="panel-heading">
                     <h2><span class="fa fa-check-square-o"></span>    Evaluación por sesión de curso </h3>
                 </div>

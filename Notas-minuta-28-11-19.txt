@@ -8,13 +8,13 @@
 --cambio de tipos en la bd
 --ampliar char de fechas propuestas evaluar opciones
 --numero de instructores igual a numero de evaluaciones debe mostrar la parte del formulario automaticamente
-Mensajes de contestacion de encuesta registrada
-
-correos con formulario contestado
+--Mensajes de contestacion de encuesta registrada
+--retornar el valor TRUE de la hoja de evaluacion
+--correos con formulario contestado
 
 *    validacion de un solo contestar una encuesta por dia 
 *    validacion de activacion del otro boton, solo activarlo cuando es la fecha fin 
-retornar el valor TRUE de la hoja de evaluacion 
+ 
 
 **arreglar la autentificacion
 
