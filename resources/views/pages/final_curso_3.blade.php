@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group row">
                             <div class="col-sm-10">
-                                <h4>Instructor: </h4>
+                                <h4>Instructor: {{ $curso->getProfesores() }}</h4>
                             </div> 
                     </div>
                     <div class="form-group row">
@@ -1432,22 +1432,22 @@
                         <tr>
                         <td>
                             <div class="form-check">
-                                <input width="20%" name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="internet"> Internet
+                                <input width="20%" name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="1"> Internet
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="fi"> Publicidad de la FI
+                                <input name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="2"> Publicidad de la FI
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="jefesd"> Jefes de División
+                                <input name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="3"> Jefes de División
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="otro"> Otro
+                                <input name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="4"> Otro
                             </div><input name="p8[]" type="otro" class="form-control" id="otro" placeholder="Otro">
                         </td>
                         </tr>

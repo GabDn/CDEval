@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group row">
                             <div class="col-sm-10">
-                                <h4>Instructor: </h4>
+                                <h4>Instructor: {{ $curso->getProfesores() }}</h4>
                             </div> 
                     </div>
                     <div class="form-group row">
@@ -1152,19 +1152,19 @@
                         </tr>
                         <tr>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="didactico"> Didáctico Pedagógico
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="1"> Didáctico Pedagógico
                             </div></td>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="desarrollo"> Desarrollo humano
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="2"> Desarrollo humano
                             </div></td>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="computo"> Cómputo
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="3"> Cómputo
                             </div></td>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="disciplinar"> Disciplinar
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="4"> Disciplinar
                             </div></td>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="otro"> Otro
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="5"> Otro
                             </div></td>
                         </tr>
                     </table>   
@@ -1187,7 +1187,9 @@
                             <td><input name="horarioi" type="text" class="form-control" id="intersemestral" placeholder=""></td></td>
                         </tr>
                     </table> 
-                    <button type="submit" class="btn btn-primary active">Enviar evaluación</button>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary active">Enviar evaluación</button>
+                    </div>
                 </div>
     
      </section>

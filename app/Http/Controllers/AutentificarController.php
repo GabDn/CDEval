@@ -48,9 +48,9 @@ class AutentificarController extends Controller{
                     return view("pages.admin")
                     ->with("profesor",$profesor)
                     ->with('infoCursos',$infoCursos);
-                } 
-            }
+                }else return back()->with('error', 'Número de trabajador inválido'); 
+            }else return back()->with('error', 'RFC inválido');
         }
-        return back()->with('error','Datos invalidos');   
+        return back()->with('error','Datos inválidos');   
     }
 }

@@ -62,5 +62,44 @@ class Curso extends Model
         $salon = Salon::all();
         return $salon;
     }
+    public function getProfesores(){
+        $profesoresCurso = ProfesoresCurso::where('curso_id',$this->id)->get();
+
+        $cadena="";
+
+        if ( count($profesoresCurso) == 1 ){
+            $profesor=Profesor::find($profesoresCurso[0]->id);
+            $cadena.=$profesor->nombres." ";
+            $cadena.=$profesor->apellido_paterno." ";
+            $cadena.=$profesor->apellido_materno;
+            return $cadena;
+        }
+        foreach($profesoresCurso as $profesorCurso){
+            $profesor=Profesor::find($profesorCurso->id);
+            $cadena.=$profesor->nombres." ";
+            $cadena.=$profesor->apellido_paterno." ";
+            $cadena.=$profesor->apellido_materno." / ";
+        }
+        $cadena= substr($cadena, 0, -2);
+        return $cadena;
+    }
+
+    public function getCorreo(){
+        $profesoresCurso = ProfesoresCurso::where('curso_id',$this->id)->get();
+
+        $cadena="";
+
+        if ( count($profesoresCurso) == 1 ){
+            $profesor=Profesor::find($profesoresCurso[0]->id);
+            $cadena.=$profesor->email;
+            return $cadena;
+        }
+        foreach($profesoresCurso as $profesorCurso){
+            $profesor=Profesor::find($profesorCurso->id);
+            $cadena.="'".$profesor->email."',";
+        }
+        $cadena= substr($cadena, 0, -1);
+        return $cadena;
+    }
 
 }

@@ -29,15 +29,10 @@ class EvaluacionController extends Controller{
       $count = ProfesoresCurso::select($curso_id)
       ->where('curso_id',$curso_id)
       ->count();
-      $instructores = ProfesoresCurso::select('profesor_id')
-      ->where('curso_id',$curso_id)->get();
-
-      //return $instructores;
+      //return $curso->getCorreo();
       $participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
       $infoCursos = array();
-      foreach($instructores as $instructor){
-
-      }
+      
       foreach($participantesCurso as $participanteCurso){
               $curso = Curso::find($participanteCurso->curso_id);
               //return $curso;
@@ -53,8 +48,8 @@ class EvaluacionController extends Controller{
       ->with("curso",$curso)
       ->with('catalogoCurso',$catalogoCurso)
       ->with('infoCursos',$infoCursos)
-      ->with('count',$count)
-      ->with('instructor',$instructor);
+      ->with('count',$count);
+      
      }
      
      public function enviarCorreo($profesor_id, $curso_id){
@@ -67,9 +62,9 @@ class EvaluacionController extends Controller{
           
           $pdf = PDF::loadView('pages.validacion',array('curso' => $curso,'profesor'=>$profesor,'semestre'=>$semestre));
           
-          Mail::send('pages.mensaje',$data, function ($message) use($profesor,$pdf){
+          Mail::send('pages.mensaje',$data, function ($message) use($profesor,$pdf,$semestre){
               $message->from('cdevalresultados@gmail.com','CDEval');
-              $message->to($profesor->email)->subject('Resultados de Encuesta');
+              $message->to([$semestre->getCorreo()])->subject('Resultados de Encuesta');
               $message->attachData($pdf->output(), 'Validacion.pdf');
           });
           return redirect()->back()

@@ -20,9 +20,14 @@
 </head>
 
 <body>
+
 <div class="container">
 	<div class="d-flex justify-content-center h-100">
+		
 		<div class="card">
+		@if(session()->has('error'))
+			<div class="alert alert-danger" role='alert'>{{session('error')}}</div>
+		@endif
 			<div class="card-header">
 				<h3>Ingresar</h3>
 			</div>
@@ -57,6 +62,8 @@
 			</div>
 		</div>
 	</div>
+	</div>	
 </div>
+
 </body>
 </html>

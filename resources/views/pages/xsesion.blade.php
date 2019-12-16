@@ -34,7 +34,7 @@
                     </div>
                     <div class="form-group row">
                             <div class="col-sm-10">
-                                <h4>Instructor: </h4>
+                                <h4>Instructor: {{ $curso->getProfesores() }}</h4>
                             </div> 
                     </div>
                     <div class="form-group row">

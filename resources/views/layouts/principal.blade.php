@@ -1,7 +1,7 @@
 <!-- Guardado en resources/views/layouts/principal.blade.php -->
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/img/cdd.ico') }}" />
     <meta charset="UTF-8">
