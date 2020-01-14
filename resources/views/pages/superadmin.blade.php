@@ -1,6 +1,6 @@
 <!-- Guardado en resources/views/pages/admin.blade.php -->
 
-@extends('layouts.principal')
+@extends('layouts.app')
 
 @section('contenido')
   <!--Body content-->
