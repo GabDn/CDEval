@@ -15,16 +15,20 @@ class EvaluacionXSeminario extends Migration
     {
         Schema::create('_evaluacion_x_seminario', function (Blueprint $table) {
             $table->increments('id');
-          $table->char('p1',1); 
+          $table->integer('p1'); 
           $table->string('p1_arg',300);
-          $table->char('p2',1); 
+          $table->integer('p2'); 
           $table->string('p2_arg',300);
-          $table->char('p3',1); 
+          $table->integer('p3'); 
           $table->string('p3_arg',300);
-          $table->char('p4',1); 
+          $table->integer('p4'); 
           $table->string('p4_arg',300);
-          $table->char('p5',1); 
+          $table->integer('p5'); 
           $table->string('p5_arg',300);
+          $table->integer('participante_curso_id');
+
+            $table->foreign('participante_curso_id')
+                  ->references('id')->on('participante_curso');
         });
     }
 
