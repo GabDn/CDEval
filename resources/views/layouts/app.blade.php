@@ -1,80 +1,80 @@
+<!-- Guardado en resources/views/layouts/principal.blade.php -->
+
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/img/cdd.ico') }}" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>CDEval</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('dist/jquery.fancybox.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/font-awesome.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin.css') }}"/>
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
+<div class="wrap">
+    <nav class="nav-bar navbar-inverse" role="navigation">
+        <div id ="top-menu" class="container-fluid active">
+            <a class="navbar-brand" href="{{ URL::to('admin/') }}">Centro de Docencia - Evaluaciones</a>
+            <ul class="nav navbar-nav">
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                <li class="dropdown movable">
+                    <!--Boton de usuario esquina superior derecha-->
+                    <a href="#"  class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <i id="usericon" class="fa fa-2x fa-user-circle"></i>
                     </a>
-                </div>
+                    <ul class="dropdown-menu" role="menu">
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
+
+                        
                     </ul>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </nav>
 
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
+    <aside id="side-menu" class="aside" role="navigation">
+        <ul class="nav nav-list accordion">
+    
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
+            <li class="nav-header">
+                <div class="link"><i class="fa fa-list-alt"></i>Cursos<i class="fa fa-chevron-down"></i></div>
+                <ul class="submenu">
+                
+                    <li><a href="{{ route('cursos') }}">Ver</a></li>
+                
+                </ul>
+            </li>
+            <li class="nav-header">
+                <div class="link"><i class="fa fa-users"></i>Instructores<i class="fa fa-chevron-down"></i></div>
+                <ul class="submenu">
+                
+                    <li><a href="{{ route('instructores') }}">Ver</a></li>
+                
+                </ul>
+            </li>
+        </ul>
+    </aside>
+
+    @yield('contenido')
+
+    <footer class="content-inner">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Hecho en México, Universidad Nacional Autónoma de México, Facultad de Ingeniería, Unidad de servicios de cómputo académico, Departamento de Investigación y Desarrollo.
+                Todos los derechos reservados 2019.
             </div>
-        </nav>
-
-        @yield('content')
-    </div>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+        </div>
+    </footer>
+</div>
+<script src="{{ asset ('/js/jquery.js') }}"></script>
+<script src="{{ asset ('/js/admin.js') }}"></script>
+<script src="{{ asset ('/dist/jquery.fancybox.min.js') }}"></script>
+<script src="{{ asset('/js/bootstrap.min.js') }}"></script>
 </body>
 </html>

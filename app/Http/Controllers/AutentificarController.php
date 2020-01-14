@@ -19,10 +19,11 @@ class AutentificarController extends Controller{
 #2143235
 
      public function index(Request $request){
+        //return view("pages.superadmin");
         $infoCursos=array(); 
         $profesores = Profesor::all();
         if ('admin' == $request->rfc && '1q2w3e4r' == $request->numTrabajador) {
-            return view("pages.superadmin");
+            return view("pages.superadmin"); //Route -> coordinador
         }
         foreach($profesores as $profesor){
             if ($profesor->rfc == $request->rfc) {

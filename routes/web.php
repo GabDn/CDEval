@@ -2,10 +2,15 @@
 Route::get('/', function () {
 
     //return view('layouts.principal');
-    return view('welcome');
+    return view('pages.superadmin');
 });
 
 Route::post('/autentificar', "AutentificarController@index")->name("autentificar");
+//Vista de coordinador
+//Route::post('/coordinador', "AutentificarController@index")->name("coordinador");
+Route::get('/cursos',"CoordinadorController@cursos")->name("cursos");
+Route::get('/instructores',"CoordinadorController@instructores")->name("instructores");
+
 //Para enviar correos
 Route::get('evaluarCurso/{profesor_id}/{curso_id}','EvaluacionController@enviarCorreo')->name('evaluacion.correo');
 //Guardar evaluaciones en la BD
@@ -17,4 +22,5 @@ Route::post('evaluar/finalc/{profesor_id}/{curso_id}',"EvaluacionController@save
 Route::post('/finals/{profesor_id}/{curso_id}','EvaluacionController@saveFinal_Seminario')->name('final.seminario');
 Route::post('evaluar/xcurso/{profesor_id}/{curso_id}',"EvaluacionController@saveXCurso")->name('x.curso');
 Route::post('evaluar/xseminario/{profesor_id}/{curso_id}',"EvaluacionController@saveXSeminario")->name('x.seminario');
+
 

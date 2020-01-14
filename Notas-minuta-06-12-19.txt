@@ -19,6 +19,7 @@ Pendientes de Jacquelyn:
 *** Falta que envíe formato de x sesion de semnario 
 *** Falta que envíe las fórmulas que faltan para evaluación global
 
+psql -h 35.194.9.146 -U 'postgres' -d 'magex' -p 'Mpv3tCf1g4wyt3cs'
 
 ---------------MAGESTICD---------------
 --Mismos alumnos en todos los modulos a excepcion de que se den de baja
