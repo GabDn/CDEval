@@ -34,7 +34,7 @@
                     <h4> Tipo:  {{ $catalogoCurso->tipo }}</h4>
                     <h5> Fecha de Inicio:  {{ $curso->fecha_inicio }}</h5>
                     <h5> Fecha de Fin:  {{ $curso->fecha_fin }}</h5>
-                    <h4> Fecha:  {{ getdate()['month'] }}</h4>
+                    <h4> Fecha:  {{ $curso->getToday() }}</h4>
                 </div>
                 <div class="panel-body">
                   <button><a id="dia" href="{{ route('evaluacion.porSesion',[ $profesor->id,$curso->id,$catalogoCurso->id,$count] ) }}" type="button" class="btn btn-primary active"> Evaluación por día</a></button>

@@ -44,7 +44,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-10">
-                            <h4>Fecha: {{ getdate()['month'] }}/{{ getdate()['year'] }}</h4>
+                            <h4>Fecha: {{ $curso->getToday() }}</h4>
                         </div>
                     </div>
                     

@@ -102,4 +102,10 @@ class Curso extends Model
         return $cadena;
     }
 
+    public function getToday(){
+        $date = \Carbon\Carbon::now()->locale('es_MX');
+
+        return $date->isoFormat('dddd, DD MMMM YYYY');
+    }
+
 }
