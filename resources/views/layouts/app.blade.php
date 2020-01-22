@@ -46,7 +46,7 @@
                 <div class="link"><i class="fa fa-list-alt"></i>Cursos<i class="fa fa-chevron-down"></i></div>
                 <ul class="submenu">
                 
-                    <li><a href="{{ route('cursos') }}">Ver</a></li>
+                    <li><a href="{{ route('cursos') }}">Ver evaluaciones</a></li>
                 
                 </ul>
             </li>

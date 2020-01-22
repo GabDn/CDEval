@@ -50,6 +50,11 @@ class Curso extends Model
         return $this->salon_id;
     }
 
+    public function getSemestre(){
+        $semestre = Curso::findOrFail($this->id)->semestre_imparticion;
+        return $semestre;
+    }
+
     public function allNombreCurso(){
         $nombre = CatalogoCurso::all('nombre_curso','id');
         return $nombre;
@@ -83,7 +88,27 @@ class Curso extends Model
         $cadena= substr($cadena, 0, -2);
         return $cadena;
     }
+    public function getProfesores2(){
+        $profesoresCurso = ProfesoresCurso::where('curso_id',$this->id)->get();
 
+        $cadena="";
+
+        if ( count($profesoresCurso) == 1 ){
+            $profesor=Profesor::find($profesoresCurso[0]->id);
+            $cadena.=$profesor->nombres." ";
+            $cadena.=$profesor->apellido_paterno." ";
+            $cadena.=$profesor->apellido_materno;
+            return $cadena;
+        }
+        foreach($profesoresCurso as $profesorCurso){
+            $profesor=Profesor::find($profesorCurso->profesor_id);
+            $cadena.=$profesor->nombres." ";
+            $cadena.=$profesor->apellido_paterno." ";
+            $cadena.=$profesor->apellido_materno."/";
+        }
+        $cadena= substr($cadena, 0, -1);
+        return $cadena;
+    }
     public function getCorreo(){
         $profesoresCurso = ProfesoresCurso::where('curso_id',$this->id)->get();
 

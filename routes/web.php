@@ -10,7 +10,7 @@ Route::post('/autentificar', "AutentificarController@index")->name("autentificar
 //Route::post('/coordinador', "AutentificarController@index")->name("coordinador");
 Route::get('/cursos',"CoordinadorController@cursos")->name("cursos");
 Route::get('/instructores',"CoordinadorController@instructores")->name("instructores");
-
+Route::get('cursos/buscar',"CoordinadorController@searchCursos")->name("buscar.curso");
 //Para enviar correos
 Route::get('evaluarCurso/{profesor_id}/{curso_id}','EvaluacionController@enviarCorreo')->name('evaluacion.correo');
 //Guardar evaluaciones en la BD
