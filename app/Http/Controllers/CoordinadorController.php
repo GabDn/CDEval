@@ -9,6 +9,7 @@ use App\Curso;
 use App\CatalogoCurso;
 use App\Profesor;
 use App\ProfesoresCurso;
+use App\EvaluacionXCurso;
 
 class CoordinadorController extends Controller
 {
@@ -37,13 +38,22 @@ class CoordinadorController extends Controller
             $res_busqueda = Curso::whereIn('id',$curso_prof)->get();
             return view('pages.cursos')->with("cursos",$res_busqueda);
 
-        }elseif($request->type == "semestre"){
+        }/*elseif($request->type == "semestre"){
 
-        }
+        }*/ 
+        //holiwis
 
     }
     
-    
+    public function sesiones(){
+        $evaluacion = EvaluacionXCurso::all();
+        //return $evaluacion;
+        return view('pages.sesiones');
+    }
+
+    public function globales(){
+        return view('pages.globales');
+    }
     
     public function instructores(){
         return view("pages.instructores");

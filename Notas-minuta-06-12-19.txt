@@ -3,15 +3,15 @@
 --Mensaje para contraseña
 --Desplegar instructor en los datos
 Falta encuesta area
+Hacer formato de x sesion -> ellos no tienen un formato en específico
 *    validacion de un solo contestar una encuesta por dia 
 *    validacion de activacion del otro boton, solo activarlo cuando es la fecha fin
 
-Hacer formato de x sesion -> ellos no tienen un formato en específico
 *-Correo al instructor-* 
 
-Cambiar a español la fecha xd
+-- Cambiar a español la fecha xd
 **  Pendientes a futuro que no han pedido xd**
-Vista coordinador
+-- Vista coordinador
 Layout instructor puede ver sus informes desde ahi
 [arreglar la autentificacion]
 
@@ -19,7 +19,6 @@ Pendientes de Jacquelyn:
 *** Falta que envíe formato de x sesion de semnario 
 *** Falta que envíe las fórmulas que faltan para evaluación global
 
-psql -h 35.194.9.146 -U 'postgres' -d 'magex' -p 'Mpv3tCf1g4wyt3cs'
 
 ---------------MAGESTICD---------------
 --Mismos alumnos en todos los modulos a excepcion de que se den de baja

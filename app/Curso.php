@@ -117,7 +117,7 @@ class Curso extends Model
         if ( count($profesoresCurso) == 1 ){
             $profesor=Profesor::find($profesoresCurso[0]->id);
             $cadena.=$profesor->email;
-            return $cadena;
+            return $profesor->email;
         }
         foreach($profesoresCurso as $profesorCurso){
             $profesor=Profesor::find($profesorCurso->id);

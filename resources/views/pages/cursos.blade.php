@@ -17,17 +17,20 @@
         <div class="panel-heading">
               <h3>Cursos</h3>
               {!! Form::open(["route" => "buscar.curso", "method" => "GET"]) !!}
+              
               <div class="input-group">
                   {!!Form::text("pattern", null, [ "class" => "form-control", "placeholder" => "Buscar Curso"])!!}
+                  <hr id="hr">
+                  <br>
                   {!! Form::select('type', array(
                          'nombre' => 'Por nombre',
-                         'instructor' => 'Por instructor',
-                         'semestre' => 'Por semestre'),
+                         'instructor' => 'Por instructor'),
                          null,['class' => 'btn dropdown-toggle pull-left'] ) !!}
-                  {!! Form::close() !!}
+                
                   <span class="input-group-btn col-md-2">
                       <button class="btn btn-search " type="submit">Buscar</button>
-                   </span>
+                </span>
+                   {!! Form::close() !!}
               </div>
           </div>
 
@@ -48,8 +51,8 @@
                                     <td>{{ $curso->getProfesores2() }}</td>
                                     <td>{{ $curso->semestre_anio }}-{{ $curso->semestre_pi }}{{ $curso->semestre_si }}</td>
                                     <td>
-                                    <a href="#" class="btn btn-warning">Sesión</a>
-                                    <a href="#" class="btn btn-success">Global</a>
+                                    <a href="{{ route('ver.sesion') }}" class="btn btn-warning">Sesión</a>
+                                    <a href="{{ route('ver.global') }}" class="btn btn-success">Global</a>
                                     </td>
                                 </tr>
                             </tbody>
