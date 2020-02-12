@@ -24,7 +24,7 @@ class EvaluacionXCurso extends Migration
             $table->string('contenido',300); 
             $table->string('sug',300); 
             $table->timestamps();
-            $table->integer('participante_curso_id');
+            $table->integer('participante_curso_id')->unsigned();
 
             $table->foreign('participante_curso_id')
                   ->references('id')->on('participante_curso');
