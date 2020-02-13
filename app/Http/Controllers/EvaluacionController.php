@@ -72,6 +72,7 @@ class EvaluacionController extends Controller{
          }
 
      public function evaluacionPorSesion($profesor_id, $curso_id, $catalogoCurso_id,$count){
+		 
           $profesor = Profesor::find($profesor_id);
           $curso = Curso::find($curso_id);
           $catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
@@ -87,7 +88,7 @@ class EvaluacionController extends Controller{
                       array_push($tupla,$curso);
                       array_push($tupla,$catalogoCursos);
                    array_push($infoCursos, $tupla);
-         }
+          }
                if($catalogoCurso->tipo == "Actualizacion"){
                     return view("pages.xsesion_seminario")
                     ->with("profesor",$profesor)
