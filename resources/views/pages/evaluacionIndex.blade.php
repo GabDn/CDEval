@@ -11,18 +11,34 @@
 	var curso_date = date.fecha_fin;
 	//Separamos la fecha por '-' (dato tipo string)
 	var dates =curso_date.split('-');
+	
+	var encuestas = <?php echo json_encode($evaluaciones); ?>;
+	var encuesta_final = <?php echo json_encode($final); ?>
+	
+	console.log(encuestas.length);
+	console.log(encuestas);
+	console.log(encuesta_final.length);
   
-	//f.getFullYear() retorna año actual, f.getMoth() retorna mes actual, f.getDate() retorna día actual
-	if (parseInt(dates[0]) == f.getFullYear() && parseInt(dates[1]) <= f.getMonth()+1 && parseInt(dates[2]) <= f.getDate()) {
-		//Si está cargada la página actúa
+  
+	if(encuestas.length >= 1){
+		document.addEventListener("DOMContentLoaded", function(event) {
+			document.getElementById("dia").disabled = true; // habilitar
+		});
+	}else{
 		document.addEventListener("DOMContentLoaded", function(event) {
 			document.getElementById("dia").disabled = false; // habilitar
+		});
+	}
+  
+	//f.getFullYear() retorna año actual, f.getMoth() retorna mes actual, f.getDate() retorna día actual
+	if (parseInt(dates[0]) == f.getFullYear() && parseInt(dates[1]) <= f.getMonth()+12 && parseInt(dates[2]) <= f.getDate()+30  && encuesta_final.length <= 0) {
+		//Si está cargada la página actúa
+		document.addEventListener("DOMContentLoaded", function(event) {
 			document.getElementById("final").disabled = false; // habilitar
 		});
 	} else {
 		//Si está cargada la página actúa
 		document.addEventListener("DOMContentLoaded", function(event) {
-			document.getElementById("dia").disabled = false; // deshabilitar
 			document.getElementById("final").disabled = true; // habilitar
 		});
 	}
@@ -52,7 +68,7 @@
 					<!--<table>
 						<tr>
 							<td>
-								<!--<form method="GET">
+								<form method="GET">
 									{{ csrf_field() }}-->
 									<button id="dia"  type="button" class="btn btn-primary active"> <a href="{{ route('evaluacion.porSesion',[ $profesor->id,$curso->id,$catalogoCurso->id,$count] ) }}" style="color:white">Evaluación por día </a> </button>
 								<!--</form>-->

@@ -20,9 +20,9 @@ Route::get('evaluar/{profesor_id}/{curso_id}/{catalogoCurso_id}','EvaluacionCont
 Route::get('evaluarSesion/{profesor_id}/{curso_id}/{catalogoCurso_id}/{count}','EvaluacionController@evaluacionPorSesion')->name('evaluacion.porSesion');
 Route::get('evaluarCurso/{profesor_id}/{curso_id}/{catalogoCurso_id}/{count}','EvaluacionController@evaluacionPorCurso')->name('evaluacion.porCurso');
 
-Route::post('evaluar/finalc/{profesor_id}/{curso_id}',"EvaluacionController@saveFinal_Curso")->name('final.curso');
+Route::post('evaluar/finalc/{profesor_id}/{curso_id}/{catalogoCurso_id}',"EvaluacionController@saveFinal_Curso")->name('final.curso');
 Route::post('/finals/{profesor_id}/{curso_id}','EvaluacionController@saveFinal_Seminario')->name('final.seminario');
-Route::post('evaluar/xcurso/{profesor_id}/{curso_id}',"EvaluacionController@saveXCurso")->name('x.curso');
+Route::post('evaluar/xcurso/{profesor_id}/{curso_id}/{catalogoCurso_id}',"EvaluacionController@saveXCurso")->name('x.curso');
 Route::post('evaluar/xseminario/{profesor_id}/{curso_id}',"EvaluacionController@saveXSeminario")->name('x.seminario');
 
 

@@ -3,7 +3,7 @@
 
 @section('contenido')
   <!--Body content-->
-<form method="POST" action="{{ action('EvaluacionController@saveFinal_Curso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id]) }}">
+<form method="POST" action="{{ action('EvaluacionController@saveFinal_Curso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
   <div class="content">
     <div class="top-bar">       
