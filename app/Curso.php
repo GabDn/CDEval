@@ -126,6 +126,24 @@ class Curso extends Model
         $cadena= substr($cadena, 0, -1);
         return $cadena;
     }
+	
+	public function getSender(){
+		$profesoresCurso = ProfesoresCurso::where('curso_id',$this->id)->get();
+
+        $cadena="";
+
+        if ( count($profesoresCurso) == 1 ){
+            $profesor=Profesor::find($profesoresCurso[0]->id);
+            $cadena.=$profesor->getNombre();
+            return $cadena;
+        }
+        foreach($profesoresCurso as $profesorCurso){
+            $profesor=Profesor::find($profesorCurso->id);
+            $cadena.="'".$profesor->getNombre()."',";
+        }
+        $cadena= substr($cadena, 0, -1);
+        return $cadena;
+	}
 
     public function getToday(){
         $date = \Carbon\Carbon::now()->locale('es_MX');

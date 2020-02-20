@@ -46,7 +46,7 @@ class EvaluacionController extends Controller{
 	 
 		$date = date("Y-m-j");
 		
-	 
+		//Se busca mandar a pages.evaluacionIndex las encuestas realizadas por el usuario para manejar los botones
 		$evaluacion_x_curso = DB::table('_evaluacion_x_curso')
 			->select('_evaluacion_x_curso.created_at','_evaluacion_x_curso.curso_id')
 			->where([['created_at',$date],['curso_id',$catalogoCurso_id],['participante_curso_id',$profesor_id]])
@@ -56,8 +56,6 @@ class EvaluacionController extends Controller{
 			->select('_evaluacion_final_curso.participante_curso_id','_evaluacion_final_curso.curso_id')
 			->where([['curso_id',$catalogoCurso_id],['participante_curso_id',$profesor_id]])
 			->get();
-			
-		//return $evaluacion_curso;
 	 
 		return view("pages.evaluacionIndex")
 			->with("profesor",$profesor)
@@ -68,26 +66,41 @@ class EvaluacionController extends Controller{
 			->with('evaluaciones',$evaluacion_x_curso)
 			->with('final',$evaluacion_final_curso);
 	  
-		}
+	}
+		
      
-     public function enviarCorreo($profesor_id, $curso_id){
-          $profesor = Profesor::find($profesor_id);
-          $curso = CatalogoCurso::find($curso_id);
-          $semestre=Curso::find($curso_id);
-          $data = array(
-              'name'=>"CDEval",
-          );
+     public function enviarCorreo($profesor_id, $curso_id, $catalogoCurso_id){
+        $profesor = Profesor::find($profesor_id);
+        $curso = CatalogoCurso::find($curso_id);
+        $semestre=Curso::find($curso_id);
+        $data = array(
+            'name'=>"CDEval",
+        );
           
-          $pdf = PDF::loadView('pages.validacion',array('curso' => $curso,'profesor'=>$profesor,'semestre'=>$semestre));
+        $pdf = PDF::loadView('pages.validacion',array('curso' => $curso,'profesor'=>$profesor,'semestre'=>$semestre));
           
-          Mail::send('pages.mensaje',$data, function ($message) use($profesor,$pdf,$semestre){
-              $message->from('cdevalresultados@gmail.com','CDEval');
-              $message->to([$semestre->getCorreo()])->subject('Resultados de Encuesta');
-              $message->attachData($pdf->output(), 'Validacion.pdf');
+		//Obtenemos los profesores de los cursos  
+		$profesoresCurso = ProfesoresCurso::where('curso_id',$curso_id)->get();
+
+		//Si es un solo profesor enviamos el mensaje
+        if ( count($profesoresCurso) == 1 ){
+            $profesor=Profesor::find($profesoresCurso[0]->id);
+			Mail::send('pages.mensaje',$data, function ($message) use($profesor,$pdf,$semestre){
+				$message->from(Array('cdevalresultados@gmail.com'=>'CDEval'));
+				$message->to(Array($profesor->getCorreo()=>$profesor->getNombre()))->subject('Resultados de Encuesta');
+				$message->attachData($pdf->output(), 'Validacion.pdf');
+			});
+        }
+        foreach($profesoresCurso as $profesorCurso){
+            $profesor=Profesor::find($profesorCurso->id);
+            //$cadena.="'".$profesor->email."',";
+			Mail::send('pages.mensaje',$data, function ($message) use($profesor,$pdf,$semestre){
+				$message->from(Array('cdevalresultados@gmail.com'=>'CDEval'));
+				$message->to(Array($profesor->getCorreo()=>$profesor->getNombre()))->subject('Resultados de Encuesta');
+				$message->attachData($pdf->output(), 'Validacion.pdf');
           });
-          return redirect()->back()
-          ->with('msj', 'Evaluación enviada');
-         }
+        }
+	}
 
      public function evaluacionPorSesion($profesor_id, $curso_id, $catalogoCurso_id,$count){
 		 
@@ -373,7 +386,6 @@ class EvaluacionController extends Controller{
           $p4=collect($promedio_p4)->average()*2*10;
           $p5=collect($promedio_p5)->average()*2*10;
           //$avp1=
-          //$correo->enviarCorreo($profesor_id,$curso_id);
 
           //Actualizar campo de hoja de evaluacion
           DB::table('participante_curso')
@@ -417,7 +429,7 @@ class EvaluacionController extends Controller{
 			->where([['curso_id',$catalogoCurso_id],['participante_curso_id',$profesor_id]])
 			->get();
 			
-		//return $evaluacion_curso;
+		$correo->enviarCorreo($profesor_id,$curso_id, $catalogoCurso_id);
 	 
 		return view("pages.evaluacionIndex")
 			->with("profesor",$profesor)
@@ -603,7 +615,7 @@ $promedio_p4=[
           $p4=collect($promedio_p4)->average()*2*10;
           $pg=collect($promedio)->average()*2*10;
 
-          $correo->enviarCorreo($profesor_id,$curso_id);
+          //$correo->enviarCorreo($profesor_id,$curso_id);
           //Actualizar tabla en la bd
           DB::table('participante_curso')
           ->where('id', $participante[0]->id)
@@ -618,7 +630,6 @@ $promedio_p4=[
      public function saveXCurso(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
           $eval_xcurso = new EvaluacionXCurso;
           $correo = new EvaluacionController(); 
-          //return $correo->enviarCorreo($profesor_id,$curso_id);
           //$participante_curso_id = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->select(DB::raw("id"))->get();
           $participante = ParticipantesCurso::find($profesor_id);
           //return $participante;
@@ -651,7 +662,6 @@ $promedio_p4=[
           ];
           $pg=collect($promedio)->average()*2*10;
           
-          //$correo->enviarCorreo($profesor_id,$curso_id);
           
 		  //return redirect()->back()
           //->with('msj', 'Evaluación enviada');
@@ -679,7 +689,7 @@ $promedio_p4=[
 			}
 			
 	  
-		
+		$correo->enviarCorreo($profesor_id,$curso_id, $catalogoCurso_id);
 	 
 		$evaluacion_x_curso = DB::table('_evaluacion_x_curso')
 			->select('_evaluacion_x_curso.created_at','_evaluacion_x_curso.curso_id')
@@ -703,7 +713,7 @@ $promedio_p4=[
 			->with('final',$evaluacion_final_curso)
 			->with('msj', 'Evaluación enviada');
 		  
-          //return redirect()->back()
+          //return redirect()->back()*/
           
      }
 
