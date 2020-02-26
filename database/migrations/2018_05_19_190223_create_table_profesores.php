@@ -26,10 +26,8 @@ class CreateTableProfesores extends Migration
             $table->string('telefono')->nullable();
             $table->string('grado')->nullable();
             $table->string('email')->nullable();
-            $table->string('area')->nullable();
             $table->string('comentarios')->nullable();
             $table->string('genero')->nullable();
-            $table->string('tutor')->nullable();
             $table->string('baja')->nullable();
             $table->string('causa_baja')->nullable();
             $table->string('semblanza_corta')->nullable();

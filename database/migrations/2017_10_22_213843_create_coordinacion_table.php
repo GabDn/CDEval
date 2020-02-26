@@ -18,7 +18,7 @@ class CreateCoordinacionTable extends Migration
             $table->string('abreviatura');
             $table->string('nombre_coordinacion');
             $table->string('coordinador');
-            $table->string('comentarios');
+            $table->string('comentarios')->nullable();
             $table->timestamps();
         });
     }
