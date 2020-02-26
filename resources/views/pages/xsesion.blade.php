@@ -4,7 +4,7 @@
 
 @section('contenido')
   <!--Body content   , 'curso_id' => $curso->id-->
-    <form action="{{ action('EvaluacionController@saveXCurso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id]) }}" method="POST">
+    <form action="{{ action('EvaluacionController@saveXCurso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id, 'catalogoCurso_id'=> $catalogoCurso->id]) }}" method="POST">
     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
   <div class="content">
     <div class="top-bar">       
@@ -266,6 +266,7 @@
                     </table>
                     </table>
                     <div class="form-group">
+						{{ csrf_field() }}
                         <button type="submit" class="btn btn-primary active">Enviar evaluación</button>
                     </div>
                 </div>

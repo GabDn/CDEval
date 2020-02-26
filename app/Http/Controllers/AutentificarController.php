@@ -25,33 +25,38 @@ class AutentificarController extends Controller{
         if ('admin' == $request->rfc && '1q2w3e4r' == $request->numTrabajador) {
             return view("pages.superadmin"); //Route -> coordinador
         }
+		
+		$correcto_usuario = False;
         foreach($profesores as $profesor){
-            if ($profesor->rfc == $request->rfc) {
-                //El profesor está en la BD
-                if ($profesor->numero_trabajador == $request->numTrabajador) {
-                    //El profesor está en la BD y las credenciales son correctas
-                    $participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-                    //return $participantesCurso;
-                    $cursos=array();
-                    foreach($participantesCurso as $participanteCurso){
-                        $curso=Curso::findorFail($participanteCurso->curso_id);
-                        array_push($cursos,$curso); 
-                    }
-                    //$cursos=Curso::all();
-                    foreach($cursos as $curso){
-                       $catalogoCursos = CatalogoCurso::find($curso->id);
-                       $tupla = array();
-                        array_push($tupla,$curso);
-                        array_push($tupla,$catalogoCursos);
-                        array_push($infoCursos, $tupla);
-                    }
-                    //return $infoCursos;
-                    return view("pages.admin")
-                    ->with("profesor",$profesor)
-                    ->with('infoCursos',$infoCursos);
-                }else return back()->with('error', 'Número de trabajador inválido'); 
-            }else return back()->with('error', 'RFC inválido');
-        }
-        return back()->with('error','Datos inválidos');   
+			if ($profesor->rfc == $request->rfc) {
+				$correcto_usuario = True;
+				break;
+			}
+		}
+        if ($correcto_usuario) {
+            if ($profesor->numero_trabajador == $request->numTrabajador) {
+                //El profesor está en la BD y las credenciales son correctas
+				$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+                //return $participantesCurso;
+                $cursos=array();
+                foreach($participantesCurso as $participanteCurso){
+                    $curso=Curso::findorFail($participanteCurso->curso_id);
+                    array_push($cursos,$curso); 
+                }
+                //$cursos=Curso::all();
+                foreach($cursos as $curso){
+                    $catalogoCursos = CatalogoCurso::find($curso->id);
+                    $tupla = array();
+                    array_push($tupla,$curso);
+                    array_push($tupla,$catalogoCursos);
+                    array_push($infoCursos, $tupla);
+                }
+                //return $infoCursos;
+                return view("pages.admin")
+                ->with("profesor",$profesor)
+                ->with('infoCursos',$infoCursos);
+            }else return back()->with('error', 'Número de trabajador inválido'); 
+        }else return back()->with('error', 'RFC inválido');
+        return back()->with('error','Datos inválidos');
     }
 }

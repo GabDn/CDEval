@@ -14,6 +14,11 @@
 
 </head>
 <body>
+<!--@if (session()->has('success'))
+    <div class="alert-success" id="popup_notification">
+        <strong>{!! trans('main.message') !!}</strong>{{ session('success') }}
+    </div>
+@endif-->
 <div class="wrap">
     <nav class="nav-bar navbar-inverse" role="navigation">
         <div id ="top-menu" class="container-fluid active">
@@ -45,6 +50,9 @@
             <li class="nav-header">
                 <div class="link"><i class="fa fa-pencil"></i>Cursos Inscritos<i class="fa fa-chevron-down"></i></div>
                 <ul class="submenu">
+				<p>
+					<!--<?php echo json_encode($infoCursos) ?>-->
+				</p>
                 @foreach($infoCursos as $infoCurso)
                     <li><a href="{{ route('evaluacion.index',[ $profesor->id,$infoCurso[0]->id,$infoCurso[0]->id] ) }}">{{ $infoCurso[1]->nombre_curso }} {{$infoCurso[0]->semestre_anio}}</a></li>
                 @endforeach

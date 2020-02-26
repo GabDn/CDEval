@@ -53,5 +53,19 @@ class Profesor extends Authenticatable
     {
         return $this->categoria_nivel_id;
     }
+	
+	public function getNombre()
+	{
+		$cadena="";
+		$cadena.=$this->nombres." ".$this->apellido_paterno." ".$this->apellido_materno;
+		return $cadena;
+	}
+	
+	public function getCorreo()
+	{
+		$cadena="";
+		$cadena.=$this->email;
+		return $cadena;
+	}
 
 }

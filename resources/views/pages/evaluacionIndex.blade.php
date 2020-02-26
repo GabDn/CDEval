@@ -1,20 +1,52 @@
 @extends('layouts.principal')
 
 @section('contenido')
+
 <script>
-  var f = new Date();
-  //console.log(document.write(f))
-  if ($curso->fecha_fin < f.getDate()){
-    document.getElementById("dia").disabled = false; // deshabilitar
-    document.getElementById("final").disabled = true; // habilitar
-  } elseif($curso->fecha_fin = f.getDate()){
-    document.getElementById("dia").disabled = false; // habilitar
-    document.getElementById("final").disabled = false; // habilitar
-  } 
-  else {
-    document.getElementById("dia").disabled = true; // deshabilitar
-    document.getElementById("final").disabled = true; // habilitar
-  }
+
+	var f = new Date();
+	//Pasamos el objeto Query a objeto tipo json
+	var date = <?php echo json_encode($curso); ?>;
+	//Extraemos la fecha del objeto json
+	var curso_date = date.fecha_fin;
+	//Separamos la fecha por '-' (dato tipo string)
+	var dates =curso_date.split('-');
+	
+	var encuestas = <?php echo json_encode($evaluaciones); ?>;
+	var encuesta_final = <?php echo json_encode($final); ?>
+	
+	console.log(encuestas.length);
+	console.log(encuestas);
+	console.log(encuesta_final.length);
+  
+	if(encuestas.length >= 1){
+		document.addEventListener("DOMContentLoaded", function(event) {
+			document.getElementById("dia").disabled = true; // habilitar
+		});
+	}else{
+		document.addEventListener("DOMContentLoaded", function(event) {
+			document.getElementById("dia").disabled = false; // habilitar
+		});
+	}
+  
+	//f.getFullYear() retorna año actual, f.getMoth() retorna mes actual, f.getDate() retorna día actual
+	if(parseInt(dates[0])<f.getFullYear() && encuesta_final.length <= 0){
+		//Si está cargada la página actúa
+		document.addEventListener("DOMContentLoaded", function(event) {
+			document.getElementById("final").disabled = false; // habilitar
+		});
+	}else if (parseInt(dates[0]) == f.getFullYear() && parseInt(dates[1]) <= f.getMonth()+12 && parseInt(dates[2]) <= f.getDate()+30  && encuesta_final.length <= 0) {
+		//Si está cargada la página actúa
+		document.addEventListener("DOMContentLoaded", function(event) {
+			document.getElementById("final").disabled = false; // habilitar
+		});
+	} else {
+		//Si está cargada la página actúa
+		document.addEventListener("DOMContentLoaded", function(event) {
+			document.getElementById("final").disabled = true; // habilitar
+		});
+	}
+		
 </script>
 
   <div class="content">
@@ -37,11 +69,26 @@
                     <h4> Fecha:  {{ $curso->getToday() }}</h4>
                 </div>
                 <div class="panel-body">
-                  <button><a id="dia" href="{{ route('evaluacion.porSesion',[ $profesor->id,$curso->id,$catalogoCurso->id,$count] ) }}" type="button" class="btn btn-primary active"> Evaluación por día</a></button>
-                  <button><a id="final" href="{{ route('evaluacion.porCurso',[ $profesor->id,$curso->id,$catalogoCurso->id,$count] ) }}" type="button" class="btn btn-primary active">Evaluación por curso</a></button> 
+					<!--<table>
+						<tr>
+							<td>
+								<form method="GET">
+									{{ csrf_field() }}-->
+									<button id="dia"  type="button" class="btn btn-primary active"> <a href="{{ route('evaluacion.porSesion',[ $profesor->id,$curso->id,$catalogoCurso->id,$count] ) }}" style="color:white">Evaluación por día </a> </button>
+								<!--</form>-->
+							<!--</td>
+							<td align="right">
+								<!--<form method="GET">
+									{{ csrf_field() }}-->
+									<button id="final" type="button" class="btn btn-primary active"> <a href="{{ route('evaluacion.porCurso',[ $profesor->id,$curso->id,$catalogoCurso->id,$count] ) }}" style="color:white">Evaluación por curso</a></button> 
+								<!--</form>
+							</td>
+						</tr>
+					</table>-->
                 </div>
 
      </section>
-     
+	
     <br><br>
-     @endsection
+	
+@endsection
