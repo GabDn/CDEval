@@ -25,4 +25,8 @@ Route::post('/finals/{profesor_id}/{curso_id}','EvaluacionController@saveFinal_S
 Route::post('evaluar/xcurso/{profesor_id}/{curso_id}/{catalogoCurso_id}',"EvaluacionController@saveXCurso")->name('x.curso');
 Route::post('evaluar/xseminario/{profesor_id}/{curso_id}',"EvaluacionController@saveXSeminario")->name('x.seminario');
 
+Route::get('enviar/{profesor_id}',"EvaluacionController@enviarClaveCrusoHistorico")->name('evaluacion.enviarClaveCrusoHistorico');
+Route::get('enviarFecha/{profesor_id}',"EvaluacionController@redirigirAEnviar")->name('evaluacion.enviarClaveFecha');
+Route::post('enviarFechaArchivo/{profesor}',"EvaluacionController@enviarClaveFecha")->name('evaluacion.enviarClaveFechaArchivo');
+
 

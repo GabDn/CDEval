@@ -21,6 +21,7 @@ class EvaluacionXCurso extends Migration
             $table->integer('p4');
             $table->integer('p5');
             $table->integer('p6');
+			$table->integer('p7');
             $table->string('contenido',300); 
             $table->string('sug',300); 
             $table->timestamps();

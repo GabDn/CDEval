@@ -35,7 +35,7 @@
 		document.addEventListener("DOMContentLoaded", function(event) {
 			document.getElementById("final").disabled = false; // habilitar
 		});
-	}else if (parseInt(dates[0]) == f.getFullYear() && parseInt(dates[1]) <= f.getMonth()+12 && parseInt(dates[2]) <= f.getDate()+30  && encuesta_final.length <= 0) {
+	}else if (parseInt(dates[0]) == f.getFullYear() && parseInt(dates[1]) <= f.getMonth() && parseInt(dates[2]) <= f.getDate()  && encuesta_final.length <= 0) {
 		//Si está cargada la página actúa
 		document.addEventListener("DOMContentLoaded", function(event) {
 			document.getElementById("final").disabled = false; // habilitar
@@ -69,22 +69,8 @@
                     <h4> Fecha:  {{ $curso->getToday() }}</h4>
                 </div>
                 <div class="panel-body">
-					<!--<table>
-						<tr>
-							<td>
-								<form method="GET">
-									{{ csrf_field() }}-->
-									<button id="dia"  type="button" class="btn btn-primary active"> <a href="{{ route('evaluacion.porSesion',[ $profesor->id,$curso->id,$catalogoCurso->id,$count] ) }}" style="color:white">Evaluación por día </a> </button>
-								<!--</form>-->
-							<!--</td>
-							<td align="right">
-								<!--<form method="GET">
-									{{ csrf_field() }}-->
-									<button id="final" type="button" class="btn btn-primary active"> <a href="{{ route('evaluacion.porCurso',[ $profesor->id,$curso->id,$catalogoCurso->id,$count] ) }}" style="color:white">Evaluación por curso</a></button> 
-								<!--</form>
-							</td>
-						</tr>
-					</table>-->
+					<button id="dia"  type="button" class="btn btn-primary active"> <a href="{{ route('evaluacion.porSesion',[ $profesor->id,$curso->id,$catalogoCurso->id,$count] ) }}" style="color:white">Evaluación por día </a> </button>
+					<button id="final" type="button" class="btn btn-primary active"> <a href="{{ route('evaluacion.porCurso',[ $profesor->id,$curso->id,$catalogoCurso->id,$count] ) }}" style="color:white">Evaluación por curso</a></button> 		
                 </div>
 
      </section>
