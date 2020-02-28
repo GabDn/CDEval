@@ -22,11 +22,12 @@ class CreateParticipanteCurso extends Migration
             $table->boolean('cancelación')->nullable();
             $table->Integer('evaluacion_mobilirario')->nullable();
             $table->Integer('evaluacion_limpieza')->nullable();
+            $table->Integer('espera')->nullable();
             $table->boolean('estuvo_en_lista')->nullable();
             $table->boolean('contesto_hoja_evaluacion')->nullable();
             $table->boolean('acreditacion')->nullable();
             $table->string('causa_no_acreditacion')->nullable();
-            $table->Integer('calificacion')->nullable();
+            $table->double('calificacion')->nullable();
             $table->boolean('inscrito')->nullable();
             $table->string('comentario')->nullable();
             

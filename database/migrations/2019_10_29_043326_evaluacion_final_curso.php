@@ -94,7 +94,10 @@ class EvaluacionFinalCurso extends Migration
             $table->foreign('participante_curso_id')
                   ->references('id')->on('profesors');
 			$table->unique(['participante_curso_id','curso_id']);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0bb1ff76bd0813736caa11c41e4e4a1aa12c4305
           });
     }
   
