@@ -28,5 +28,6 @@ Route::post('evaluar/xseminario/{profesor_id}/{curso_id}',"EvaluacionController@
 Route::get('enviar/{profesor_id}',"EvaluacionController@enviarClaveCrusoHistorico")->name('evaluacion.enviarClaveCrusoHistorico');
 Route::get('enviarFecha/{profesor_id}',"EvaluacionController@redirigirAEnviar")->name('evaluacion.enviarClaveFecha');
 Route::post('enviarFechaArchivo/{profesor}',"EvaluacionController@enviarClaveFecha")->name('evaluacion.enviarClaveFechaArchivo');
+Route::get('admin/{profesor_id}',"EvaluacionController@admin")->name('evaluacion.admin');
 
 

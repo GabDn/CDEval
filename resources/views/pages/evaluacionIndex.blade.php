@@ -48,6 +48,9 @@
 	}
 		
 </script>
+  @if (session()->has('msj'))
+	<p align="center" style="color:green;">{{ session('msj') }}<strong></strong></p>
+  @endif
 
   <div class="content">
     <div class="top-bar">       

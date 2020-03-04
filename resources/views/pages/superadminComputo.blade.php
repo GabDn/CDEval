@@ -1,13 +1,10 @@
 <!-- Guardado en resources/views/pages/admin.blade.php -->
 
-@extends('layouts.principal')
+@extends('layouts.app')
 
 @section('contenido')
   <!--Body content-->
 
-  @if (session()->has('msj'))
-    <p align="center" style="color:green;">{{ session('msj') }}<strong></strong></p>
-  @endif
   <div class="content">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
@@ -20,7 +17,7 @@
     <br>
       <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>Bienvenido Prof(a). {{ $profesor->nombres }} {{ $profesor->apellido_paterno }}</h3>
+                    <h3>Bienvenido Coordinador del área de Cómputo                    </h3>
                 </div>
                 <div class="panel-body">
 
@@ -30,12 +27,10 @@
                       </h3>
                   
                   </div>
-				<br>
-				<br>
-					<button id="dia"  type="button" class="btn btn-primary active"><a href="{{ route('evaluacion.enviarClaveCrusoHistorico',[ $profesor->id] ) }}" style="color:white">Enviar historial cursos</a></button>
-					<button id="dia"  type="button" class="btn btn-primary active"><a href="{{ route('evaluacion.enviarClaveFecha',[ $profesor->id] ) }}" style="color:white">Enviar cursos por fecha</a></button>
+
+                
                 </div>
 
      </section>
-     <br>
+     
 @endsection

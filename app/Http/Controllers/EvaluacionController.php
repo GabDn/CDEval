@@ -21,7 +21,7 @@ use View;
 class EvaluacionController extends Controller{
 
 
-    public function index($profesor_id, $curso_id, $catalogoCurso_id){
+	public function index($profesor_id, $curso_id, $catalogoCurso_id){
  
 		$profesor = Profesor::find($profesor_id);
 		$curso = Curso::find($curso_id);
@@ -68,7 +68,33 @@ class EvaluacionController extends Controller{
 	  
 	}
 		
-     
+	/**
+	 * @brief Funcion que retorna la ruta a admin.blade.php
+	 */
+	public function admin($profesor_id){
+		$infoCursos=array(); 
+        $profesor = Profesor::find($profesor_id);
+        if ('admin' == $profesor->rfc && '1q2w3e4r' == $profesor->numTrabajador) {
+            return view("pages.superadmin");
+        }
+		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+        $cursos=array();
+        foreach($participantesCurso as $participanteCurso){
+            $curso=Curso::findorFail($participanteCurso->curso_id);
+            array_push($cursos,$curso); 
+        }
+        foreach($cursos as $curso){
+            $catalogoCursos = CatalogoCurso::find($curso->id);
+            $tupla = array();
+            array_push($tupla,$curso);
+            array_push($tupla,$catalogoCursos);
+            array_push($infoCursos, $tupla);
+        }
+        return view("pages.admin")
+			->with("profesor",$profesor)
+			->with('infoCursos',$infoCursos);
+	}
+
 	public function enviarCorreo($profesor_id, $curso_id, $catalogoCurso_id, $eval_curso, $lugar){
 		$profesor = Profesor::find($profesor_id);
 		$curso = CatalogoCurso::find($curso_id);
@@ -796,7 +822,7 @@ $promedio_p4=[
 		return View::make('pages.admin')
 			->with('profesor',$profesor)
 			->with('infoCursos',$infoCursos)
-			->with('success','Correo enviado');
+			->with('msj','Claves enviadas');
 		
 	}
 	
@@ -897,7 +923,7 @@ $promedio_p4=[
 		return View::make('pages.admin')
 			->with('profesor',$profesor)
 			->with('infoCursos',$infoCursos)
-			->with('success','Correo enviado');
+			->with('msj','Claves enviadas');
 			
 	}
        
