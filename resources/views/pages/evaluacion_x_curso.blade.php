@@ -112,6 +112,8 @@ body {
             <tr>
                 <th>3. MANEJO DEL TEMA</th>
                 <td class="n">{{$evaluacion[0]->p2}}</td>
+            </tr>
+            <tr>
                 <th>4. CLARIDAD EN LA EXPOSICION</th>
                 <td class="n">{{$evaluacion[0]->p3}}</td>
             </tr>
@@ -121,6 +123,8 @@ body {
             <tr>
                 <th>5. MANEJO DEL MATERIAL Y RECURSOS DIDÁCTICOS</th>
                 <td class="n">{{$evaluacion[0]->p4}}</td>
+            </tr>
+            <tr>
                 <th>6. PLANTEAMIENTO DE PROBLEMAS</th>
                 <td class="n">{{$evaluacion[0]->p5}}</td>
             </tr>
@@ -130,6 +134,8 @@ body {
             <tr>
                 <th>7. USO DE EJEMPLOS</th>
                 <td class="n">{{$evaluacion[0]->p6}}</td>
+            </tr>
+            <tr>
                 <th width="15%">8. FOMENTO DE PARTICIPACIÓN GRUPAL</th>
                 <td class="n"><pre>  </pre>{{$evaluacion[0]->p7}}</td>
             </tr>

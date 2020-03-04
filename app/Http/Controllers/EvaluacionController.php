@@ -421,7 +421,7 @@ class EvaluacionController extends Controller{
 		
 
 		//Enviamos el correo con los datos a usar
-		$correo->enviarCorreo($profesor_id,$curso_id, $catalogoCurso_id, $eval_fcurso, 'pages.validacion');
+		$correo->enviarCorreo($profesor_id,$curso_id, $catalogoCurso_id, $eval_fcurso, 'pages.reporte');
 
 		//Revisamos si hay encuestas realizadas por el alumno en el día actual
 		$evaluacion_x_curso = DB::table('_evaluacion_x_curso')
