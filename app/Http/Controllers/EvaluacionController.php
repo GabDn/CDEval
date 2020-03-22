@@ -25,8 +25,10 @@ class EvaluacionController extends Controller{
  
 		$profesor = Profesor::find($profesor_id);
 		$curso = Curso::find($curso_id);
-		$catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
-
+		$catalogoCurso = CatalogoCurso::find($curso->catalogo_id);
+		//return $profesor; --> acá todo bien, devuelve al participante
+		// return $curso; --> acá todo bien
+		//return $catalogoCurso; --> se corrije el error de esta variable
 		$count = ProfesoresCurso::select($curso_id)
 			->where('curso_id',$curso_id)
 			->count();
