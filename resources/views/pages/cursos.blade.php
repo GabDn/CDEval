@@ -52,7 +52,7 @@
                                     <td>{{ $curso->semestre_anio }}-{{ $curso->semestre_pi }}{{ $curso->semestre_si }}</td>
                                     <td>
                                     <a href="{{ route('ver.sesion') }}" class="btn btn-warning">Sesión</a>
-                                    <a href="{{ route('ver.global') }}" class="btn btn-success">Global</a>
+                                    <a href="{{ route('ver.global') }}" class="btn btn-success">Final</a>
                                     </td>
                                 </tr>
                             </tbody>

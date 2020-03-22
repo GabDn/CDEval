@@ -72,8 +72,8 @@
                     <h4> Fecha:  {{ $curso->getToday() }}</h4>
                 </div>
                 <div class="panel-body">
-					<button id="dia"  type="button" class="btn btn-primary active"> <a href="{{ route('evaluacion.porSesion',[ $profesor->id,$curso->id,$catalogoCurso->id,$count] ) }}" style="color:white">Evaluación por día </a> </button>
-					<button id="final" type="button" class="btn btn-primary active"> <a href="{{ route('evaluacion.porCurso',[ $profesor->id,$curso->id,$catalogoCurso->id,$count] ) }}" style="color:white">Evaluación por curso</a></button> 		
+					<button id="dia"  type="button" class="btn btn-primary active"> <a href="{{ route('evaluacion.porSesion',[ $profesor->id,$curso->id,$catalogoCurso->id,$count] ) }}" style="color:white">Evaluación por sesión </a> </button>
+					<button id="final" type="button" class="btn btn-primary active"> <a href="{{ route('evaluacion.porCurso',[ $profesor->id,$curso->id,$catalogoCurso->id,$count] ) }}" style="color:white">Evaluación final</a></button> 		
                 </div>
 
      </section>
