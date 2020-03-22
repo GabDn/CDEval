@@ -69,11 +69,11 @@ class Curso extends Model
     }
     public function getProfesores(){
         $profesoresCurso = ProfesoresCurso::where('curso_id',$this->id)->get();
-
+        
         $cadena="";
 
         if ( count($profesoresCurso) == 1 ){
-            $profesor=Profesor::find($profesoresCurso[0]->id);
+            $profesor=Profesor::find($profesoresCurso[0]->profesor_id);
             $cadena.=$profesor->nombres." ";
             $cadena.=$profesor->apellido_paterno." ";
             $cadena.=$profesor->apellido_materno;
