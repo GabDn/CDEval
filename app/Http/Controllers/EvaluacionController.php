@@ -656,14 +656,15 @@ $promedio_p4=[
      public function saveXCurso(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
           $eval_xcurso = new EvaluacionXCurso;
           $correo = new EvaluacionController(); 
-          $participante = ParticipantesCurso::find($profesor_id);
+          $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->get('id');
 		  $semestre=Curso::find($curso_id);
-		  
+		  $participanteID = $participante[0]['id'];
 		  //Obtenemos la fecha actual para usarla en consultas posteriores	
 		  $date = date("Y-m-j");
 		  
 		  //Guardamos en _evaluacion_x_curso todos los datos ingresados por el alumno en la encuesta
-          $eval_xcurso->participante_curso_id=$participante->id;
+
+          $eval_xcurso->participante_curso_id=$participanteID;
           $eval_xcurso->p1=$request->p1;
           $eval_xcurso->p2=$request->p2;
           $eval_xcurso->p3=$request->p3;
@@ -674,7 +675,7 @@ $promedio_p4=[
           $eval_xcurso->contenido=$request->contenido;
           $eval_xcurso->sug=$request->sug;
 		  $eval_xcurso->created_at=$date;
-		  $eval_xcurso->curso_id=$catalogoCurso_id;
+		  $eval_xcurso->curso_id=$curso_id;
           $eval_xcurso->save();
 		  
           $promedio=[
