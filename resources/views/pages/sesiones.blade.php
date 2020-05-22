@@ -37,43 +37,43 @@
                             <tbody>
                                 <tr>
                                     <td>La forma en la que se alcanzaron los objetivos planteados fue</td>
-                                    <td>5</td>
+                                    <td>Excelente</td>
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
                                     <td>La manera en que el instructor dominó y manejó el tema fue</td>
-                                    <td>4</td>
+                                    <td>Muy buena</td>
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
                                     <td>La claridad en la exposición fue</td>
-                                    <td>3</td>
+                                    <td>Buena</td>
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
                                     <td>La habilidad para el manejo de material y recursos didácticos fue</td>
-                                    <td>2</td>
+                                    <td>Regular</td>
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
                                     <td>La forma en que se plantearon los problemas o actividades fue</td>
-                                    <td>1</td>
+                                    <td>Malo</td>
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
                                     <td>Los ejemplos utilizados favorecieron la comprensión del tema de una manera</td>
-                                    <td>5</td>
+                                    <td>Excelente</td>
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
                                     <td>La forma en que se fomentó la participación grupal fue</td>
-                                    <td>4</td>
+                                    <td>Muy buena</td>
                                 </tr>
                             </tbody>
                             <tbody>

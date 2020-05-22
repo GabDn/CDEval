@@ -10,6 +10,8 @@ use App\CatalogoCurso;
 use App\Profesor;
 use App\ProfesoresCurso;
 use App\EvaluacionXCurso;
+use Illuminate\Support\Facades\DB;
+use PDF;
 
 class CoordinadorController extends Controller
 {
@@ -18,8 +20,7 @@ class CoordinadorController extends Controller
         return view("pages.cursos")->with("cursos",$cursos);
     }
 
-    public function searchCursos(Request $request){
-        
+    public function searchCursos(Request $request){      
         if ($request->type == "nombre") {
             $catalogos_res = CatalogoCurso::select('id')->where('nombre_curso','ILIKE','%'.$request->pattern.'%')->get();
             $res_busqueda = Curso::whereIn('catalogo_id', $catalogos_res)
@@ -37,11 +38,23 @@ class CoordinadorController extends Controller
             $curso_prof = ProfesoresCurso::select('curso_id')->whereIn('profesor_id', $profesores)->get();
             $res_busqueda = Curso::whereIn('id',$curso_prof)->get();
             return view('pages.cursos')->with("cursos",$res_busqueda);
+        }
+    }
 
-        }/*elseif($request->type == "semestre"){
+    public function cursosCoordinaciones($encargado_id){
 
-        }*/ 
-        //holiwis
+       //$cursos = DB::table('cursos')
+       //                     ->join('catalogo_cursos', function($join) use ($encargado_id) {
+       //                       $join->on('cursos.catalogo_id','=','catalogo_cursos.id')
+       //                         ->where('catalogo_cursos.coordinacion_id','=',$encargado_id);
+       //               })->get();
+             $cursos = Curso::Join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
+                              ->where('catalogo_cursos.coordinacion_id',$encargado_id)->get();
+        //return $cursos;
+        return view("pages.cursos")->with("cursos",$cursos);
+    }
+
+    public function searchCursosCoordinaciones(Request $request){
 
     }
     
@@ -58,6 +71,13 @@ class CoordinadorController extends Controller
     public function instructores(){
         return view("pages.instructores");
     }
+
+    public function area_pdf(){
+        $pdf = PDF::loadView('pages.area');
+        return $pdf->download('Evaluacion_area.pdf');
+    }
+
+
 
 
 }

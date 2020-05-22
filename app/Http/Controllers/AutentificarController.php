@@ -7,6 +7,7 @@ use App\Profesor;
 use App\Curso;
 use App\CatalogoCurso;
 use App\ParticipantesCurso;
+use App\Coordinacion;
 use App\Http\Controllers\Controller;
 
 class AutentificarController extends Controller{
@@ -16,16 +17,36 @@ class AutentificarController extends Controller{
 # RAGJ720101T72
 
 #JUFM720101M74 
-#2143235
+#12143235
 
      public function index(Request $request){
         //return view("pages.superadmin");
         $infoCursos=array(); 
         $profesores = Profesor::all();
+        //Usuario general
         if ('admin' == $request->rfc && '1q2w3e4r' == $request->numTrabajador) {
             return view("pages.superadmin"); //Route -> coordinador
         }
-		
+        //Coordinadores de área
+        $coordinadores = Coordinacion::all();
+        $correcto = False;
+        foreach($coordinadores as $coordinador){
+            if ($coordinador->usuario == $request->rfc){
+                $correcto = True;
+                break;
+            }
+        }
+        if($correcto){
+            if($coordinador->password == $request->numTrabajador){
+                //El coordinador está en la BD y las credenciales son correctas
+                $encargado = Coordinacion::findorFail($coordinador->id);
+                
+                return view("pages.superadminCoordinadores")
+                        ->with("encargado",$encargado);
+            }else return back()->with('error', 'Contraseña incorrecta');
+        }
+        
+        //Comprobando usuarios normales 
 		$correcto_usuario = False;
         foreach($profesores as $profesor){
 			if ($profesor->rfc == $request->rfc) {
@@ -59,7 +80,7 @@ class AutentificarController extends Controller{
 					->with("profesor",$profesor)
 					->with('infoCursos',$infoCursos);
             }else return back()->with('error', 'Número de trabajador inválido'); 
-        }else return back()->with('error', 'RFC inválido');
+        }else return back()->with('error', 'RFC o usuario inválido');
         return back()->with('error','Datos inválidos');
     }
 }

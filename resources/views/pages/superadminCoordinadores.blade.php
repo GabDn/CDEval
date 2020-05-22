@@ -1,6 +1,6 @@
 <!-- Guardado en resources/views/pages/admin.blade.php -->
 
-@extends('layouts.app')
+@extends('layouts.coordinadores')
 
 @section('contenido')
   <!--Body content-->
@@ -17,16 +17,18 @@
     <br>
       <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>Bienvenido Coordinador del área de Cómputo                    </h3>
+                    <h3>Bienvenido(a)  {{ $encargado->coordinador }}</h3>
+                    <h3>Coordinación de {{ $encargado->nombre_coordinacion }}</h3>
                 </div>
                 <div class="panel-body">
 
                   <div class="logos col-md-12 col-center">
                       <img class="img-escudo" src="{{ asset('img/cdd.png') }}">
-                      Centro de Docencia. Evaluaciones
-                      </h3>
-                  
+                      Centro de Docencia. Evaluaciones 
                   </div>
+                  <br>
+                  <hr>
+                  <button id="final" type="button" class="btn btn-primary active"> <a href="{{ route('boton.area') }}" style="color:white">Evaluación de área</a></button> 
 
                 
                 </div>
