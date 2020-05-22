@@ -79,13 +79,13 @@
                             <tbody>
                                 <tr>
                                     <td>De los contenidos abordados. ¿Cuáles considera que puede incorporar a su práctica docente?</td>
-                                    <td>CONTENIDO</td>
+                                    <td>El tema sobre la mejora continua</td>
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
                                     <td>Comentarios y Sugerencias</td>
-                                    <td>COMENTARIOS Y SUGERENCIAS</td>
+                                    <td>El Curso debería durar más, me encantó.</td>
                                 </tr>
                             </tbody>
                         
