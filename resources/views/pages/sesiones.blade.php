@@ -37,55 +37,55 @@
                             <tbody>
                                 <tr>
                                     <td>La forma en la que se alcanzaron los objetivos planteados fue</td>
-                                    <td>5</td>
+                                    <td>Muy Bien</td>
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
                                     <td>La manera en que el instructor dominó y manejó el tema fue</td>
-                                    <td>4</td>
+                                    <td>Bien</td>
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
                                     <td>La claridad en la exposición fue</td>
-                                    <td>3</td>
+                                    <td>Regular</td>
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
                                     <td>La habilidad para el manejo de material y recursos didácticos fue</td>
-                                    <td>2</td>
+                                    <td>Mal</td>
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
                                     <td>La forma en que se plantearon los problemas o actividades fue</td>
-                                    <td>1</td>
+                                    <td>Muy Mal</td>
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
                                     <td>Los ejemplos utilizados favorecieron la comprensión del tema de una manera</td>
-                                    <td>5</td>
+                                    <td>Muy Bien</td>
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
                                     <td>La forma en que se fomentó la participación grupal fue</td>
-                                    <td>4</td>
+                                    <td>Bien</td>
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
                                     <td>De los contenidos abordados. ¿Cuáles considera que puede incorporar a su práctica docente?</td>
-                                    <td>CONTENIDO</td>
+                                    <td>El tema sobre la mejora continua</td>
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
                                     <td>Comentarios y Sugerencias</td>
-                                    <td>COMENTARIOS Y SUGERENCIAS</td>
+                                    <td>El Curso debería durar más, me encantó.</td>
                                 </tr>
                             </tbody>
                         
