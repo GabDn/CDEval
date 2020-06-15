@@ -2,162 +2,307 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Area</title>
+	<title>Evaluación de área</title>
 </head>
 <style>
-    div.container {
-        text-align:center;
+    html{
+	    width:100%;
     }
-html{
-	width:100%;
-}
-body {
-  font-family: Arial, Helvetica, Sans-serif;
-  align-items: center;
-  font-size: 18px;
-}
+    .margen{
+        border: 1px solid #ddd;  
+        font-family:Arial, Helvetica, Sans-serif,cursive;   
+        font-size: 12px;    
+    }
+    .margen2{
+        border: 1px solid black;        
+    }
+    #tabla_encabezado{
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+        height: 50px;
+        width:100%;
+    }
+    #tabla_encabezado_debajo{
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+        height: 5%;
+        width:100%;
+        text-align:center;
+        font-family:Arial, Helvetica, Sans-serif,cursive; 
+        font-size: 9px;
+    }
+    #tabla_lista{
+        border-collapse: collapse;
+        border: 1px solid black;
+        height: 5%;
+        width:100%;
+        text-align:left;
+        font-family:Arial, Helvetica, Sans-serif,cursive; 
+        font-size: 11px;
+    }
+    #encabezado{
+        font-family:Arial, Helvetica, Sans-serif,cursive; 
+        text-align: center;
+        font-size: 12px;
+        line-height:90%;
+    }
+    #imagen_izquierda{
+        margin-left: 15%;
+    }
+    #imagen_derecha{
+        margin-left: 14%;
+    }
+    .titulos{
+        font-family:Arial, Helvetica, Sans-serif,cursive; 
+        font-size: 13px;
+        font-weight: bold;
+        background-color: #B4B0B0;
 
-hr{
-	border: 1px solid #000;
-	margin: 1.5px;
-}
-#mayusculas{
-	text-transform: uppercase;
-}
-#h4 {
-    margin:15px 60px 15px;
-}
-
-.normal{
-	font-size: 12px;
-	font-weight: lighter;
-
-}
-.encabezado{
-	/*padding: 10px;*/
-	font-size: 20px;
-}
-.small{
-	font-size: 12px;
-}
-
+    }
+    .inicial{
+        font-family:Arial, Helvetica, Sans-serif,cursive; 
+        font-size: 13px;
+        font-weight: bold;  
+    }
+    .valores{
+        font-family:Arial, Helvetica, Sans-serif,cursive; 
+        font-size: 11px;
+    }
+    .tipo{
+        font-family:Arial, Helvetica, Sans-serif,cursive; 
+        font-size: 14px;
+        font-weight: bold;
+    }
+   .mayus{
+        text-transform: uppercase;
+    }
 
 </style>
 <body>
-<div style="height: 90%">
-	<div height="10%">
-		<table style="width: 100%" align="top" id="encabezado" height="5%">
-			<tr>
-				<td  width="10%" >
-					<img src="img/cdd.png"  align="center" height="100">
-					
+	<div>
+		<table  id="tabla_encabezado">
+				<td width= 12% class="margen">
+                    <img id="imagen_izquierda"  src="img/fi_2.png" height="80">
 				</td>
-				<td align="center" class="encabezado">
-					<b>UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO</b><br/>
-			        <b>FACULTAD DE INGENIERÍA</b><br/>
-			        CENTRO DE DOCENCIA<br>
-			        <i>"Ing. Gilberto Borja Navarrete"</i><br/>
-			        <br/>
-			     </td> 
-			    </tr>
-		</table>   
-    	<hr >
-    	<hr >
-		<p align="left"><i><b>Semestre 2016-1</i></p>
-		<p class="small" align="left"><b>Cómputo <b/></p>
-		<hr>  
-		<table width="100%" style="margin: 10px">
-			<tr >
-				<td class="small" width="25%">Nombre del curso
+				<td width= 58% id="encabezado" class="margen" style="line-height=20px">
+			        FACULTAD DE INGENIERÍA, UNAM<br/>
+			        Secretaria de Apoyo a la Docencia<br>
+			        Centro de Docencia "Ing. Gilberto Borja Navarrete"<br/>
+			        Sistema de Gestión de la Calidad<br/>
+			        Norma ISO 9001-2015<br/>
+			        Formato
 				</td>
-				<td class="small" width="8%">Fecha</td>
-				<td class="small" width="8%">Registrados</td>
-				<td class="small" width="8%">Cancelados</td>
-				<td class="small" width="8%">Confirmados</td>
-				<td class="small" width="8%">Inscritos</td>
-				<td class="small" width="8%">Asistieron</td>
-				<td class="small" width="8%">Acreditados</td>
-				<td class="small" width="15%">Hoja de Evaluación</td>
-			</tr>
+				<td width= 12% class="margen">
+                    <img id="imagen_derecha" src="img/cdd.png" height="80">
+				</td>
 		</table>
-		<hr>
-		<table width="100%" style="margin: 10px">
-			<tr>
-				<td class="normal" width="18%" >Access básico</td>
-				<td class="normal" width=10%" align="center">18-ene-16</td>
-				<td class="normal" width="10%" align="center">22-ene-16</td>
-				<td class="normal" width="8%" align="center">17</td>
-				<td class="normal" width="8%" align="center">1</td>
-				<td class="normal" width="8%" align="center">11</td>
-				<td class="normal" width="8%" align="center">16</td>
-				<td class="normal" width="8%" align="center">15</td>
-				<td class="normal" width="8%" align="center">9</td>
-				<td class="normal" width="15%" align="center">10</td>
-			</tr>
-			<tr>
-				<td class="normal" width="18%">Excel avanzado para docentes</td>
-				<td class="normal" width=10%" align="center">04-ene-16</td>
-				<td class="normal" width="10%" align="center">15-ene-16</td>
-				<td class="normal" width="8%" align="center">24</td>
-				<td class="normal" width="8%" align="center">3</td>
-				<td class="normal" width="8%" align="center">0</td>
-				<td class="normal" width="8%" align="center">16</td>
-				<td class="normal" width="8%" align="center">12</td>
-				<td class="normal" width="8%" align="center">12</td>
-				<td class="normal" width="15%" align="center">12</td>
-			</tr>
-			<tr>
-				<td class="normal" width="18%">Matlab Básico-intermedio</td>
-				<td class="normal" width=10%" align="center">25-ene-16</td>
-				<td class="normal" width="10%" align="center">29-ene-16</td>
-				<td class="normal" width="8%" align="center">29</td>
-				<td class="normal" width="8%" align="center">3</td>
-				<td class="normal" width="8%" align="center">0</td>
-				<td class="normal" width="8%" align="center">16</td>
-				<td class="normal" width="8%" align="center">9</td>
-				<td class="normal" width="8%" align="center">9</td>
-				<td class="normal" width="15%" align="center">8</td>
-			</tr>
-			<tr>
-				<td class="normal" width="18%">Tecnologías de la Información y la Comunicación (TIC) y su aplicación</td>
-				<td class="normal" width=10%" align="center">18-ene-16</td>
-				<td class="normal" width="10%" align="center">22-ene-16</td>
-				<td class="normal" width="8%" align="center">15</td>
-				<td class="normal" width="8%" align="center">0</td>
-				<td class="normal" width="8%" align="center">0</td>
-				<td class="normal" width="8%" align="center">15</td>
-				<td class="normal" width="8%" align="center">14</td>
-				<td class="normal" width="8%" align="center">14</td>
-				<td class="normal" width="15%" align="center">13</td>
-			</tr>
-			<tr>
-				<td class="normal" width="18%">Uso de pizarrones electrónicos</td>
-				<td class="normal" width=10%" align="center">05-ene-16</td>
-				<td class="normal" width="10%" align="center">08-ene-16</td>
-				<td class="normal" width="8%" align="center">27</td>
-				<td class="normal" width="8%" align="center">1</td>
-				<td class="normal" width="8%" align="center">0</td>
-				<td class="normal" width="8%" align="center">26</td>
-				<td class="normal" width="8%" align="center">22</td>
-				<td class="normal" width="8%" align="center">22</td>
-				<td class="normal" width="15%" align="center">20</td>
-			</tr>
+        <table id="tabla_encabezado_debajo">
+				<td width="20%" class="margen">
+					2730-SGC-IC-FO-03
+				</td>
+				<td  class="margen">
+					Fecha de emisión:
+				</td>
+				<td class="margen">
+                    2017-03-30
+				</td>
+				<td class="margen">
+					Versión
+				</td>
+				<td class="margen">
+					1
+				</td>
+				<td width="20%" class="margen">
+					Página 1 de 1
+				</td>
 		</table>
-		<hr>
-		<table width="100%" style="margin: 12px 0px 0px 5px">
-			<tr>
-				<td class="small" width="26%" align="left">Periodo de análisis 2016-1i Cursos Totales:5</td>
-				<td class="small" width=10%" align="center">Suma</td>
-				<td class="normal" width=8%" align="center">112</td>
-				<td class="normal" width=8%" align="center">8</td>
-				<td class="normal" width=9%" align="center">11</td>
-				<td class="normal" width=8%" align="center">39</td>
-				<td class="normal" width=8%" align="center">72</td>
-				<td class="normal" width=8%" align="center">66</td>
-				<td class="normal" width=15%" align="center">63</td>
-			</tr>
-		</table>
-	</div>
+        <h5 class="inicial">Reporte de evaluación global de Área</h5>
+    
+        <table style="width: 100%">
+            <tr>
+                <th class="titulos" align=center >ÁREA DE FORMACIÓN Y DESARROLLO DOCENTE</th>
+            </tr>
+            <tr>
+                <td class="margen" align=center>
+                   Didáctico Pedagógica
+                </td>
+            </tr>
+
+		</table> 
+        <br>
+        <table style="width: 100%">
+            <tr>
+                <th class="titulos" align= left >  1. NOMBRE DE LOS CURSOS EVALUADOS</th>
+            </tr>
+            <tr>
+                <td class="margen">
+                    <ol type=”A”>
+                        <li>Inducción y formación docente para profesores de ingeniería</li>
+                        <li>Comunicación asertiva en el aula</li>
+                        <li></li>
+                    </ol>
+                </td>
+            </tr>
+
+		</table> 
+        <br>
+
+        <table style="width: 100%">
+            <tr>
+                <th colspan="4" class="titulos" align= left >2. REGISTRO DE PARTICIPANTES</th>
+            </tr>
+            <tr>
+                <td class="margen">a) Semiperiodo de evaluación: </td>
+                <td class="margen">  </td>
+                <td class="margen">d) Número de participantes que acreditaron </td>
+                <td class="margen"></td>
+            </tr>
+            <tr>
+                <td class="margen">b) Número de particpantes inscritos: </td>
+                <td class="margen">  </td>
+                <td rowspan="2" class="margen">e) Número de participantes que contestaron el formato de evaluación</td>
+                <td rowspan="2"  class="margen"></td>
+            </tr>
+            <tr>
+                <td class="margen">c) Número de participantes que asistieron: </td>
+                <td class="margen">  </td>
+            </tr>
+		</table> 
+        <br>
+        <table style="width: 100%">
+            <tr>
+                <th colspan="2" class="titulos" align= left >3. FACTOR DE OCUPACIÓN</th>
+            </tr>
+            <tr>
+                <td class="margen"> (No. de participantes que asistieron al Área x 100 / Capacidad de los cursos en el Área) = </td>
+                <td></td>
+            </tr>
+
+		</table> 
+        <br>
+        <table style="width: 100%">
+            <tr>
+                <th colspan="2" class="titulos" align= left >4. FACTOR DE RECOMENDACIÓN DE LOS CURSOS</th>
+            </tr>
+            <tr>
+                <td class="margen">(No. de participantes que recomiendan los cursos en el Área x 100 / Total de participantes que respondieron la pregunta de satisfacción en el Área) =</td>
+                <td></td>
+            </tr>
+		</table> 
+        <br>
+        <table style="width: 100%">
+            <tr>
+                <th colspan="2" class="titulos" align= left >5. FACTOR DE ACREDITACIÓN</th>
+            </tr>
+            <tr>
+                <td class="margen">(No. de participantes que recibieron constancia en el Área x 100 / No. de participantes que asistieron al Área) =</td>
+                <td></td>
+            </tr>
+		</table> 
+<br>
+        <table style="width: 100%">
+            <tr>
+                <th colspan="2" class="titulos" align= left >6. CALIDAD DE LOS CURSOS</th>
+            </tr>
+            <tr>
+                <td class="margen">(No. de reactivos positivos en el Área x 100 / No. de reactivos en el Área) =</td>
+                <td></td>
+            </tr>
+
+		</table> 
+        <br>
+        <table style="width: 100%">
+            <tr>
+                <th class="titulos" align= left >7. INSTRUCTORES QUE SE VOLVERÍAN A CONTRATAR</th>
+            </tr>
+            <tr>
+                <td class="margen">
+                    <ol type=”A”>
+                        <li>Lista de profesores</li>
+                        <li></li>
+                    </ol>
+                </td>
+            </tr>
+
+		</table> 
+        <br>
+
+        <table style="width: 100%">
+            <tr>
+                <th colspan="8"  class="titulos" align= left >8. ÁREAS SOLICITADAS POR LOS PARTICIPANTES</th>
+            </tr>
+            <tr>
+                <td class="margen"> Didáctico Pedagógico: </td>
+                <td class="margen"></td>
+                <td class="margen">Desarrollo Humano: </td>
+                <td class="margen"></td>
+                <td class="margen">Cómputo</td>
+                <td class="margen"></td>
+                <td class="margen">Disciplinar:</td>
+                <td class="margen"></td>
+            </tr>
+
+		</table> 
+        <br>
+
+        <table style="width: 100%">
+            <tr>
+                <th colspan="4" class="titulos" align= left >9. TEMÁTICAS SOLICITADAS POR LOS PARTICIPANTES</th>
+            </tr>
+            <tr>
+                <td class="margen"> Didáctico Pedagógico: </td>
+               
+                <td class="margen">Desarrollo Humano: </td>
+                
+                <td class="margen">Cómputo</td>
+                
+                <td class="margen">Disciplinar:</td>
+               
+            </tr>
+            <tr>
+            <td class="margen"></td>
+            <td class="margen"></td>
+            <td class="margen"></td>
+            <td class="margen"></td>
+            </tr>
+
+		</table> 
+<br>
+        <table style="width: 100%">
+            <tr>
+                <th colspan="2" class="titulos" align= left >10. HORARIOS SOLICITADOS POR LOS PARTICIPANTES</th>
+            </tr>
+            <tr>
+                <td class="margen">Horarios Semestrales</td>
+                <td class="margen">Horarios Intersemestrales</td>
+            </tr>
+
+		</table> 
+<br>
+        <table style="width: 100%">
+            <tr>
+                <th colspan="4" class="titulos" align= left >11. CRITERIOS DE ACEPTACIÓN DE LOS CURSOS</th>
+            </tr>
+            <tr>
+                <td class="margen">Contenido de los cursos: </td>
+                <td class="margen"> </td>
+                <td rowspan="4" ></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="margen">Desempeño de los instructores: </td>
+                <td class="margen"> </td>
+            </tr>
+            <tr>
+                <td class="margen">Coordinación de los cursos: </td>
+                <td class="margen"> </td>
+            </tr>
+            <tr>
+                <td class="margen">Recomendación de los cursos: </td>
+                <td class="margen"> </td>
+            </tr>
+
+		</table> 
+<br>
+
 </div>
-</body>
-</html>

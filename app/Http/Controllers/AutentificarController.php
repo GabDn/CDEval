@@ -23,9 +23,13 @@ class AutentificarController extends Controller{
         //return view("pages.superadmin");
         $infoCursos=array(); 
         $profesores = Profesor::all();
+        $coordinaciones = Coordinacion::all();
+      
         //Usuario general
         if ('admin' == $request->rfc && '1q2w3e4r' == $request->numTrabajador) {
-            return view("pages.superadmin"); //Route -> coordinador
+           
+            return view("pages.superadmin")
+                ->with("coordinaciones",$coordinaciones); //Route -> coordinador
         }
         //Coordinadores de área
         $coordinadores = Coordinacion::all();

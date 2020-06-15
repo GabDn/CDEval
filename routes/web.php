@@ -15,6 +15,7 @@ Route::get('cursos/buscar',"CoordinadorController@searchCursos")->name("buscar.c
 Route::get('sesion',"CoordinadorController@sesiones")->name("ver.sesion");
 Route::get('global',"CoordinadorController@globales")->name("ver.global");
 Route::get('area',"CoordinadorController@area_pdf")->name("boton.area");
+
 //Para enviar correos
 Route::get('evaluarCurso/{profesor_id}/{curso_id}','EvaluacionController@enviarCorreo')->name('evaluacion.correo');
 //Guardar evaluaciones en la BD

@@ -10,6 +10,7 @@ use App\CatalogoCurso;
 use App\Profesor;
 use App\ProfesoresCurso;
 use App\EvaluacionXCurso;
+use App\Coordinacion;
 use Illuminate\Support\Facades\DB;
 use PDF;
 
@@ -42,17 +43,15 @@ class CoordinadorController extends Controller
     }
 
     public function cursosCoordinaciones($encargado_id){
-
-       //$cursos = DB::table('cursos')
-       //                     ->join('catalogo_cursos', function($join) use ($encargado_id) {
-       //                       $join->on('cursos.catalogo_id','=','catalogo_cursos.id')
-       //                         ->where('catalogo_cursos.coordinacion_id','=',$encargado_id);
-       //               })->get();
-             $cursos = Curso::Join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
-                              ->where('catalogo_cursos.coordinacion_id',$encargado_id)->get();
-        //return $cursos;
-        return view("pages.cursos")->with("cursos",$cursos);
+        $coordinaciones = Coordinacion::all();
+        $cursos = Curso::Join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
+                  ->where('catalogo_cursos.coordinacion_id',$encargado_id)->get();
+        return view("pages.cursos")
+            ->with("cursos",$cursos)
+            ->with("coordinaciones",$coordinaciones);
     }
+
+
 
     public function searchCursosCoordinaciones(Request $request){
 
@@ -60,12 +59,16 @@ class CoordinadorController extends Controller
     
     public function sesiones(){
         $evaluacion = EvaluacionXCurso::all();
+        $coordinaciones = Coordinacion::all();
         //return $evaluacion;
-        return view('pages.sesiones');
+        return view('pages.sesiones')
+        ->with("coordinaciones",$coordinaciones);
     }
 
     public function globales(){
-        return view('pages.globales');
+        $coordinaciones = Coordinacion::all();
+        return view('pages.globales')
+        ->with("coordinaciones",$coordinaciones);
     }
     
     public function instructores(){
