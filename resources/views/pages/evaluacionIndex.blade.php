@@ -18,6 +18,12 @@
 	console.log(encuestas.length);
 	console.log(encuestas);
 	console.log(encuesta_final.length);
+	console.log(dates[0]);
+	console.log(dates[1]);
+	console.log(dates[2]);
+	console.log(f.getFullYear());
+	console.log(f.getMonth()+1);
+	console.log(f.getDate());
   
 	if(encuestas.length >= 1){
 		document.addEventListener("DOMContentLoaded", function(event) {
@@ -35,7 +41,12 @@
 		document.addEventListener("DOMContentLoaded", function(event) {
 			document.getElementById("final").disabled = false; // habilitar
 		});
-	}else if (parseInt(dates[0]) == f.getFullYear() && parseInt(dates[1]) <= f.getMonth() && parseInt(dates[2]) <= f.getDate()  && encuesta_final.length <= 0) {
+	}else if (parseInt(dates[0]) == f.getFullYear() && parseInt(dates[1]) < f.getMonth()+1  && encuesta_final.length <= 0) {
+		//Si está cargada la página actúa
+		document.addEventListener("DOMContentLoaded", function(event) {
+			document.getElementById("final").disabled = false; // habilitar
+		});
+	}else if (parseInt(dates[0]) == f.getFullYear() && parseInt(dates[1]) == f.getMonth()+1  && parseInt(dates[2]) <= f.getDate() && encuesta_final.length <= 0) {
 		//Si está cargada la página actúa
 		document.addEventListener("DOMContentLoaded", function(event) {
 			document.getElementById("final").disabled = false; // habilitar

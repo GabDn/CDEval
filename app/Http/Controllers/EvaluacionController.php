@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * To Do list: agregar constraint a par curso_id participante_id en _evaluacion_final_seminario
+ * Crear desde cero una html view para crear el formulario de la evaluacion final global (Formulas basadas en todo lo presente en la funcion que manda a llamar enviarCorreoFinal)
+ * Ver que pedo con el tercer formulario
+ */
+
 namespace App\Http\Controllers;
 use App\Profesor;
 use App\Curso;
@@ -18,6 +24,9 @@ use App\Http\Controllers\Controller;
 use Mail;
 use PDF;
 use View;
+
+ini_set('max_execution_time', '300');
+
 class EvaluacionController extends Controller{
 
 
@@ -53,6 +62,16 @@ class EvaluacionController extends Controller{
 			->select('_evaluacion_final_curso.participante_curso_id','_evaluacion_final_curso.curso_id')
 			->where([['curso_id',$catalogoCurso_id],['participante_curso_id',$profesor_id]])
 			->get();
+
+		if(sizeof($evaluacion_final_curso) <= 0){
+			$participante = DB::table('participante_curso')
+				->where([['curso_id',$curso_id],['profesor_id',$profesor_id]])
+				->get();
+			$evaluacion_final_curso = DB::table('_evaluacion_final_seminario')
+				->select('_evaluacion_final_seminario.participante_curso_id')
+				->where('participante_curso_id',$participante[0]->id)
+				->get();
+		}
 	 
 		//Retornamos la vista pages.evaluacionIndex con todos los datos necesarios para su funcionamiento
 		return view("pages.evaluacionIndex")
@@ -102,6 +121,43 @@ class EvaluacionController extends Controller{
 		);
 		
 		$pdf = PDF::loadView($lugar,array('curso' => $curso,'profesor'=>$profesor,'semestre'=>$semestre,'evaluacion'=>$eval_curso));	
+		  
+		$content = $pdf->download()->getOriginalContent();
+
+		Storage::put('C:\Users\rodri\Documents\_evaluacion_final.pdf',$content) ;
+
+		//Obtenemos los profesores de los cursos  
+		$profesoresCurso = ProfesoresCurso::where('curso_id',$curso_id)->get();
+
+		//Si es un solo profesor enviamos el mensaje
+		if ( count($profesoresCurso) == 1 ){
+			$profesor=Profesor::find($profesor_id);
+			Mail::send('pages.mensaje',$data, function ($message) use($profesor,$pdf){
+				$message->from(Array('cdevalresultados@gmail.com'=>'CDEval'));
+				$message->to(Array($profesor->getCorreo()=>$profesor->getNombre()))->subject('Resultados de Encuesta');
+				$message->attachData($pdf->output(), 'Resultados de Encuesta.pdf');
+			});
+		}else{
+			foreach($profesoresCurso as $profesorCurso){
+				$profesor=Profesor::find($profesorCurso->id);
+				Mail::send('pages.mensaje',$data, function ($message) use($profesor,$pdf,$semestre){
+					$message->from(Array('cdevalresultados@gmail.com'=>'CDEval'));
+					$message->to(Array($profesor->getCorreo()=>$profesor->getNombre()))->subject('Resultados de Encuesta');
+					$message->attachData($pdf->output(), 'Resultados de Encuesta.pdf');
+				});
+			}
+		}
+	}
+
+	public function enviarCorreoFinal($evals,$profesor_id,$curso_id, $catalogoCurso_id, $eval_fcurso,$participantes,$factor_acreditacion,$factor,$alumnos,$DP,$DH,$CO,$DI,$Otros,$ocupacion,$factor_respuestas_positivas,$factor_contenido,$factor_coordinacion,$factor_instructor,$minimo,$maximo,$lugar){
+		$profesor = Profesor::find($profesor_id);
+		$curso = CatalogoCurso::find($curso_id);
+		$semestre=Curso::find($curso_id);
+		$data = array(
+			'name'=>"CDEval",
+		);
+		
+		$pdf = PDF::loadView($lugar,array('evals'=>$evals,'profesor_id'=>$profesor_id,'curso_id'=>$curso_id,'catalogoCurso_id'=>$catalogoCurso_id,'eval_fcurso'=>$eval_fcurso,'participantes'=>$participantes,'factor_acreditacion'=>$factor_acreditacion,'factor'=>$factor,'alumnos'=>$alumnos,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'ocupacion'=>$ocupacion,'positivas'=>$factor_respuestas_positivas,'contenido'=>$factor_contenido,'coordinacion'=>$factor_coordinacion,'instructor'=>$factor_instructor,'minimo'=>$minimo,'maximo'=>$maximo));	
           
 		//Obtenemos los profesores de los cursos  
 		$profesoresCurso = ProfesoresCurso::where('curso_id',$curso_id)->get();
@@ -351,6 +407,7 @@ class EvaluacionController extends Controller{
 			
 		//7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
 		$eval_fcurso->p7 = $request->p7;
+		//return $eval_fcurso->p7;
 		
 		//8. ¿CÓMO SE ENTERÓ DEL CURSO?
 		$eval_fcurso->p8 = $request->p8;
@@ -442,10 +499,8 @@ class EvaluacionController extends Controller{
             array_push($tupla,$catalogoCursos);
             array_push($infoCursos, $tupla);
 		}
-		
 
-		//Enviamos el correo con los datos a usar
-		$correo->enviarCorreo($profesor_id,$curso_id, $catalogoCurso_id, $eval_fcurso, 'pages.reporte');
+		return $this->enviarEvaluacionFinal($profesor_id,$curso_id,$catalogoCurso_id,$eval_fcurso,'pages.reporte_final_curso');
 
 		//Revisamos si hay encuestas realizadas por el alumno en el día actual
 		$evaluacion_x_curso = DB::table('_evaluacion_x_curso')
@@ -473,9 +528,11 @@ class EvaluacionController extends Controller{
      public function saveFinal_Seminario(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
           $eval_fseminario = new EvaluacionFinalSeminario;
           $promedio_p1 = new EvaluacionFinalSeminario;
-          
-          $participante = ParticipantesCurso::find($profesor_id);
-          $eval_fseminario->participante_curso_id=$participante->id;
+		  
+		  $participante = DB::table('participante_curso')
+			  ->where('profesor_id',$profesor_id)
+			  ->get();
+          $eval_fseminario->participante_curso_id=$participante[0]->id;
           $correo = new EvaluacionController(); 
           $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
           $eval_fseminario->participante_curso_id=$participante[0]->id;
@@ -646,10 +703,63 @@ $promedio_p4=[
           DB::table('participante_curso')
           ->where('id', $participante[0]->id)
           ->where('curso_id',$curso_id)
-          ->update(['contesto_hoja_evaluacion' => true]);
+		  ->update(['contesto_hoja_evaluacion' => true]);
+		  
+		//Actualizar campo de hoja de evaluacion
+		DB::table('participante_curso')
+			->where('id', $participante[0]->id)
+			->where('curso_id',$curso_id)
+			->update(['contesto_hoja_evaluacion' => true]);
 
-          return redirect()->back()
-          ->with('msj', 'Evaluación enviada');
+		$count = ProfesoresCurso::select($curso_id)
+			->where('curso_id',$curso_id)
+			->count();
+          
+		$profesor = Profesor::find($profesor_id);
+		$curso = Curso::find($curso_id);
+		$catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
+	
+		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+		$infoCursos = array();
+		
+		foreach($participantesCurso as $participanteCurso){
+			$curso = Curso::find($participanteCurso->curso_id);
+			$catalogoCursos = CatalogoCurso::find($curso->id);
+						
+			$tupla = array();
+			array_push($tupla,$curso);
+            array_push($tupla,$catalogoCursos);
+            array_push($infoCursos, $tupla);
+		}
+
+		//return $this->enviarEvaluacionFinal($profesor_id,$curso_id,$catalogoCurso_id,$eval_fseminario,'pages.reporte_final_seminario');
+
+		//Revisamos si hay encuestas realizadas por el alumno en el día actual
+		/*$evaluacion_x_curso = DB::table('_evaluacion_x_seminario')
+			->select('_evaluacion_x_seminario.created_at','_evaluacion_x_seminario.curso_id')
+			->where('participante_curso_id',$profesor_id)
+			->get();*/
+			
+		/*$evaluacion_final_curso = DB::table('_evaluacion_final_seminario')
+			->select('_evaluacion_final_seminario.participante_curso_id','_evaluacion_final_seminario.curso_id')
+			->where([['curso_id',$catalogoCurso_id],['participante_curso_id',$profesor_id]])
+			->get();*/
+
+		$evaluacion_final_curso = DB::table('_evaluacion_final_seminario')
+			->select('_evaluacion_final_seminario.participante_curso_id')
+			->where('participante_curso_id',$participante[0]->id)
+			->get();
+	 
+		//Retornamos la vista pages.evaluacionIndex con los datos necesarios para su funcionamiento
+		return view("pages.evaluacionIndex")
+			->with("profesor",$profesor)
+			->with("curso",$curso)
+			->with('catalogoCurso',$catalogoCurso)
+			->with('infoCursos',$infoCursos)
+			->with('count',$count)
+			->with('evaluaciones',array())
+			->with('final',$evaluacion_final_curso)
+			->with('msj', 'Evaluación enviada');
      }
      
 //Por sesiones
@@ -924,6 +1034,501 @@ $promedio_p4=[
 			->with('infoCursos',$infoCursos)
 			->with('msj','Claves enviadas');
 			
+	}
+
+	public function enviarEvaluacionFinal($profesor_id, $curso_id, $catalogoCurso_id, $eval_fcurso, $lugar){
+		$correo = new EvaluacionController(); 
+		$evals = null;
+		if($lugar == 'pages.reporte_final_curso'){
+			$evals = DB::table('_evaluacion_final_curso')
+			->where("curso_id",$curso_id)
+			->get();
+		}else{
+			$evals = DB::table('_evaluacion_final_seminario')
+			->where("curso_id",$curso_id)
+			->get();
+		}
+
+		$curso_ocupacion = DB::table("cursos")
+			->where("id",$curso_id)
+			->value("cupo_maximo");
+
+		$participantes = DB::table('participante_curso')
+			->where('curso_id',$curso_id)
+			->get();
+
+		$curso = DB::table('cursos')
+			->where('id',$curso_id)
+			->get();
+
+		$catalogo_curso = DB::table('catalogo_cursos')
+			->where('id',$curso[0]->catalogo_id)
+			->get();
+
+		$salon = DB::table('salons')
+			->where('id',$curso[0]->salon_id)
+			->get();
+
+		//Obtenemos el factor de recomendación
+		$recomendaciones = 0;
+        $factor = 0;
+        $alumnos = 0;
+        foreach($evals as $array){
+            if($array->p7 == 1){
+                $recomendaciones = $recomendaciones + 1;
+                $alumnos = $alumnos + 1;
+            }else if($array->p7 == 0){
+                $alumnos = $alumnos + 1;
+            }
+        }
+        if($alumnos == 0){
+            $factor = round(($recomendaciones * 100) / 1,2);
+        }else
+        {
+            $factor = round(($recomendaciones * 100) / $alumnos,2);
+		}
+
+		//Obtenemos el factor de acreditación
+		$acreditado = 0;
+		$factor_acreditacion = 0;
+		$alumnos = 0;
+		foreach($participantes as $participante){
+			$alumnos = $alumnos + 1;
+			if($participante->acreditacion == 1){
+				$acreditado = $acreditado + 1;
+			}
+		}
+		if($alumnos == 0){
+			$factor_acreditacion = round(($acreditado * 100) / 1,2);
+		}else
+		{
+			$factor_acreditacion = round(($acreditado * 100) / $alumnos,2);
+		}
+
+		//Obtenemos el factor de ocupacion
+		$ocupacion = ($alumnos*100)/$curso_ocupacion;
+
+		//Obtenemos la cantidad de integrantes de cada area
+		$DP=0;
+        $DH=0;
+        $CO=0;
+        $DI=0;
+        $Otros=0;
+        foreach($evals as $evaluacion){
+            $array = explode(',',$evaluacion->conocimiento);
+            foreach($array as $elem){
+                if($elem[2] == 1 || $elem[1] == 1){
+                    $DP++;
+                }else if($elem[2] == 2 || $elem[1] == 2){
+                    $DH++;
+                }else if($elem[2] == 3 || $elem[1] == 3){
+                    $CO++;
+                }else if($elem[2] == 4 || $elem[1] == 4){
+                    $DI++;
+                }else if($elem[2] == 5 || $elem[1] == 5){
+                    $Otros++;
+                }
+            }
+		}
+		
+		$preguntas = 0;
+		$positivas = 0;
+		$respuestasContenido = 0;
+		$respuestasCoordinacion = 0;
+		$respuestasInstructores = 0;
+		$alumnos = 0;
+		$alumnos_eval_instructor = 0;
+		$promedios = array();
+		$respuesta_individual = 0;
+
+		//return (array) $evals;
+
+		foreach($evals as $evaluacion){
+			$alumnos++;
+			if($evaluacion->p1_1 >= 20){
+				$preguntas++;
+				$respuestasContenido += $evaluacion->p1_1;
+				if($evaluacion->p1_1 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p1_2 >= 20){
+				$preguntas++;
+				$respuestasContenido+= $evaluacion->p1_2;
+				if($evaluacion->p1_2 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p1_3 >= 20){
+				$preguntas++;
+				$respuestasContenido+= $evaluacion->p1_3;
+				if($evaluacion->p1_3 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p1_4 >= 20){
+				$preguntas++;
+				$respuestasContenido+= $evaluacion->p1_4;
+				if($evaluacion->p1_4 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p1_5 >= 20){
+				$preguntas++;
+				$respuestasContenido+= $evaluacion->p1_5;
+				if($evaluacion->p1_5 >= 60){
+					$positivas++;
+				}
+			}
+
+			if($evaluacion->p2_1 >= 20){
+				$preguntas++;
+				if($evaluacion->p2_1 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p2_2 >= 20){
+				$preguntas++;
+				if($evaluacion->p2_2 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p2_3 >= 20){
+				$preguntas++;
+				if($evaluacion->p2_3 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p2_4 >= 20){
+				$preguntas++;
+				if($evaluacion->p2_4 >= 60){
+					$positivas++;
+				}
+			}
+
+			if($evaluacion->p3_1 >= 20){
+				$preguntas++;
+				$respuestasCoordinacion += $evaluacion->p3_1;
+				if($evaluacion->p3_1 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p3_2 >= 20){
+				$preguntas++;
+				$respuestasCoordinacion += $evaluacion->p3_2;
+				if($evaluacion->p3_2 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p3_3 >= 20){
+				$preguntas++;
+				$respuestasCoordinacion += $evaluacion->p3_3;
+				if($evaluacion->p3_3 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p3_4 >= 20){
+				$preguntas++;
+				$respuestasCoordinacion += $evaluacion->p3_4;
+				if($evaluacion->p3_4 >= 60){
+					$positivas++;
+				}
+			}
+
+			if($evaluacion->p4_1 >= 20){
+				$preguntas++;
+				if($evaluacion->p4_1 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_2 >= 20){
+				$preguntas++;
+				if($evaluacion->p4_2 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_3 >= 20){
+				$preguntas++;
+				if($evaluacion->p4_3 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_4 >= 20){
+				$preguntas++;
+				if($evaluacion->p4_4 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_5 >= 20){
+				$preguntas++;
+				if($evaluacion->p4_5 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_6 >= 20){
+				$preguntas++;
+				if($evaluacion->p4_6 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_7 >= 20){
+				$preguntas++;
+				if($evaluacion->p4_7 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_8 >= 20){
+				$preguntas++;
+				if($evaluacion->p4_8 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_9 >= 20){
+				$preguntas++;
+				if($evaluacion->p4_9 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_10 >= 20){
+				$preguntas++;
+				if($evaluacion->p4_10 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_11 >= 20){
+				$preguntas++;
+				if($evaluacion->p4_11 >= 60){
+					$positivas++;
+				}
+			}
+
+			if($evaluacion->p5_1 >= 20){
+				$preguntas++;
+				if($evaluacion->p5_1 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_2 >= 20){
+				$preguntas++;
+				if($evaluacion->p5_2 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_3 >= 20){
+				$preguntas++;
+				if($evaluacion->p5_3 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_4 >= 20){
+				$preguntas++;
+				if($evaluacion->p5_4 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_5 >= 20){
+				$preguntas++;
+				if($evaluacion->p5_5 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_6 >= 20){
+				$preguntas++;
+				if($evaluacion->p5_6 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_7 >= 20){
+				$preguntas++;
+				if($evaluacion->p5_7 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_8 >= 20){
+				$preguntas++;
+				if($evaluacion->p5_8 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_9 >= 20){
+				$preguntas++;
+				if($evaluacion->p5_9 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_10 >= 20){
+				$preguntas++;
+				if($evaluacion->p5_10 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_11 >= 20){
+				$preguntas++;
+				if($evaluacion->p5_11 >= 60){
+					$positivas++;
+				}
+			}
+
+			if($evaluacion->p6_1 >= 20){
+				$alumnos_eval_instructor++;
+				$preguntas++;
+				$respuestasInstructores+= $evaluacion->p6_1;
+				$respuesta_individual+= $evaluacion->p6_1;
+				if($evaluacion->p6_1 == 1){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_2 >= 20){
+				$preguntas++;
+				$respuestasInstructores+= $evaluacion->p6_2;
+				$respuesta_individual+= $evaluacion->p6_2;
+				if($evaluacion->p6_2 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_3 >= 20){
+				$preguntas++;
+				$respuestasInstructores+= $evaluacion->p6_3;
+				$respuesta_individual+= $evaluacion->p6_3;
+				if($evaluacion->p6_3 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_4 >= 20){
+				$preguntas++;
+				$respuestasInstructores+= $evaluacion->p6_4;
+				$respuesta_individual+= $evaluacion->p6_4;
+				if($evaluacion->p6_4 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_5 >= 20){
+				$preguntas++;
+				$respuestasInstructores+= $evaluacion->p6_5;
+				$respuesta_individual+= $evaluacion->p6_5;
+				if($evaluacion->p6_5 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_6 >= 20){
+				$preguntas++;
+				$respuestasInstructores+= $evaluacion->p6_6;
+				$respuesta_individual+= $evaluacion->p6_6;
+				if($evaluacion->p6_6 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_7 >= 20){
+				$preguntas++;
+				$respuestasInstructores+= $evaluacion->p6_7;
+				$respuesta_individual+= $evaluacion->p6_7;
+				if($evaluacion->p6_7 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_8 >= 20){
+				$preguntas++;
+				$respuestasInstructores+= $evaluacion->p6_8;
+				$respuesta_individual+= $evaluacion->p6_8;
+				if($evaluacion->p6_8 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_9 >= 20){
+				$preguntas++;
+				$respuestasInstructores+= $evaluacion->p6_9;
+				$respuesta_individual+= $evaluacion->p6_9;
+				if($evaluacion->p6_9 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_10 >= 20){
+				$preguntas++;
+				$respuestasInstructores+= $evaluacion->p6_10;
+				$respuesta_individual+= $evaluacion->p6_10;
+				if($evaluacion->p6_10 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_11 >= 20){
+				$preguntas++;
+				$respuestasInstructores+= $evaluacion->p6_11;
+				$respuesta_individual+= $evaluacion->p6_11;
+				array_push($promedios, round($respuesta_individual/11,2));
+				$respuesta_individual = 0;
+				if($evaluacion->p6_11 >= 60){
+					$positivas++;
+				}
+			}
+
+		}
+
+		$minimo = 0;
+		$maximo = 0;
+
+		foreach($promedios as $promedio){
+			if($minimo == 0){
+				$minimo = $promedio;
+			}
+			if($promedio < $minimo){
+				$minimo = $promedio;
+			}
+			if($promedio > $maximo){
+				$maximo = $promedio;
+			}
+		}
+
+		$factor_instructor = 0;
+
+		if($alumnos_eval_instructor != 0){
+			$factor_instructor = round($respuestasInstructores / $alumnos_eval_instructor,2);
+		}
+
+		$factor_respuestas_positivas = round($positivas*100 / $preguntas, 2);
+		$factor_contenido = round($respuestasContenido / ($alumnos*5),2);
+		$factor_coordinacion = round($respuestasCoordinacion / ($alumnos*4),2);
+
+		/*$horas_inicio = str_split(':',$curso[0]->hora_inicio);
+		$horas_fin = str_split(':',$curso[0]->hora_fin);
+
+		$inicio = intval($horas_inicio[0]) + floatval($horas_inicio[1]/100);
+		$fin = intval($horas_fin[0]) + floatval($horas_fin[1]/100);*/
+
+		//$numero_horas = floatval($curso[0]->numero_sesiones) * ($fin-$inicio);
+		$numero_horas = $curso[0]->numero_sesiones;
+
+		//Enviamos el correo con los datos a usar
+		return view('pages.reporte_final_curso')
+			->with('evals',$evals)
+			->with('profesor_id',$profesor_id)
+			->with('curso_id',$curso_id)
+			->with('catalogoCurso_id',$catalogoCurso_id)
+			->with('eval_fcurso',$eval_fcurso)
+			->with('participantes',$participantes)
+			->with('factor_acreditacion',$factor_acreditacion)
+			->with('factor',$factor)
+			->with('ocupacion',$alumnos)
+			->with('DP',$DP)
+			->with('DH',$DH)
+			->with('CO',$CO)
+			->with('DI',$DI)
+			->with('Otros',$Otros)
+			->with('positivas',$factor_respuestas_positivas)
+			->with('coordinacion',$factor_coordinacion)
+			->with('contenido',$factor_contenido)
+			->with('instructor',$factor_instructor)
+			->with('minimo', $minimo)
+			->with('maximo', $maximo)
+			->with('curso', $curso[0])
+			->with('salon',$salon[0])
+			->with('participantes',$alumnos)
+			->with('acreditaron',$acreditado)
+			->with('numero_horas',$numero_horas);
+
+		
+
+		$correo->enviarCorreoFinal($evals,$profesor_id,$curso_id, $catalogoCurso_id, $eval_fcurso,$participantes,$factor_acreditacion,$factor,$alumnos,$DP,$DH,$CO,$DI,$Otros,$ocupacion,$factor_respuestas_positivas,$factor_contenido,$factor_coordinacion,$factor_instructor,$minimo,$maximo,'pages.reporte_final_curso');
+
 	}
        
 }
