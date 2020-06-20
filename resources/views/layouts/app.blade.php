@@ -43,11 +43,14 @@
     
 
             <li class="nav-header">
-                <div class="link"><i class="fa fa-list-alt"></i>Cursos<i class="fa fa-chevron-down"></i></div>
+                <div class="link"><i class="fa fa-list-alt"></i>Coordinaciones<i class="fa fa-chevron-down"></i></div>
                 <ul class="submenu">
-                
-                    <li><a href="{{ route('cursos') }}">Evaluaciones</a></li>
-                
+                <p>
+                    <!--<?php echo json_encode($coordinaciones) ?>-->
+                </p>
+                @foreach($coordinaciones as $coordinacion)
+                    <li><a href="{{ route('cursos.coordinacion',$coordinacion->id) }}">{{ $coordinacion->nombre_coordinacion }}</a></li>
+                @endforeach
                 </ul>
             </li>
     
