@@ -371,22 +371,22 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p3_2" vallue="40" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p3_2" value="40" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p3_2" vallue="60" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p3_2" value="60" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p3_2" vallue="80" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p3_2" value="80" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p3_2" vallue="100" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p3_2" value="100" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -399,22 +399,22 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p3_3" vallue="40" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p3_3" value="40" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p3_3" vallue="60" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p3_3" value="60" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p3_3" vallue="80" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p3_3" value="80" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p3_3" vallue="100" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p3_3" value="100" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -427,22 +427,22 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p3_4" vallue="40" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p3_4" value="40" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p3_4" vallue="60" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p3_4" value="60" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p3_4" vallue="80" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p3_4" value="80" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p3_4" vallue="100" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p3_4" value="100" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -450,7 +450,7 @@
                     <br>
                     <table class="table table-hover">
                     <tr>
-                        <th width="42%" align="justify">4. INSTRUCTOR(A)</th>
+                        <th width="42%" align="justify">4. INSTRUCTOR(A) UNO</th>
                         <th align="right">Mala</th>
                         <th align="right">Regular</th>
                         <th align="right">Buena</th>
@@ -466,22 +466,22 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_1" vallue="40" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_1" value="40" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_1" vallue="60" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_1" value="60" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_1" vallue="80" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_1" value="80" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_1" vallue="100" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_1" value="100" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -494,22 +494,22 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_2" vallue="40" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_2" value="40" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_2" vallue="60" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_2" value="60" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_2" vallue="80" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_2" value="80" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_2" vallue="100" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_2" value="100" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -522,22 +522,22 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_3" vallue="40" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_3" value="40" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_3" vallue="60" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_3" value="60" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_3" vallue="80" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_3" value="80" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_3" vallue="100" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_3" value="100" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -550,22 +550,22 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_4" vallue="40" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_4" value="40" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_4" vallue="60" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_4" value="60" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_4" vallue="80" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_4" value="80" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_4" vallue="100" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_4" value="100" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -578,22 +578,22 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_5" vallue="40" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_5" value="40" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_5" vallue="60" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_5" value="60" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_5" vallue="80" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_5" value="80" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_5" vallue="100" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_5" value="100" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -606,22 +606,22 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_6" vallue="40" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_6" value="40" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_6" vallue="60" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_6" value="60" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_6" vallue="80" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_6" value="80" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_6" vallue="100" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_6" value="100" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -634,22 +634,22 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_7" vallue="40" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_7" value="40" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_7" vallue="60" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_7" value="60" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_7" vallue="80" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_7" value="80" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_7" vallue="100" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_7" value="100" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -662,22 +662,22 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_8" vallue="40" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_8" value="40" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_8" vallue="60" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_8" value="60" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_8" vallue="80" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_8" value="80" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_8" vallue="100" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_8" value="100" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -690,22 +690,22 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_9" vallue="40" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_9" value="40" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_9" vallue="60" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_9" value="60" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_9" vallue="80" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_9" value="80" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_9" vallue="100" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_9" value="100" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -718,22 +718,22 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_10" vallue="40" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_10" value="40" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_10" vallue="60" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_10" value="60" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_10" vallue="80" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_10" value="80" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_10" vallue="100" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_10" value="100" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -746,22 +746,22 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_11" vallue="40" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_11" value="40" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_11" vallue="60" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_11" value="60" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_11" vallue="80" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_11" value="80" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_11" vallue="100" class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p4_11" value="100" class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -836,16 +836,16 @@
                                 <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="1"> Didáctico Pedagógico
                             </div></td>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" vallue="2"> Desarrollo humano
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="2"> Desarrollo humano
                             </div></td>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" vallue="3"> Cómputo
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="3"> Cómputo
                             </div></td>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" vallue="4"> Disciplinar
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="4"> Disciplinar
                             </div></td>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" vallue="5"> Otro
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="5"> Otro
                             </div></td>
                         </tr>
                     </table>   

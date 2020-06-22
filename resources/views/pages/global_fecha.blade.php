@@ -1,7 +1,10 @@
-@extends('layouts.principal')
+
+@extends('layouts.app')
 
 @section('contenido')
-<form method="POST" action="{{ action('EvaluacionController@enviarClaveFecha',[ $profesor->id] ) }}">
+  <!--Body content-->
+
+<form method="POST" action="{{ action('CoordinadorController@enviarGlobal')}}">
   <div class="content">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
@@ -14,10 +17,10 @@
     <br>
       <div class="panel panel-default">
 			<div class="panel-heading">
-                <h3> Curso:  Seleccione semestre</h3>
+                <h3> Global:  Seleccione semestre</h3>
             </div>
             <div class="panel-body">
-            <select name='semestre' width="25%">
+				<select name='semestre' width="25%">
           <?php 
             foreach($fechas as $fecha){
               echo "<option value=$fecha>$fecha</option>";

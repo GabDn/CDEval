@@ -1,7 +1,10 @@
-@extends('layouts.principal')
+
+@extends('layouts.app')
 
 @section('contenido')
-<form method="POST" action="{{ action('EvaluacionController@enviarClaveFecha',[ $profesor->id] ) }}">
+  <!--Body content-->
+
+<form method="POST" action="{{ action('CoordinadorController@enviarCoordinacion')}}">
   <div class="content">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
@@ -17,13 +20,21 @@
                 <h3> Curso:  Seleccione semestre</h3>
             </div>
             <div class="panel-body">
-            <select name='semestre' width="25%">
-          <?php 
-            foreach($fechas as $fecha){
-              echo "<option value=$fecha>$fecha</option>";
-            }
-          ?>
-				</select>
+                <select name='semestre' width="25%">
+                <?php 
+                    foreach($fechas as $fecha){
+                        echo "<option value=$fecha>$fecha</option>";
+                    }
+                ?>
+                </select>
+                <br>
+                <select name='coordinacion' width="25%">
+                <?php 
+                    foreach($coordinaciones as $coordinacion){
+                        echo "<option value=$coordinacion->abreviatura>$coordinacion->nombre_coordinacion</option>";
+                    }
+                ?>
+				        </select>
 				{{ csrf_field() }}
 				<button id="dia"  type="submit" class="btn btn-primary active">Enviar</button>
             </div>

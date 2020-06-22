@@ -27,8 +27,8 @@ class AutentificarController extends Controller{
       
         //Usuario general
         if ('admin' == $request->rfc && '1q2w3e4r' == $request->numTrabajador) {
-           
-            return view("pages.superadmin")
+            //return redirect()->route("superadmin",[$coordinaciones]);
+            return view('pages.superadmin')
                 ->with("coordinaciones",$coordinaciones); //Route -> coordinador
         }
         //Coordinadores de área
