@@ -17,6 +17,7 @@ class CreateDirector extends Migration
             $table->increments('id')->unique();
             $table->String('director');
             $table->String('comentarios')->nullable();
+            $table->String('grado');
             $table->timestamps();
         });
     }

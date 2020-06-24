@@ -30,7 +30,8 @@ class CreateParticipanteCurso extends Migration
             $table->double('calificacion')->nullable();
             $table->boolean('inscrito')->nullable();
             $table->string('comentario')->nullable();
-            
+            $table->boolean('adicional')->nullable();
+
             $table->foreign('curso_id')->references('id')->on('cursos');
             $table->foreign('profesor_id')->references('id')->on('profesors');
 

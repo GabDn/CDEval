@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+
 class StartSeeder extends Seeder
 {
     /**
@@ -11,24 +13,19 @@ class StartSeeder extends Seeder
      */
     public function run()
     {
-        /*DB::table('users')->insert([
-            'nombres' => 'Jose',
-            'apellido_paterno' => 'Suarez',
-            'apellido_materno' => 'Hernandez',
-            'rfc' => 'ASDSMAD1231',
-            'curp'=> 'ASDPO213ASF',
-            'fecha_nacimiento' => '01011988',
-            'telefono' => 54548796,
-            'grado' => 'Maestro',
-            'email' => 'correo@correo.con.mx',
-            'usuario' => 'usuario',
-            'password' => bcrypt(123)
-
-        ]);*/
-        DB::table('salons')->insert([
-            'sede'=> 'Salon 123',
-            'capacidad' => 50,
-            'ubicacion' => 'FI',
+        
+        DB::table('users')->insert([
+            'nombres'=> 'Mauricio',
+            'apellido_paterno' => 'Ramos',
+            'apellido_materno' => 'Villaseñor',
+            'rfc' => 'RAVC971212',
+            'curp' => 'RAVC971212HDFMLS07',
+            'fecha_nacimiento' => '1997-12-12',
+            'telefono' => '5656978610',
+            'grado' => 'Doctor',
+            'email' => 'mauri334455@gmail.com',
+            'usuario' => 'mauri334455',
+            'password' => Hash::make('amores334455')
         ]);
         DB::table('salons')->insert([
             'sede'=> 'Salon 213',
@@ -51,29 +48,35 @@ class StartSeeder extends Seeder
             'ubicacion' => 'FI',
         ]);
         DB::table('coordinacions')->insert([
-            'nombre_coordinacion' => 'Coordinacion 1',
-            'abreviatura' => 'C1',
+            'nombre_coordinacion' => 'Formación de Desarrollo Humano',
+            'abreviatura' => 'CA',
             'coordinador' => 'Diego Alberto Gomez',
-            'comentarios' => 'Comentarios'
+            'grado' => 'M.E.M.',
+            'usuario' => 'd1eg1nEZ',
+            'password' => Hash::make('1234'),
+            'comentarios' => 'Esta coordinacion está encargada en la parte administrativa de la FI'
         ]);
 
         DB::table('coordinacions')->insert([
-            'nombre_coordinacion' => 'Coordinacion 2',
-            'abreviatura' => 'C2',
+            'nombre_coordinacion' => 'Formación Educativa',
+            'abreviatura' => 'CE',
             'coordinador' => 'Alan Rodriguez Ramirez',
-            'comentarios' => 'Comentarios'
+            'grado' => 'M.E.',
+            'usuario' => 'A1an1nEZ',
+            'password' => Hash::make('1234'),
+            'comentarios' => 'Esta coordinación se encarga de la parte educativa de la FI'
         ]);
         DB::table('divisions')->insert([
-            'nombre' => 'Division 1',
+            'nombre' => 'Ciencias Básicas',
         ]);
         DB::table('divisions')->insert([
-            'nombre' => 'Division 2',
+            'nombre' => 'Geomática',
         ]);
         DB::table('divisions')->insert([
-            'nombre' => 'Division 3',
+            'nombre' => 'Ingeniería Eléctrica',
         ]);
         DB::table('divisions')->insert([
-            'nombre' => 'Division 4',
+            'nombre' => 'Ciencias Sociales',
         ]);
 
         DB:: table('facultads')->insert([
@@ -213,9 +216,6 @@ class StartSeeder extends Seeder
             'nombre' =>'Escuela Nacional de Lenguas, Lingúistica y Traducción'
         ]);
 
-
-
-
         DB::table('carreras')->insert([
             'nombre' => 'Actuaría',
             'clave' => 101,
@@ -339,7 +339,6 @@ class StartSeeder extends Seeder
             'id_facultad' => 14,
 
         ]);
-
         DB::table('carreras')->insert([
             'nombre' => 'Ingenieria electrica',
             'clave' => 1231,
@@ -366,7 +365,7 @@ class StartSeeder extends Seeder
             'id_division' => 1,
             'id_facultad' =>  1,
         ]);
-        
+
         DB::table('carreras')->insert([
             'nombre' => 'Ingeniería Mecatrónica',
             'clave' => 124,
@@ -545,10 +544,27 @@ class StartSeeder extends Seeder
             'id_division' => 2,
             'id_facultad' => 11,
         ]);
-
         DB::table('carreras')->insert([
-            'nombre' => 'Química',
-            'clave' => 211,
+            'nombre' => 'Psicología',
+            'clave' => 441,
+            'id_division' => 2,
+            'id_facultad' => 19,
+        ]);
+        DB::table('carreras')->insert([
+            'nombre' => 'Economía',
+            'clave' => 442,
+            'id_division' => 2,
+            'id_facultad' => 7
+        ]);
+        DB::table('carreras')->insert([
+            'nombre' => 'Economía',
+            'clave' => 443,
+            'id_division' => 2,
+            'id_facultad' => 7
+        ]);
+        DB::table('carreras')->insert([
+            'nombre' => 'Veterinario Zootecnista',
+            'clave' => 444,
             'id_division' => 2,
             'id_facultad' => 10,
         ]);
@@ -1099,15 +1115,17 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>1,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
-            'grado' => 'Maestro',
+            'grado' => 'Maestría',
             'email' => 'carosiim.sdco@gmail.com',
-            'comentarios' => 'Comentarios0',
+            'semblanza_corta'=> 'Doctorado en Inteligencia Artificial,
+                             su carrera es respaldada por 25 años de 
+                             ejercer la doctrina de profesor. Ganó el premio
+                             S@T por el código más pequeño del mundo',
             'genero' => 'masculino',
-            'semblanza_corta' => 'Semblanza corta',
-            'facebook' => 'face',
-            'unam' => true,
-            'facultad_id' =>1,
-            'carrera_id' =>11,
+            'comentarios' => 'hombre alto, de tez blanca, cabello negro y ojos marrones. ',
+            'facebook' => 'Juan Ramirez',
+            'unam' => false,
+            'procedencia'=> 'Universidad Miskatonic'
 
         ]);
         DB::table('profesors')->insert([
@@ -1120,12 +1138,17 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>1,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '557458963',
-            'grado' => 'Maestro',
+            'grado' => 'Licenciatura',
             'email' => 'MSP@gmail.com',
-            'comentarios' => 'Comentario',
+            'semblanza_corta' => 'Profesora de la facultad de ingeniería,
+                             fundó la asociación de mujeres programadoras
+                             con el fin de impulsar los derechos y la presencia
+                             de la mujer en el ámbito profesional de las Tecnologías
+                             de la Información. Es egresada de la Facultad de Ciencias.
+                             Doctora en análisis de datos.',
             'genero' => 'femenino',
-            'semblanza_corta' => 'Semblanza',
-            'facebook' => 'MyFace',
+            'comentarios' => 'Mujer delgada, de tez morena, cabello negro y ojos cafes.',
+            'facebook' => 'Martha Suarez',
             'unam' => true,
             'facultad_id' =>1,
             'carrera_id' =>1,
@@ -1141,11 +1164,11 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>1,
             'fecha_nacimiento' => '1972-05-17',
             'telefono' => '55664487',
-            'grado' => 'Maestro',
+            'grado' => 'Ingeniería',
             'email' => 'prof2@gmail.com',
-            'comentarios' => 'Comentarios0',
+            'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
             'genero' => 'masculino',
-            'semblanza_corta' => 'Semblanza corta',
+            'comentarios' => 'Señor alto, edad avanzada, pelo y barba canosas y usa lentes',
             'facebook' => 'face',
             'unam' => true,
             'facultad_id' =>14,
@@ -1162,11 +1185,11 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>1,
             'fecha_nacimiento' => '1972-05-017',
             'telefono' => '557458963',
-            'grado' => 'Maestro',
+            'grado' => 'Licenciatura',
             'email' => 'MSP2@gmail.com',
-            'comentarios' => 'Comentario',
+            'semblanza_corta' => 'Licenciada en administracion egresada de la FCyA de la UNAM con honores.',
             'genero' => 'femenino',
-            'semblanza_corta' => 'Semblanza',
+            'comentarios' => 'Mujer bajita, tez obscura, cabello negro.',
             'facebook' => 'MyFace',
             'unam' => true,
             'facultad_id' =>5,
@@ -1183,12 +1206,12 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>5,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
-            'grado' => 'Maestro',
+            'grado' => 'Carrera Tecnica',
             'email' => 'prof3@gmail.com',
-            'comentarios' => 'Comentarios0',
+            'semblanza_corta' => 'Ingeniero mecanico con especialidad en diseño mecanico egresado de la unam y con maestria en Alemania.',
             'genero' => 'masculino',
-            'semblanza_corta' => 'Semblanza corta',
-            'facebook' => 'face',
+            'comentarios' => 'Hombre alto, calvo y con barba muy grande',
+            'facebook' => 'Mateo Juarez',
             'unam' => true,
             'facultad_id' =>14,
             'carrera_id' =>7,
@@ -1204,12 +1227,12 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>1,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '557458963',
-            'grado' => 'Maestro',
+            'grado' => 'Doctorado',
             'email' => 'MSP3@gmail.com',
-            'comentarios' => 'Comentario',
+            'semblanza_corta' => 'Ingeniera industrial, con un MBA en inglaterra y tambien trabaja en Coca Cola.',
             'genero' => 'femenino',
-            'semblanza_corta' => 'Semblanza',
-            'facebook' => 'MyFace',
+            'comentarios' => 'Mujer de edad avanzada, cabello negro y orejas grandes',
+            'facebook' => 'Gaby Gonzalez',
             'unam' => true,
             'facultad_id' =>14,
             'carrera_id' =>13,
@@ -1224,12 +1247,12 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>7,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
-            'grado' => 'Maestro',
+            'grado' => 'Maestría',
             'email' => 'prof4@gmail.com',
-            'comentarios' => 'Comentarios0',
+            'semblanza_corta' => 'Ingeniero en telecomunicaciones y estudia actualmente su segunda carrera, en economia.',
             'genero' => 'masculino',
-            'semblanza_corta' => 'Semblanza corta',
-            'facebook' => 'face',
+            'comentarios' => 'Hombre de mucho peso, estatura promedio y larga cabellera rubia',
+            'facebook' => 'Dani Velásquez',
             'unam' => true,
             'facultad_id' =>14,
             'carrera_id' =>9,
@@ -1244,12 +1267,12 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>1,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '557458963',
-            'grado' => 'Maestro',
+            'grado' => 'Maestría',
             'email' => 'MSP4@gmail.com',
-            'comentarios' => 'Comentario',
+            'semblanza_corta' => 'Ingeniera civil, maestria en puentes y con especialidad en puentes muy grandes.',
             'genero' => 'femenino',
-            'semblanza_corta' => 'Semblanza',
-            'facebook' => 'MyFace',
+            'comentarios' => 'Mujer joven, alta, cabello negro y tez blanca',
+            'facebook' => 'Fer Sandoval',
             'unam' => true,
             'facultad_id' =>14,
             'carrera_id' =>11,
@@ -1265,12 +1288,12 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>11,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
-            'grado' => 'Maestro',
+            'grado' => 'Maestría',
             'email' => 'prof5@gmail.com',
-            'comentarios' => 'Comentarios0',
+            'semblanza_corta' => 'Ingeniero petrolero, actualmente se desempeña tambien en cargos altos en PEMEX',
             'genero' => 'masculino',
-            'semblanza_corta' => 'Semblanza corta',
-            'facebook' => 'face',
+            'comentarios' => 'Hombre de mediana edad, cabello negro y barba de candado',
+            'facebook' => 'Angel García Caseres',
             'unam' => true,
             'facultad_id' =>14,
             'carrera_id' =>10,
@@ -1285,12 +1308,12 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>4,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '557458963',
-            'grado' => 'Maestro',
+            'grado' => 'Maestría',
             'email' => 'MSP5@gmail.com',
-            'comentarios' => 'Comentario',
+            'semblanza_corta' => 'Licenciada en contaduria, con maestria en impuestos empresariales y doctorado en contaduria para Macroempresas.',
             'genero' => 'femenino',
-            'semblanza_corta' => 'Semblanza',
-            'facebook' => 'MyFace',
+            'comentarios' => 'Mujer de baja estatura, delgada y con ojos cafes.',
+            'facebook' => 'Vivi Salcedo',
             'unam' => true,
             'facultad_id' =>5,
             'carrera_id' =>10,
@@ -1307,12 +1330,12 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>5,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
-            'grado' => 'Maestro',
+            'grado' => 'Maestría',
             'email' => 'prof6@gmail.com',
-            'comentarios' => 'Comentarios0',
+            'semblanza_corta' => 'Arquitecto con especialidad en paisajismo. Actualmente está creando su propia consultura',
             'genero' => 'masculino',
-            'semblanza_corta' => 'Semblanza corta',
-            'facebook' => 'face',
+            'comentarios' => 'Hombre con rascos asiaticos, tez blanca y ojos rasgados.',
+            'facebook' => 'Arturo Galvan',
             'unam' => true,
             'facultad_id' =>1,
             'carrera_id' =>11,
@@ -1328,12 +1351,12 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>1,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '557458963',
-            'grado' => 'Maestro',
+            'grado' => 'Maestría',
             'email' => 'MSP6@gmail.com',
-            'comentarios' => 'Comentario',
+            'semblanza_corta' => 'Licenciada en arquitectura con maestria en diseño de interiores ',
             'genero' => 'femenino',
-            'semblanza_corta' => 'Semblanza',
-            'facebook' => 'MyFace',
+            'comentarios' => 'Mujer afroamericana de alta estatura y cabello cafe.',
+            'facebook' => 'Melissaa Valles',
             'unam' => true,
             'facultad_id' =>1,
             'carrera_id' =>1,
@@ -1349,12 +1372,12 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>1,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
-            'grado' => 'Maestro',
+            'grado' => 'Maestría',
             'email' => 'prof7@gmail.com',
-            'comentarios' => 'Comentarios0',
+            'semblanza_corta' => 'Ingeniero en Minas, con especialidad en minas de carbon y diamante.',
             'genero' => 'masculino',
-            'semblanza_corta' => 'Semblanza corta',
-            'facebook' => 'face',
+            'comentarios' => 'Hombre alto, afroamericano con cabello negro.',
+            'facebook' => 'Roberto Sanchez',
             'unam' => true,
             'facultad_id' =>14,
             'carrera_id' =>12,
@@ -1370,12 +1393,12 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>1,
             'fecha_nacimiento' => '1972-05-017',
             'telefono' => '557458963',
-            'grado' => 'Maestro',
+            'grado' => 'Maestría',
             'email' => 'MSP7@gmail.com',
-            'comentarios' => 'Comentario',
+            'semblanza_corta' => 'Ingeniera en Sistemas Biómedicos, egresada del ITAM',
             'genero' => 'femenino',
-            'semblanza_corta' => 'Semblanza',
-            'facebook' => 'MyFace',
+            'comentarios' => 'Mujer de corta estatura, ojos azules y cabello color cafe',
+            'facebook' => 'Dani Arjona',
             'unam' => true,
             'facultad_id' =>5,
             'carrera_id' =>1,
@@ -1391,12 +1414,12 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>5,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
-            'grado' => 'Maestro',
+            'grado' => 'Maestría',
             'email' => 'prof8@gmail.com',
-            'comentarios' => 'Comentarios0',
+            'semblanza_corta' => 'Ingeniero mecanico con especialidad en termofluidos actualmente trabaja para Ferrari.',
             'genero' => 'masculino',
-            'semblanza_corta' => 'Semblanza corta',
-            'facebook' => 'face',
+            'comentarios' => 'Hombre de baja estatura, sin cabello y utiliza lentes',
+            'facebook' => 'Alex López Mateos',
             'unam' => true,
             'facultad_id' =>14,
             'carrera_id' =>7,
@@ -1412,12 +1435,12 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>1,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '557458963',
-            'grado' => 'Maestro',
+            'grado' => 'Maestría',
             'email' => 'MSP8@gmail.com',
-            'comentarios' => 'Comentario',
+            'semblanza_corta' => 'Ingeniera insdustrial enfocada al area de logistica con maestry en cadena de suministros en Canada.',
             'genero' => 'femenino',
-            'semblanza_corta' => 'Semblanza',
-            'facebook' => 'MyFace',
+            'comentarios' => 'Mujer de edad avanzada con pelo rubio y orejas grandes.',
+            'facebook' => 'Julia Dominguez',
             'unam' => true,
             'facultad_id' =>14,
             'carrera_id' =>13,
@@ -1432,12 +1455,12 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>7,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
-            'grado' => 'Maestro',
+            'grado' => 'Maestría',
             'email' => 'prof9@gmail.com',
-            'comentarios' => 'Comentarios0',
+            'semblanza_corta' => 'Ingeniero en telecomunicaciones que trabaja con la super computadora de la UNAM',
             'genero' => 'masculino',
-            'semblanza_corta' => 'Semblanza corta',
-            'facebook' => 'face',
+            'comentarios' => 'Hombre con enanismo, de tez blanca y pelo negro.',
+            'facebook' => 'Luis Méndez',
             'unam' => true,
             'facultad_id' =>14,
             'carrera_id' =>9,
@@ -1452,12 +1475,12 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>1,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '557458963',
-            'grado' => 'Maestro',
+            'grado' => 'Maestría',
             'email' => 'MSP9@gmail.com',
-            'comentarios' => 'Comentario',
+            'semblanza_corta' => 'Ingeniera civil, socia de Carlos Slim y con maestria en carreteras',
             'genero' => 'femenino',
-            'semblanza_corta' => 'Semblanza',
-            'facebook' => 'MyFace',
+            'comentarios' => 'Mujer alta, delgada, con el pelo pintado de azul.',
+            'facebook' => 'Hilda Ramirez',
             'unam' => true,
             'facultad_id' =>14,
             'carrera_id' =>11,
@@ -1473,12 +1496,12 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>11,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
-            'grado' => 'Maestro',
+            'grado' => 'Maestría',
             'email' => 'prof10@gmail.com',
-            'comentarios' => 'Comentarios0',
+            'semblanza_corta' => 'Ingeniero petrolero, trabaja en paises arabes y es de los hombres más ricos del mundo',
             'genero' => 'masculino',
-            'semblanza_corta' => 'Semblanza corta',
-            'facebook' => 'face',
+            'comentarios' => 'Hombre alto, con mucha musculatura, pelo y barba de color castaño claro.',
+            'facebook' => 'Juan Macedo',
             'unam' => true,
             'facultad_id' =>14,
             'carrera_id' =>10,
@@ -1493,57 +1516,216 @@ class StartSeeder extends Seeder
             'categoria_nivel_id'=>4,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '557458963',
-            'grado' => 'Maestro',
+            'grado' => 'Maestría',
             'email' => 'MSP10@gmail.com',
-            'comentarios' => 'Comentario',
+            'semblanza_corta' => 'Licencidad en contaduria, ella calcula los imppuestos de la unam y tiene maestria en impuestos universitarios.',
             'genero' => 'femenino',
-            'semblanza_corta' => 'Semblanza',
-            'facebook' => 'MyFace',
+            'comentarios' => 'Mujer de estatura promedio, de tez morena con nariz grande y pelo negro',
+            'facebook' => 'Viridiana Valencia',
             'unam' => true,
             'facultad_id' =>5,
             'carrera_id' =>10,
         ]);
 
-
-
         DB::table('catalogo_cursos')->insert([
-            'nombre_curso' =>'Curso de programacion',
+            'nombre_curso' =>'Programacion Estructurada',
             'duracion_curso' => '10',
             'coordinacion_id' => 1,
-            'tipo' => 'C',
+            'tipo' => 'CT',
+            'institucion' => 'CD',
             'presentacion' => 'Presentacion',
-            'dirigido' => 'Dirigido',
-            'objetivo' => 'Objetivo',
-            'contenido' => 'Contentido',
+            'dirigido' => 'Personas interesadas en el área 
+                            de la programación, desarrollo de software 
+                            y tecnologías de la información',
+            'objetivo' => 'Enseñar las bases de todos los paradigmas de la programación
+                            y mostrar la ventana de oportunidades que libera',
+            'contenido' => '-¿Qué es la programación?
+                            -Paradigmas de programación
+                            -Lenguajes de programación
+                            -Ejercicios
+                            -Ejemplos en la vida diaria
+                            -Temas avanzados',
             'sintesis' => 'Sintesis',
             'metodologia' => 'Metodologia',
-            'acreditacion' => 'Acreditacion',
-            'previo' => 'prueba de conocimientos previos, encender un computadora',
+            'acreditacion' => '10% Tareas
+            90% Examen',
+            'previo' => 'Conocimientos básicos de informática y tecnologías de información: Qué es una computadora y cómo funciona',
             'evaluacion' => 'Examen',
-            'bibliografia' => 'Bibliogragia',
+            'bibliografia' => 'www.paginasobreprogramacion.com
+            A.J. Tyson, Programacion para dummys. Pearson, 2008.',
             'fecha_disenio' => '2018-05-18',
             'clave_curso' => 'ADFVJ0911598'
 
         ]);
         DB::table('catalogo_cursos')->insert([
-            'nombre_curso' =>'Administracion',
+            'nombre_curso' =>'Administración',
             'duracion_curso' => '20',
             'coordinacion_id' => 1,
             'tipo' => 'E',
+            'institucion' => 'DGAPA',
             'presentacion' => 'Presentacion',
-            'dirigido' => 'Dirigido',
-            'objetivo' => 'Objetivo',
-            'contenido' => 'Contentido',
-            'sintesis' => 'Sintesis',
-            'metodologia' => 'Metodologia',
-            'acreditacion' => 'Acreditacion',
+            'dirigido' => 'Administradores',
+            'objetivo' => 'Que los que tomen el curso refuerzen sus conocimientos administrativos',
+            'contenido' => 'Que es la administracion y sus derivados',
+            'sintesis' => 'Se aprendera sobre la administracion',
+            'metodologia' => 'Presencial',
+            'acreditacion' => 'Diploma de la FI',
             'evaluacion' => 'Examen',
-            'bibliografia' => 'Bibliogragia',
+            'bibliografia' => 'El libro sobre administracion',
             'fecha_disenio' => '2018-05-18',
             'clave_curso' => 'FJHCZC'
 
         ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Administración',
+            'duracion_curso' => '20',
+            'coordinacion_id' => 1,
+            'tipo' => 'C',
+            'institucion' => 'DGAPA',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Gente sin conocimiento en administracion',
+            'objetivo' => 'Aprender lo basico de aministracion',
+            'contenido' => 'Bases de administracion',
+            'sintesis' => 'Se aprendera lo basico de administracion',
+            'metodologia' => 'online',
+            'acreditacion' => 'Diploma de la FI',
+            'evaluacion' => 'Examen',
+            'bibliografia' => 'El libro administratico',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'FJHCZB'
+        ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Ecuaciones Diferenciales',
+            'duracion_curso' => '20',
+            'coordinacion_id' => 1,
+            'tipo' => 'S',
+            'institucion' => 'DGAPA',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Ingenieros',
+            'objetivo' => 'Aprender sobre ecuaciones diferenciales',
+            'contenido' => 'Lo basico de ecuaciones diferenciales',
+            'sintesis' => 'Aqui se aprenderan las bases para resolver ecuaciones diferenciales',
+            'metodologia' => 'presencial',
+            'acreditacion' => 'Diploma de la FI',
+            'evaluacion' => 'Examen',
+            'bibliografia' => 'Zill',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'ED1HCZ12'
 
+        ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Cálculo Integral',
+            'duracion_curso' => '20',
+            'coordinacion_id' => 1,
+            'tipo' => 'C',
+            'institucion' => 'CD',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Alumnos de ingenieria',
+            'objetivo' => 'Aprender a integrar',
+            'contenido' => 'Metodos de integracion',
+            'sintesis' => 'Se aprendera a integrar mub bien en este curso',
+            'metodologia' => 'Presencial',
+            'acreditacion' => 'Diploma de la FI',
+            'evaluacion' => 'Examen',
+            'bibliografia' => 'Libro de Integrales',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'CI2HCZA'
+
+        ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Álgebra Lineal',
+            'duracion_curso' => '20',
+            'coordinacion_id' => 1,
+            'tipo' => 'C',
+            'institucion' => 'CD',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Alumno que ya acabaron Algebra',
+            'objetivo' => 'Que la gente aprenda algebra lineal',
+            'contenido' => 'Transformaciones lineales y espacios vectoriales',
+            'sintesis' => 'Aqui se aprendera algebra vectorial',
+            'metodologia' => 'presencial',
+            'acreditacion' => 'Diploma de la FI',
+            'evaluacion' => 'Examen',
+            'bibliografia' => 'Libro de Algebra Lineal',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'ALA3HCZ'
+
+        ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Álgebra',
+            'duracion_curso' => '20',
+            'coordinacion_id' => 1,
+            'tipo' => 'C',
+            'institucion' => 'CD',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Todo el publico',
+            'objetivo' => 'Que los que tomen el curso aprendan lo basico de Algebra',
+            'contenido' => 'Matrices y polinomios',
+            'sintesis' => 'Aquí se aprenderá sobre Álgebra',
+            'metodologia' => 'Presencia',
+            'acreditacion' => 'Diploma de la FI',
+            'evaluacion' => 'Examen',
+            'bibliografia' => 'Libro de Álgebra',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'A1A27HCZ'
+
+        ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Análisis Numérico',
+            'duracion_curso' => '20',
+            'coordinacion_id' => 1,
+            'tipo' => 'C',
+            'institucion' => 'CD',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Alumno que ya cursaron ecuaciones diferenciales',
+            'objetivo' => 'Aprender sobre analisis numerico',
+            'contenido' => 'Temas de Análisis Numérico',
+            'sintesis' => 'Aqui se aprenderan los temas básicos de Ánalisis numérico',
+            'metodologia' => 'Online',
+            'acreditacion' => 'Diploma de la FI',
+            'evaluacion' => 'Examen',
+            'bibliografia' => 'Libro de Analisis Numerico',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'AN412HCZ'
+
+        ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Programación Estructurada',
+            'duracion_curso' => '10',
+            'coordinacion_id' => 1,
+            'tipo' => 'CT',
+            'institucion' => 'CD',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Alumnos de la carrera de ingenieria en computación',
+            'objetivo' => 'Aprender temas avanzados de programacion ',
+            'contenido' => 'Temas Avanzados de programacion',
+            'sintesis' => 'En este curso los alumnos seran capaces al finalizar de programar cualquier cosa',
+            'metodologia' => 'Online',
+            'acreditacion' => 'Diploma de la FI',
+            'evaluacion' => 'Examen',
+            'bibliografia' => 'Libro de super programación',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'ADFVJ080578451'
+
+        ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Administración Básica',
+            'duracion_curso' => '20',
+            'coordinacion_id' => 1,
+            'tipo' => 'C',
+            'institucion' => 'DGAPA',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Administradores expertos',
+            'objetivo' => 'Aprender todo sobre administracion',
+            'contenido' => 'Temas avanzados de aministracion',
+            'sintesis' => 'En este curso se aprenderan los temas más avanzados de administracion',
+            'metodologia' => 'Presencial',
+            'acreditacion' => 'Diploma de la FI',
+            'evaluacion' => 'Examen',
+            'bibliografia' => 'Libro super avanzado de Administracion',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'FJHCZA'
+        ]);
         DB::table('cursos')->insert([
             'semestre_anio' => 2020,
             'semestre_pi'=>"2",
@@ -1556,67 +1738,10 @@ class StartSeeder extends Seeder
             'numero_sesiones' => 10,
             'texto_diploma' => 'Texto diploma',
             'costo' => 2000,
-            'cupo_maximo' => 20,
+            'cupo_maximo' => 5,
             'cupo_minimo' => 5,
-            'status' => 'Activo',
             'catalogo_id' => 1,
             'salon_id' => 1
-        ]);
-        DB::table('cursos')->insert([
-            'semestre_anio' => 2019,
-            'semestre_pi'=>"1",
-            'semestre_si' => "s",
-            'fecha_inicio' => '2019-12-05',
-            'fecha_fin' => '2018-12-30',
-            'hora_inicio' => '14:00',
-            'hora_fin' => '16:00',
-            'dias_semana' => 'Lunes,Martes',
-            'numero_sesiones' => 10,
-            'texto_diploma' => 'Texto diploma',
-            'costo' => 2000,
-            'cupo_maximo' => 20,
-            'cupo_minimo' => 5,
-            'status' => 'Activo',
-            'catalogo_id' => 2,
-            'salon_id' => 1
-        ]);
-
-
-        DB::table('catalogo_cursos')->insert([
-            'nombre_curso' =>'Curso de programacion',
-            'duracion_curso' => '10',
-            'coordinacion_id' => 1,
-            'tipo' => 'CT',
-            'presentacion' => 'Presentacion',
-            'dirigido' => 'Dirigido',
-            'objetivo' => 'Objetivo',
-            'contenido' => 'Contentido',
-            'sintesis' => 'Sintesis',
-            'metodologia' => 'Metodologia',
-            'acreditacion' => 'Acreditacion',
-            'evaluacion' => 'Examen',
-            'bibliografia' => 'Bibliogragia',
-            'fecha_disenio' => '2018-05-18',
-            'clave_curso' => 'ADFVJ080578451'
-
-        ]);
-        DB::table('catalogo_cursos')->insert([
-            'nombre_curso' =>'Administracion',
-            'duracion_curso' => '20',
-            'coordinacion_id' => 1,
-            'tipo' => 'C',
-            'presentacion' => 'Presentacion',
-            'dirigido' => 'Dirigido',
-            'objetivo' => 'Objetivo',
-            'contenido' => 'Contentido',
-            'sintesis' => 'Sintesis',
-            'metodologia' => 'Metodologia',
-            'acreditacion' => 'Acreditacion',
-            'evaluacion' => 'Examen',
-            'bibliografia' => 'Bibliogragia',
-            'fecha_disenio' => '2018-05-18',
-            'clave_curso' => 'FJHCZA'
-
         ]);
 
         DB::table('cursos')->insert([
@@ -1633,7 +1758,6 @@ class StartSeeder extends Seeder
             'costo' => 2000,
             'cupo_maximo' => 20,
             'cupo_minimo' => 5,
-            'status' => 'Activo',
             'catalogo_id' => 1,
             'salon_id' => 1
         ]);
@@ -1651,113 +1775,10 @@ class StartSeeder extends Seeder
             'costo' => 2000,
             'cupo_maximo' => 20,
             'cupo_minimo' => 5,
-            'status' => 'Activo',
             'catalogo_id' => 2,
             'salon_id' => 1
         ]);
-        DB::table('catalogo_cursos')->insert([
-            'nombre_curso' =>'Administracion',
-            'duracion_curso' => '20',
-            'coordinacion_id' => 1,
-            'tipo' => 'C',
-            'presentacion' => 'Presentacion',
-            'dirigido' => 'Dirigido',
-            'objetivo' => 'Objetivo',
-            'contenido' => 'Contentido',
-            'sintesis' => 'Sintesis',
-            'metodologia' => 'Metodologia',
-            'acreditacion' => 'Acreditacion',
-            'evaluacion' => 'Examen',
-            'bibliografia' => 'Bibliogragia',
-            'fecha_disenio' => '2018-05-18',
-            'clave_curso' => 'FJHCZB'
 
-        ]);DB::table('catalogo_cursos')->insert([
-            'nombre_curso' =>'Ecuaciones Diferenciales',
-            'duracion_curso' => '20',
-            'coordinacion_id' => 1,
-            'tipo' => 'C',
-            'presentacion' => 'Presentacion',
-            'dirigido' => 'Dirigido',
-            'objetivo' => 'Objetivo',
-            'contenido' => 'Contentido',
-            'sintesis' => 'Sintesis',
-            'metodologia' => 'Metodologia',
-            'acreditacion' => 'Acreditacion',
-            'evaluacion' => 'Examen',
-            'bibliografia' => 'Bibliogragia',
-            'fecha_disenio' => '2018-05-18',
-            'clave_curso' => 'ED1HCZ12'
-
-        ]);DB::table('catalogo_cursos')->insert([
-            'nombre_curso' =>'Cálculo Integral',
-            'duracion_curso' => '20',
-            'coordinacion_id' => 1,
-            'tipo' => 'C',
-            'presentacion' => 'Presentacion',
-            'dirigido' => 'Dirigido',
-            'objetivo' => 'Objetivo',
-            'contenido' => 'Contentido',
-            'sintesis' => 'Sintesis',
-            'metodologia' => 'Metodologia',
-            'acreditacion' => 'Acreditacion',
-            'evaluacion' => 'Examen',
-            'bibliografia' => 'Bibliogragia',
-            'fecha_disenio' => '2018-05-18',
-            'clave_curso' => 'CI2HCZA'
-
-        ]);DB::table('catalogo_cursos')->insert([
-            'nombre_curso' =>'Álgebra Lineal',
-            'duracion_curso' => '20',
-            'coordinacion_id' => 1,
-            'tipo' => 'C',
-            'presentacion' => 'Presentacion',
-            'dirigido' => 'Dirigido',
-            'objetivo' => 'Objetivo',
-            'contenido' => 'Contentido',
-            'sintesis' => 'Sintesis',
-            'metodologia' => 'Metodologia',
-            'acreditacion' => 'Acreditacion',
-            'evaluacion' => 'Examen',
-            'bibliografia' => 'Bibliogragia',
-            'fecha_disenio' => '2018-05-18',
-            'clave_curso' => 'ALA3HCZ'
-
-        ]);DB::table('catalogo_cursos')->insert([
-            'nombre_curso' =>'Álgebra',
-            'duracion_curso' => '20',
-            'coordinacion_id' => 1,
-            'tipo' => 'C',
-            'presentacion' => 'Presentacion',
-            'dirigido' => 'Dirigido',
-            'objetivo' => 'Objetivo',
-            'contenido' => 'Contentido',
-            'sintesis' => 'Sintesis',
-            'metodologia' => 'Metodologia',
-            'acreditacion' => 'Acreditacion',
-            'evaluacion' => 'Examen',
-            'bibliografia' => 'Bibliogragia',
-            'fecha_disenio' => '2018-05-18',
-            'clave_curso' => 'A1A27HCZ'
-
-        ]);DB::table('catalogo_cursos')->insert([
-            'nombre_curso' =>'Análisis Numérico',
-            'duracion_curso' => '20',
-            'coordinacion_id' => 1,
-            'tipo' => 'C',
-            'presentacion' => 'Presentacion',
-            'dirigido' => 'Dirigido',
-            'objetivo' => 'Objetivo',
-            'contenido' => 'Contentido',
-            'sintesis' => 'Sintesis',
-            'metodologia' => 'Metodologia',
-            'acreditacion' => 'Acreditacion',
-            'evaluacion' => 'Examen',
-            'bibliografia' => 'Bibliogragia',
-            'fecha_disenio' => '2018-05-18',
-            'clave_curso' => 'AN412HCZ'
-
-        ]);
         DB::table('cursos')->insert([
             'semestre_anio' => 2016,
             'semestre_pi'=>"2",
@@ -1772,8 +1793,7 @@ class StartSeeder extends Seeder
             'costo' => 2000,
             'cupo_maximo' => 20,
             'cupo_minimo' => 5,
-            'status' => 'Activo',
-            'catalogo_id' => 5,
+            'catalogo_id' => 3,
             'salon_id' => 2
         ]);
         DB::table('cursos')->insert([
@@ -1790,7 +1810,6 @@ class StartSeeder extends Seeder
             'costo' => 2000,
             'cupo_maximo' => 20,
             'cupo_minimo' => 5,
-            'status' => 'Activo',
             'catalogo_id' => 6,
             'salon_id' => 3
         ]);
@@ -1808,8 +1827,7 @@ class StartSeeder extends Seeder
             'costo' => 2000,
             'cupo_maximo' => 20,
             'cupo_minimo' => 5,
-            'status' => 'Activo',
-            'catalogo_id' => 8,
+            'catalogo_id' => 7,
             'salon_id' => 3
         ]);
         DB::table('cursos')->insert([
@@ -1826,7 +1844,6 @@ class StartSeeder extends Seeder
             'costo' => 2000,
             'cupo_maximo' => 20,
             'cupo_minimo' => 5,
-            'status' => 'Activo',
             'catalogo_id' => 3,
             'salon_id' => 2
         ]);
@@ -1844,7 +1861,6 @@ class StartSeeder extends Seeder
             'costo' => 2000,
             'cupo_maximo' => 20,
             'cupo_minimo' => 5,
-            'status' => 'Activo',
             'catalogo_id' => 7,
             'salon_id' => 1
         ]);
@@ -1904,61 +1920,30 @@ class StartSeeder extends Seeder
 
         ]);
         DB::table('profesor_curso')->insert([
-            'curso_id' => "9",
-            'profesor_id' => '1',
-
-        ]);
-        DB::table('profesor_curso')->insert([
-            'curso_id' => "9",
-            'profesor_id' => '2',
-
-        ]);
-        DB::table('profesor_curso')->insert([
             'curso_id' => "8",
             'profesor_id' => '4',
 
         ]);
 
-        DB::table('participante_curso')->insert([
-            'curso_id' => "8",
-            'profesor_id' => '1',
-        ]);
-
-        DB::table('participante_curso')->insert([
-            'curso_id' => "1",
-            'profesor_id' => '1',
-
-        ]);
-
-        DB::table('participante_curso')->insert([
-            'curso_id' => "2",
-            'profesor_id' => '1',
-
-        ]);
-
-        DB::table('participante_curso')->insert([
-            'curso_id' => "3",
-            'profesor_id' => '1',
-
-        ]);
-
-
         DB::table('secretario_apoyo')->insert([
             'secretario' => "Javier Arriaga",
-            'comentarios' => 'holi',
+            'comentarios' => 'Licenciado en Administracion, muchos años ha estado en cargos administrativos de la universidad y actualmente se desempeña como secretario.',
+            'grado' => "M.E.M.",
 
         ]);
 
         DB::table('direccion')->insert([
             'director' => "Gabriel Aguilar Luna",
-            'comentarios' => 'holi',
+            'comentarios' => 'Ingeniero en computacion egresado de la UNAM, trabajo mucho tiempo en cargos administraticos en la FI',
+            'grado' => "M.E.M."
 
-        ]); 
+        ]);
 
         DB::table('coordinador_general')->insert([
             'coordinador' => "Carolina Herrera",
-            'comentarios' => 'holi',
+            'comentarios' => 'Licenciada en derecho, actuelmente se desempeña como coordinadora.',
+            'grado' => "M.E.M."
 
-        ]);     
+        ]);
     }
 }

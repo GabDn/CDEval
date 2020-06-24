@@ -23,7 +23,6 @@ class CreateTableCursos extends Migration
             $table->double('costo');
             $table->integer('cupo_maximo');
             $table->integer('cupo_minimo');
-            $table->String('status');
             $table->integer('catalogo_id')->unsigned();
             $table->integer('salon_id')->unsigned();
             $table->foreign('catalogo_id')->references('id')->on('catalogo_cursos');

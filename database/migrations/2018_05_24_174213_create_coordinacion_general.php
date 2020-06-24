@@ -16,6 +16,7 @@ class CreateCoordinacionGeneral extends Migration
         Schema::create('coordinador_general', function (Blueprint $table) {
             $table->increments('id')->unique();
             $table->String('coordinador');
+            $table->String('grado');
             $table->String('comentarios')->nullable();
             $table->timestamps();
         });

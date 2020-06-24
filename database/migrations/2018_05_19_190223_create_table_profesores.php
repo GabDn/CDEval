@@ -26,11 +26,11 @@ class CreateTableProfesores extends Migration
             $table->string('telefono')->nullable();
             $table->string('grado')->nullable();
             $table->string('email')->nullable();
-            $table->string('comentarios')->nullable();
+            $table->longText('comentarios')->nullable();
             $table->string('genero')->nullable();
             $table->string('baja')->nullable();
             $table->string('causa_baja')->nullable();
-            $table->string('semblanza_corta')->nullable();
+            $table->longText('semblanza_corta')->nullable();
             $table->string('facebook')->nullable();
             $table->boolean('unam')->nullable();
             $table->string('procedencia')->nullable();

@@ -17,6 +17,7 @@ class CreateSecretariaApoyo extends Migration
             $table->increments('id')->unique();
             $table->String('secretario');
             $table->String('comentarios')->nullable();
+            $table->String('grado');
             $table->timestamps();
         });
     }
