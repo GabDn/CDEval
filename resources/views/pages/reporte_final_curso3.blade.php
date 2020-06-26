@@ -77,7 +77,7 @@ body {
                 <td style="font-weight: bold; border: 0px solid white; ">a) Instructor</td>
                 <?php
                     foreach($nombreInstructor as $instructorCurso){
-                        echo "<td style=\"border: 0px solid white;\"> $instructorCurso->nombres $instructorCurso->apellido_paterno $instructorCurso->apellido_materno</td>";
+                        echo "<td style=\"border: 0px solid white;\"> $instructorCurso->nombres $instructorCurso->apellido_paterno $instructorCurso->apellido_materno, </td>";
                     }
                 ?>
             </tr>
@@ -151,7 +151,7 @@ body {
                     <th style="background-color: #2A4EDF;color: white; ">Máximo</th>
                 </tr>
                 <tr>
-                    <td style="border: 0px solid white; ">INSTRUCTOR</td>
+                    <td style="border: 0px solid white; ">{{$nombreInstructor[0]->nombres}} {{$nombreInstructor[0]->apellido_paterno}} {{$nombreInstructor[0]->apellido_materno}}</td>
                     <td style="border: 0px solid white; ">{{$instructor}}</td>
                     <td style="border: 0px solid white; ">{{$minimo}}</td>
                     <td style="border: 0px solid white; ">{{$maximo}}</td>
@@ -165,7 +165,7 @@ body {
                     <th style="background-color: #2A4EDF;color: white; ">Máximo</th>
                 </tr>
                 <tr>
-                    <td style="border: 0px solid white; ">INSTRUCTOR</td>
+                    <td style="border: 0px solid white; ">{{$nombreInstructor[1]->nombres}} {{$nombreInstructor[1]->apellido_paterno}} {{$nombreInstructor[1]->apellido_materno}}</td>
                     <td style="border: 0px solid white; ">{{$instructor2}}</td>
                     <td style="border: 0px solid white; ">{{$minimo2}}</td>
                     <td style="border: 0px solid white; ">{{$maximo2}}</td>
@@ -179,7 +179,7 @@ body {
                     <th style="background-color: #2A4EDF;color: white; ">Máximo</th>
                 </tr>
                 <tr>
-                    <td style="border: 0px solid white; ">INSTRUCTOR</td>
+                    <td style="border: 0px solid white; ">{{$nombreInstructor[2]->nombres}} {{$nombreInstructor[2]->apellido_paterno}} {{$nombreInstructor[2]->apellido_materno}}</td>
                     <td style="border: 0px solid white; ">{{$instructor3}}</td>
                     <td style="border: 0px solid white; ">{{$minimo3}}</td>
                     <td style="border: 0px solid white; ">{{$maximo3}}</td>
@@ -281,6 +281,8 @@ body {
             </table>
         </div>
     </div>
+
+    <button id="dia"  type="button" class="btn btn-primary active"><a href="{{route('ver.global.final',['curso_id'=>$curso_id,'pdf'=>1])}}" style="color:white">Descargar PDF</a></button>
 
                          
                 </div>

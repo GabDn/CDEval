@@ -868,6 +868,8 @@
                             <td><input name="horarioi" type="text" class="form-control" id="intersemestral" placeholder=""></td></td>
                         </tr>
                     </table> 
+                    <br>
+                    <br>
                     <button type="submit" class="btn btn-primary active">Enviar evaluación</button>
                 </div>
     

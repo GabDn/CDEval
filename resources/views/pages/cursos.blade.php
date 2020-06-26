@@ -2,6 +2,10 @@
 
 @section('contenido')
 
+@if(!empty($message))
+    <div class="alert alert-success" style = "text-align:center;"> {{ $message }}</div>
+@endif
+
 <div class="content">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
@@ -51,8 +55,8 @@
                                     <td>{{ $curso->getProfesores2() }}</td>
                                     <td>{{ $curso->semestre_anio }}-{{ $curso->semestre_pi }}{{ $curso->semestre_si }}</td>
                                     <td>
-                                    <a href="{{ route('ver.sesion') }}" class="btn btn-warning">Sesión</a>
-                                    <a href="{{ route('ver.global') }}" class="btn btn-success">Final</a>
+                                    <a href="{{ route('ver.sesion.final',['curso_id'=>$curso->id,'pdf'=>0]) }}" class="btn btn-warning">Sesión</a>
+                                    <a href="{{ route('ver.global.final',['curso_id'=>$curso->id,'pdf'=>0]) }}" class="btn btn-success">Final</a>
                                     </td>
                                 </tr>
                             </tbody>

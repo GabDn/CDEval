@@ -84,13 +84,13 @@ body {
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">b) Fecha de impartición</td>
-                <td class="n">{fecha}</td>
+                <td class="n">{{$semestre->fecha_inicio}},{{$semestre->fecha_fin}}</td>
                 <td style="font-weight: bold ; margin-left: 50px white;" class="n" >e) Capacidad</td>
-                <td class="n">{núm}</td>
+                <td class="n">{{$semestre->curpo_maximo}}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">c) Horario</td>
-                <td class="n">{hora}</td>
+                <td class="n">{{$semestre->hora_inicio}},{{$semestre->hora_fin}}</td>
                 <td style="font-weight: bold ; margin-left: 50px white;" class="n">f) Total de horas</td>
                 <td class="n">{núm}</td>
             </tr>
@@ -104,46 +104,46 @@ body {
         <table width="100%">
             <tr>
                 <th>2. PLANTEAMIENTO DE OBJETIVOS</th>
-				<td class="n">{{$evaluacion[0]->p1}}</td>
+				<td class="n">{{$evaluacion->p1}}</td>
             </tr>
         </table>
         <br>
         <table width="100%">
             <tr>
                 <th>3. MANEJO DEL TEMA</th>
-                <td class="n">{{$evaluacion[0]->p2}}</td>
+                <td class="n">{{$evaluacion->p2}}</td>
             </tr>
             <tr>
                 <th>4. CLARIDAD EN LA EXPOSICION</th>
-                <td class="n">{{$evaluacion[0]->p3}}</td>
+                <td class="n">{{$evaluacion->p3}}</td>
             </tr>
         </table>
         <br>
         <table width="100%">
             <tr>
                 <th>5. MANEJO DEL MATERIAL Y RECURSOS DIDÁCTICOS</th>
-                <td class="n">{{$evaluacion[0]->p4}}</td>
+                <td class="n">{{$evaluacion->p4}}</td>
             </tr>
             <tr>
                 <th>6. PLANTEAMIENTO DE PROBLEMAS</th>
-                <td class="n">{{$evaluacion[0]->p5}}</td>
+                <td class="n">{{$evaluacion->p5}}</td>
             </tr>
         </table>
         <br>
         <table width="100%">
             <tr>
                 <th>7. USO DE EJEMPLOS</th>
-                <td class="n">{{$evaluacion[0]->p6}}</td>
+                <td class="n">{{$evaluacion->p6}}</td>
             </tr>
             <tr>
                 <th width="15%">8. FOMENTO DE PARTICIPACIÓN GRUPAL</th>
-                <td class="n"><pre>  </pre>{{$evaluacion[0]->p7}}</td>
+                <td class="n"><pre>  </pre>{{$evaluacion->p7}}</td>
             </tr>
         </table>
         <table width="100%">
             <tr>
                 <th>9. CONTENIDOS A ABORDAR EN PRACTICA DOCENTE</th>
-				<td class="n">{{$evaluacion[0]->contenido}}</td>
+				<td class="n">{{$evaluacion->contenido}}</td>
             </tr>
             <tr>
                 
@@ -152,7 +152,7 @@ body {
 		<table width="100%">
             <tr>
                 <th>10. COMENTARIOS Y SUGERENCIAS</th>
-				<td class="n">{{$evaluacion[0]->sug}}</td>
+				<td class="n">{{$evaluacion->sug}}</td>
             </tr>
             <tr>
                 

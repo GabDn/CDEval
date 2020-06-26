@@ -23,11 +23,18 @@ class CoordinadorController extends Controller
 
     public function index(){
 
+        $coordinaciones = Coordinacion::all();
+
+        return view('pages.superadmin')
+            ->with("coordinaciones",$coordinaciones); //Route -> coordinador
     }
 
     public function cursos(){
         $cursos = Curso::all();
-        return view("pages.cursos")->with("cursos",$cursos);
+        return view("pages.cursos")
+                ->with("cursos",$cursos)
+                ->with('message','Curso no evaluado')
+                ->with('coordinaciones',$coordinaciones);
     }
 
     public function searchCursos(Request $request){      
@@ -982,4 +989,760 @@ class CoordinadorController extends Controller
         return $pdf->download($lugar.'pdf');
     }
 
+    public function globalFinal($curso_id,$pdf){
+
+        $coordinaciones = Coordinacion::all();
+
+		$correo = new EvaluacionController(); 
+		$evals = 0;
+
+        $catalogoCurso_id = DB::table('cursos')
+            ->where('id',$curso_id)
+            ->get('catalogo_id');
+
+        $catalogoCurso = DB::table('catalogo_cursos')
+            ->where('id',$catalogoCurso_id[0]->catalogo_id)
+            ->get('tipo');
+
+		//Checamos si el usuario desea los reportes de los cursos o de los seminarios
+		if(strcmp($catalogoCurso[0]->tipo,'Actualizacion')==0){
+            $evals = DB::table('_evaluacion_final_seminario')
+			    ->where("curso_id",$curso_id)
+                ->get();
+
+		}else{
+			$evals = DB::table('_evaluacion_final_curso')
+			    ->where("curso_id",$curso_id)
+                ->get();
+        }
+
+        if(sizeof($evals) == 0){
+            $cursos = Curso::all();
+            return view("pages.cursos")
+                ->with("cursos",$cursos)
+                ->with('message','Curso no ha sido evaluado')
+                ->with('coordinaciones',$coordinaciones);
+        }
+
+		//Obtenemos el id de los instructores de los cursos
+		$instructores = DB::table('profesor_curso')
+			->where('curso_id',$evals[0]->curso_id)
+			->get();
+
+		//Obtenemos los datos de los instructores de cada curso
+		$nombreInstructor = array();
+		foreach($instructores as $instructorCurso){
+			$instructor = DB::table('profesors')
+				->where('id',$instructorCurso->profesor_id)
+				->get();
+			array_push($nombreInstructor,$instructor[0]);
+		}
+
+		//Obtenemos el cupo maximo del curso en cuestion
+		$curso_ocupacion = DB::table("cursos")
+			->where("id",$curso_id)
+			->value("cupo_maximo");
+
+		//Obtenemos los participantes del curso
+		$participantes = DB::table('participante_curso')
+			->where('curso_id',$curso_id)
+			->get();
+
+		//Obtenemos el curso?
+		$curso = DB::table('cursos')
+			->where('id',$curso_id)
+			->get();
+
+		//Obtenemos los datos del curso
+		$catalogo_curso = DB::table('catalogo_cursos')
+			->where('id',$curso[0]->catalogo_id)
+			->get();
+
+		//Obtenemos el salon donde se imparte el curso
+		$salon = DB::table('salons')
+			->where('id',$curso[0]->salon_id)
+			->get();
+
+		//Obtenemos el factor de recomendación y de asistencia
+		$recomendaciones = 0;
+        $factor = 0;
+		$alumnos = 0;
+
+        foreach($evals as $array){
+			//Si la pregunta 7 vale uno es curso es recomendado
+            if($array->p7 == 1){
+                $recomendaciones = $recomendaciones + 1;
+                $alumnos = $alumnos + 1;
+            }else if($array->p7 == 0){
+                $alumnos = $alumnos + 1;
+            }
+		}
+		
+		//Obtenemos el factor de recomendacion
+        if($alumnos == 0){
+            $factor = round(($recomendaciones * 100) / 1,2);
+        }else
+        {
+            $factor = round(($recomendaciones * 100) / $alumnos,2);
+		}
+
+		//Obtenemos el factor de acreditación y la asistencia
+		$acreditado = 0;
+		$factor_acreditacion = 0;
+		$alumnos = 0;
+		$asistieron = 0;
+		foreach($participantes as $participante){
+			$alumnos = $alumnos + 1;
+			if($participante->acreditacion == 1){
+				$acreditado = $acreditado + 1;
+			}
+			if($participante->asistencia == 1){
+				$asistieron++;
+			}
+		}
+
+		//Obtenemos el factor de acreditacion 
+		if($alumnos == 0){
+			$factor_acreditacion = round(($acreditado * 100) / 1,2);
+		}else
+		{
+			$factor_acreditacion = round(($acreditado * 100) / $alumnos,2);
+		}
+
+		//Obtenemos el factor de ocupacion
+		$ocupacion = ($alumnos*100)/$curso_ocupacion;
+
+		//Obtenemos la cantidad de integrantes de cada area
+		$DP=0;
+        $DH=0;
+        $CO=0;
+        $DI=0;
+        $Otros=0;
+        foreach($evals as $evaluacion){
+            $array = explode(',',$evaluacion->conocimiento);
+            foreach($array as $elem){
+                if($elem[2] == 1 || $elem[1] == 1){
+					//Aumentamos numero integrante Division Pedagogia
+					$DP++;
+                }else if($elem[2] == 2 || $elem[1] == 2){
+					//Aumentamos numero integrantes division desarrollo humano
+                    $DH++;
+                }else if($elem[2] == 3 || $elem[1] == 3){
+					//Aumentamos numero integrante Division de computo
+                    $CO++;
+                }else if($elem[2] == 4 || $elem[1] == 4){
+					//Aumentamos numero integrante Division de disciplina
+                    $DI++;
+                }else if($elem[2] == 5 || $elem[1] == 5){
+					//Aumentamos numero integrante externo
+                    $Otros++;
+                }
+            }
+		}
+		
+		$preguntas = 0;
+		$positivas = 0;
+		$respuestasContenido = 0;
+		$respuestasCoordinacion = 0;
+		$respuestasInstructores1 = 0;
+		$respuestasInstructores2 = 0;
+		$respuestasInstructores3 = 0;
+		$alumnos = 0;
+		$alumnos_eval_instructor1 = 0;
+		$alumnos_eval_instructor2 = 0;
+		$alumnos_eval_instructor3 = 0;
+		$promedios1 = array();
+		$promedios2 = array();
+		$promedios3 = array();
+		$respuesta_individual1 = 0;
+		$respuesta_individual2 = 0;
+		$respuesta_individual3 = 0;
+
+		//Bucle necesario para obtener el numero de preguntas positivas, evaluaciones de cada uno de los instructores y los factores de calidad de contenido, de calidad de la coordinacion, y los factores de calidad de los instructores
+		foreach($evals as $evaluacion){
+			//Aumentamos el numero de alumnos que respondieron el cuestionario
+			$alumnos++;
+			//Desde 1_1 a 1_5 obtenemos el factor de calidad del contenido ($respuestasContenido/$alumnos*5) valor >= 60
+			if($evaluacion->p1_1 >= 20){
+				$preguntas++;
+				$respuestasContenido += $evaluacion->p1_1;
+				if($evaluacion->p1_1 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p1_2 >= 20){
+				$preguntas++;
+				$respuestasContenido+= $evaluacion->p1_2;
+				if($evaluacion->p1_2 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p1_3 >= 20){
+				$preguntas++;
+				$respuestasContenido+= $evaluacion->p1_3;
+				if($evaluacion->p1_3 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p1_4 >= 20){
+				$preguntas++;
+				$respuestasContenido+= $evaluacion->p1_4;
+				if($evaluacion->p1_4 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p1_5 >= 20){
+				$preguntas++;
+				$respuestasContenido+= $evaluacion->p1_5;
+				if($evaluacion->p1_5 >= 60){
+					$positivas++;
+				}
+			}
+
+			if($evaluacion->p2_1 >= 20){
+				$preguntas++;
+				if($evaluacion->p2_1 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p2_2 >= 20){
+				$preguntas++;
+				if($evaluacion->p2_2 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p2_3 >= 20){
+				$preguntas++;
+				if($evaluacion->p2_3 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p2_4 >= 20){
+				$preguntas++;
+				if($evaluacion->p2_4 >= 60){
+					$positivas++;
+				}
+			}
+
+			//Desde 1_1 a 1_5 obtenemos el factor de calidad de la coordinacion ($respuestasCoordinacion/$alumnos*4)
+			if($evaluacion->p3_1 >= 20){
+				$preguntas++;
+				$respuestasCoordinacion += $evaluacion->p3_1;
+				if($evaluacion->p3_1 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p3_2 >= 20){
+				$preguntas++;
+				$respuestasCoordinacion += $evaluacion->p3_2;
+				if($evaluacion->p3_2 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p3_3 >= 20){
+				$preguntas++;
+				$respuestasCoordinacion += $evaluacion->p3_3;
+				if($evaluacion->p3_3 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p3_4 >= 20){
+				$preguntas++;
+				$respuestasCoordinacion += $evaluacion->p3_4;
+				if($evaluacion->p3_4 >= 60){
+					$positivas++;
+				}
+			}
+
+			//Las preguntas correspondientes al primer instructor
+			if($evaluacion->p4_1 >= 20){
+				$alumnos_eval_instructor1++;
+				$preguntas++;
+				$respuestasInstructores1+= $evaluacion->p4_1;
+				$respuesta_individual1+= $evaluacion->p4_1;
+				if($evaluacion->p4_1 == 1){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_2 >= 20){
+				$preguntas++;
+				$respuestasInstructores1+= $evaluacion->p4_2;
+				$respuesta_individual1+= $evaluacion->p4_2;
+				if($evaluacion->p4_2 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_3 >= 20){
+				$preguntas++;
+				$respuestasInstructores1+= $evaluacion->p4_3;
+				$respuesta_individual1+= $evaluacion->p4_3;
+				if($evaluacion->p4_3 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_4 >= 20){
+				$preguntas++;
+				$respuestasInstructores1+= $evaluacion->p4_4;
+				$respuesta_individual1+= $evaluacion->p4_4;
+				if($evaluacion->p4_4 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_5 >= 20){
+				$preguntas++;
+				$respuestasInstructores1+= $evaluacion->p4_5;
+				$respuesta_individual1+= $evaluacion->p4_5;
+				if($evaluacion->p4_5 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_6 >= 20){
+				$preguntas++;
+				$respuestasInstructores1+= $evaluacion->p4_6;
+				$respuesta_individual1+= $evaluacion->p4_6;
+				if($evaluacion->p4_6 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_7 >= 20){
+				$preguntas++;
+				$respuestasInstructores1+= $evaluacion->p4_7;
+				$respuesta_individual1+= $evaluacion->p4_7;
+				if($evaluacion->p4_7 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_8 >= 20){
+				$preguntas++;
+				$respuestasInstructores1+= $evaluacion->p4_8;
+				$respuesta_individual1+= $evaluacion->p4_8;
+				if($evaluacion->p4_8 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_9 >= 20){
+				$preguntas++;
+				$respuestasInstructores1+= $evaluacion->p4_9;
+				$respuesta_individual1+= $evaluacion->p4_9;
+				if($evaluacion->p4_9 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p4_10 >= 20){
+				$preguntas++;
+				$respuestasInstructores1+= $evaluacion->p4_10;
+				$respuesta_individual1+= $evaluacion->p4_10;
+				if($evaluacion->p4_10 >= 60){
+					$positivas++;
+				}
+			}
+			//Queremos obtener todas las evaluaciones para luego comparar promedio, minimo y maximo del instructor
+			if($evaluacion->p4_11 >= 20){
+				$preguntas++;
+				$respuestasInstructores1+= $evaluacion->p4_11;
+				$respuesta_individual1+= $evaluacion->p4_11;
+				array_push($promedios1, round($respuesta_individual1/11,2));
+				$respuesta_individual1 = 0;
+				if($evaluacion->p4_11 >= 60){
+					$positivas++;
+				}
+			}
+
+			//Las preguntas correspondientes al segundo instructor
+			if($evaluacion->p5_1 >= 20){
+				$alumnos_eval_instructor2++;
+				$preguntas++;
+				$respuestasInstructores2+= $evaluacion->p5_1;
+				$respuesta_individual2+= $evaluacion->p5_1;
+				if($evaluacion->p5_1 == 1){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_2 >= 20){
+				$preguntas++;
+				$respuestasInstructores2+= $evaluacion->p5_2;
+				$respuesta_individual2+= $evaluacion->p5_2;
+				if($evaluacion->p5_2 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_3 >= 20){
+				$preguntas++;
+				$respuestasInstructores2+= $evaluacion->p5_3;
+				$respuesta_individual2+= $evaluacion->p5_3;
+				if($evaluacion->p5_3 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_4 >= 20){
+				$preguntas++;
+				$respuestasInstructores2+= $evaluacion->p5_4;
+				$respuesta_individual2+= $evaluacion->p5_4;
+				if($evaluacion->p5_4 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_5 >= 20){
+				$preguntas++;
+				$respuestasInstructores2+= $evaluacion->p5_5;
+				$respuesta_individual2+= $evaluacion->p5_5;
+				if($evaluacion->p5_5 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_6 >= 20){
+				$preguntas++;
+				$respuestasInstructores2+= $evaluacion->p5_6;
+				$respuesta_individual2+= $evaluacion->p5_6;
+				if($evaluacion->p5_6 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_7 >= 20){
+				$preguntas++;
+				$respuestasInstructores2+= $evaluacion->p5_7;
+				$respuesta_individual2+= $evaluacion->p5_7;
+				if($evaluacion->p5_7 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_8 >= 20){
+				$preguntas++;
+				$respuestasInstructores2+= $evaluacion->p5_8;
+				$respuesta_individual2+= $evaluacion->p5_8;
+				if($evaluacion->p5_8 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_9 >= 20){
+				$preguntas++;
+				$respuestasInstructores2+= $evaluacion->p5_9;
+				$respuesta_individual2+= $evaluacion->p5_9;
+				if($evaluacion->p5_9 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p5_10 >= 20){
+				$preguntas++;
+				$respuestasInstructores2+= $evaluacion->p5_10;
+				$respuesta_individual2+= $evaluacion->p5_10;
+				if($evaluacion->p5_10 >= 60){
+					$positivas++;
+				}
+			}
+			//Queremos obtener todas las evaluaciones para luego comparar promedio, minimo y maximo del instructor
+			if($evaluacion->p5_11 >= 20){
+				$preguntas++;
+				$respuestasInstructores2+= $evaluacion->p5_11;
+				$respuesta_individual2+= $evaluacion->p5_11;
+				array_push($promedios2, round($respuesta_individual2/11,2));
+				$respuesta_individual2 = 0;
+				if($evaluacion->p5_11 >= 60){
+					$positivas++;
+				}
+			}
+			
+			//Las preguntas correspondientes al tercer instructor
+			if($evaluacion->p6_1 >= 20){
+				$alumnos_eval_instructor3++;
+				$preguntas++;
+				$respuestasInstructores3+= $evaluacion->p6_1;
+				$respuesta_individual3+= $evaluacion->p6_1;
+				if($evaluacion->p6_1 == 1){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_2 >= 20){
+				$preguntas++;
+				$respuestasInstructores3+= $evaluacion->p6_2;
+				$respuesta_individual3+= $evaluacion->p6_2;
+				if($evaluacion->p6_2 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_3 >= 20){
+				$preguntas++;
+				$respuestasInstructores3+= $evaluacion->p6_3;
+				$respuesta_individual3+= $evaluacion->p6_3;
+				if($evaluacion->p6_3 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_4 >= 20){
+				$preguntas++;
+				$respuestasInstructores3+= $evaluacion->p6_4;
+				$respuesta_individual3+= $evaluacion->p6_4;
+				if($evaluacion->p6_4 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_5 >= 20){
+				$preguntas++;
+				$respuestasInstructores3+= $evaluacion->p6_5;
+				$respuesta_individual3+= $evaluacion->p6_5;
+				if($evaluacion->p6_5 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_6 >= 20){
+				$preguntas++;
+				$respuestasInstructores3+= $evaluacion->p6_6;
+				$respuesta_individual3+= $evaluacion->p6_6;
+				if($evaluacion->p6_6 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_7 >= 20){
+				$preguntas++;
+				$respuestasInstructores3+= $evaluacion->p6_7;
+				$respuesta_individual3+= $evaluacion->p6_7;
+				if($evaluacion->p6_7 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_8 >= 20){
+				$preguntas++;
+				$respuestasInstructores3+= $evaluacion->p6_8;
+				$respuesta_individual3+= $evaluacion->p6_8;
+				if($evaluacion->p6_8 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_9 >= 20){
+				$preguntas++;
+				$respuestasInstructores3+= $evaluacion->p6_9;
+				$respuesta_individual3+= $evaluacion->p6_9;
+				if($evaluacion->p6_9 >= 60){
+					$positivas++;
+				}
+			}
+			if($evaluacion->p6_10 >= 20){
+				$preguntas++;
+				$respuestasInstructores3+= $evaluacion->p6_10;
+				$respuesta_individual3+= $evaluacion->p6_10;
+				if($evaluacion->p6_10 >= 60){
+					$positivas++;
+				}
+			}
+
+			//Queremos obtener todas las evaluaciones para luego comparar promedio, minimo y maximo del instructor
+			if($evaluacion->p6_11 >= 20){
+				$preguntas++;
+				$respuestasInstructores3+= $evaluacion->p6_11;
+				$respuesta_individual3+= $evaluacion->p6_11;
+				array_push($promedios3, round($respuesta_individual3/11,2));
+				$respuesta_individual3 = 0;
+				if($evaluacion->p6_11 >= 60){
+					$positivas++;
+				}
+			}
+
+		}
+
+		//Obtenemos la evaluacion minima y maxima del primer instructor
+		$minimo1 = 0;
+		$maximo1 = 0;
+
+		foreach($promedios1 as $promedio){
+			if($minimo1 == 0){
+				$minimo1 = $promedio;
+			}
+			if($promedio < $minimo1){
+				$minimo1 = $promedio;
+			}
+			if($promedio > $maximo1){
+				$maximo1 = $promedio;
+			}
+		}
+
+		//Obtenemos la evaluacion minima y maxima del segundo instructor
+		$minimo2 = 0;
+		$maximo2 = 0;
+
+		foreach($promedios2 as $promedio){
+			if($minimo2 == 0){
+				$minimo2 = $promedio;
+			}
+			if($promedio < $minimo2){
+				$minimo2 = $promedio;
+			}
+			if($promedio > $maximo2){
+				$maximo2 = $promedio;
+			}
+		}
+
+		//Obtenemos la evaluacion minima y maxima del tercer instructor
+		$minimo3 = 0;
+		$maximo3 = 0;
+
+		foreach($promedios3 as $promedio){
+			if($minimo3 == 0){
+				$minimo3 = $promedio;
+			}
+			if($promedio < $minimo3){
+				$minimo3 = $promedio;
+			}
+			if($promedio > $maximo3){
+				$maximo3 = $promedio;
+			}
+		}
+
+		//Checamos el numero de instructores del curso para ver a cual de los view enviar
+		$envio = 0;
+		if(strcmp($catalogoCurso[0]->tipo,'Actualizacion')==0){
+			if($minimo3 != 0){
+				$envio = 'pages.reporte_final_seminario3';
+			}else if($minimo2 != 0){
+				$envio = 'pages.reporte_final_seminario2';
+			}else{
+				$envio = 'pages.reporte_final_seminario1';
+			}
+		}else{
+			if($minimo3 != 0){
+				$envio = 'pages.reporte_final_curso3';
+			}else if($minimo2 != 0){
+				$envio = 'pages.reporte_final_curso2';
+			}else{
+				$envio = 'pages.reporte_final_curso1';
+			}
+		}
+
+		//En caso de no haber alumnos ni preguntas (se pide el resumen de un curso no evaluado anteriormente) pasamos su valor a 1 para evitar division by zero exception
+		if($alumnos == 0){
+			$alumnos = 1;
+		}
+		
+		if($preguntas == 0){
+			$preguntas = 1;
+		}
+
+		$factor_instructor1 = 0;
+
+		//Si hay un instructor obtenemos su factor
+		if($alumnos_eval_instructor1 != 0){
+			$factor_instructor1 = round($respuestasInstructores1 / ($alumnos_eval_instructor1*11),2);
+		}
+
+		$factor_instructor2 = 0;
+
+		//Si hay dos instructores obtenemos su factor
+		if($alumnos_eval_instructor2 != 0){
+			$factor_instructor2 = round($respuestasInstructores2 / ($alumnos_eval_instructor2*11),2);
+		}
+
+		$factor_instructor3 = 0;
+
+		//Si hay tres instructores obtenemos su factor
+		if($alumnos_eval_instructor3 != 0){
+			$factor_instructor3 = round($respuestasInstructores3 / ($alumnos_eval_instructor3*11),2);
+		}
+
+		//Obtenemos los factores de respuestas positivas, contenido y coordinacion
+		$factor_respuestas_positivas = round($positivas*100 / $preguntas, 2);
+		$factor_contenido = round($respuestasContenido / ($alumnos*5),2);
+		$factor_coordinacion = round($respuestasCoordinacion / ($alumnos*4),2);
+
+		//Obtenemos el numero de horas a partir del numero de sesiones y las horas de cada sesion
+		$horas_inicio = explode(':',$curso[0]->hora_inicio);
+		$horas_fin = explode(':',$curso[0]->hora_fin);
+
+		$inicio = intval($horas_inicio[0]) + floatval($horas_inicio[1]/100);
+		$fin = intval($horas_fin[0]) + floatval($horas_fin[1]/100);
+
+		$numero_horas = floatval($curso[0]->numero_sesiones) * ($fin-$inicio);
+
+        if($pdf == 1){
+            $pdf = PDF::loadView($envio,array('evals'=>$evals,'curso_id'=>$curso_id,'catalogoCurso_id'=>$catalogoCurso_id,'participantes'=>$participantes,'factor_acreditacion'=>$factor_acreditacion,'factor'=>$factor,'alumnos'=>$alumnos,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'ocupacion'=>$ocupacion,'positivas'=>$factor_respuestas_positivas,'contenido'=>$factor_contenido,'factor_coordinacion'=>$factor_coordinacion,'curso'=>$curso[0],'salon'=>$salon[0],'acreditaron'=>$acreditado,'coordinaciones'=>array(),'instructor'=>$factor_instructor1,'minimo'=>$minimo1,'maximo'=>$maximo1,'instructor2'=>$factor_instructor2,'minimo2'=>$minimo2,'maximo2'=>$maximo2,'instructor3'=>$factor_instructor3,'minimo3'=>$minimo3,'maximo3'=>$maximo3,'numero_horas'=>$numero_horas,'asistieron'=>$asistieron,'nombreInstructor'=>$nombreInstructor,'coordinaciones'=>$coordinaciones));	
+            return $pdf->download($envio.'pdf');
+        }
+
+        return view($envio)
+            ->with('evals',$evals)
+            ->with('curso_id',$curso_id)
+            ->with('catalogoCurso_id',$catalogoCurso_id)
+            //->with('eval_fcurso',$eval_fcurso)
+            ->with('participantes',$participantes)
+            ->with('factor_acreditacion',$factor_acreditacion)
+            ->with('factor',$factor)
+            ->with('alumnos',$alumnos)
+            ->with('DP',$DP)
+            ->with('DH',$DH)
+            ->with('CO',$CO)
+            ->with('DI',$DI)
+            ->with('Otros',$Otros)
+            ->with('ocupacion',$ocupacion)
+            ->with('positivas',$factor_respuestas_positivas)
+            ->with('contenido',$factor_contenido)
+            ->with('factor_coordinacion',$factor_coordinacion)
+            ->with('curso',$curso[0])
+            ->with('salon',$salon[0])
+            ->with('acreditaron',$acreditado)
+            ->with('coordinaciones',array())
+            ->with('instructor',$factor_instructor1)
+            ->with('minimo',$minimo1)
+            ->with('maximo',$maximo1)
+            ->with('instructor2',$factor_instructor2)
+            ->with('minimo2',$minimo2)
+            ->with('maximo2',$maximo2)
+            ->with('instructor3',$factor_instructor3)
+            ->with('minimo3',$minimo3)
+            ->with('maximo3',$maximo3)
+            ->with('numero_horas',$numero_horas)
+            ->with('asistieron',$asistieron)
+            ->with('nombreInstructor',$nombreInstructor)
+            ->with('coordinaciones',$coordinaciones);
+		
+
+    }
+    
+    public function globalSesion($curso_id,$pdf){
+
+        $curso = DB::table('cursos')
+            ->where('id',$curso_id)
+            ->get();
+
+        $catalogo_curso = DB::table('catalogo_cursos')
+            ->where('id',$curso[0]->id)
+            ->get();
+
+        $coordinaciones = Coordinacion::all();        
+
+        if(strcmp($catalogo_curso[0]->tipo,'Actualizacion')==0){
+            $evaluaciones = DB::table('_evaluacion_x_seminario')
+                ->where('curso_id',$curso_id)
+                ->get();
+            $lugar = "pages.resumen_x_session_seminario";
+        }else{
+            $evaluaciones = DB::table('_evaluacion_x_curso')
+                ->where('curso_id',$curso_id)
+                ->get();
+                $lugar = "pages.resumen_x_sesion_curso";
+        }
+
+        if(sizeof($evaluaciones)==0){
+            $cursos = Curso::all();
+            return view("pages.cursos")
+                ->with("cursos",$cursos)
+                ->with('message','Curso no ha sido evaluado')
+                ->with('coordinaciones',$coordinaciones);
+        }
+
+        $curso = Curso::find($curso_id);
+
+        if($pdf == 1){
+            $pdf = PDF::loadView($lugar,array('evaluaciones'=>$evaluaciones,'curso_id'=>$curso_id,'coordinaciones'=>$coordinaciones,'catalogoCurso'=>$catalogo_curso[0],'curso'=>$curso));	
+            return $pdf->download($lugar.'pdf');
+        }
+
+        return view($lugar)
+            ->with('evaluaciones',$evaluaciones)
+            ->with('curso_id',$curso_id)
+            ->with('coordinaciones',$coordinaciones)
+            ->with('catalogoCurso',$catalogo_curso[0])
+            ->with('curso',$curso);
+
+    }
+
 }
+
+

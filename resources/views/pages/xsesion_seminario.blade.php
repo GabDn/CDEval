@@ -2,7 +2,7 @@
 @extends('layouts.principal')
 
 @section('contenido')
-<form action="{{ action('EvaluacionController@saveXSeminario',['profesor_id' => $profesor->id,'curso_id'=> $curso->id]) }}" method="POST">
+<form action="{{ action('EvaluacionController@saveXSeminario',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,'catalogoCurso_id'=>$catalogoCurso->id]) }}" method="POST">
 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
   <div class="content">
     <div class="top-bar">       

@@ -14,6 +14,8 @@ Route::get('/instructores',"CoordinadorController@instructores")->name("instruct
 Route::get('cursos/buscar',"CoordinadorController@searchCursos")->name("buscar.curso");
 Route::get('sesion',"CoordinadorController@sesiones")->name("ver.sesion");
 Route::get('global',"CoordinadorController@globales")->name("ver.global");
+Route::get('global/{curso_id}/{pdf}',"CoordinadorController@globalFinal")->name("ver.global.final");
+Route::get('global/sesion/{curso_id}/{pdf}',"CoordinadorController@globalSesion")->name("ver.sesion.final");
 Route::get('area',"CoordinadorController@area_pdf")->name("boton.area");
 
 //Para enviar correos
@@ -26,7 +28,7 @@ Route::get('evaluarCurso/{profesor_id}/{curso_id}/{catalogoCurso_id}/{count}','E
 Route::post('evaluar/finalc/{profesor_id}/{curso_id}/{catalogoCurso_id}',"EvaluacionController@saveFinal_Curso")->name('final.curso');
 Route::post('/finals/{profesor_id}/{curso_id}/{catalogoCurso_id}','EvaluacionController@saveFinal_Seminario')->name('final.seminario');
 Route::post('evaluar/xcurso/{profesor_id}/{curso_id}/{catalogoCurso_id}',"EvaluacionController@saveXCurso")->name('x.curso');
-Route::post('evaluar/xseminario/{profesor_id}/{curso_id}/',"EvaluacionController@saveXSeminario")->name('x.seminario');
+Route::post('evaluar/xseminario/{profesor_id}/{curso_id}/{catalogoCurso_id}',"EvaluacionController@saveXSeminario")->name('x.seminario');
 
 Route::get('enviar/{profesor_id}',"EvaluacionController@enviarClaveCrusoHistorico")->name('evaluacion.enviarClaveCrusoHistorico');
 Route::get('enviarFecha/{profesor_id}',"EvaluacionController@redirigirAEnviar")->name('evaluacion.enviarClaveFecha');
@@ -36,7 +38,7 @@ Route::get('admin/{profesor_id}',"EvaluacionController@admin")->name('evaluacion
 Route::get('fecha_global/', "CoordinadorController@elegirFecha")->name('elegir.fecha');
 Route::get('fecha_coordinacion/', "CoordinadorController@elegirFechaCoordinacion")->name('elegir.coordinacion');
 
-Route::post('admin/','CoordinadorController@index')->name('superadmin');
+Route::get('admin/','CoordinadorController@index')->name('superadmin');
 
 Route::post('enviar_global',"CoordinadorController@enviarGlobal")->name('enviar.global');
 Route::post('enviar_coordinacion',"CoordinadorController@enviarCoordinacion")->name('enviar.coordinacion');
