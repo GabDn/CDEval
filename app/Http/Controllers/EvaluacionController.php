@@ -944,18 +944,25 @@ $promedio_p4=[
 		  $count = ProfesoresCurso::select($curso_id)
 			->where('curso_id',$curso_id)
 			->count();
+			$infoCursos=array(); 
 			$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-			$infoCursos = array();
-      
-			foreach($participantesCurso as $participanteCurso){
-				$curso = Curso::find($participanteCurso->curso_id);
-				$catalogoCursos = CatalogoCurso::find($curso->id);
-                       
-				$tupla = array();
-					array_push($tupla,$curso);
-					array_push($tupla,$catalogoCursos);
-					array_push($infoCursos, $tupla);
-			}
+                //return $participantesCurso;
+                $cursos=array();
+                foreach($participantesCurso as $participanteCurso){
+                    $curso=Curso::findorFail($participanteCurso->curso_id);
+                    //return $curso;
+                    array_push($cursos,$curso); 
+                }
+                //$cursos=Curso::all();
+                foreach($cursos as $curso){
+                    $catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
+                    $tupla = array();
+                    array_push($tupla,$curso);
+                    array_push($tupla,$catalogoCursos);
+                    array_push($infoCursos, $tupla);
+                    //return $catalogoCursos;
+                    //return $infoCursos;
+                }
 	
 		//Obtenemos la evaluacion recien realizada para enviarla por correo
 		$eval_xcurso = DB::table('_evaluacion_x_curso')
@@ -1025,18 +1032,25 @@ $promedio_p4=[
 		  $count = ProfesoresCurso::select($curso_id)
 			->where('curso_id',$curso_id)
 			->count();
+			$infoCursos=array(); 
 			$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-			$infoCursos = array();
-      
-			foreach($participantesCurso as $participanteCurso){
-				$curso = Curso::find($participanteCurso->curso_id);
-				$catalogoCursos = CatalogoCurso::find($curso->id);
-                       
-				$tupla = array();
-					array_push($tupla,$curso);
-					array_push($tupla,$catalogoCursos);
-					array_push($infoCursos, $tupla);
-			}
+                //return $participantesCurso;
+                $cursos=array();
+                foreach($participantesCurso as $participanteCurso){
+                    $curso=Curso::findorFail($participanteCurso->curso_id);
+                    //return $curso;
+                    array_push($cursos,$curso); 
+                }
+                //$cursos=Curso::all();
+                foreach($cursos as $curso){
+                    $catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
+                    $tupla = array();
+                    array_push($tupla,$curso);
+                    array_push($tupla,$catalogoCursos);
+                    array_push($infoCursos, $tupla);
+                    //return $catalogoCursos;
+                    //return $infoCursos;
+                }
 	
 
 		//Obtenemos la evaluacion recien realizada para enviarla por correo
