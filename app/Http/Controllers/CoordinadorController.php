@@ -109,10 +109,10 @@ class CoordinadorController extends Controller
         //Indicamos la vista a observar
         $lugar = "pages.reporte_final_global";
 
-        return $this->enviarVista($fecha, $cursos, "", $lugar,0);
+        return $this->enviarVista($fecha, $cursos, "", $lugar,0,'elegir.fecha');
     }
 
-    public function enviarVista($request, $cursos, $nombreCoordinacion, $lugar, $pdf){
+    public function enviarVista($request, $cursos, $nombreCoordinacion, $lugar, $pdf, $inicio){
 
         //Obtenemos todos los coordinadores
         $coordinaciones = Coordinacion::all();
@@ -175,6 +175,10 @@ class CoordinadorController extends Controller
             if(sizeof($eval2)>0){
                 array_push($evaluacionesCursos,$eval2);
             }
+        }
+
+        if(sizeof($evaluacionesCursos)==0){
+            return redirect()->route($inicio,['message'=>'Curso no ha sido evaluado']);
         }
 
         $DP=0;
@@ -826,7 +830,7 @@ class CoordinadorController extends Controller
             ->with('nombreCoordinacion',$nombreCoordinacion);
     }
 
-    public function elegirFecha(){
+    public function elegirFecha($message){
         //Obtenemos todos los cursos y todas las coordinaciones
         $coordinaciones = Coordinacion::all();
         $cursos = DB::table('cursos')
@@ -853,10 +857,11 @@ class CoordinadorController extends Controller
 
         return view('pages.global_fecha')
             ->with('coordinaciones',$coordinaciones)
-            ->with('fechas',$fechas);
+            ->with('fechas',$fechas)
+            ->with('message',$message);
     }
 
-    public function elegirFechaCoordinacion(){
+    public function elegirFechaCoordinacion($message){
         //Obtenemos todos los cursos y todas las coordinaciones
         $coordinaciones = Coordinacion::all();
         $cursos = DB::table('cursos')
@@ -881,7 +886,8 @@ class CoordinadorController extends Controller
         }
         return view('pages.global_coordinacion')
             ->with('coordinaciones',$coordinaciones)
-            ->with('fechas',$fechas);
+            ->with('fechas',$fechas)
+            ->with('message',$message);
     }
 
     public function enviarCoordinacion(Request $request){
@@ -898,9 +904,11 @@ class CoordinadorController extends Controller
         $catalogs = DB::table('catalogo_cursos')
             ->where('coordinacion_id',$coordinaciones[0]->id)
             ->get();
+
+        //return $request->get('periodo');
         //Buscamos los cursos de dicha fecha
         $cursosFecha = DB::table('cursos')
-            ->where([['semestre_anio',$fecha[0]],['semestre_pi',$fecha[1]]])
+            ->where([['semestre_anio',$fecha[0]],['semestre_pi',$fecha[1]],['semestre_si',$request->get('periodo')]])
             ->get();
 
         $cursos = array();
@@ -919,7 +927,7 @@ class CoordinadorController extends Controller
         $nombreCoordinacion = $coordinaciones[0]->nombre_coordinacion;
         $lugar = "pages.reporte_final_area";
 
-        return $this->enviarVista($semestre, $cursos, $nombreCoordinacion, $lugar,0);
+        return $this->enviarVista($semestre, $cursos, $nombreCoordinacion, $lugar,0,'elegir.coordinacion');
         
     }
 
@@ -935,7 +943,7 @@ class CoordinadorController extends Controller
         //Procedemos a obtener todos los datos e indicamos que queremos pasarlo a pdf
         $lugar = "pages.reporte_final_global";
 
-        return $this->enviarVista($fecha, $cursos, "", $lugar,1);
+        return $this->enviarVista($fecha, $cursos, "", $lugar,1,'');
     }
 
     public function areaPDF($fecha,$coordinacion){
@@ -976,7 +984,7 @@ class CoordinadorController extends Controller
         $nombreCoordinacion = $coordinaciones[0]->nombre_coordinacion;
         $lugar = "pages.reporte_final_area";
 
-        return $this->enviarVista($semestre, $cursos, "", $lugar,1);
+        return $this->enviarVista($semestre, $cursos, "", $lugar,1,'');
     }
 
     public function descargarPDF($nombres,$periodo,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$positivas,$DP,$DH,$CO,$DI,$Otros,$DPtematicas,$DItematicas,$COtematicas,$DHtematicas,$Otrostematicas,$coordinaciones,$horarios,$coordinacion,$contenido,$profesors,$instructor,$asistencia,$nombreCoordinacion,$lugar){
@@ -986,7 +994,7 @@ class CoordinadorController extends Controller
         $pdf = PDF::loadView($lugar,array('nombres'=>$nombres,'periodo'=>$periodo,'acreditaron'=>$acreditaron,'inscritos'=>$inscritos,'contestaron'=>$contestaron,'factor_ocupacion'=>$factor_ocupacion,'factor_recomendacion'=>$factor_recomendacion,'factor_acreditacion'=>$factor_acreditacion,'positivas'=>$positivas,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'DPtematicas'=>$DPtematicas,'DItematicas'=>$DItematicas,'COtematicas'=>$COtematicas,'DHtematicas'=>$DHtematicas,'Otrostematicas'=>$Otrostematicas,'coordinaciones'=>$coordinaciones,'horarios'=>$horarios,'coordinacion'=>$coordinacion,'contenido'=>$contenido,'profesors'=>$profesors,'instructor'=>$instructor,'asistencia'=>$asistencia,'nombreCoordinacion'=>$nombreCoordinacion));	
 
         //Retornamos la descarga del pdf
-        return $pdf->download($lugar.'pdf');
+        return $pdf->download($lugar.'.pdf');
     }
 
     public function globalFinal($curso_id,$pdf){
@@ -1026,7 +1034,7 @@ class CoordinadorController extends Controller
 
 		//Obtenemos el id de los instructores de los cursos
 		$instructores = DB::table('profesor_curso')
-			->where('curso_id',$evals[0]->curso_id)
+			->where('curso_id',$curso_id)
 			->get();
 
 		//Obtenemos los datos de los instructores de cada curso
@@ -1731,7 +1739,7 @@ class CoordinadorController extends Controller
 
         if($pdf == 1){
             $pdf = PDF::loadView($lugar,array('evaluaciones'=>$evaluaciones,'curso_id'=>$curso_id,'coordinaciones'=>$coordinaciones,'catalogoCurso'=>$catalogo_curso[0],'curso'=>$curso));	
-            return $pdf->download($lugar.'pdf');
+            return $pdf->download($lugar.'.pdf');
         }
 
         return view($lugar)

@@ -31,14 +31,18 @@ class EvaluacionController extends Controller{
 
 
 	public function index($profesor_id, $curso_id, $catalogoCurso_id){
- 
+		/*$array = array();
+		array_push($array,$profesor_id);
+		array_push($array,$curso_id);
+		return $array;*/
 		$profesor = Profesor::find($profesor_id);
 		$curso = Curso::find($curso_id);
 		$catalogoCurso = CatalogoCurso::find($curso->catalogo_id);
 		$count = ProfesoresCurso::select($curso_id)
 			->where('curso_id',$curso_id)
 			->count();
-		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+		$participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
+		/*$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
 		$infoCursos = array();
       
 		foreach($participantesCurso as $participanteCurso){
@@ -48,39 +52,57 @@ class EvaluacionController extends Controller{
                 array_push($tupla,$curso);
                 array_push($tupla,$catalogoCursos);
                 array_push($infoCursos, $tupla);
-		}
+		}*/
+		$infoCursos=array(); 
+		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+                //return $participantesCurso;
+                $cursos=array();
+                foreach($participantesCurso as $participanteCurso){
+                    $curso=Curso::findorFail($participanteCurso->curso_id);
+                    //return $curso;
+                    array_push($cursos,$curso); 
+                }
+                //$cursos=Curso::all();
+                foreach($cursos as $curso){
+                    $catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
+                    $tupla = array();
+                    array_push($tupla,$curso);
+                    array_push($tupla,$catalogoCursos);
+                    array_push($infoCursos, $tupla);
+                    //return $catalogoCursos;
+                    //return $infoCursos;
+                }
 
 		$date = date("Y-m-j");
 		
+		$curso = Curso::find($curso_id);
+
 		//Se busca mandar a pages.evaluacionIndex las encuestas realizadas por el usuario para manejar los botones
 		$evaluacion_x_curso = DB::table('_evaluacion_x_curso')
 			->select('_evaluacion_x_curso.created_at','_evaluacion_x_curso.curso_id')
-			->where([['created_at',$date],['curso_id',$curso_id],['participante_curso_id',$profesor_id]])
+			->where([['created_at',$date],['curso_id',$curso_id],['participante_curso_id',$participante[0]->id]])
 			->get();
 		
 		if(sizeof($evaluacion_x_curso) <= 0){
 			$evaluacion_x_curso = DB::table('_evaluacion_x_seminario')
 			->select('_evaluacion_x_seminario.created_at','_evaluacion_x_seminario.curso_id')
-			->where([['created_at',$date],['curso_id',$curso_id],['participante_curso_id',$profesor_id]])
+			->where([['created_at',$date],['curso_id',$curso_id],['participante_curso_id',$participante[0]->id]])
 			->get();
 		}
 
 		
 		$evaluacion_final_curso = DB::table('_evaluacion_final_curso')
 			->select('_evaluacion_final_curso.participante_curso_id','_evaluacion_final_curso.curso_id')
-			->where([['curso_id',$curso_id],['participante_curso_id',$profesor_id]])
+			->where([['curso_id',$curso_id],['participante_curso_id',$participante[0]->id]])
 			->get();
 
 		if(sizeof($evaluacion_final_curso) <= 0){
-			$participante = DB::table('participante_curso')
-				->where([['curso_id',$curso_id],['profesor_id',$profesor_id]])
-				->get();
 			$evaluacion_final_curso = DB::table('_evaluacion_final_seminario')
 				->select('_evaluacion_final_seminario.participante_curso_id')
-				->where('participante_curso_id',$participante[0]->id)
+				->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
 				->get();
 		}
-	 
+
 		//Retornamos la vista pages.evaluacionIndex con todos los datos necesarios para su funcionamiento
 		return view("pages.evaluacionIndex")
 			->with("profesor",$profesor)
@@ -89,7 +111,8 @@ class EvaluacionController extends Controller{
 			->with('infoCursos',$infoCursos)
 			->with('count',$count)
 			->with('evaluaciones',$evaluacion_x_curso)
-			->with('final',$evaluacion_final_curso);
+			->with('final',$evaluacion_final_curso)
+			->with('curso_id',$curso_id);
 	  
 	}
 		
@@ -102,7 +125,7 @@ class EvaluacionController extends Controller{
         if ('admin' == $profesor->rfc && '1q2w3e4r' == $profesor->numTrabajador) {
             return view("pages.superadmin");
         }
-		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+		/*$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
         $cursos=array();
         foreach($participantesCurso as $participanteCurso){
             $curso=Curso::findorFail($participanteCurso->curso_id);
@@ -114,7 +137,26 @@ class EvaluacionController extends Controller{
             array_push($tupla,$curso);
             array_push($tupla,$catalogoCursos);
             array_push($infoCursos, $tupla);
-        }
+		}*/
+		$infoCursos=array(); 
+		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+                //return $participantesCurso;
+                $cursos=array();
+                foreach($participantesCurso as $participanteCurso){
+                    $curso=Curso::findorFail($participanteCurso->curso_id);
+                    //return $curso;
+                    array_push($cursos,$curso); 
+                }
+                //$cursos=Curso::all();
+                foreach($cursos as $curso){
+                    $catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
+                    $tupla = array();
+                    array_push($tupla,$curso);
+                    array_push($tupla,$catalogoCursos);
+                    array_push($infoCursos, $tupla);
+                    //return $catalogoCursos;
+                    //return $infoCursos;
+                }
         return view("pages.admin")
 			->with("profesor",$profesor)
 			->with('infoCursos',$infoCursos);
@@ -196,7 +238,7 @@ class EvaluacionController extends Controller{
 		$profesor = Profesor::find($profesor_id);
 		$curso = Curso::find($curso_id);
 		$catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
-		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+		/*$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
 		$infoCursos = array();
 
 
@@ -208,7 +250,28 @@ class EvaluacionController extends Controller{
             array_push($tupla,$curso);
             array_push($tupla,$catalogoCursos);
             array_push($infoCursos, $tupla);
-		}
+		}*/
+		$infoCursos=array(); 
+		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+                //return $participantesCurso;
+                $cursos=array();
+                foreach($participantesCurso as $participanteCurso){
+                    $curso=Curso::findorFail($participanteCurso->curso_id);
+                    //return $curso;
+                    array_push($cursos,$curso); 
+                }
+                //$cursos=Curso::all();
+                foreach($cursos as $curso){
+                    $catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
+                    $tupla = array();
+                    array_push($tupla,$curso);
+                    array_push($tupla,$catalogoCursos);
+                    array_push($infoCursos, $tupla);
+                    //return $catalogoCursos;
+                    //return $infoCursos;
+				}
+				
+		$curso = Curso::find($curso_id);
             
 		if($catalogoCurso->tipo == "Actualizacion"){
             return view("pages.xsesion_seminario")
@@ -228,11 +291,14 @@ class EvaluacionController extends Controller{
     }
 
     public function evaluacionPorCurso($profesor_id, $curso_id, $catalogoCurso_id,$count){
- 
+		/*$array = array();
+		array_push($array,$profesor_id);
+		array_push($array,$curso_id);
+		return $array;*/
 		$profesor = Profesor::find($profesor_id);
 		$curso = Curso::find($curso_id);
 		$catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
-		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+		/*$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
 		$infoCursos = array();
         
 		foreach($participantesCurso as $participanteCurso){
@@ -243,7 +309,28 @@ class EvaluacionController extends Controller{
 			array_push($tupla,$curso);
             array_push($tupla,$catalogoCursos);
 			array_push($infoCursos, $tupla);
-		}
+		}*/
+		$infoCursos=array(); 
+		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+                //return $participantesCurso;
+                $cursos=array();
+                foreach($participantesCurso as $participanteCurso){
+                    $curso=Curso::findorFail($participanteCurso->curso_id);
+                    //return $curso;
+                    array_push($cursos,$curso); 
+                }
+                //$cursos=Curso::all();
+                foreach($cursos as $curso){
+                    $catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
+                    $tupla = array();
+                    array_push($tupla,$curso);
+                    array_push($tupla,$catalogoCursos);
+                    array_push($infoCursos, $tupla);
+                    //return $catalogoCursos;
+                    //return $infoCursos;
+				}
+				
+		$curso = Curso::find($curso_id);
 		if($catalogoCurso->tipo == "Actualizacion"){
 			if($count==1){
                 return view("pages.final_seminario_1")
@@ -291,9 +378,12 @@ class EvaluacionController extends Controller{
 	public function saveFinal_Curso(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
 		$eval_fcurso = new EvaluacionFinalCurso;
 		$correo = new EvaluacionController(); 
+		/*$array = array();
+		array_push($array,$profesor_id);
+		array_push($array,$curso_id);
+		return $array;*/
 		$participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
 		$eval_fcurso->participante_curso_id=$participante[0]->id;
-          
 		//Obtenemos la fecha actual para usarla en consultas posteriores	
 		$date = date("Y-m-j");  
 		  
@@ -435,7 +525,6 @@ class EvaluacionController extends Controller{
 		$eval_fcurso->horarios = $request->horarios;	
 		//Horarios Intersemestrales:
 		$eval_fcurso->horarioi = $request->horarioi;
-		$eval_fcurso->participante_curso_id = $profesor_id;
 		$eval_fcurso->curso_id = $curso_id;
 		$eval_fcurso->save();
 		$promedio=[
@@ -496,7 +585,7 @@ class EvaluacionController extends Controller{
 		$curso = Curso::find($curso_id);
 		$catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
 	
-		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+		/*$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
 		$infoCursos = array();
 		
 		foreach($participantesCurso as $participanteCurso){
@@ -507,20 +596,41 @@ class EvaluacionController extends Controller{
 			array_push($tupla,$curso);
             array_push($tupla,$catalogoCursos);
             array_push($infoCursos, $tupla);
-		}
+		}*/
+		$infoCursos=array(); 
+		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+                //return $participantesCurso;
+                $cursos=array();
+                foreach($participantesCurso as $participanteCurso){
+                    $curso=Curso::findorFail($participanteCurso->curso_id);
+                    //return $curso;
+                    array_push($cursos,$curso); 
+                }
+                //$cursos=Curso::all();
+                foreach($cursos as $curso){
+                    $catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
+                    $tupla = array();
+                    array_push($tupla,$curso);
+                    array_push($tupla,$catalogoCursos);
+                    array_push($infoCursos, $tupla);
+                    //return $catalogoCursos;
+                    //return $infoCursos;
+                }
 
 		$this->enviarEvaluacionFinal($profesor_id,$curso_id,$catalogoCurso_id,$eval_fcurso,'pages.reporte_final_curso');
 
 		//Revisamos si hay encuestas realizadas por el alumno en el día actual
 		$evaluacion_x_curso = DB::table('_evaluacion_x_curso')
 			->select('_evaluacion_x_curso.created_at','_evaluacion_x_curso.curso_id')
-			->where([['created_at',$date],['curso_id',$curso_id],['participante_curso_id',$profesor_id]])
+			->where([['created_at',$date],['curso_id',$curso_id],['participante_curso_id',$participante[0]->id]])
 			->get();
 			
 		$evaluacion_final_curso = DB::table('_evaluacion_final_curso')
 			->select('_evaluacion_final_curso.participante_curso_id','_evaluacion_final_curso.curso_id')
-			->where([['curso_id',$catalogoCurso_id],['participante_curso_id',$profesor_id]])
+			->where([['curso_id',$curso_id],['participante_curso_id',$participante[0]->id]])
 			->get();
+
+		$curso = Curso::find($curso_id);
 	 
 		//Retornamos la vista pages.evaluacionIndex con los datos necesarios para su funcionamiento
 		return view("pages.evaluacionIndex")
@@ -540,7 +650,7 @@ class EvaluacionController extends Controller{
 		  
           $correo = new EvaluacionController(); 
           $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
-		  $eval_fseminario->participante_curso_id=$profesor_id;
+		  $eval_fseminario->participante_curso_id=$participante[0]->id;
 		  $eval_fseminario->curso_id = $curso_id;
           
           
@@ -725,7 +835,7 @@ $promedio_p4=[
 		$curso = Curso::find($curso_id);
 		$catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
 	
-		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+		/*$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
 		$infoCursos = array();
 		
 		foreach($participantesCurso as $participanteCurso){
@@ -736,19 +846,38 @@ $promedio_p4=[
 			array_push($tupla,$curso);
             array_push($tupla,$catalogoCursos);
             array_push($infoCursos, $tupla);
-		}
+		}*/
+		$infoCursos=array(); 
+		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+                //return $participantesCurso;
+                $cursos=array();
+                foreach($participantesCurso as $participanteCurso){
+                    $curso=Curso::findorFail($participanteCurso->curso_id);
+                    //return $curso;
+                    array_push($cursos,$curso); 
+                }
+                //$cursos=Curso::all();
+                foreach($cursos as $curso){
+                    $catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
+                    $tupla = array();
+                    array_push($tupla,$curso);
+                    array_push($tupla,$catalogoCursos);
+                    array_push($infoCursos, $tupla);
+                    //return $catalogoCursos;
+                    //return $infoCursos;
+                }
 
 		$this->enviarEvaluacionFinal($profesor_id,$curso_id,$catalogoCurso_id,$eval_fseminario,'pages.reporte_final_seminario');
 
 		//Revisamos si hay encuestas realizadas por el alumno en el día actual
 		$evaluacion_x_curso = DB::table('_evaluacion_x_seminario')
 			->select('_evaluacion_x_seminario.created_at','_evaluacion_x_seminario.curso_id')
-			->where('participante_curso_id',$profesor_id)
+			->where('participante_curso_id',$participante[0]->id)
 			->get();
 			
 		$evaluacion_final_curso = DB::table('_evaluacion_final_seminario')
 			->select('_evaluacion_final_seminario.participante_curso_id','_evaluacion_final_seminario.curso_id')
-			->where([['curso_id',$curso_id],['participante_curso_id',$profesor_id]])
+			->where([['curso_id',$curso_id],['participante_curso_id',$participante[0]->id]])
 			->get();
 
 		/*$evaluacion_final_curso = DB::table('_evaluacion_final_seminario')
@@ -756,6 +885,8 @@ $promedio_p4=[
 			->where('participante_curso_id',$participante[0]->id)
 			->get();*/
 	 
+		$curso = Curso::find($curso_id);
+
 		//Retornamos la vista pages.evaluacionIndex con los datos necesarios para su funcionamiento
 		return view("pages.evaluacionIndex")
 			->with("profesor",$profesor)
@@ -840,13 +971,15 @@ $promedio_p4=[
 		//Revisamos si hay encuestas realizadas por el alumno en el día actual
 		$evaluacion_x_curso = DB::table('_evaluacion_x_curso')
 			->select('_evaluacion_x_curso.created_at','_evaluacion_x_curso.curso_id')
-			->where([['created_at',$date],['curso_id',$curso_id],['participante_curso_id',$profesor_id]])
+			->where([['created_at',$date],['curso_id',$curso_id],['participante_curso_id',$participanteID]])
 			->get();
 			
 		$evaluacion_final_curso = DB::table('_evaluacion_final_curso')
 			->select('_evaluacion_final_curso.participante_curso_id','_evaluacion_final_curso.curso_id')
-			->where([['curso_id',$curso_id],['participante_curso_id',$profesor_id]])
+			->where([['curso_id',$curso_id],['participante_curso_id',$participanteID]])
 			->get();
+
+		$curso = Curso::find($curso_id);
 			
 		//Retornamos la vista pages.evaluacionIndex con los datos necesarios para su correcto funcionamiento
 		return view("pages.evaluacionIndex")
@@ -920,15 +1053,16 @@ $promedio_p4=[
 		//Revisamos si hay encuestas realizadas por el alumno en el día actual
 		$evaluacion_x_curso = DB::table('_evaluacion_x_seminario')
 			->select('_evaluacion_x_seminario.created_at','_evaluacion_x_seminario.curso_id')
-			->where([['created_at',$date],['curso_id',$curso_id],['participante_curso_id',$profesor_id]])
+			->where([['created_at',$date],['curso_id',$curso_id],['participante_curso_id',$participanteID]])
 			->get();
 		
 
 		$evaluacion_final_curso = DB::table('_evaluacion_final_seminario')
 			->select('_evaluacion_final_seminario.participante_curso_id','_evaluacion_final_seminario.curso_id')
-			->where([['curso_id',$curso_id],['participante_curso_id',$profesor_id]])
+			->where([['curso_id',$curso_id],['participante_curso_id',$participanteID]])
 			->get();
 			
+		$curso = Curso::find($curso_id);
 		//Retornamos la vista pages.evaluacionIndex con los datos necesarios para su correcto funcionamiento
 		return view("pages.evaluacionIndex")
 			->with("profesor",$profesor)

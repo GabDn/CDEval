@@ -35,8 +35,8 @@ Route::get('enviarFecha/{profesor_id}',"EvaluacionController@redirigirAEnviar")-
 Route::post('enviarFechaArchivo/{profesor}',"EvaluacionController@enviarClaveFecha")->name('evaluacion.enviarClaveFechaArchivo');
 Route::get('admin/{profesor_id}',"EvaluacionController@admin")->name('evaluacion.admin');
 
-Route::get('fecha_global/', "CoordinadorController@elegirFecha")->name('elegir.fecha');
-Route::get('fecha_coordinacion/', "CoordinadorController@elegirFechaCoordinacion")->name('elegir.coordinacion');
+Route::get('fecha_global/{message}/', "CoordinadorController@elegirFecha")->name('elegir.fecha');
+Route::get('fecha_coordinacion/{message}/', "CoordinadorController@elegirFechaCoordinacion")->name('elegir.coordinacion');
 
 Route::get('admin/','CoordinadorController@index')->name('superadmin');
 

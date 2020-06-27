@@ -84,13 +84,13 @@ body {
             <tr>
                 <td style="font-weight: bold; border: 0px solid white;">b) Fecha de impartición</td>
                 <td style="border: 0px solid white;">{{$curso->fecha_inicio}}, {{$curso->fecha_fin}}</td>
-                <td style="font-weight: bold ; margin-left: 50px white;" style="border: 0px solid white;" >e) Capacidad</td>
+                <td style="font-weight: bold ; margin-left: 50px white; border: 0px solid white;" >e) Capacidad</td>
                 <td style="border: 0px solid white;">{{$curso->cupo_maximo}}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold; border: 0px solid white;">c) Horario</td>
                 <td style="border: 0px solid white;">{{$curso->hora_inicio}}, {{$curso->hora_fin}}</td>
-                <td style="font-weight: bold ; margin-left: 50px white;" style="border: 0px solid white;">f) Total de horas</td>
+                <td style="font-weight: bold ; margin-left: 50px white; border: 0px solid white;">f) Total de horas</td>
                 <td style="border: 0px solid white;">{{$numero_horas}}</td>
             </tr>
             <tr>
@@ -107,13 +107,13 @@ body {
             <tr>
                 <td style="font-weight: bold; border: 0px solid white;">a) Inscritos</td>
                 <td style="border: 0px solid white;"><?php echo sizeof($participantes); ?></td>
-                <td style="font-weight: bold ; margin-left: 50px white;" style="border: 0px solid white;" >c) Acreditaron</td>
+                <td style="font-weight: bold ; margin-left: 50px white; border: 0px solid white;" >c) Acreditaron</td>
                 <td style="border: 0px solid white;">{{$acreditaron}}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold; border: 0px solid white;">b) Asistieron</td>
                 <td style="border: 0px solid white;">1</td>
-                <td style="font-weight: bold ; margin-left: 50px white;" style="border: 0px solid white;">d) Formato de evaluación</td>
+                <td style="font-weight: bold ; margin-left: 50px white; border: 0px solid white;">d) Formato de evaluación</td>
                 <td style="border: 0px solid white;">1</td>
             </tr>
         </table>

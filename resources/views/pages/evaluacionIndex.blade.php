@@ -11,19 +11,13 @@
 	var curso_date = date.fecha_fin;
 	//Separamos la fecha por '-' (dato tipo string)
 	var dates =curso_date.split('-');
-	
+
 	var encuestas = <?php echo json_encode($evaluaciones); ?>;
 	var encuesta_final = <?php echo json_encode($final); ?>
 	
 	console.log(encuestas.length);
-	console.log(encuestas);
 	console.log(encuesta_final.length);
-	console.log(dates[0]);
-	console.log(dates[1]);
-	console.log(dates[2]);
-	console.log(f.getFullYear());
-	console.log(f.getMonth()+1);
-	console.log(f.getDate());
+	console.log(date.id);
   
 	if(encuestas.length >= 1){
 		document.addEventListener("DOMContentLoaded", function(event) {

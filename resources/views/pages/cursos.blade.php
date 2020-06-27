@@ -51,6 +51,7 @@
                             @foreach($cursos as $curso)
                             <tbody>
                                 <tr>
+                                    <td>{{ $curso->id }}</td>
                                     <td>{{ $curso->getNombreCurso() }}</td>
                                     <td>{{ $curso->getProfesores2() }}</td>
                                     <td>{{ $curso->semestre_anio }}-{{ $curso->semestre_pi }}{{ $curso->semestre_si }}</td>

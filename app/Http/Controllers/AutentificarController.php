@@ -79,7 +79,7 @@ class AutentificarController extends Controller{
                     //return $catalogoCursos;
                     //return $infoCursos;
                 }
-                //return $infoCursos;
+                //return $infoCursos[0][1];
                 return view("pages.admin")
 					->with("profesor",$profesor)
 					->with('infoCursos',$infoCursos);

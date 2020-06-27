@@ -52,7 +52,7 @@
 					<!--<?php echo json_encode($infoCursos) ?>-->
 				</p>
                 @foreach($infoCursos as $infoCurso)
-                    <li><a href="{{ route('evaluacion.index',[ $profesor->id,$infoCurso[0]->id,$infoCurso[0]->id] ) }}">{{ $infoCurso[1]->nombre_curso }} {{$infoCurso[0]->semestre_anio}}</a></li>
+                    <li><a href="{{ route('evaluacion.index',['profesor_id'=> $profesor->id,'curso_id'=>$infoCurso[0]->id,'catalogoCurso_id'=>$infoCurso[1]->id] ) }}">{{ $infoCurso[1]->nombre_curso }} {{$infoCurso[0]->semestre_anio}}</a></li>
                 @endforeach
                 </ul>
             </li>

@@ -4,6 +4,10 @@
 @section('contenido')
   <!--Body content-->
 
+@if($message != '0')
+    <div class="alert alert-success" style = "text-align:center;"> {{ $message }}</div>
+@endif
+
 <form method="POST" action="{{ action('CoordinadorController@enviarCoordinacion')}}">
   <div class="content">
     <div class="top-bar">       
@@ -35,6 +39,10 @@
                     }
                 ?>
 				        </select>
+                <select name='periodo' width="25%">
+                    <option value='i'>Intersemestral</option>
+                    <option value='s'>Semestral</option>
+                </select>
 				{{ csrf_field() }}
 				<button id="dia"  type="submit" class="btn btn-primary active">Enviar</button>
             </div>
