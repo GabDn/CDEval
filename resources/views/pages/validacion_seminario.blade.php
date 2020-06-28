@@ -114,10 +114,10 @@ body {
     <div>
         <table width="100%">
             <tr>
-                <th>1. DATOS GENERALES DEL CURSO</th>
+                <th>1. DATOS GENERALES DEL SEMINARIO</th>
             </tr>
             <tr>
-                <td style="font-weight: bold" class="n">a) Instructor</td>
+                <td style="font-weight: bold" class="n">a) Facilitador del seminario</td>
                 <td class="n">{profesor_nombres}} {profesor_apellido_paterno}} {profesor_apellido_materno}}</td>
             </tr>
             <tr>
@@ -177,18 +177,18 @@ body {
         <br>
         <table width="100%">
             <tr>
-                <th>7. FACTOR DE DESEMPEÑO INSTRUCTORES</th>
+                <th>7. FACTOR DE DESEMPEÑO FACILITADORES</th>
             </tr>
         </table>
         <table width="100%">
             <tr>
-                <th style="width: 65%" class="f" >Instructor</th>
+                <th style="width: 65%" class="f" >Facilitador</th>
                 <th class="f">Promedio</th>
                 <th class="f">Mínimo</th>
                 <th class="f">Máximo</th>
             </tr>
             <tr>
-                <td style="width: 65%" class="n" >{INSTRUCTOR}</td>
+                <td style="width: 65%" class="n" >{facilitador}</td>
                 <td class="n">{promedio}</td>
                 <td class="n">{min}</td>
                 <td class="n">{max}</td>
@@ -198,7 +198,7 @@ body {
         <br>
         <table width="100%">
             <tr>
-            <th style="width: 20%">8. JUICIO SUMARIO INSTRUCTOR a)</th>
+            <th style="width: 20%">8. JUICIO SUMARIO FACILITADOR a)</th>
                 <td style="width: 30%" class="n">{/}</td>
                 
             </tr>
@@ -206,7 +206,7 @@ body {
         <br>
         <table width="100%">
             <tr>
-                <th style="width: 20%">8. JUICIO SUMARIO  CURSO b)</th>
+                <th style="width: 20%">8. JUICIO SUMARIO  SEMINARIO b)</th>
                 <td style="width: 30%" class="n">{num} &nbsp; {Sí/No}</td>
             </tr>
         </table>

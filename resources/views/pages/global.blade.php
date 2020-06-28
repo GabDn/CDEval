@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Evaluación de área</title>
+	<title>Evaluación global</title>
 </head>
 <style>
     html{
@@ -98,37 +98,26 @@
 		</table>
         <table id="tabla_encabezado_debajo">
 				<td width="20%" class="margen">
-					2730-SGC-IC-FO-10
+					2730-SGC-IC-FO-11
 				</td>
 				<td  class="margen">
 					Fecha de emisión:
 				</td>
 				<td class="margen">
-                    2017-03-30
+                    2017-06-08
 				</td>
 				<td class="margen">
 					Versión
 				</td>
 				<td class="margen">
-					1
+					2
 				</td>
 				<td width="20%" class="margen">
 					Página 1 de 1
 				</td>
 		</table>
-        <h5 class="inicial">Reporte de evaluación global de Área</h5>
-    
-        <table style="width: 100%">
-            <tr>
-                <th class="titulos" align=center >ÁREA DE FORMACIÓN Y DESARROLLO DOCENTE</th>
-            </tr>
-            <tr>
-                <td class="margen" align=center>
-                   { }
-                </td>
-            </tr>
+        <h5 class="inicial">Reporte global de los cursos impartidos</h5>
 
-		</table> 
         <br>
         <table style="width: 100%">
             <tr>
@@ -152,7 +141,7 @@
                 <th colspan="4" class="titulos" align= left >2. REGISTRO DE PARTICIPANTES</th>
             </tr>
             <tr>
-                <td class="margen">a) Semiperiodo de evaluación: </td>
+                <td class="margen">a) Periodo de evaluación: </td>
                 <td class="margen">  </td>
                 <td class="margen">d) Número de participantes que acreditaron </td>
                 <td class="margen"></td>
@@ -174,7 +163,7 @@
                 <th colspan="2" class="titulos" align= left >3. FACTOR DE OCUPACIÓN</th>
             </tr>
             <tr>
-                <td class="margen"> (No. de participantes que asistieron al Área x 100 / Capacidad de los cursos en el Área) = </td>
+                <td class="margen"> (Total de participantes que asistieron a cursos x 100 / Capacidad total de los cursos) = </td>
                 <td></td>
             </tr>
 
@@ -185,7 +174,7 @@
                 <th colspan="2" class="titulos" align= left >4. FACTOR DE RECOMENDACIÓN DE LOS CURSOS</th>
             </tr>
             <tr>
-                <td class="margen">(No. de participantes que recomiendan los cursos en el Área x 100 / Total de participantes que respondieron la pregunta de satisfacción en el Área) =</td>
+                <td class="margen">(Total de participantes que recomiendan los cursos x 100 / Total de participantes que respondieron la pregunta de satisfacción) = </td>
                 <td></td>
             </tr>
 		</table> 
@@ -195,7 +184,7 @@
                 <th colspan="2" class="titulos" align= left >5. FACTOR DE ACREDITACIÓN</th>
             </tr>
             <tr>
-                <td class="margen">(No. de participantes que recibieron constancia en el Área x 100 / No. de participantes que asistieron al Área) =</td>
+                <td class="margen"> (Total de participantes que recibieron constancia x 100 / Total de participantes que asistieron a cursos) = </td>
                 <td></td>
             </tr>
 		</table> 
@@ -205,7 +194,7 @@
                 <th colspan="2" class="titulos" align= left >6. CALIDAD DE LOS CURSOS</th>
             </tr>
             <tr>
-                <td class="margen">(No. de reactivos positivos en el Área x 100 / No. de reactivos en el Área) =</td>
+                <td class="margen">(Total de reactivos positivos x 100 / Total de reactivos) = </td>
                 <td></td>
             </tr>
 
@@ -254,7 +243,7 @@
                
                 <td class="margen">Desarrollo Humano </td>
                 
-                <td class="margen">Cómputo </td>
+                <td class="margen">Cómputo</td>
                 
                 <td class="margen">Disciplinar </td>
                
