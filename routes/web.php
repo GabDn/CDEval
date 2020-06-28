@@ -9,13 +9,13 @@ Route::post('/autentificar', "AutentificarController@index")->name("autentificar
 //Vista de coordinador
 //Route::post('/coordinador', "AutentificarController@index")->name("coordinador");
 Route::get('/cursos',"CoordinadorController@cursos")->name("cursos");
-Route::get('/cursosCoordinacion/{id}',"CoordinadorController@cursosCoordinaciones")->name("cursos.coordinacion");
+Route::get('/cursosCoordinacion/{id}/{message}',"CoordinadorController@cursosCoordinaciones")->name("cursos.coordinacion");
 Route::get('/instructores',"CoordinadorController@instructores")->name("instructores");
 Route::get('cursos/buscar',"CoordinadorController@searchCursos")->name("buscar.curso");
 Route::get('sesion',"CoordinadorController@sesiones")->name("ver.sesion");
 Route::get('global',"CoordinadorController@globales")->name("ver.global");
-Route::get('global/{curso_id}/{pdf}',"CoordinadorController@globalFinal")->name("ver.global.final");
-Route::get('global/sesion/{curso_id}/{pdf}',"CoordinadorController@globalSesion")->name("ver.sesion.final");
+Route::get('global/{curso_id}/{pdf}/{encargado_id}',"CoordinadorController@globalFinal")->name("ver.global.final");
+Route::get('global/sesion/{curso_id}/{pdf}/{encargado_id}',"CoordinadorController@globalSesion")->name("ver.sesion.final");
 Route::get('area',"CoordinadorController@area_pdf")->name("boton.area");
 
 //Para enviar correos

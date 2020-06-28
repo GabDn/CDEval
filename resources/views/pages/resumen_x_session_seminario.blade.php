@@ -125,7 +125,7 @@
                     
             </table>
     </div>
-        <button type="submit" class="btn btn-primary active"><a href="{{route('ver.sesion.final',['curso_id'=>$curso_id,'pdf'=>1])}}" style="color:white">Descargar</a></button>
+        <button type="submit" class="btn btn-primary active"><a href="{{route('ver.sesion.final',['curso_id'=>$curso_id,'pdf'=>1,'encargado_id'=>$encargado_id])}}" style="color:white">Descargar</a></button>
      </section>
     <br>
 @endsection

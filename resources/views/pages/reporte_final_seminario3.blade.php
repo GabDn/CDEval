@@ -295,7 +295,7 @@ body {
         </div>
     </div>
 
-    <button id="dia"  type="button" class="btn btn-primary active"><a href="{{route('ver.global.final',['curso_id'=>$curso_id,'pdf'=>1])}}" style="color:white">Descargar PDF</a></button>
+    <button id="dia"  type="button" class="btn btn-primary active"><a href="{{route('ver.global.final',['curso_id'=>$curso_id,'pdf'=>1,'encargado_id'=>$encargado_id])}}" style="color:white">Descargar PDF</a></button>
 
                          
                 </div>

@@ -29,14 +29,6 @@ class CoordinadorController extends Controller
             ->with("coordinaciones",$coordinaciones); //Route -> coordinador
     }
 
-    public function cursos(){
-        $cursos = Curso::all();
-        return view("pages.cursos")
-                ->with("cursos",$cursos)
-                ->with('message','Curso no evaluado')
-                ->with('coordinaciones',$coordinaciones);
-    }
-
     public function searchCursos(Request $request){      
         if ($request->type == "nombre") {
             $catalogos_res = CatalogoCurso::select('id')->where('nombre_curso','ILIKE','%'.$request->pattern.'%')->get();
@@ -58,13 +50,46 @@ class CoordinadorController extends Controller
         }
     }
 
-    public function cursosCoordinaciones($encargado_id){
+    public function cursosCoordinaciones($encargado_id,$message){
         $coordinaciones = Coordinacion::all();
-        $cursos = Curso::Join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
-                  ->where('catalogo_cursos.coordinacion_id',$encargado_id)->get();
+        /**$cursos = Curso::Join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
+                  ->where('catalogo_cursos.coordinacion_id',$encargado_id)->get();*/
+        
+        /*$cursos = Curso::Join('catalogo_cursos','cursos.catalogo_id','catalogo_cursos.id')
+            ->where('catalogo_cursos.coordinacion_id',$encargado_id)->get();*/
+
+        $catalogo_curso = DB::table('catalogo_cursos')
+            ->where('coordinacion_id',$encargado_id)
+            ->get();
+
+        $cursos = array();
+        foreach($catalogo_curso as $catalogo){
+            $cursosDatos = DB::table('cursos')
+                ->where('catalogo_id',$catalogo->id)
+                ->get();
+            foreach($cursosDatos as $curso){
+                $datos = array();
+                $profesores = array();
+                $profesores_curso = DB::table('profesor_curso')
+                    ->where('curso_id',$curso->id)
+                    ->get();
+                foreach($profesores_curso as $profesor_curso){
+                    $profesor = DB::table('profesors')
+                        ->where('id',$profesor_curso->profesor_id)
+                        ->get();
+                    array_push($profesores,$profesor);
+                }
+                array_push($datos,$curso);
+                array_push($datos,$catalogo);
+                array_push($datos,$profesores);
+                array_push($cursos,$datos);
+            }
+        }        
         return view("pages.cursos")
             ->with("cursos",$cursos)
-            ->with("coordinaciones",$coordinaciones);
+            ->with("coordinaciones",$coordinaciones)
+            ->with('encargado_id',$encargado_id)
+            ->with('message',$message);
     }
 
 
@@ -997,7 +1022,7 @@ class CoordinadorController extends Controller
         return $pdf->download($lugar.'.pdf');
     }
 
-    public function globalFinal($curso_id,$pdf){
+    public function globalFinal($curso_id,$pdf,$encargado_id){
 
         $coordinaciones = Coordinacion::all();
 
@@ -1025,11 +1050,7 @@ class CoordinadorController extends Controller
         }
 
         if(sizeof($evals) == 0){
-            $cursos = Curso::all();
-            return view("pages.cursos")
-                ->with("cursos",$cursos)
-                ->with('message','Curso no ha sido evaluado')
-                ->with('coordinaciones',$coordinaciones);
+            return redirect()->route('cursos.coordinacion',['encargado_id'=>$encargado_id,'message'=>'Cursos no han sido calificado']);
         }
 
 		//Obtenemos el id de los instructores de los cursos
@@ -1698,12 +1719,13 @@ class CoordinadorController extends Controller
             ->with('numero_horas',$numero_horas)
             ->with('asistieron',$asistieron)
             ->with('nombreInstructor',$nombreInstructor)
-            ->with('coordinaciones',$coordinaciones);
+            ->with('coordinaciones',$coordinaciones)
+            ->with('encargado_id',$encargado_id);
 		
 
     }
     
-    public function globalSesion($curso_id,$pdf){
+    public function globalSesion($curso_id,$pdf,$encargado_id){
 
         $curso = DB::table('cursos')
             ->where('id',$curso_id)
@@ -1728,11 +1750,7 @@ class CoordinadorController extends Controller
         }
 
         if(sizeof($evaluaciones)==0){
-            $cursos = Curso::all();
-            return view("pages.cursos")
-                ->with("cursos",$cursos)
-                ->with('message','Curso no ha sido evaluado')
-                ->with('coordinaciones',$coordinaciones);
+            return redirect()->route('cursos.coordinacion',['encargado_id'=>$encargado_id,'message','Curso no ha sido evaluado']);
         }
 
         $curso = Curso::find($curso_id);
@@ -1747,7 +1765,8 @@ class CoordinadorController extends Controller
             ->with('curso_id',$curso_id)
             ->with('coordinaciones',$coordinaciones)
             ->with('catalogoCurso',$catalogo_curso[0])
-            ->with('curso',$curso);
+            ->with('curso',$curso)
+            ->with('encargado_id',$encargado_id);
 
     }
 

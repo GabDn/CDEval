@@ -49,7 +49,7 @@
                     <!--<?php echo json_encode($coordinaciones) ?>-->
                 </p>
                 @foreach($coordinaciones as $coordinacion)
-                    <li><a href="{{ route('cursos.coordinacion',$coordinacion->id) }}">{{ $coordinacion->nombre_coordinacion }}</a></li>
+                    <li><a href="{{ route('cursos.coordinacion',['encargado_id'=>$coordinacion->id,'message'=>0]) }}">{{ $coordinacion->nombre_coordinacion }}</a></li>
                 @endforeach
                 </ul>
             </li>

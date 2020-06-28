@@ -2,7 +2,7 @@
 
 @section('contenido')
 
-@if(!empty($message))
+@if($message!=0)
     <div class="alert alert-success" style = "text-align:center;"> {{ $message }}</div>
 @endif
 
@@ -43,7 +43,7 @@
                             <thead>
                                 <tr>
                                     <th>Curso</th>
-                                    <th>Instructor</th>
+                                    <th>Instructor(es)</th>
                                     <th>Semestre</th>
                                     <th>Evaluación</th>
                                 </tr>
@@ -51,13 +51,19 @@
                             @foreach($cursos as $curso)
                             <tbody>
                                 <tr>
-                                    <td>{{ $curso->id }}</td>
-                                    <td>{{ $curso->getNombreCurso() }}</td>
-                                    <td>{{ $curso->getProfesores2() }}</td>
-                                    <td>{{ $curso->semestre_anio }}-{{ $curso->semestre_pi }}{{ $curso->semestre_si }}</td>
+                                    <td>{{ $curso[0]->id }}</td>
+                                    <td>{{ $curso[1]->nombre_curso }}</td>
                                     <td>
-                                    <a href="{{ route('ver.sesion.final',['curso_id'=>$curso->id,'pdf'=>0]) }}" class="btn btn-warning">Sesión</a>
-                                    <a href="{{ route('ver.global.final',['curso_id'=>$curso->id,'pdf'=>0]) }}" class="btn btn-success">Final</a>
+                                    @foreach($curso[2] as $profesors)
+                                        @foreach($profesors as $profesor)
+                                         <p>{{ $profesor->nombres }} {{$profesor->apellido_paterno}} {{$profesor->apellido_materno}} </p>
+                                        @endforeach
+                                    @endforeach
+                                    </td>
+                                    <td>{{ $curso[0]->semestre_anio }}-{{ $curso[0]->semestre_pi }}{{ $curso[0]->semestre_si }}</td>
+                                    <td>
+                                    <a href="{{ route('ver.sesion.final',['curso_id'=>$curso[0]->id,'pdf'=>0,'encargado_id'=>$encargado_id]) }}" class="btn btn-warning">Sesión</a>
+                                    <a href="{{ route('ver.global.final',['curso_id'=>$curso[0]->id,'pdf'=>0,'encargado_id'=>$encargado_id]) }}" class="btn btn-success">Final</a>
                                     </td>
                                 </tr>
                             </tbody>
