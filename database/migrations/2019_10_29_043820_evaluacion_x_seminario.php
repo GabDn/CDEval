@@ -25,14 +25,15 @@ class EvaluacionXSeminario extends Migration
           $table->string('p4_arg',300);
           $table->integer('p5'); 
           $table->string('p5_arg',300);
-		  $table->integer('p6');
+          $table->integer('p6');
 		  $table->string('p6_arg',300);
           $table->integer('participante_curso_id')->unsigned();
-		  $table->integer('curso_id')->unsigned();
+          $table->integer('curso_id')->unsigned();
+
           $table->timestamps();
-            $table->foreign('participante_curso_id')
+          $table->foreign('participante_curso_id')
                   ->references('id')->on('participante_curso');
-			$table->foreign('curso_id')
+            $table->foreign('curso_id')
                   ->references('id')->on('cursos');
         });
     }
