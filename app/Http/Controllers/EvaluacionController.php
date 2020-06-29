@@ -1898,9 +1898,8 @@ $promedio_p4=[
 		$control3 = 0;
 		$interes3 = 0;
 		$actitud3 = 0;
-		$lugar = 0;
 
-		if($count<=2){
+		if($count>=2){
 			$lugar = 'pages.reporte_instructores_2';
 			$experiencia2 += $eval[0]->p5_1;
 			$planeacion2 += $eval[0]->p5_2;
@@ -1945,8 +1944,6 @@ $promedio_p4=[
 				$message->attachData($pdf->output(), 'Resultados de Encuesta.pdf');
 			});
 		}
-
-
 
 		/*return view($lugar)
 			->with('experiencia1',$experiencia1)

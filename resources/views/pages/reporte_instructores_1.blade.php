@@ -136,7 +136,7 @@ body {
 					<td class="n1">{{$planeacion1}}</td>
 					<td class="n1">{{$puntualidad1}}</td>
 					<td class="n1">{{$materiales1}}</td>
-					<td class="n1">{{$dudas}}</td>
+					<td class="n1">{{$dudas1}}</td>
 					<td class="n1">{{$control1}}</td>
 					<td class="n1">{{$interes1}}</td>
 					<td class="n1">{{$actitud1}}</td>
