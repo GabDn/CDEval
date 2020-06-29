@@ -89,7 +89,7 @@ body {
             <tr>
                 <td style="font-weight: bold; border: 0px solid white;">c) Horario</td>
                 <td style="border: 0px solid white;">{{$curso->hora_inicio}}, {{$curso->hora_fin}}</td>
-                <td style="font-weight: bold ; margin-left: 50px white;" style="border: 0px solid white;">f) Total de horas</td>
+                <td style="font-weight: bold ; margin-left: 50px white; border: 0px solid white;">f) Total de horas</td>
                 <td style="border: 0px solid white;">{{$numero_horas}}</td>
             </tr>
             <tr>
@@ -111,9 +111,9 @@ body {
             </tr>
             <tr>
                 <td style="font-weight: bold; border: 0px solid white;">b) Asistieron</td>
-                <td style="border: 0px solid white;">1</td>
+                <td style="border: 0px solid white;">{{$asistieron}}</td>
                 <td style="font-weight: bold ; margin-left: 50px white;border: 0px solid white;">d) Formato de evaluación</td>
-                <td style="border: 0px solid white;">1</td>
+                <td style="border: 0px solid white;">{{$contestaron}}</td>
             </tr>
         </table>
         <br> <hr>
@@ -259,7 +259,7 @@ body {
                 </tr>
                 <tr>
                     <td style="border: 0px solid white;"> Contenido: {{$contenido}}</td>
-                    <td style="border: 0px solid white;"> Instructores: {{$instructor}},{{$instructor2}}</td>
+                    <td style="border: 0px solid white;"> Instructores: <?php echo round(($instructor+$instructor2)/2,2)?></td>
                     <td style="border: 0px solid white;"> Coordinacion: {{$factor_coordinacion}}</td>
                     <td style="border: 0px solid white;"> Recomendacion: {{$factor}}</td>
                 </tr>

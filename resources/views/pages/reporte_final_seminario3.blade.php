@@ -112,9 +112,9 @@ body {
             </tr>
             <tr>
                 <td style="font-weight: bold; border: 0px solid white;">b) Asistieron</td>
-                <td style="border: 0px solid white;">1</td>
+                <td style="border: 0px solid white;">{{$asistieron}}</td>
                 <td style="font-weight: bold ; margin-left: 50px white; border: 0px solid white;">d) Formato de evaluación</td>
-                <td style="border: 0px solid white;">1</td>
+                <td style="border: 0px solid white;">{{$contestaron}}</td>
             </tr>
         </table>
         <br> <hr>
@@ -267,19 +267,6 @@ body {
             ?>
         </table>
         <br> <hr>
-        <div id = "Instructor">
-            <table width="100%">
-                <tr>
-                    <th>13. CRITERIOS DE ACEPTACION</th>
-                </tr>
-                <tr>
-                    <td style="border: 0px solid white;"> Contenido: {{$contenido}}</td>
-                    <td style="border: 0px solid white;"> Instructores: {{$instructor}}</td>
-                    <td style="border: 0px solid white;"> Coordinacion: {{$factor_coordinacion}}</td>
-                    <td style="border: 0px solid white;"> Recomendacion: {{$factor}}</td>
-                </tr>
-            </table>
-        </div>
         <div id = "No instructor">
             <table width="100%">
                 <tr>
@@ -287,7 +274,7 @@ body {
                 </tr>
                 <tr>
                     <td style="border: 0px solid white;"> Contenido: {{$contenido}}</td>
-                    <td style="border: 0px solid white;"> Instructores: {{$instructor}},{{$instructor2}},{{$instructor3}}</td>
+                    <td style="border: 0px solid white;"> Instructores: <?php echo round(($instructor+$instructor2+$instructor3)/3,2)?></td>
                     <td style="border: 0px solid white;"> Coordinacion: {{$factor_coordinacion}}</td>
                     <td style="border: 0px solid white;"> Recomendacion: {{$factor}}</td>
                 </tr>

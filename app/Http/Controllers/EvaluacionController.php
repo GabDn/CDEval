@@ -25,7 +25,7 @@ use Mail;
 use PDF;
 use View;
 
-ini_set('max_execution_time', '400');
+ini_set('max_execution_time', '420');
 
 class EvaluacionController extends Controller{
 
@@ -42,17 +42,6 @@ class EvaluacionController extends Controller{
 			->where('curso_id',$curso_id)
 			->count();
 		$participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
-		/*$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-		$infoCursos = array();
-      
-		foreach($participantesCurso as $participanteCurso){
-            $curso = Curso::find($participanteCurso->curso_id);
-			$catalogoCursos = CatalogoCurso::find($curso->catalogo_id);          
-            $tupla = array();
-                array_push($tupla,$curso);
-                array_push($tupla,$catalogoCursos);
-                array_push($infoCursos, $tupla);
-		}*/
 		$infoCursos=array(); 
 		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
                 //return $participantesCurso;
@@ -69,8 +58,6 @@ class EvaluacionController extends Controller{
                     array_push($tupla,$curso);
                     array_push($tupla,$catalogoCursos);
                     array_push($infoCursos, $tupla);
-                    //return $catalogoCursos;
-                    //return $infoCursos;
                 }
 
 		$date = date("Y-m-j");
@@ -125,37 +112,19 @@ class EvaluacionController extends Controller{
         if ('admin' == $profesor->rfc && '1q2w3e4r' == $profesor->numTrabajador) {
             return view("pages.superadmin");
         }
-		/*$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-        $cursos=array();
-        foreach($participantesCurso as $participanteCurso){
-            $curso=Curso::findorFail($participanteCurso->curso_id);
-            array_push($cursos,$curso); 
-        }
-        foreach($cursos as $curso){
-            $catalogoCursos = CatalogoCurso::find($curso->id);
-            $tupla = array();
-            array_push($tupla,$curso);
-            array_push($tupla,$catalogoCursos);
-            array_push($infoCursos, $tupla);
-		}*/
 		$infoCursos=array(); 
 		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-                //return $participantesCurso;
                 $cursos=array();
                 foreach($participantesCurso as $participanteCurso){
                     $curso=Curso::findorFail($participanteCurso->curso_id);
-                    //return $curso;
                     array_push($cursos,$curso); 
                 }
-                //$cursos=Curso::all();
                 foreach($cursos as $curso){
                     $catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
                     $tupla = array();
                     array_push($tupla,$curso);
                     array_push($tupla,$catalogoCursos);
                     array_push($infoCursos, $tupla);
-                    //return $catalogoCursos;
-                    //return $infoCursos;
                 }
         return view("pages.admin")
 			->with("profesor",$profesor)
@@ -199,7 +168,6 @@ class EvaluacionController extends Controller{
 
 	public function enviarCorreoFinal($evals,$profesor_id,$curso_id, $catalogoCurso_id, $eval_fcurso,$participantes,$factor_acreditacion,$factor,$alumnos,$DP,$DH,$CO,$DI,$Otros,$ocupacion,$factor_respuestas_positivas,$factor_contenido,$factor_coordinacion,$lugar,$salon,$acreditado,$factor_instructor1,$minimo1,$maximo1,$factor_instructor2,$minimo2,$maximo2,$factor_instructor3,$minimo3,$maximo3, $numero_horas,$asistieron,$nombreInstructor){
 		$profesor = Profesor::find($profesor_id);
-		//$curso = CatalogoCurso::find($curso_id);
 		$curso = DB::table('cursos')
 			->where('id',$curso_id)
 			->get();
@@ -207,8 +175,32 @@ class EvaluacionController extends Controller{
 		$data = array(
 			'name'=>"CDEval",
 		);
+		$catalogoCurso = DB::table('catalogo_cursos')
+			->where('id',$catalogoCurso_id)
+			->get();
+
+		$envioPDF = 0;
+		if(strcmp($catalogoCurso[0]->tipo,'Actualizacion')==0){
+			if($minimo3 != 0){
+				$envioPDF = 'pages.validacion_seminario_3';
+			}else if($minimo2 != 0){
+				$envioPDF = 'pages.validacion_seminario_2';
+			}else{
+				$envioPDF = 'pages.validacion_seminario_1';
+			}
+		}else{
+			if($minimo3 != 0){
+				$envioPDF = 'pages.validacion_3';
+			}else if($minimo2 != 0){
+				$envioPDF = 'pages.validacion_2';
+			}else{
+				$envioPDF = 'pages.validacion_1';
+			}
+		}
+
+		$contestaron = sizeof($evals);
 		
-		$pdf = PDF::loadView($lugar,array('evals'=>$evals,'profesor_id'=>$profesor_id,'curso_id'=>$curso_id,'catalogoCurso_id'=>$catalogoCurso_id,'eval_fcurso'=>$eval_fcurso,'participantes'=>$participantes,'factor_acreditacion'=>$factor_acreditacion,'factor'=>$factor,'alumnos'=>$alumnos,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'ocupacion'=>$ocupacion,'positivas'=>$factor_respuestas_positivas,'contenido'=>$factor_contenido,'factor_coordinacion'=>$factor_coordinacion, 'curso'=>$curso[0], 'salon'=>$salon[0], 'acreditaron'=>$acreditado, 'coordinaciones'=>array(),'instructor'=>$factor_instructor1,'minimo'=>$minimo1,'maximo'=>$maximo1,'instructor2'=>$factor_instructor2,'minimo2'=>$minimo2,'maximo2'=>$maximo2,'instructor3'=>$factor_instructor3,'minimo3'=>$minimo3,'maximo3'=>$maximo3, 'numero_horas'=>$numero_horas,'asistieron'=>$asistieron,'nombreInstructor'=>$nombreInstructor));	
+		$pdf = PDF::loadView($envioPDF,array('evals'=>$evals,'profesor_id'=>$profesor_id,'curso_id'=>$curso_id,'catalogoCurso_id'=>$catalogoCurso_id,'eval_fcurso'=>$eval_fcurso,'participantes'=>$participantes,'factor_acreditacion'=>$factor_acreditacion,'factor'=>$factor,'alumnos'=>$alumnos,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'ocupacion'=>$ocupacion,'positivas'=>$factor_respuestas_positivas,'contenido'=>$factor_contenido,'factor_coordinacion'=>$factor_coordinacion, 'curso'=>$curso[0], 'salon'=>$salon[0], 'acreditaron'=>$acreditado, 'coordinaciones'=>array(),'instructor'=>$factor_instructor1,'minimo'=>$minimo1,'maximo'=>$maximo1,'instructor2'=>$factor_instructor2,'minimo2'=>$minimo2,'maximo2'=>$maximo2,'instructor3'=>$factor_instructor3,'minimo3'=>$minimo3,'maximo3'=>$maximo3, 'numero_horas'=>$numero_horas,'asistieron'=>$asistieron,'nombreInstructor'=>$nombreInstructor,'catalogo'=>$catalogoCurso[0],'contestaron'=>$contestaron));	
           
 		//Obtenemos los profesores de los cursos  
 		$profesoresCurso = ProfesoresCurso::where('curso_id',$curso_id)->get();
@@ -238,19 +230,6 @@ class EvaluacionController extends Controller{
 		$profesor = Profesor::find($profesor_id);
 		$curso = Curso::find($curso_id);
 		$catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
-		/*$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-		$infoCursos = array();
-
-
-		foreach($participantesCurso as $participanteCurso){
-			$curso = Curso::find($participanteCurso->curso_id);
-            $catalogoCursos = CatalogoCurso::find($curso->id);
-                           
-            $tupla = array();
-            array_push($tupla,$curso);
-            array_push($tupla,$catalogoCursos);
-            array_push($infoCursos, $tupla);
-		}*/
 		$infoCursos=array(); 
 		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
                 //return $participantesCurso;
@@ -267,8 +246,6 @@ class EvaluacionController extends Controller{
                     array_push($tupla,$curso);
                     array_push($tupla,$catalogoCursos);
                     array_push($infoCursos, $tupla);
-                    //return $catalogoCursos;
-                    //return $infoCursos;
 				}
 				
 		$curso = Curso::find($curso_id);
@@ -291,43 +268,22 @@ class EvaluacionController extends Controller{
     }
 
     public function evaluacionPorCurso($profesor_id, $curso_id, $catalogoCurso_id,$count){
-		/*$array = array();
-		array_push($array,$profesor_id);
-		array_push($array,$curso_id);
-		return $array;*/
 		$profesor = Profesor::find($profesor_id);
 		$curso = Curso::find($curso_id);
 		$catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
-		/*$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-		$infoCursos = array();
-        
-		foreach($participantesCurso as $participanteCurso){
-            $curso = Curso::find($participanteCurso->curso_id);
-			$catalogoCursos = CatalogoCurso::find($curso->id);
-                           
-			$tupla = array();
-			array_push($tupla,$curso);
-            array_push($tupla,$catalogoCursos);
-			array_push($infoCursos, $tupla);
-		}*/
 		$infoCursos=array(); 
 		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-                //return $participantesCurso;
                 $cursos=array();
                 foreach($participantesCurso as $participanteCurso){
                     $curso=Curso::findorFail($participanteCurso->curso_id);
-                    //return $curso;
                     array_push($cursos,$curso); 
                 }
-                //$cursos=Curso::all();
                 foreach($cursos as $curso){
                     $catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
                     $tupla = array();
                     array_push($tupla,$curso);
                     array_push($tupla,$catalogoCursos);
                     array_push($infoCursos, $tupla);
-                    //return $catalogoCursos;
-                    //return $infoCursos;
 				}
 				
 		$curso = Curso::find($curso_id);
@@ -378,10 +334,6 @@ class EvaluacionController extends Controller{
 	public function saveFinal_Curso(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
 		$eval_fcurso = new EvaluacionFinalCurso;
 		$correo = new EvaluacionController(); 
-		/*$array = array();
-		array_push($array,$profesor_id);
-		array_push($array,$curso_id);
-		return $array;*/
 		$participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
 		$eval_fcurso->participante_curso_id=$participante[0]->id;
 		//Obtenemos la fecha actual para usarla en consultas posteriores	
@@ -585,39 +537,22 @@ class EvaluacionController extends Controller{
 		$curso = Curso::find($curso_id);
 		$catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
 	
-		/*$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-		$infoCursos = array();
-		
-		foreach($participantesCurso as $participanteCurso){
-			$curso = Curso::find($participanteCurso->curso_id);
-			$catalogoCursos = CatalogoCurso::find($curso->id);
-						
-			$tupla = array();
-			array_push($tupla,$curso);
-            array_push($tupla,$catalogoCursos);
-            array_push($infoCursos, $tupla);
-		}*/
 		$infoCursos=array(); 
 		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-                //return $participantesCurso;
                 $cursos=array();
                 foreach($participantesCurso as $participanteCurso){
                     $curso=Curso::findorFail($participanteCurso->curso_id);
-                    //return $curso;
                     array_push($cursos,$curso); 
                 }
-                //$cursos=Curso::all();
                 foreach($cursos as $curso){
                     $catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
                     $tupla = array();
                     array_push($tupla,$curso);
                     array_push($tupla,$catalogoCursos);
                     array_push($infoCursos, $tupla);
-                    //return $catalogoCursos;
-                    //return $infoCursos;
-                }
+				}
 
-		$this->enviarEvaluacionFinal($profesor_id,$curso_id,$catalogoCurso_id,$eval_fcurso,'pages.reporte_final_curso');
+		$this->reporteInstructor($profesor_id,$curso_id,$catalogoCurso_id,$eval_fcurso->id);
 
 		//Revisamos si hay encuestas realizadas por el alumno en el día actual
 		$evaluacion_x_curso = DB::table('_evaluacion_x_curso')
@@ -835,39 +770,23 @@ $promedio_p4=[
 		$curso = Curso::find($curso_id);
 		$catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
 	
-		/*$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-		$infoCursos = array();
-		
-		foreach($participantesCurso as $participanteCurso){
-			$curso = Curso::find($participanteCurso->curso_id);
-			$catalogoCursos = CatalogoCurso::find($curso->id);
-						
-			$tupla = array();
-			array_push($tupla,$curso);
-            array_push($tupla,$catalogoCursos);
-            array_push($infoCursos, $tupla);
-		}*/
 		$infoCursos=array(); 
 		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-                //return $participantesCurso;
                 $cursos=array();
                 foreach($participantesCurso as $participanteCurso){
                     $curso=Curso::findorFail($participanteCurso->curso_id);
                     //return $curso;
                     array_push($cursos,$curso); 
                 }
-                //$cursos=Curso::all();
                 foreach($cursos as $curso){
                     $catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
                     $tupla = array();
                     array_push($tupla,$curso);
                     array_push($tupla,$catalogoCursos);
                     array_push($infoCursos, $tupla);
-                    //return $catalogoCursos;
-                    //return $infoCursos;
                 }
 
-		$this->enviarEvaluacionFinal($profesor_id,$curso_id,$catalogoCurso_id,$eval_fseminario,'pages.reporte_final_seminario');
+		return $this->reporteInstructor($profesor_id,$curso_id,$catalogoCurso_id,$eval_fseminario->id);
 
 		//Revisamos si hay encuestas realizadas por el alumno en el día actual
 		$evaluacion_x_curso = DB::table('_evaluacion_x_seminario')
@@ -880,11 +799,6 @@ $promedio_p4=[
 			->where([['curso_id',$curso_id],['participante_curso_id',$participante[0]->id]])
 			->get();
 
-		/*$evaluacion_final_curso = DB::table('_evaluacion_final_seminario')
-			->select('_evaluacion_final_seminario.participante_curso_id')
-			->where('participante_curso_id',$participante[0]->id)
-			->get();*/
-	 
 		$curso = Curso::find($curso_id);
 
 		//Retornamos la vista pages.evaluacionIndex con los datos necesarios para su funcionamiento
@@ -974,7 +888,7 @@ $promedio_p4=[
 
 		//Enviamos el correo con los datos a usar
 		$correo->enviarCorreo($profesor_id,$curso_id, $catalogoCurso_id, $eval_curso, 'pages.evaluacion_x_curso');
-	 
+
 		//Revisamos si hay encuestas realizadas por el alumno en el día actual
 		$evaluacion_x_curso = DB::table('_evaluacion_x_curso')
 			->select('_evaluacion_x_curso.created_at','_evaluacion_x_curso.curso_id')
@@ -1034,22 +948,17 @@ $promedio_p4=[
 			->count();
 			$infoCursos=array(); 
 			$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-                //return $participantesCurso;
                 $cursos=array();
                 foreach($participantesCurso as $participanteCurso){
                     $curso=Curso::findorFail($participanteCurso->curso_id);
-                    //return $curso;
                     array_push($cursos,$curso); 
                 }
-                //$cursos=Curso::all();
                 foreach($cursos as $curso){
                     $catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
                     $tupla = array();
                     array_push($tupla,$curso);
                     array_push($tupla,$catalogoCursos);
                     array_push($infoCursos, $tupla);
-                    //return $catalogoCursos;
-                    //return $infoCursos;
                 }
 	
 
@@ -1062,7 +971,7 @@ $promedio_p4=[
 		$eval_curso = $eval_xcurso[0];
 	  
 		//Enviamos el correo con los datos a usar
-		//$correo->enviarCorreo($profesor_id,$curso_id, $catalogoCurso_id, $eval_curso, 'pages.evaluacion_x_seminario');
+		$correo->enviarCorreo($profesor_id,$curso_id, $catalogoCurso_id, $eval_curso, 'pages.evaluacion_x_seminario');
 	 
 		//Revisamos si hay encuestas realizadas por el alumno en el día actual
 		$evaluacion_x_curso = DB::table('_evaluacion_x_seminario')
@@ -1921,5 +1830,158 @@ $promedio_p4=[
 		$correo->enviarCorreoFinal($evals,$profesor_id,$curso_id, $catalogoCurso_id, $eval_fcurso,$participantes,$factor_acreditacion,$factor,$alumnos,$DP,$DH,$CO,$DI,$Otros,$ocupacion,$factor_respuestas_positivas,$factor_contenido,$factor_coordinacion,$envio,$salon,$acreditado,$factor_instructor1,$minimo1,$maximo1,$factor_instructor2,$minimo2,$maximo2,$factor_instructor3,$minimo3,$maximo3,$numero_horas,$asistieron,$nombreInstructor);
 
 	}
-       
+
+	public function reporteInstructor($profesor_id,$curso_id,$catalogoCurso_id,$eval_id){
+		$curso = DB::table('cursos')
+			->where('id',$curso_id)
+			->get();
+		$catalogoCurso = DB::table('catalogo_cursos')
+			->where('id',$catalogoCurso_id)
+			->get();
+		$eval = DB::table('_evaluacion_final_curso')
+			->where('id',$eval_id)
+			->get();
+
+		if(sizeof($eval)<=0){
+			$eval = DB::table('_evaluacion_final_seminario')
+				->where('id',$eval_id)
+				->get();
+		}
+
+		$profesorsDatos = DB::table('profesor_curso')
+			->where('curso_id',$curso[0]->id)
+			->get();
+		$count = ProfesoresCurso::select($curso_id)
+			->where('curso_id',$curso_id)
+			->count();
+
+		$profesors = array();
+
+		foreach($profesorsDatos as $Dato){
+			/*$profesor = DB::table('profesors')
+				->where('id',$Dato->profesor_id)
+				->get();*/
+			$profesor = Profesor::find($Dato->id);
+			array_push($profesors,$profesor);
+		}
+
+		//return $profesors;
+		//return $eval;
+
+		$cursos = Curso::find($curso_id)->get();
+
+
+		$mejor = $eval[0]->mejor;
+		$sugerencias = $eval[0]->sug;
+		$lugar = 'pages.reporte_instructores_1';
+		$experiencia1 = $eval[0]->p4_1;
+		$planeacion1 = $eval[0]->p4_2;
+		$puntualidad1 = $eval[0]->p4_3;
+		$materiales1 = $eval[0]->p4_4;
+		$dudas1 = $eval[0]->p4_5;
+		$control1 = $eval[0]->p4_6;
+		$interes1 = $eval[0]->p4_7;
+		$actitud1 = $eval[0]->p4_8;
+		$experiencia2 = 0;
+		$planeacion2 = 0;
+		$puntualidad2 = 0;
+		$materiales2 = 0;
+		$dudas2 = 0;
+		$control2 = 0;
+		$interes2 = 0;
+		$actitud2 = 0;
+		$experiencia3 = 0;
+		$planeacion3 = 0;
+		$puntualidad3 = 0;
+		$materiales3 = 0;
+		$dudas3 = 0;
+		$control3 = 0;
+		$interes3 = 0;
+		$actitud3 = 0;
+		$lugar = 0;
+
+		if($count<=2){
+			$lugar = 'pages.reporte_instructores_2';
+			$experiencia2 += $eval[0]->p5_1;
+			$planeacion2 += $eval[0]->p5_2;
+			$puntualidad2 += $eval[0]->p5_3;
+			$materiales2 += $eval[0]->p5_4;
+			$dudas2 += $eval[0]->p5_5;
+			$control2 += $eval[0]->p5_6;
+			$interes2 += $eval[0]->p5_7;
+			$actitud2 += $eval[0]->p5_8;
+		}
+		if($count == 3){
+			$lugar = 'pages.reporte_instructores_3';
+			$experiencia3 += $eval[0]->p6_1;
+			$planeacion3 += $eval[0]->p6_2;
+			$puntualidad3 += $eval[0]->p6_3;
+			$materiales3 += $eval[0]->p6_4;
+			$dudas3 += $eval[0]->p6_5;
+			$control3 += $eval[0]->p6_6;
+			$interes3 += $eval[0]->p6_7;
+			$actitud3 += $eval[0]->p6_8;
+		}
+
+		$envio = $catalogoCurso[0]->nombre_curso.'_'.$eval_id;
+		
+			
+		$pdf = PDF::loadView($lugar,array('experiencia1'=>$experiencia1,'planeacion1'=>$planeacion1,'puntualidad1'=>$puntualidad1,'materiales1'=>$materiales1,'dudas1'=>$dudas1,'control1'=>$control1,'interes1'=>$interes1,'actitud1'=>$actitud1,'experiencia2'=>$experiencia2,'planeacion2'=>$planeacion2,'puntualidad2'=>$puntualidad2,'materiales2'=>$materiales2,'dudas2'=>$dudas2,'control2'=>$control2,'interes2'=>$interes2,'actitud2'=>$actitud2,'experiencia3'=>$experiencia3,'planeacion3'=>$planeacion3,'puntualidad3'=>$puntualidad3,'materiales3'=>$materiales3,'dudas3'=>$dudas3,'control3'=>$control3,'interes3'=>$interes3,'actitud3'=>$actitud3,'mejor'=>$mejor,'sugerencias'=>$sugerencias,'catalogo'=>$catalogoCurso[0],'curso'=>$curso[0],'cursos'=>$cursos[0],'profesors'=>$profesors,'eval_id'=>$eval_id));	
+		//return $pdf->download($envio.'.pdf');
+
+		$profesoresCurso = ProfesoresCurso::where('curso_id',$curso_id)->get();
+
+		$semestre = $curso[0]->semestre_anio;
+
+		$data = array(
+			'name'=>"CDEval",
+		);
+
+		foreach($profesoresCurso as $profesorCurso){
+			$profesor=Profesor::find($profesorCurso->id);
+			Mail::send('pages.mensaje',$data, function ($message) use($profesor,$pdf,$semestre){
+				$message->from(Array('cdevalresultados@gmail.com'=>'CDEval'));
+				$message->to(Array($profesor->getCorreo()=>$profesor->getNombre()))->subject('Resultados de Encuesta');
+				$message->attachData($pdf->output(), 'Resultados de Encuesta.pdf');
+			});
+		}
+
+
+
+		/*return view($lugar)
+			->with('experiencia1',$experiencia1)
+			->with('planeacion1',$planeacion1)
+			->with('puntualidad1',$puntualidad1)
+			->with('materiales1',$materiales1)
+			->with('dudas1',$dudas1)
+			->with('control1',$control1)
+			->with('interes1',$interes1)
+			->with('actitud1',$actitud1)
+			->with('experiencia2',$experiencia2)
+			->with('planeacion2',$planeacion2)
+			->with('puntualidad2',$puntualidad2)
+			->with('materiales2',$materiales2)
+			->with('dudas2',$dudas2)
+			->with('control2',$control2)
+			->with('interes2',$interes2)
+			->with('actitud2',$actitud2)
+			->with('experiencia3',$experiencia3)
+			->with('planeacion3',$planeacion3)
+			->with('puntualidad3',$puntualidad3)
+			->with('materiales3',$materiales3)
+			->with('dudas3',$dudas3)
+			->with('control3',$control3)
+			->with('interes3',$interes3)
+			->with('actitud3',$actitud3)
+			->with('mejor',$mejor)
+			->with('sugerencias',$sugerencias)
+			->with('catalogo',$catalogoCurso[0])
+			->with('curso',$curso[0])
+			->with('cursos',$cursos[0])
+			->with('profesors',$profesors)
+			->with('eval_id',$eval_id);*/
+	}
+
 }
+
+

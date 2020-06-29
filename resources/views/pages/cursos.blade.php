@@ -2,10 +2,9 @@
 
 @section('contenido')
 
-@if($message!=0)
+@if($message != '0')
     <div class="alert alert-success" style = "text-align:center;"> {{ $message }}</div>
 @endif
-
 <div class="content">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 

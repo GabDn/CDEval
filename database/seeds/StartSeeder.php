@@ -1617,7 +1617,7 @@ class StartSeeder extends Seeder
             'nombre_curso' =>'Cálculo Integral',
             'duracion_curso' => '20',
             'coordinacion_id' => 1,
-            'tipo' => 'C',
+            'tipo' => 'D',
             'institucion' => 'CD',
             'presentacion' => 'Presentacion',
             'dirigido' => 'Alumnos de ingenieria',
@@ -1758,7 +1758,7 @@ class StartSeeder extends Seeder
             'costo' => 2000,
             'cupo_maximo' => 20,
             'cupo_minimo' => 5,
-            'catalogo_id' => 1,
+            'catalogo_id' => 5,
             'salon_id' => 1
         ]);
         DB::table('cursos')->insert([
@@ -1864,6 +1864,23 @@ class StartSeeder extends Seeder
             'catalogo_id' => 7,
             'salon_id' => 1
         ]);
+        DB::table('cursos')->insert([
+            'semestre_anio' => 2018,
+            'semestre_pi'=>"2",
+            'semestre_si' => "s",
+            'fecha_inicio' => '2019-12-03',
+            'fecha_fin' => '2020-05-30',
+            'hora_inicio' => '14:00',
+            'hora_fin' => '16:00',
+            'dias_semana' => 'Lunes,Martes',
+            'numero_sesiones' => 10,
+            'texto_diploma' => 'Texto diploma',
+            'costo' => 2000,
+            'cupo_maximo' => 20,
+            'cupo_minimo' => 5,
+            'catalogo_id' => 4,
+            'salon_id' => 1
+        ]);
         DB::table('profesor_curso')->insert([
             'curso_id' => "1",
             'profesor_id' => '1',
@@ -1924,7 +1941,11 @@ class StartSeeder extends Seeder
             'profesor_id' => '4',
 
         ]);
+        DB::table('profesor_curso')->insert([
+            'curso_id' => "9",
+            'profesor_id' => '3',
 
+        ]);
         DB::table('secretario_apoyo')->insert([
             'secretario' => "Javier Arriaga",
             'comentarios' => 'Licenciado en Administracion, muchos años ha estado en cargos administrativos de la universidad y actualmente se desempeña como secretario.',

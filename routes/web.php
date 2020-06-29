@@ -10,7 +10,7 @@ Route::post('/autentificar', "AutentificarController@index")->name("autentificar
 //Route::post('/coordinador', "AutentificarController@index")->name("coordinador");
 Route::get('/cursos',"CoordinadorController@cursos")->name("cursos");
 //Route::get('/cursosCoordinacion/{id}/{message}',"CoordinadorController@cursosCoordinaciones")->name("cursos.coordinacion");
-Route::get('/cursosCoordinacion/{id}',"CoordinadorController@cursosCoordinaciones")->name("cursos.coordinacion");
+Route::get('/cursosCoordinacion/{id}/{message}/',"CoordinadorController@cursosCoordinaciones")->name("cursos.coordinacion");
 Route::get('/instructores',"CoordinadorController@instructores")->name("instructores");
 Route::get('cursos/buscar',"CoordinadorController@searchCursos")->name("buscar.curso");
 Route::get('sesion',"CoordinadorController@sesiones")->name("ver.sesion");
@@ -46,3 +46,14 @@ Route::post('enviar_coordinacion',"CoordinadorController@enviarCoordinacion")->n
 Route::get('descargar/global/{fecha}','CoordinadorController@globalPDF')->name('global.pdf');
 Route::get('descargar/area/{fecha}/{nombreCoordinacion}','CoordinadorController@areaPDF')->name('area.pdf');
 
+Route::get('area',function(){
+    return view('pages.area');
+})->name('area');
+
+Route::get('global',function(){
+    return view('pages.global');
+})->name('global');
+
+Route::get('instructores',function(){
+    return view('pages.reporte_instructores');
+})->name('instructores');

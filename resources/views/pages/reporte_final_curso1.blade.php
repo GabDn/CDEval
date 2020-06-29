@@ -112,9 +112,9 @@ body {
             </tr>
             <tr>
                 <td style="font-weight: bold; border: 0px solid white;">b) Asistieron</td>
-                <td style="border: 0px solid white;">1</td>
+                <td style="border: 0px solid white;">{{$asistieron}}</td>
                 <td style="font-weight: bold ; margin-left: 50px white; border: 0px solid white;" >d) Formato de evaluación</td>
-                <td style="border: 0px solid white;">1</td>
+                <td style="border: 0px solid white;">{{$contestaron}}</td>
             </tr>
         </table>
         <br> <hr>

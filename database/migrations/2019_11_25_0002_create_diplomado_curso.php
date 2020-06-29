@@ -13,6 +13,7 @@ class CreateDiplomadoCurso extends Migration
     {
         Schema::create('diplomado_curso', function (Blueprint $table) {
             $table->increments('id')->unique();
+            $table->Integer('num_modulo')->unsigned();
             $table->Integer('diplomado_id')->unsigned();
             $table->Integer('curso_id')->unsigned();
 

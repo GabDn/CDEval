@@ -16,8 +16,6 @@ use Mail;
 use PDF;
 use DB; 
 
-ini_set('max_execution_time', '500');
-
 class CoordinadorController extends Controller
 {
 
@@ -203,7 +201,7 @@ class CoordinadorController extends Controller
         }
 
         if(sizeof($evaluacionesCursos)==0){
-            return redirect()->route($inicio,['message'=>'Curso no ha sido evaluado']);
+            return redirect()->route($inicio,['Curso no ha sido evaluado']);
         }
 
         $DP=0;
@@ -255,7 +253,6 @@ class CoordinadorController extends Controller
         $evaluacionProfesor = 0;
 
         foreach($evaluacionesCursos as $curso){
-
             $curso_id = $curso[0]->curso_id;
             $profesores = DB::table('profesor_curso')
                 ->where('curso_id',$curso_id)
@@ -274,7 +271,7 @@ class CoordinadorController extends Controller
 
                 //Obtenemos los datos del alumno
                 $alumno = DB::table('participante_curso')
-                    ->where([['profesor_id',$evaluacion->participante_curso_id],['curso_id',$evaluacion->curso_id]])
+                    ->where('id',$evaluacion->participante_curso_id)
                     ->get();
                 
                 //Obtenemos numero de acreditacion de los usuarios
@@ -757,6 +754,16 @@ class CoordinadorController extends Controller
                 }
             }
 
+            if($preguntas_curso == 0){
+                $preguntas_curso = 1;
+            }
+            if($alumno_curso == 0){
+                $alumno_curso = 1;
+            }
+            if($recomendaciones_curso == 0){
+                $recomendaciones_curso = 1;
+            }
+
             //Obtenemos factor de calidad del curso iterado, su factor de acreditacion y de recomendacion
             $factor_calidad_curso = ($positivas_curso*100)/$preguntas_curso;
             $factora_acreditacion = ($acreditaronCurso*100)/$alumno_curso;
@@ -820,7 +827,7 @@ class CoordinadorController extends Controller
         //Si el usuario indico descargar un pdf se procedera a realizarlo
         if($pdf == 1){
             //Retornamos la funcion que permite la descarga del pdf
-            return $this->descargarPDF($nombresCursos,$request,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$positivas,$DP,$DH,$CO,$DI,$Otros,$DPtematica,$DItematica,$COtematica,$DHtematica,$Otrostematica,$coordinaciones,$horarios,$promedio_coordinacion,$promedio_contenido,$profesoresRecontratar,$factor_instructor,$asistieron,$nombreCoordinacion,$lugar);
+            return $this->descargarPDF($nombresCursos,$request,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$positivas,$DP,$DH,$CO,$DI,$Otros,$DPtematica,$DItematica,$COtematica,$DHtematica,$Otrostematica,$coordinaciones,$horariosCurso,$promedio_coordinacion,$promedio_contenido,$profesoresRecontratar,$factor_instructor,$asistieron,$nombreCoordinacion,$lugar);
         }
 
         //Retornamos la vista correspondiente (seleccionados por fecah o seleccionados por fecha y coordinacion) con los datos calculados
@@ -959,12 +966,10 @@ class CoordinadorController extends Controller
     public function globalPDF($fecha){
         //Obtenemos la fecha seleccionada por el usuario
         $semestre = explode('-',$fecha);
-
         //Obtenemos los cursos de dicha fecha
         $cursos = DB::table('cursos')
             ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]]])
             ->get();
-
         //Procedemos a obtener todos los datos e indicamos que queremos pasarlo a pdf
         $lugar = "pages.reporte_final_global";
 
@@ -1009,17 +1014,23 @@ class CoordinadorController extends Controller
         $nombreCoordinacion = $coordinaciones[0]->nombre_coordinacion;
         $lugar = "pages.reporte_final_area";
 
-        return $this->enviarVista($semestre, $cursos, "", $lugar,1,'');
+        return $this->enviarVista($semestre, $cursos, $nombreCoordinacion, $lugar,1,'');
     }
 
     public function descargarPDF($nombres,$periodo,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$positivas,$DP,$DH,$CO,$DI,$Otros,$DPtematicas,$DItematicas,$COtematicas,$DHtematicas,$Otrostematicas,$coordinaciones,$horarios,$coordinacion,$contenido,$profesors,$instructor,$asistencia,$nombreCoordinacion,$lugar){
         $coordinaciones = Coordinacion::all();
 
+        $envio = 'pages.global';
+        $envioPDF = 'global_'.$periodo;
+        if(strcmp($lugar,'pages.reporte_final_area') == 0){
+            $envio = 'pages.area';
+            $envioPDF = 'area_'.$nombreCoordinacion.'_periodo';
+        }
         //Obtenemos el pdf con los datos calculados
-        $pdf = PDF::loadView($lugar,array('nombres'=>$nombres,'periodo'=>$periodo,'acreditaron'=>$acreditaron,'inscritos'=>$inscritos,'contestaron'=>$contestaron,'factor_ocupacion'=>$factor_ocupacion,'factor_recomendacion'=>$factor_recomendacion,'factor_acreditacion'=>$factor_acreditacion,'positivas'=>$positivas,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'DPtematicas'=>$DPtematicas,'DItematicas'=>$DItematicas,'COtematicas'=>$COtematicas,'DHtematicas'=>$DHtematicas,'Otrostematicas'=>$Otrostematicas,'coordinaciones'=>$coordinaciones,'horarios'=>$horarios,'coordinacion'=>$coordinacion,'contenido'=>$contenido,'profesors'=>$profesors,'instructor'=>$instructor,'asistencia'=>$asistencia,'nombreCoordinacion'=>$nombreCoordinacion));	
+        $pdf = PDF::loadView($envio,array('nombres'=>$nombres,'periodo'=>$periodo,'acreditaron'=>$acreditaron,'inscritos'=>$inscritos,'contestaron'=>$contestaron,'factor_ocupacion'=>$factor_ocupacion,'factor_recomendacion'=>$factor_recomendacion,'factor_acreditacion'=>$factor_acreditacion,'positivas'=>$positivas,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'DPtematicas'=>$DPtematicas,'DItematicas'=>$DItematicas,'COtematicas'=>$COtematicas,'DHtematicas'=>$DHtematicas,'Otrostematicas'=>$Otrostematicas,'coordinaciones'=>$coordinaciones,'horarios'=>$horarios,'coordinacion'=>$coordinacion,'contenido'=>$contenido,'profesors'=>$profesors,'instructor'=>$instructor,'asistencia'=>$asistencia,'nombreCoordinacion'=>$nombreCoordinacion));	
 
         //Retornamos la descarga del pdf
-        return $pdf->download($lugar.'.pdf');
+        return $pdf->download($envioPDF.'.pdf');
     }
 
     public function globalFinal($curso_id,$pdf,$encargado_id){
@@ -1050,8 +1061,10 @@ class CoordinadorController extends Controller
         }
 
         if(sizeof($evals) == 0){
-            return redirect()->route('cursos.coordinacion',['encargado_id'=>$encargado_id,'message'=>'Cursos no han sido calificado']);
+            return redirect()->route('cursos.coordinacion',[$encargado_id,'Cursos no han sido calificado']);
         }
+
+        $contestaron = sizeof($evals);
 
 		//Obtenemos el id de los instructores de los cursos
 		$instructores = DB::table('profesor_curso')
@@ -1617,22 +1630,32 @@ class CoordinadorController extends Controller
 		}
 
 		//Checamos el numero de instructores del curso para ver a cual de los view enviar
-		$envio = 0;
+        $envio = 0;
+        $envioPDF = 0;
+        $nombre = 0;
 		if(strcmp($catalogoCurso[0]->tipo,'Actualizacion')==0){
+            $nombre = 'seminario';
 			if($minimo3 != 0){
-				$envio = 'pages.reporte_final_seminario3';
+                $envio = 'pages.reporte_final_seminario3';
+                $envioPDF = 'pages.validacion_seminario_3';
 			}else if($minimo2 != 0){
-				$envio = 'pages.reporte_final_seminario2';
+                $envio = 'pages.reporte_final_seminario2';
+                $envioPDF = 'pages.validacion_seminario_2';
 			}else{
-				$envio = 'pages.reporte_final_seminario1';
+                $envio = 'pages.reporte_final_seminario1';
+                $envioPDF = 'pages.validacion_seminario_1';
 			}
 		}else{
+            $nombre = 'curso';
 			if($minimo3 != 0){
-				$envio = 'pages.reporte_final_curso3';
+                $envio = 'pages.reporte_final_curso3';
+                $envioPDF = 'pages.validacion_3';
 			}else if($minimo2 != 0){
-				$envio = 'pages.reporte_final_curso2';
+                $envio = 'pages.reporte_final_curso2';
+                $envioPDF = 'pages.validacion_2';
 			}else{
-				$envio = 'pages.reporte_final_curso1';
+                $envio = 'pages.reporte_final_curso1';
+                $envioPDF = 'pages.validacion_1';
 			}
 		}
 
@@ -1680,16 +1703,20 @@ class CoordinadorController extends Controller
 
 		$numero_horas = floatval($curso[0]->numero_sesiones) * ($fin-$inicio);
 
+        $catalogo_curso = DB::table('catalogo_cursos')
+            ->where('id',$curso[0]->catalogo_id)
+            ->get();
+
         if($pdf == 1){
-            $pdf = PDF::loadView($envio,array('evals'=>$evals,'curso_id'=>$curso_id,'catalogoCurso_id'=>$catalogoCurso_id,'participantes'=>$participantes,'factor_acreditacion'=>$factor_acreditacion,'factor'=>$factor,'alumnos'=>$alumnos,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'ocupacion'=>$ocupacion,'positivas'=>$factor_respuestas_positivas,'contenido'=>$factor_contenido,'factor_coordinacion'=>$factor_coordinacion,'curso'=>$curso[0],'salon'=>$salon[0],'acreditaron'=>$acreditado,'coordinaciones'=>array(),'instructor'=>$factor_instructor1,'minimo'=>$minimo1,'maximo'=>$maximo1,'instructor2'=>$factor_instructor2,'minimo2'=>$minimo2,'maximo2'=>$maximo2,'instructor3'=>$factor_instructor3,'minimo3'=>$minimo3,'maximo3'=>$maximo3,'numero_horas'=>$numero_horas,'asistieron'=>$asistieron,'nombreInstructor'=>$nombreInstructor,'coordinaciones'=>$coordinaciones));	
-            return $pdf->download($envio.'pdf');
+            $nombre = $nombre.'_'.$catalogo_curso[0]->nombre_curso.'_'.$curso[0]->semestre_anio.'_'.$curso[0]->semestre_pi.'_'.$curso[0]->semestre_si.'.pdf';
+            $pdf = PDF::loadView($envioPDF,array('evals'=>$evals,'curso_id'=>$curso_id,'catalogoCurso_id'=>$catalogoCurso_id,'participantes'=>$participantes,'factor_acreditacion'=>$factor_acreditacion,'factor'=>$factor,'alumnos'=>$alumnos,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'ocupacion'=>$ocupacion,'positivas'=>$factor_respuestas_positivas,'contenido'=>$factor_contenido,'factor_coordinacion'=>$factor_coordinacion,'curso'=>$curso[0],'salon'=>$salon[0],'acreditaron'=>$acreditado,'coordinaciones'=>array(),'instructor'=>$factor_instructor1,'minimo'=>$minimo1,'maximo'=>$maximo1,'instructor2'=>$factor_instructor2,'minimo2'=>$minimo2,'maximo2'=>$maximo2,'instructor3'=>$factor_instructor3,'minimo3'=>$minimo3,'maximo3'=>$maximo3,'numero_horas'=>$numero_horas,'asistieron'=>$asistieron,'nombreInstructor'=>$nombreInstructor,'coordinaciones'=>$coordinaciones,'catalogo'=>$catalogo_curso[0],'contestaron'=>$contestaron));	
+            return $pdf->download($nombre);
         }
 
         return view($envio)
             ->with('evals',$evals)
             ->with('curso_id',$curso_id)
             ->with('catalogoCurso_id',$catalogoCurso_id)
-            //->with('eval_fcurso',$eval_fcurso)
             ->with('participantes',$participantes)
             ->with('factor_acreditacion',$factor_acreditacion)
             ->with('factor',$factor)
@@ -1720,7 +1747,9 @@ class CoordinadorController extends Controller
             ->with('asistieron',$asistieron)
             ->with('nombreInstructor',$nombreInstructor)
             ->with('coordinaciones',$coordinaciones)
-            ->with('encargado_id',$encargado_id);
+            ->with('encargado_id',$encargado_id)
+            ->with('contestaron',$contestaron)
+            ->with('catalogo',$catalogo_curso);
 		
 
     }
@@ -1750,7 +1779,7 @@ class CoordinadorController extends Controller
         }
 
         if(sizeof($evaluaciones)==0){
-            return redirect()->route('cursos.coordinacion',['encargado_id'=>$encargado_id,'message','Curso no ha sido evaluado']);
+            return redirect()->route('cursos.coordinacion',[$encargado_id,'Curso no ha sido evaluado']);
         }
 
         $curso = Curso::find($curso_id);

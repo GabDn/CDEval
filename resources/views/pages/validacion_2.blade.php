@@ -105,8 +105,8 @@ body {
 		</table>
         <br>
         <div align="center">
-            <div style="float: left; width: 100%; font-size: 22px;">{curso_nombre_curso}}</div>
-            <div style="float: right; width: 15%">{semestre_semestre_anio}}</div>
+            <div style="float: left; width: 100%; font-size: 22px;">{{$catalogo->nombre_curso}}</div>
+            <div style="float: right; width: 15%">{{$curso->semestre_anio}}-{{$curso->semestre_pi}}-{{$curso->semestre_si}}</div>
             <div style="clear: both"></div>
             <hr>
         </div>
@@ -118,23 +118,27 @@ body {
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">a) Instructor</td>
-                <td class="n">{profesor_nombres}} {profesor_apellido_paterno}} {profesor_apellido_materno}}</td>
+                <?php
+                    foreach($nombreInstructor as $instructorCurso){
+                        echo "<td class=\"n\"> $instructorCurso->nombres $instructorCurso->apellido_paterno $instructorCurso->apellido_materno, </td>";
+                    }
+                ?>
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">b) Fecha de impartición</td>
-                <td style="width=10%" class="n">{fecha}</td>
+                <td style="width=10%" class="n">{{$curso->fecha_inicio}}, {{$curso->fecha_fin}}</td>
                 <td style="font-weight: bold ; margin-left: 50px white; width=40%" class="n" >e) Capacidad</td>
-                <td style="width=10%" class="n">{núm}</td>
+                <td style="width=10%" class="n">{{$curso->cupo_maximo}}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">c) Horario</td>
-                <td class="n">{hora}</td>
+                <td class="n">{{$curso->hora_inicio}}, {{$curso->hora_fin}}</td>
                 <td style="font-weight: bold ; margin-left: 50px white;" class="n">f) Total de horas</td>
-                <td class="n">{núm}</td>
+                <td class="n">{{$numero_horas}}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">d) Lugar</td>
-                <td class="n">{lugar}</td>
+                <td class="n">{{$salon->sede}}</td>
                 
             </tr>     
         </table>
@@ -145,33 +149,33 @@ body {
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">a) Inscritos</td>
-                <td class="n">{}</td>
+                <td class="n"><?php echo sizeof($participantes); ?></td>
                 <td style="font-weight: bold ; margin-left: 50px white;" class="n" >c) Acreditaron</td>
-                <td class="n">{}</td>
+                <td class="n">{{$acreditaron}}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">b) Asistieron</td>
-                <td class="n">{}</td>
+                <td class="n">{{$asistieron}}</td>
                 <td style="font-weight: bold ; margin-left: 50px white;" class="n">d) Formatos de evaluación final</td>
-                <td class="n">{}</td>
+                <td class="n">{{$acreditaron}}</td>
             </tr>
         </table>
         <br>
         <table width="100%">
             <tr>
                 <th>3. FACTOR DE OCUPACIÓN</th>
-                <td class="n">{}</td>
+                <td class="n">{{$asistieron}}</td>
                 <th>4. FACTOR DE RECOMENDACIÓN</th>
-                <td class="n">{}</td>
+                <td class="n">{{$contestaron}}</td>
             </tr>
         </table>
         <br>
         <table width="100%">
             <tr>
                 <th>5. FACTOR DE ACREDITACIÓN</th>
-                <td class="n">{}</td>
+                <td class="n"> {{$factor_acreditacion}}</td>
                 <th>6. FACTOR DE CALIDAD</th>
-                <td class="n">{num}</td>
+                <td class="n"> {{$positivas}}</td>
             </tr>
         </table>
         <br>
@@ -182,16 +186,28 @@ body {
         </table>
         <table width="100%">
             <tr>
-                <th style="width: 65%" class="f" >Instructor</th>
+                <th style="width: 65%" class="f" >Instructor 1</th>
                 <th class="f">Promedio</th>
                 <th class="f">Mínimo</th>
                 <th class="f">Máximo</th>
             </tr>
             <tr>
-                <td style="width: 65%" class="n" >{INSTRUCTOR}</td>
-                <td class="n">{promedio}</td>
-                <td class="n">{min}</td>
-                <td class="n">{max}</td>
+                <td style="width: 65%" class="n" >{{$nombreInstructor[0]->nombres}} {{$nombreInstructor[0]->apellido_paterno}} {{$nombreInstructor[0]->apellido_materno}}</td>
+                <td class="n">{{$instructor}}</td>
+                <td class="n">{{$minimo}}</td>
+                <td class="n">{{$maximo}}</td>
+            </tr>
+            <tr>
+                <th style="width: 65%" class="f" >Instructor 2</th>
+                <th class="f">Promedio</th>
+                <th class="f">Mínimo</th>
+                <th class="f">Máximo</th>
+            </tr>
+            <tr>
+                <td style="width: 65%" class="n" >{{$nombreInstructor[1]->nombres}} {{$nombreInstructor[1]->apellido_paterno}} {{$nombreInstructor[1]->apellido_materno}}</td>
+                <td class="n">{{$instructor2}}</td>
+                <td class="n">{{$minimo2}}</td>
+                <td class="n">{{$maximo2}}</td>
             </tr>
         </table>
 
@@ -199,15 +215,27 @@ body {
         <table width="100%">
             <tr>
             <th style="width: 20%">8. JUICIO SUMARIO INSTRUCTOR a)</th>
-                <td style="width: 30%" class="n">{/}</td>
-                
+            <?php
+                if($factor >= 80){
+                    echo "<td style=\"width: 30%\" class=\"n\">Si</td>";
+                }else{
+                    echo "<td style=\"width: 30%\" class=\"n\">No</td>";
+                }
+            ?>
             </tr>
         </table>
         <br>
         <table width="100%">
             <tr>
                 <th style="width: 20%">8. JUICIO SUMARIO  CURSO b)</th>
-                <td style="width: 30%" class="n">{num} &nbsp; {Sí/No}</td>
+                <?php
+                    $num = round(($factor+$factor_acreditacion+$positivas)/3,2);
+                    if($factor >= 80 && $factor_acreditacion >= 80 && $positivas >= 80){
+                        echo "<td style=\"width: 30%\" class=\"n\">$num &nbsp; Si</td>";
+                    }else{
+                        echo "<td style=\"width: 30%\" class=\"n\">$num &nbsp; No</td>";
+                    }
+                ?>
             </tr>
         </table>
         <br>
@@ -215,20 +243,28 @@ body {
             <tr>
                 <th>9. RECOMENDACIONES</th>
             </tr>
-            <tr><td class="n">{SUGERENCIAS Y RECOMENDACIONES}</td></tr>
+            <?php
+                foreach($evals as $evaluacion){
+                    echo "<tr>";
+                    echo "<td class=\"n\">$evaluacion->sug</td>";
+                    echo "</tr>";
+                }
+            ?>
         </table>
         <br>
         <table width="100%">
-            <tr>
+        <tr>
                 <th>10. ÁREAS SOLICITADAS</th>
                 <th>DP: </th>
-                <td class="n">{}</td>
+                <td class="n">{{$DP}}</td>
                 <th>DH: </th>
-                <td class="n">{}</td>
+                <td class="n">{{$DH}}</td>
                 <th>CO: </th>
-                <td class="n">{}</td>
+                <td class="n">{{$CO}}</td>
                 <th>DI: </th>
-                <td class="n">{}</td>
+                <td class="n">{{$DI}}</td>
+                <th>Otros: </th>
+                <td class="n">{{$Otros}}</td>
             </tr>
         </table>
         <br>
@@ -236,7 +272,13 @@ body {
             <tr>
                 <th>11. TEMÁTICA SOLICITADAS</th>
             </tr>
-            <tr><td class="n">{}</td></tr>
+            <?php
+                foreach($evals as $evaluacion){
+                    echo "<tr>";
+                    echo "<td class=\"n\">$evaluacion->tematica</td>";
+                    echo "</tr>";
+                }
+            ?>
         </table>
         <br>
         <table width="100%">
@@ -247,10 +289,14 @@ body {
                 <th style="width: 50%" class="f">Horario semestral</th>
                 <th style="width: 50%" class="f">Horario intersemestral</th>
             </tr>
-            <tr>
-                <td style="width: 50%" class="n">{HORARIOS}</td>
-                <td style="width: 50%" class="n">{HORARIOI}</td>
-            </tr>
+            <?php
+                foreach($evals as $evaluacion){
+                    echo "<tr>";
+                    echo "<td style=\"width: 50%\" class= \"n\">$evaluacion->horarios</td>";
+                    echo "<td style=\"width: 50%\" class=\"n\">$evaluacion->horarioi</td>";
+                    echo "</tr>";
+            }
+            ?>
         </table>
         <br>
         <table width="100%">
@@ -262,22 +308,22 @@ body {
         <table width="100%">
             <tr>
                 <th style="width: 10%" >Contenido: </th>
-                <td style="width: 90%" class="n" >{num}</td>
+                <td style="width: 90%" class="n" >{{$contenido}}</td>
             </tr>
             <br>
             <tr>
                 <th style="width: 10%" >Instructores: </th>
-                <td style="width: 90%" class="n" >{num}</td>
+                <td style="width: 90%" class="n" ><?php echo round(($instructor+$instructor2)/2,2)?></td>
             </tr>
             <br>
             <tr>
                 <th style="width: 10%" >Coordinación: </th>
-                <td style="width: 90%" class="n" >{num}</td>
+                <td style="width: 90%" class="n" >{{$factor_coordinacion}}</td>
             </tr>
             <br>
             <tr>
                 <th style="width: 10%" >Recomendación: </th>
-                <td style="width: 90%" class="n" >{num}</td>
+                <td style="width: 90%" class="n" >{{$factor}}</td>
             </tr>
 
         </table>

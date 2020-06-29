@@ -124,7 +124,7 @@
             </tr>
             <tr>
                 <td class="margen" align=center>
-                   { }
+                {{$nombreCoordinacion}}
                 </td>
             </tr>
 
@@ -136,11 +136,15 @@
             </tr>
             <tr>
                 <td class="margen">
-                    <ol type=”A”>
-                        <li>{ }</li>
-                        <li>{ }</li>
-                        <li></li>
-                    </ol>
+                    <!--<ol type=”A”>-->
+                    <?php 
+                        $num = 1;
+                        foreach($nombres as $nombre){
+                            echo "<dd style=\"line-height:1.3\">&nbsp;$num. $nombre</dd>";
+                            $num++;
+                        }
+                    ?>
+                    <!--</ol>-->
                 </td>
             </tr>
 
@@ -153,19 +157,19 @@
             </tr>
             <tr>
                 <td class="margen">a) Semiperiodo de evaluación: </td>
-                <td class="margen">  </td>
+                <td class="margen">{{$periodo}}</td>
                 <td class="margen">d) Número de participantes que acreditaron </td>
-                <td class="margen"></td>
+                <td class="margen">{{$acreditaron}}</td>
             </tr>
             <tr>
                 <td class="margen">b) Número de particpantes inscritos: </td>
-                <td class="margen">  </td>
+                <td class="margen">{{$inscritos}}</td>
                 <td rowspan="2" class="margen">e) Número de participantes que contestaron el formato de evaluación</td>
-                <td rowspan="2"  class="margen"></td>
+                <td rowspan="2"  class="margen">{{$contestaron}}</td>
             </tr>
             <tr>
                 <td class="margen">c) Número de participantes que asistieron: </td>
-                <td class="margen">  </td>
+                <td class="margen">{{$asistencia}}</td>
             </tr>
 		</table> 
         <br>
@@ -175,7 +179,7 @@
             </tr>
             <tr>
                 <td class="margen"> (No. de participantes que asistieron al Área x 100 / Capacidad de los cursos en el Área) = </td>
-                <td></td>
+                <td class="margen">{{$factor_ocupacion}}</td>
             </tr>
 
 		</table> 
@@ -186,7 +190,7 @@
             </tr>
             <tr>
                 <td class="margen">(No. de participantes que recomiendan los cursos en el Área x 100 / Total de participantes que respondieron la pregunta de satisfacción en el Área) =</td>
-                <td></td>
+                <td class="margen">{{$factor_recomendacion}}</td>
             </tr>
 		</table> 
         <br>
@@ -196,7 +200,7 @@
             </tr>
             <tr>
                 <td class="margen">(No. de participantes que recibieron constancia en el Área x 100 / No. de participantes que asistieron al Área) =</td>
-                <td></td>
+                <td class="margen">{{$factor_acreditacion}}</td>
             </tr>
 		</table> 
 <br>
@@ -206,7 +210,7 @@
             </tr>
             <tr>
                 <td class="margen">(No. de reactivos positivos en el Área x 100 / No. de reactivos en el Área) =</td>
-                <td></td>
+                <td class="margen">{{$positivas}}</td>
             </tr>
 
 		</table> 
@@ -217,10 +221,13 @@
             </tr>
             <tr>
                 <td class="margen">
-                    <ol type=”A”>
-                        <li>{Lista de profesores}</li>
-                        <li></li>
-                    </ol>
+                     <?php 
+                        $num = 1;
+                        foreach($profesors as $profesor){
+                            echo "<dd style=\"line-height:1.3\">&nbsp;$num. $profesor->nombres $profesor->apellido_paterno $profesor->apellido_materno</dd>";
+                            $num++;
+                        }
+                    ?>
                 </td>
             </tr>
 
@@ -233,13 +240,13 @@
             </tr>
             <tr>
                 <td class="margen"> Didáctico Pedagógico: </td>
-                <td class="margen"></td>
+                <td class="margen">{{$DP}}</td>
                 <td class="margen">Desarrollo Humano: </td>
-                <td class="margen"></td>
+                <td class="margen">{{$DH}}</td>
                 <td class="margen">Cómputo: </td>
-                <td class="margen"></td>
+                <td class="margen">{{$CO}}</td>
                 <td class="margen">Disciplinar:</td>
-                <td class="margen"></td>
+                <td class="margen">{{$DI}}</td>
             </tr>
 
 		</table> 
@@ -254,18 +261,49 @@
                
                 <td class="margen">Desarrollo Humano </td>
                 
-                <td class="margen">Cómputo </td>
+                <td class="margen">Cómputo</td>
                 
                 <td class="margen">Disciplinar </td>
                
             </tr>
             <tr>
-            <td class="margen"></td>
-            <td class="margen"></td>
-            <td class="margen"></td>
-            <td class="margen"></td>
+                <td class="margen">
+                    <ul>
+                        <?php
+                            foreach($DPtematicas as $tematica){
+                                echo "<li style=\"line-height=0.7\">$tematica</li>";
+                            }
+                        ?>
+                    </ul>
+                </td>
+                <td class="margen">
+                    <ul>
+                        <?php
+                            foreach($DItematicas as $tematica){
+                                echo "<li style=\"line-height=0.7\">$tematica</li>";
+                            }
+                        ?>
+                    </ul>
+                </td>
+                <td class="margen">
+                    <ul>
+                        <?php
+                            foreach($DHtematicas as $tematica){
+                                echo "<li style=\"line-height=0.7\">$tematica</li>";
+                            }
+                        ?>
+                    </ul>
+                </td>
+                <td class="margen">
+                    <ul>
+                        <?php
+                            foreach($COtematicas as $tematica){
+                                echo "<li style=\"line-height=0.7\">$tematica</li>";
+                            }
+                        ?>
+                    </ul>
+                </td>
             </tr>
-
 		</table> 
 <br>
         <table style="width: 100%">
@@ -276,10 +314,15 @@
                 <td class="margen">Horarios Semestrales</td>
                 <td class="margen">Horarios Intersemestrales</td>
             </tr>
-            <tr>
-                <td class="margen">{horarios}</td>
-                <td class="margen">{horarios}</td>
-            </tr>
+            <?php
+
+                foreach($horarios as $horario){
+                    echo "<tr>";
+                    echo "<td class=\"margen\">$horario[0]</td>";
+                    echo "<td class=\"margen\">$horario[1]</td>";
+                    echo "</tr>";
+                }        
+            ?>
 
 		</table> 
 <br>
@@ -289,21 +332,21 @@
             </tr>
             <tr>
                 <td class="margen">Contenido de los cursos: </td>
-                <td class="margen"> </td>
+                <td class="margen">{{$contenido}}</td>
                 <td rowspan="4" ></td>
                 <td></td>
             </tr>
             <tr>
                 <td class="margen">Desempeño de los instructores: </td>
-                <td class="margen"> </td>
+                <td class="margen">{{$instructor}}</td>
             </tr>
             <tr>
                 <td class="margen">Coordinación de los cursos: </td>
-                <td class="margen"> </td>
+                <td class="margen">{{$coordinacion}}</td>
             </tr>
             <tr>
                 <td class="margen">Recomendación de los cursos: </td>
-                <td class="margen"> </td>
+                <td class="margen">{{$factor_recomendacion}}</td>
             </tr>
 
 		</table> 

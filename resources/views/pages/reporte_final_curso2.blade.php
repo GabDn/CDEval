@@ -112,9 +112,9 @@ body {
             </tr>
             <tr>
                 <td style="font-weight: bold; border: 0px solid white;">b) Asistieron</td>
-                <td style="border: 0px solid white;">1</td>
+                <td style="border: 0px solid white;">{{$asistieron}}</td>
                 <td style="font-weight: bold ; margin-left: 50px white;" class="n">d) Formato de evaluación</td>
-                <td style="border: 0px solid white;">1</td>
+                <td style="border: 0px solid white;">{{$contestaron}}</td>
             </tr>
         </table>
         <br> <hr>
@@ -260,7 +260,7 @@ body {
                 </tr>
                 <tr>
                     <td style="border: 0px solid white;"> Contenido: {{$contenido}}</td>
-                    <td style="border: 0px solid white;"> Instructores: {{$instructor}}, {{$instructor2}}</td>
+                    <td style="border: 0px solid white;"> Instructores: <?php echo round(($instructor+$instructor2)/2,2)?></td>
                     <td style="border: 0px solid white;"> Coordinacion: {{$factor_coordinacion}}</td>
                     <td style="border: 0px solid white;"> Recomendacion: {{$factor}}</td>
                 </tr>
