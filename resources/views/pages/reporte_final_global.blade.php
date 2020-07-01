@@ -250,17 +250,37 @@ body {
         </table>
         <br> <hr>
         <div id = "Instructor">
-            <table width="100%">
-                <tr>
-                    <th>11. CRITERIOS DE ACEPTACION</th>
-                </tr>
-                <tr>
-                    <td style="border: 0px solid white;"> Contenido: {{$contenido}}</td>
-                    <td style="border: 0px solid white;"> Instructores: {{$instructor}}</td>
-                    <td style="border: 0px solid white;"> Coordinacion: {{$coordinacion}}</td>
-                    <td style="border: 0px solid white;"> Recomendacion: {{$factor_recomendacion}}</td>
-                </tr>
-            </table>
+        <table style="width: 100%">
+            <tr>
+                <th colspan="3" align= left >11. CRITERIOS DE ACEPTACIÓN DE LOS CURSOS</th>
+            </tr>
+            <tr>
+                <th style="border: 0px solid white">Campo</th>
+                <th style="border: 0px solid white">Ponderado</th>
+                <th style="border: 0px solid white">Aritmetico</th>
+            </tr>
+            <tr>
+                <td style="border: 0px solid white">Contenido de los cursos: </td>
+                <td style="border: 0px solid white">{{$contenido}}</td>
+                <td style="border: 0px solid white">{{$aritmetico_contenido}}</td>
+            </tr>
+            <tr>
+                <td style="border: 0px solid white">Desempeño de los instructores: </td>
+                <td style="border: 0px solid white">{{$instructor}}</td>
+                <td style="border: 0px solid white">{{$aritmetico_instructor}}</td>
+            </tr>
+            <tr>
+                <td style="border: 0px solid white">Coordinación de los cursos: </td>
+                <td style="border: 0px solid white">{{$coordinacion}}</td>
+                <td style="border: 0px solid white">{{$aritmetico_coordinacion}}</td>
+            </tr>
+            <tr>
+                <td style="border: 0px solid white">Recomendación de los cursos: </td>
+                <td style="border: 0px solid white">{{$factor_recomendacion}}</td>
+                <td style="border: 0px solid white">{{$aritmetico_recomendacion}}</td>
+            </tr>
+
+		</table> 
         </div>
     </div>
 

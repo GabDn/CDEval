@@ -325,25 +325,32 @@
 <br>
         <table style="width: 100%">
             <tr>
-                <th colspan="4" class="titulos" align= left >11. CRITERIOS DE ACEPTACIÓN DE LOS CURSOS</th>
+                <th colspan="3" class="titulos" align= left >11. CRITERIOS DE ACEPTACIÓN DE LOS CURSOS</th>
+            </tr>
+            <tr>
+                <td class="titulos">Campo</td>
+                <td class="titulos">Ponderado</td>
+                <td class="titulos">Aritmetico</td>
             </tr>
             <tr>
                 <td class="margen">Contenido de los cursos: </td>
                 <td class="margen">{{$contenido}}</td>
-                <td rowspan="4" ></td>
-                <td></td>
+                <td class="margen">{{$aritmetico_contenido}}</td>
             </tr>
             <tr>
                 <td class="margen">Desempeño de los instructores: </td>
                 <td class="margen">{{$instructor}}</td>
+                <td class="margen">{{$aritmetico_instructor}}</td>
             </tr>
             <tr>
                 <td class="margen">Coordinación de los cursos: </td>
                 <td class="margen">{{$coordinacion}}</td>
+                <td class="margen">{{$aritmetico_coordinacion}}</td>
             </tr>
             <tr>
                 <td class="margen">Recomendación de los cursos: </td>
                 <td class="margen">{{$factor_recomendacion}}</td>
+                <td class="margen">{{$aritmetico_recomendacion}}</td>
             </tr>
 
 		</table> 

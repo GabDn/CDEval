@@ -39,89 +39,118 @@
                         <th width="42%">ASPECTOS A EVALUAR.</th>
                     </tr>
                     <tr>
-                        <th align="justify">1. Se presentó una orden del día </th>
-                        <?php
-                            foreach($evaluaciones as $evaluacion){
-                                echo "<tr>";
-                                if($evaluacion->p1==1){
-                                    echo "<td>Si</td><td>$evaluacion->p1_arg</td>";;
-                                }else{
-                                    echo "<td>No</td><td>$evaluacion->p1_arg</td>";;
-                                }
-                                echo "</tr>";
-                            }
-                        ?>
+                        <th align="float-right" class="f">PROFESOR</th>
+                        <th align="float-right" class="f">RESPUESTA</th>
+                        <th align="float-right" class="f">ARGUMENTO</th>
                     </tr>
+                    <tr>
+                        <th align="justify">1. Se presentó una orden del día </th>
+                    </tr>
+                            @foreach($evaluaciones as $evals)
+                                <tr>
+                                <td>{{$evals[0]->nombres}} {{$evals[0]->apellido_paterno}} {{$evals[0]->apellido_materno}}</td>
+                                <td>
+                                <?php 
+                                        if($evals[1]->p1 == 1){
+                                            echo "Si";
+                                        }
+                                        else{
+                                            echo "No";
+                                        }
+                                ?></td>
+                                <td>{{$evals[1]->p1_arg}}</td>
+                                </tr>
+                            @endforeach
                     <tr>
                         <th align="justify">2. El o los objetivos del seminario son los esperados por el grupo </th>
-                        <?php
-                            foreach($evaluaciones as $evaluacion){
-                                echo "<tr>";
-                                if($evaluacion->p2==1){
-                                    echo "<td>Si</td><td>$evaluacion->p2_arg</td>";;
-                                }else{
-                                    echo "<td>No</td><td>$evaluacion->p2_arg</td>";;
-                                }
-                                echo "</tr>";
-                            }
-                        ?>
                     </tr>
+                        @foreach($evaluaciones as $evals)
+                                <tr>
+                                <td>{{$evals[0]->nombres}} {{$evals[0]->apellido_paterno}} {{$evals[0]->apellido_materno}}</td>
+                                <td>
+                                <?php 
+                                        if($evals[1]->p2 == 1){
+                                            echo "Si";
+                                        }
+                                        else{
+                                            echo "No";
+                                        }
+                                ?></td>
+                                <td>{{$evals[1]->p2_arg}}</td>
+                                </tr>
+                        @endforeach
                     <tr>
                         <th align="justify">3. El moderador centró el desarrollo de la sesión </th>
-                        <?php
-                            foreach($evaluaciones as $evaluacion){
-                                echo "<tr>";
-                                if($evaluacion->p3==1){
-                                    echo "<td>Si</td><td>$evaluacion->p3_arg</td>";;
-                                }else{
-                                    echo "<td>No</td><td>$evaluacion->p3_arg</td>";;
-                                }
-                                echo "</tr>";
-                            }
-                        ?>
                     </tr>
+                        @foreach($evaluaciones as $evals)
+                                <tr>
+                                <td>{{$evals[0]->nombres}} {{$evals[0]->apellido_paterno}} {{$evals[0]->apellido_materno}}</td>
+                                <td>
+                                <?php 
+                                        if($evals[1]->p3 == 1){
+                                            echo "Si";
+                                        }
+                                        else{
+                                            echo "No";
+                                        }
+                                ?></td>
+                                <td>{{$evals[1]->p3_arg}}</td>
+                                </tr>
+                        @endforeach
                     <tr>
                         <th align="justify">4. Se propició la participación de todos los asistentes </th>
-                        <?php
-                            foreach($evaluaciones as $evaluacion){
-                                echo "<tr>";
-                                if($evaluacion->p4==1){
-                                    echo "<td>Si</td><td>$evaluacion->p4_arg</td>";;
-                                }else{
-                                    echo "<td>No</td><td>$evaluacion->p4_arg</td>";;
-                                }
-                                echo "</tr>";
-                            }
-                        ?>
                     </tr>
+                        @foreach($evaluaciones as $evals)
+                                <tr>
+                                <td>{{$evals[0]->nombres}} {{$evals[0]->apellido_paterno}} {{$evals[0]->apellido_materno}}</td>
+                                <td>
+                                <?php 
+                                        if($evals[1]->p4 == 1){
+                                            echo "Si";
+                                        }
+                                        else{
+                                            echo "No";
+                                        }
+                                ?></td>
+                                <td>{{$evals[1]->p4_arg}}</td>
+                                </tr>
+                        @endforeach
                     <tr>
                         <th align="justify">5. Se levantó una minuta de sesión </th>
-                        <?php
-                            foreach($evaluaciones as $evaluacion){
-                                echo "<tr>";
-                                if($evaluacion->p5==1){
-                                    echo "<td>Si</td><td>$evaluacion->p5_arg</td>";;
-                                }else{
-                                    echo "<td>No</td><td>$evaluacion->p5_arg</td>";;
-                                }
-                                echo "</tr>";
-                            }
-                        ?>
                     </tr>
+                    @foreach($evaluaciones as $evals)
+                                <tr>
+                                <td>{{$evals[0]->nombres}} {{$evals[0]->apellido_paterno}} {{$evals[0]->apellido_materno}}</td>
+                                <td>
+                                <?php 
+                                        if($evals[1]->p5 == 1){
+                                            echo "Si";
+                                        }
+                                        else{
+                                            echo "No";
+                                        }
+                                ?></td>
+                                <td>{{$evals[1]->p5_arg}}</td>
+                                </tr>
+                        @endforeach
                     <tr>
-                        <!--<th align="justify">6. Se obtuvieron conclusiones </th>
-                        <?php
-                            /*foreach($evaluaciones as $evaluacion){
-                                echo "<tr>";
-                                if($evaluacion->p6==1){
-                                    echo "<td>Si</td><td>$evaluacion->p6_arg</td>";;
-                                }else{
-                                    echo "<td>No</td><td>$evaluacion->p6_arg</td>";;
-                                }
-                                echo "</tr>";
-                            }*/
-                        ?>-->
+                        <th align="justify">6. Se obtuvieron conclusiones </th>
                     </tr>
+                    @foreach($evaluaciones as $evals)
+                                <tr>
+                                <td>{{$evals[0]->nombres}} {{$evals[0]->apellido_paterno}} {{$evals[0]->apellido_materno}}</td>
+                                <td>
+                                <?php 
+                                        if($evals[1]->p6 == 1){
+                                            echo "Si";
+                                        }
+                                        else{
+                                            echo "No";
+                                        }
+                                ?></td>
+                                <td>{{$evals[1]->p6_arg}}</td>
+                                </tr>
+                        @endforeach
                     
             </table>
     </div>

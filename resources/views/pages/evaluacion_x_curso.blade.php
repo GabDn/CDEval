@@ -92,11 +92,11 @@ body {
                 <td style="font-weight: bold" class="n">c) Horario</td>
                 <td class="n">{{$semestre->hora_inicio}},{{$semestre->hora_fin}}</td>
                 <td style="font-weight: bold ; margin-left: 50px white;" class="n">f) Total de horas</td>
-                <td class="n">{núm}</td>
+                <td class="n">{{$numero_horas}}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">d) Lugar</td>
-                <td class="n">{lugar}</td>
+                <td class="n">{{$salon[0]->sede}}</td>
                 
             </tr>     
         </table>

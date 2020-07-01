@@ -824,10 +824,18 @@ class CoordinadorController extends Controller
             $factor_ocupacion = round((($inscritos*100)-1) / $capacidad_total,2);
         }
 
+        $aritmetico = [0,0,0,0];
+        if(strcmp($nombreCoordinacion,"")==0){
+            $aritmetico = $this->calculaAritmetico($cursos);
+            //return $this->calculaAritmetico($cursos);
+        }else{
+            $aritmetico = $this->calculaAritmeticoArea($cursos, $nombreCoordinacion);
+        }
+
         //Si el usuario indico descargar un pdf se procedera a realizarlo
         if($pdf == 1){
             //Retornamos la funcion que permite la descarga del pdf
-            return $this->descargarPDF($nombresCursos,$request,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$positivas,$DP,$DH,$CO,$DI,$Otros,$DPtematica,$DItematica,$COtematica,$DHtematica,$Otrostematica,$coordinaciones,$horariosCurso,$promedio_coordinacion,$promedio_contenido,$profesoresRecontratar,$factor_instructor,$asistieron,$nombreCoordinacion,$lugar);
+            return $this->descargarPDF($nombresCursos,$request,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$positivas,$DP,$DH,$CO,$DI,$Otros,$DPtematica,$DItematica,$COtematica,$DHtematica,$Otrostematica,$coordinaciones,$horariosCurso,$promedio_coordinacion,$promedio_contenido,$profesoresRecontratar,$factor_instructor,$asistieron,$nombreCoordinacion,$lugar,$aritmetico[0],$aritmetico[1],$aritmetico[2],$aritmetico[3]);
         }
 
         //Retornamos la vista correspondiente (seleccionados por fecah o seleccionados por fecha y coordinacion) con los datos calculados
@@ -859,7 +867,275 @@ class CoordinadorController extends Controller
             ->with('profesors',$profesoresRecontratar)
             ->with('instructor',$factor_instructor)
             ->with('asistencia',$asistieron)
-            ->with('nombreCoordinacion',$nombreCoordinacion);
+            ->with('nombreCoordinacion',$nombreCoordinacion)
+            ->with('aritmetico_contenido',$aritmetico[0])
+            ->with('aritmetico_instructor',$aritmetico[1])
+            ->with('aritmetico_coordinacion',$aritmetico[2])
+            ->with('aritmetico_recomendacion',$aritmetico[3]);
+    }
+
+    public function calculaAritmetico($cursos){
+        $semestre_anio = $cursos[0]->semestre_anio;
+        $semestre_pi = $cursos[0]->semestre_pi;
+
+        $coordinaciones = Coordinacion::all();
+        $catalogo_coordinaciones = array();
+
+        foreach($coordinaciones as $coordinacion){
+            $cursos = DB::table('cursos')
+                ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
+                ->select('cursos.id','catalogo_cursos.nombre_curso','catalogo_cursos.tipo')
+                ->where([['catalogo_cursos.coordinacion_id',$coordinacion->id],['cursos.semestre_anio',$semestre_anio],['cursos.semestre_pi',$semestre_pi]])
+                ->get();
+            
+            if(sizeof($cursos)>0){
+                array_push($catalogo_coordinaciones,$cursos);
+            }
+        }
+
+        $contenido_promedio = 0;
+        $instructor_promedio = 0;
+        $coordinacion_promedio = 0;
+        $factor_recomendacion_promedio = 0;
+        $tam_coordinacion = 0;
+
+        foreach($catalogo_coordinaciones as $coordinacion){
+
+            $contenido_curso = 0;
+            $instructor_curso_1 = 0;
+            $instructor_curso_2 = 0;
+            $instructor_curso_3 = 0;
+            $coordinacion_curso = 0;
+            $factor_recomendacion_curso = 0;
+            $tam = 0;
+            $tam2 = 0;
+            $tam3 = 0;
+
+            $tam_coordinacion++;
+
+            foreach($coordinacion as $curso){
+                $evals = 0;
+                if(strcmp($curso->tipo,'Actualizacion')==0){
+                    $evals = DB::table('_evaluacion_final_seminario')
+                        ->where('curso_id',$curso->id)
+                        ->get();
+                }else{
+                    $evals = DB::table('_evaluacion_final_curso')
+                        ->where('curso_id',$curso->id)
+                        ->get();   
+                }
+
+                $tam += sizeof($evals);
+
+                foreach($evals as $eval){
+
+                    $contenido_curso += $eval->p1_1;
+                    $contenido_curso += $eval->p1_2;
+                    $contenido_curso += $eval->p1_3;
+                    $contenido_curso += $eval->p1_4;
+                    $contenido_curso += $eval->p1_5;
+
+                    $coordinacion_curso += $eval->p3_1;
+                    $coordinacion_curso += $eval->p3_2;
+                    $coordinacion_curso += $eval->p3_3;
+                    $coordinacion_curso += $eval->p3_4;
+
+                    $instructor_curso_1 += $eval->p4_1;
+                    $instructor_curso_1 += $eval->p4_2;
+                    $instructor_curso_1 += $eval->p4_3;
+                    $instructor_curso_1 += $eval->p4_4;
+                    $instructor_curso_1 += $eval->p4_5;
+                    $instructor_curso_1 += $eval->p4_6;
+                    $instructor_curso_1 += $eval->p4_7;
+                    $instructor_curso_1 += $eval->p4_8;
+                    $instructor_curso_1 += $eval->p4_9;
+                    $instructor_curso_1 += $eval->p4_10;
+                    $instructor_curso_1 += $eval->p4_11;
+
+                    if($eval->p5_1 >= 20){
+                        $tam2++;
+                        $instructor_curso_2 += $eval->p5_1;
+                        $instructor_curso_2 += $eval->p5_2;
+                        $instructor_curso_2 += $eval->p5_3;
+                        $instructor_curso_2 += $eval->p5_4;
+                        $instructor_curso_2 += $eval->p5_5;
+                        $instructor_curso_2 += $eval->p5_6;
+                        $instructor_curso_2 += $eval->p5_7;
+                        $instructor_curso_2 += $eval->p5_8;
+                        $instructor_curso_2 += $eval->p5_9;
+                        $instructor_curso_2 += $eval->p5_10;
+                        $instructor_curso_2 += $eval->p5_11; 
+                    }
+
+                    if($eval->p6_1 >= 20){
+                        $tam3++;
+                        $instructor_curso_3 += $eval->p6_1;
+                        $instructor_curso_3 += $eval->p6_2;
+                        $instructor_curso_3 += $eval->p6_3;
+                        $instructor_curso_3 += $eval->p6_4;
+                        $instructor_curso_3 += $eval->p6_5;
+                        $instructor_curso_3 += $eval->p6_6;
+                        $instructor_curso_3 += $eval->p6_7;
+                        $instructor_curso_3 += $eval->p6_8;
+                        $instructor_curso_3 += $eval->p6_9;
+                        $instructor_curso_3 += $eval->p6_10;
+                        $instructor_curso_3 += $eval->p6_11; 
+                    }
+
+                    if(intval($eval->p7) == 1){
+                        $factor_recomendacion_curso++;
+                    }
+                }
+            }
+
+            $divisor = 1;
+            if($tam2 != 0){
+                $divisor = 2;
+            }else{
+                $tam2 = 1;
+            }
+            if($tam3 != 0){
+                $divisor = 3;
+            }else{
+                $tam3 = 1;
+            }
+
+            $contenido_promedio += $contenido_curso/($tam*5);
+            $instructor_promedio += (($instructor_curso_1/($tam*11))+($instructor_curso_2/($tam2*11))+($instructor_curso_3/($tam3*11)))/$divisor;
+            $coordinacion_promedio += $coordinacion_curso/($tam*4);
+            $factor_recomendacion_promedio += ($factor_recomendacion_curso*100/$tam);
+
+        }
+
+        $factor_contenido_aritmetico = round($contenido_promedio / $tam_coordinacion,2);
+        $factor_instructor_aritmetico = round($instructor_promedio / $tam_coordinacion,2);
+        $factor_coordinacion_aritmetico = round($coordinacion_promedio / $tam_coordinacion,2);
+        $factor_recomendacion_aritmetico = round($factor_recomendacion_promedio / $tam_coordinacion,2);
+
+        $aritmetico = [$factor_contenido_aritmetico,$factor_instructor_aritmetico,$factor_coordinacion_aritmetico,$factor_recomendacion_aritmetico];
+        return $aritmetico;
+
+    }
+
+    public function calculaAritmeticoArea($cursos, $nombreCoordinacion){
+
+        $contenido_promedio = 0;
+        $instructor_promedio = 0;
+        $coordinacion_promedio = 0;
+        $factor_recomendacion_promedio = 0;
+        $tam_coordinacion = 0;
+        
+        foreach($cursos as $curso){
+            $tam_coordinacion++;
+            $catalogo_curso = DB::table('catalogo_cursos')
+                ->where('id',$curso->catalogo_id)
+                ->get();
+            if(strcmp($catalogo_curso[0]->tipo,'Actualizacion') == 0)
+                $evals = DB::table('_evaluacion_final_seminario')
+                    ->where('curso_id',$curso->id)
+                    ->get();
+            else            
+                $evals = DB::table('_evaluacion_final_curso')
+                    ->where('curso_id',$curso->id)
+                    ->get();    
+
+            $tam_curso = 0;
+            $contenido_curso = 0;
+            $instructor_1 = 0;
+            $coordinacion_curso = 0;
+            $factor_recomendacion_curso = 0;
+            $tam2 = 0;
+            $tam3 = 0;
+            $instructor_2 = 0;
+            $instructor_3 = 0;
+            foreach($evals as $eval){
+                $tam_curso++;
+                $contenido_curso += $eval->p1_1;
+                $contenido_curso += $eval->p1_2;
+                $contenido_curso += $eval->p1_3;
+                $contenido_curso += $eval->p1_4;
+                $contenido_curso += $eval->p1_5;
+
+                $coordinacion_curso += $eval->p3_1;
+                $coordinacion_curso += $eval->p3_2;
+                $coordinacion_curso += $eval->p3_3;
+                $coordinacion_curso += $eval->p3_4; 
+
+                $instructor_1 += $eval->p4_1;
+                $instructor_1 += $eval->p4_2;
+                $instructor_1 += $eval->p4_3;
+                $instructor_1 += $eval->p4_4;
+                $instructor_1 += $eval->p4_5;
+                $instructor_1 += $eval->p4_6; 
+                $instructor_1 += $eval->p4_7; 
+                $instructor_1 += $eval->p4_8; 
+                $instructor_1 += $eval->p4_9; 
+                $instructor_1 += $eval->p4_10;
+                $instructor_1 += $eval->p4_11;
+
+                if($eval->p5_1>=20){
+                    $tam2++;
+                    $instructor_2 += $eval->p5_1;
+                    $instructor_2 += $eval->p5_2;
+                    $instructor_2 += $eval->p5_3;
+                    $instructor_2 += $eval->p5_4;
+                    $instructor_2 += $eval->p5_5;
+                    $instructor_2 += $eval->p5_6; 
+                    $instructor_2 += $eval->p5_7; 
+                    $instructor_2 += $eval->p5_8; 
+                    $instructor_2 += $eval->p5_9; 
+                    $instructor_2 += $eval->p5_10;
+                    $instructor_2 += $eval->p5_11;
+                }
+
+                if($eval->p6_1>=20){
+                    $tam3++;
+                    $instructor_3 += $eval->p6_1;
+                    $instructor_3 += $eval->p6_2;
+                    $instructor_3 += $eval->p6_3;
+                    $instructor_3 += $eval->p6_4;
+                    $instructor_3 += $eval->p6_5;
+                    $instructor_3 += $eval->p6_6; 
+                    $instructor_3 += $eval->p6_7; 
+                    $instructor_3 += $eval->p6_8; 
+                    $instructor_3 += $eval->p6_9; 
+                    $instructor_3 += $eval->p6_10;
+                    $instructor_3 += $eval->p6_11;
+                }
+
+                if(intval($eval->p7) == 1){
+                    $factor_recomendacion_curso++;
+                }
+
+            }
+
+            $divisor = 1;
+            if($tam2 == 0){
+                $tam2 = 1;
+            }else{
+                $divisor = 2;
+            }
+            if($tam3 == 0){
+                $tam3 = 1;
+            }else{
+                $divisor = 3;
+            }
+
+            $contenido_promedio += round($contenido_curso/($tam_curso*5),2);
+            $coordinacion_promedio += round($coordinacion_curso/($tam_curso*4),2);
+            $instructor_promedio += round((($instructor_1/($tam_curso*11))+($instructor_2/($tam2*11))+($instructor_3/($tam3*11)))/$divisor,2);
+            $factor_recomendacion_promedio += round(($factor_recomendacion_curso*100)/$tam_curso,2);
+
+        }
+
+        $factor_contenido_aritmetico = round($contenido_promedio / $tam_coordinacion,2);
+        $factor_instructor_aritmetico = round($instructor_promedio / $tam_coordinacion,2);
+        $factor_coordinacion_aritmetico = round($coordinacion_promedio / $tam_coordinacion,2);
+        $factor_recomendacion_aritmetico = round($factor_recomendacion_promedio / $tam_coordinacion,2);
+
+        $aritmetico = [$factor_contenido_aritmetico,$factor_instructor_aritmetico,$factor_coordinacion_aritmetico,$factor_recomendacion_aritmetico];
+        return $aritmetico;
+
     }
 
     public function elegirFecha($message){
@@ -1017,7 +1293,7 @@ class CoordinadorController extends Controller
         return $this->enviarVista($semestre, $cursos, $nombreCoordinacion, $lugar,1,'');
     }
 
-    public function descargarPDF($nombres,$periodo,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$positivas,$DP,$DH,$CO,$DI,$Otros,$DPtematicas,$DItematicas,$COtematicas,$DHtematicas,$Otrostematicas,$coordinaciones,$horarios,$coordinacion,$contenido,$profesors,$instructor,$asistencia,$nombreCoordinacion,$lugar){
+    public function descargarPDF($nombres,$periodo,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$positivas,$DP,$DH,$CO,$DI,$Otros,$DPtematicas,$DItematicas,$COtematicas,$DHtematicas,$Otrostematicas,$coordinaciones,$horarios,$coordinacion,$contenido,$profesors,$instructor,$asistencia,$nombreCoordinacion,$lugar,$factor_contenido_aritmetico,$factor_instructor_aritmetico,$factor_coordinacion_aritmetico,$factor_recomendacion_aritmetico){
         $coordinaciones = Coordinacion::all();
 
         $envio = 'pages.global';
@@ -1027,7 +1303,7 @@ class CoordinadorController extends Controller
             $envioPDF = 'area_'.$nombreCoordinacion.'_periodo';
         }
         //Obtenemos el pdf con los datos calculados
-        $pdf = PDF::loadView($envio,array('nombres'=>$nombres,'periodo'=>$periodo,'acreditaron'=>$acreditaron,'inscritos'=>$inscritos,'contestaron'=>$contestaron,'factor_ocupacion'=>$factor_ocupacion,'factor_recomendacion'=>$factor_recomendacion,'factor_acreditacion'=>$factor_acreditacion,'positivas'=>$positivas,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'DPtematicas'=>$DPtematicas,'DItematicas'=>$DItematicas,'COtematicas'=>$COtematicas,'DHtematicas'=>$DHtematicas,'Otrostematicas'=>$Otrostematicas,'coordinaciones'=>$coordinaciones,'horarios'=>$horarios,'coordinacion'=>$coordinacion,'contenido'=>$contenido,'profesors'=>$profesors,'instructor'=>$instructor,'asistencia'=>$asistencia,'nombreCoordinacion'=>$nombreCoordinacion));	
+        $pdf = PDF::loadView($envio,array('nombres'=>$nombres,'periodo'=>$periodo,'acreditaron'=>$acreditaron,'inscritos'=>$inscritos,'contestaron'=>$contestaron,'factor_ocupacion'=>$factor_ocupacion,'factor_recomendacion'=>$factor_recomendacion,'factor_acreditacion'=>$factor_acreditacion,'positivas'=>$positivas,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'DPtematicas'=>$DPtematicas,'DItematicas'=>$DItematicas,'COtematicas'=>$COtematicas,'DHtematicas'=>$DHtematicas,'Otrostematicas'=>$Otrostematicas,'coordinaciones'=>$coordinaciones,'horarios'=>$horarios,'coordinacion'=>$coordinacion,'contenido'=>$contenido,'profesors'=>$profesors,'instructor'=>$instructor,'asistencia'=>$asistencia,'nombreCoordinacion'=>$nombreCoordinacion,'aritmetico_contenido'=>$factor_contenido_aritmetico,'aritmetico_instructor'=>$factor_instructor_aritmetico,'aritmetico_coordinacion'=>$factor_coordinacion_aritmetico,'aritmetico_recomendacion'=>$factor_recomendacion_aritmetico));	
 
         //Retornamos la descarga del pdf
         return $pdf->download($envioPDF.'.pdf');
@@ -1761,36 +2037,65 @@ class CoordinadorController extends Controller
             ->get();
 
         $catalogo_curso = DB::table('catalogo_cursos')
-            ->where('id',$curso[0]->id)
+            ->where('id',$curso[0]->catalogo_id)
             ->get();
 
-        $coordinaciones = Coordinacion::all();        
+        $coordinaciones = Coordinacion::all();   
+        $enviopdf = 0;
+        $final = 0;
+        $evaluaciones = 0;
+        
 
         if(strcmp($catalogo_curso[0]->tipo,'Actualizacion')==0){
             $evaluaciones = DB::table('_evaluacion_x_seminario')
                 ->where('curso_id',$curso_id)
                 ->get();
             $lugar = "pages.resumen_x_session_seminario";
+            $enviopdf = "pages.resumen_x_sesion_seminario_pdf";
+            $final = 'seminario';
         }else{
             $evaluaciones = DB::table('_evaluacion_x_curso')
                 ->where('curso_id',$curso_id)
                 ->get();
                 $lugar = "pages.resumen_x_sesion_curso";
+                $enviopdf = "pages.resumen_x_sesion_pdf";
+                $final = 'curso';
         }
-
+        
         if(sizeof($evaluaciones)==0){
             return redirect()->route('cursos.coordinacion',[$encargado_id,'Curso no ha sido evaluado']);
         }
+        
+        $profesors = array();
+        $Datos = array();
+
+        foreach($evaluaciones as $eval){
+            $participante = DB::table('participante_curso')
+                ->where('id',$eval->participante_curso_id)
+                ->get();
+
+            $profesor = DB::table('profesors')
+                ->where('id',$participante[0]->profesor_id)
+                ->get();
+            $tupla = [$profesor[0],$eval];
+            //return $profesor[0];
+            array_push($Datos,$tupla);
+        }
+
+        /*foreach($Datos as $dato){
+            return $dato[0]->nombres;
+        }*/
 
         $curso = Curso::find($curso_id);
 
-        if($pdf == 1){
-            $pdf = PDF::loadView($lugar,array('evaluaciones'=>$evaluaciones,'curso_id'=>$curso_id,'coordinaciones'=>$coordinaciones,'catalogoCurso'=>$catalogo_curso[0],'curso'=>$curso));	
-            return $pdf->download($lugar.'.pdf');
+        if($pdf == 1 && $enviopdf != '0'){
+            $pdf = PDF::loadView($enviopdf,array('evaluaciones'=>$Datos,'curso_id'=>$curso_id,'coordinaciones'=>$coordinaciones,'catalogoCurso'=>$catalogo_curso[0],'curso'=>$curso));	
+            $nombre = $catalogo_curso[0]->nombre_curso.'_'.$curso->semestre_anio.'_'.$curso->semestre_pi.'_'.$curso->semestre_si.'_sesion_'.$final.'pdf';
+            return $pdf->download($nombre.'.pdf');
         }
 
         return view($lugar)
-            ->with('evaluaciones',$evaluaciones)
+            ->with('evaluaciones',$Datos)
             ->with('curso_id',$curso_id)
             ->with('coordinaciones',$coordinaciones)
             ->with('catalogoCurso',$catalogo_curso[0])
