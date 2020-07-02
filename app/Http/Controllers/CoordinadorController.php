@@ -848,7 +848,7 @@ class CoordinadorController extends Controller
             ->with('factor_ocupacion',$factor_ocupacion)
             ->with('factor_ocupacion',$factor_ocupacion)
             ->with('factor_recomendacion',$factor_recomendacion)
-            ->with('factor_acreditacion',$acreditaron)
+            ->with('factor_acreditacion',$factor_acreditacion)
             ->with('positivas',$factor_calidad)
             ->with('DP',$DP)
             ->with('DH',$DH)

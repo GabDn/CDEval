@@ -70,7 +70,7 @@ class EvaluacionFinalCurso extends Migration
             //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
             $table->integer('p7');
             //8. ¿CÓMO SE ENTERÓ DEL CURSO?
-            $table->string('p8',15);
+            $table->string('p8',300);
             //Lo mejor del curso fue:
             $table->string('mejor',300);
             //Sugerencias y recomendaciones:	
@@ -91,9 +91,9 @@ class EvaluacionFinalCurso extends Migration
 
 			$table->foreign('curso_id')
 				  ->references('id')->on('cursos');;
-            $table->foreign('participante_curso_id')
+            $table->foreign('participante_curso_id','participante_curso_id')
                   ->references('id')->on('participante_curso');
-			$table->unique(['participante_curso_id','curso_id']);
+			$table->unique(['participante_curso_id','curso_id'],'parcitipante_y_curso_id');
           });
       }
   

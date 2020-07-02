@@ -90,9 +90,9 @@ class EvaluacionFinalSeminario extends Migration
           $table->integer('curso_id')->unsigned();
           $table->foreign('curso_id')
                 ->references('id')->on('cursos');
-          $table->foreign('participante_curso_id')
+          $table->foreign('participante_curso_id','participante_curso_id_s')
                 ->references('id')->on('participante_curso');
-          $table->unique(['participante_curso_id','curso_id']);
+          $table->unique(['participante_curso_id','curso_id'],'parcitipante_y_seminario_id');
         });
     }
 
