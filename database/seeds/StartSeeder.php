@@ -1968,16 +1968,26 @@ class StartSeeder extends Seeder
         ]);
 		
 		//1_RespuestasEvalCursosTodasAreas_2020-1s_4.pdf
+
+		DB::table('coordinacions')->insert([
+			'id'=>50,
+			'abreviatura'=>'AC',
+			'nombre_coordinacion'=>'Área de cómputo',
+			'coordinador'=>'Gerardo Lopez Gomez',
+			'grado'=>'M.C.C',
+			'usuario'=>'G3rardo1nEZ',
+			'password'=>'$10$Sli0p2.SdjP7JTbyze.RIucCUJA5MOG6AEB40sJG3Ok3Kb33ltibl'
+		]);
 		
 		DB::table('catalogo_cursos')->insert([
 			'id'=> 50,
 			'nombre_curso'=>'Tecnologías de la Información y la Comunicación (TIC). Parte 1',
 			'duracion_curso' => '20',
-            'coordinacion_id' => 1,
+            'coordinacion_id' => 50,
             'tipo' => 'C',
             'institucion' => 'DGAPA',
 			'fecha_disenio'=>'2012-12-12',
-			'coordinacion_id'=>2,
+			'coordinacion_id'=>50,
 			'clave_curso'=>'TICDGAPA'
 		]);
 		
@@ -2704,7 +2714,7 @@ class StartSeeder extends Seeder
 			'participante_curso_id'=>59
         ]);
         
-        //1_RespuestasEvalCursosTodasAreas_2020-1s_33.pdf
+		//1_RespuestasEvalCursosTodasAreas_2020-1s_33.pdf
 		
 		DB::table('catalogo_cursos')->insert([
 			'id'=> 51,
@@ -4773,15 +4783,25 @@ class StartSeeder extends Seeder
             'participante_curso_id'=>98
         ]);
 
+		DB::table('coordinacions')->insert([
+			'id'=>51,
+			'abreviatura'=>'ADIE',
+			'nombre_coordinacion'=>'Área Disciplinar e Investigación educativa',
+			'coordinador'=>'Gonzalo Lopez Juarez',
+			'grado'=>'M.E.M.',
+			'usuario'=>'G0nz4l0o1nEZ',
+			'password'=>'$10$Sli0p2.SdjP7JTbyze.RIucCUJA5MOG6AEB40sJG3Ok3Kb33ltibm'
+		]);
+
         DB::table('catalogo_cursos')->insert([
 			'id'=> 54,
 			'nombre_curso'=>'Programación de máquinas de control numérico (CNC)',
 			'duracion_curso' => '20',
-            'coordinacion_id' => 1,
+            'coordinacion_id' => 51,
             'tipo' => 'C',
             'institucion' => 'DGAPA',
 			'fecha_disenio'=>'2012-12-12',
-			'coordinacion_id'=>2,
+			'coordinacion_id'=>51,
 			'clave_curso'=>'PMCCNC'
 		]);
 		
@@ -5214,16 +5234,26 @@ class StartSeeder extends Seeder
 			'curso_id'=>54,
 			'participante_curso_id'=>105
         ]);
-        
+		
+		DB::table('coordinacions')->insert([
+			'id'=>52,
+			'abreviatura'=>'ADEE',
+			'nombre_coordinacion'=>'Área Disciplinar y evaluación educativa',
+			'coordinador'=>'Roman Dominguez Perez',
+			'grado'=>'M.E.M.',
+			'usuario'=>'R0m4n1nEZ',
+			'password'=>'$10$Sli0p2.SdjP7JTbyze.RIucCUJA5MOG6AEB40sJG3Ok3Kb33ltibn'
+		]);
+
         DB::table('catalogo_cursos')->insert([
 			'id'=> 55,
 			'nombre_curso'=>'Redescubriendo a la vida de Michael Faraday',
 			'duracion_curso' => '20',
-            'coordinacion_id' => 2,
+            'coordinacion_id' => 52,
             'tipo' => 'C',
             'institucion' => 'DGAPA',
 			'fecha_disenio'=>'2012-12-12',
-			'coordinacion_id'=>2,
+			'coordinacion_id'=>52,
 			'clave_curso'=>'RVMFEYMEE'
 		]);
 		

@@ -76,7 +76,17 @@
    .mayus{
         text-transform: uppercase;
     }
-
+    .firma{
+        text-align:center;
+        vertical-align:top;
+        line-height: 80%;
+    }
+    .firma1{
+        text-align:center;
+        vertical-align:top;
+        padding-bottom: 1.5%;
+        line-height: 100%;
+    }
 </style>
 <body>
 	<div>
@@ -354,6 +364,30 @@
             </tr>
 
 		</table> 
+
+    <br>
+    <br>
+    <br>
+
+    <table class = "tabla-centro" width="100%">
+      <tr>
+        <td  class="firma" style="font-weight: bold; text-align: center;">Analista de Área</td>
+        <td  class="firma" style="font-weight: bold; text-align: center;">Coordinador del centro de Docencia</td>
+      </tr>
+      <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td  class="firma1">___________________</td>
+        <td  class="firma1" style=" text-align: center;">___________________</td>
+      </tr>
+    </table>
+    <br>
+    <br>
+    <p>Fecha:___________________</p>
+
+
 <br>
 
 </div>
