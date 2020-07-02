@@ -2192,7 +2192,7 @@ class StartSeeder extends Seeder
 			'curso_id'=>50,
 			'profesor_id'=>52,
 			'asistencia'=>true,
-			'acreditacion'=>false
+			'acreditacion'=>true
 		]);
 		
 		DB::table('_evaluacion_final_curso')->insert([
@@ -2393,7 +2393,7 @@ class StartSeeder extends Seeder
 			'curso_id'=>50,
 			'profesor_id'=>55,
 			'asistencia'=>true,
-			'acreditacion'=>false
+			'acreditacion'=>true
 		]);
 		
 		DB::table('_evaluacion_final_curso')->insert([
@@ -2594,7 +2594,7 @@ class StartSeeder extends Seeder
 			'curso_id'=>50,
 			'profesor_id'=>58,
 			'asistencia'=>true,
-			'acreditacion'=>false
+			'acreditacion'=>true
 		]);
 		
 		DB::table('_evaluacion_final_curso')->insert([
@@ -2662,7 +2662,7 @@ class StartSeeder extends Seeder
 			'curso_id'=>50,
 			'profesor_id'=>59,
 			'asistencia'=>true,
-			'acreditacion'=>false
+			'acreditacion'=>true
 		]);
 		
 		DB::table('_evaluacion_final_curso')->insert([
@@ -3003,7 +3003,7 @@ class StartSeeder extends Seeder
 			'curso_id'=>51,
 			'profesor_id'=>64,
 			'asistencia'=>true,
-			'acreditacion'=>false
+			'acreditacion'=>true
 		]);
 		
 		DB::table('_evaluacion_final_curso')->insert([
@@ -3171,7 +3171,7 @@ class StartSeeder extends Seeder
 			'curso_id'=>51,
 			'profesor_id'=>67,
 			'asistencia'=>true,
-			'acreditacion'=>false
+			'acreditacion'=>true
 		]);
 		
 		DB::table('_evaluacion_final_curso')->insert([
@@ -3339,7 +3339,7 @@ class StartSeeder extends Seeder
 			'curso_id'=>51,
 			'profesor_id'=>70,
 			'asistencia'=>true,
-			'acreditacion'=>false
+			'acreditacion'=>true
 		]);
 		
 		DB::table('_evaluacion_final_curso')->insert([
@@ -3395,7 +3395,7 @@ class StartSeeder extends Seeder
 			'curso_id'=>51,
 			'profesor_id'=>71,
 			'asistencia'=>true,
-			'acreditacion'=>false
+			'acreditacion'=>true
 		]);
 		
 		DB::table('_evaluacion_final_curso')->insert([
@@ -5496,7 +5496,7 @@ class StartSeeder extends Seeder
 			'curso_id'=>55,
 			'profesor_id'=>82,
 			'asistencia'=>true,
-			'acreditacion'=>false
+			'acreditacion'=>true
 		]);
 		
 		DB::table('_evaluacion_final_curso')->insert([
@@ -5574,7 +5574,7 @@ class StartSeeder extends Seeder
 			'curso_id'=>55,
 			'profesor_id'=>83,
 			'asistencia'=>true,
-			'acreditacion'=>false
+			'acreditacion'=>true
 		]);
 		
 		DB::table('_evaluacion_final_curso')->insert([
