@@ -60,3 +60,5 @@ Route::get('global',function(){
 Route::get('instructores',function(){
     return view('pages.reporte_instructores');
 })->name('instructores');
+
+Route::get('logout','\App\Http\Controllers\Auth\LoginController@logout')->name('logout');

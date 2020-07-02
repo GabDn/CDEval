@@ -24,11 +24,12 @@
                     <!--Boton de usuario esquina superior derecha-->
                     <a href="#"  class="dropdown-toggle" data-toggle="dropdown">
                         <span class="caret"></span>
-                        <i id="usericon" class="fa fa-2x fa-user-circle"></i>
+                        <i id="usericon" class="fa fa-2x fa-user-circle">
+                        </i>
                     </a>
                     <ul class="dropdown-menu" role="menu">
 
-
+                        <a href="{{ route('logout') }}"  style="text-align:center"> logout </a>
                         
                     </ul>
 
