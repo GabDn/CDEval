@@ -1726,6 +1726,21 @@ class StartSeeder extends Seeder
             'fecha_disenio' => '2018-05-18',
             'clave_curso' => 'FJHCZA'
         ]);
+	 DB::table('temas_seminarios')->insert([
+            'nombre' => 'Margaret Parsen',
+            'duracion' => 1,
+            'catalogo_id' => 4
+        ]);
+        DB::table('temas_seminarios')->insert([
+            'nombre' => 'Margaret Parsen II',
+            'duracion' => 2,
+            'catalogo_id' => 4
+        ]);
+        DB::table('temas_seminarios')->insert([
+            'nombre' => 'Margaret Parsen III',
+            'duracion' => 3,
+            'catalogo_id' => 4
+        ]);
         DB::table('cursos')->insert([
             'semestre_anio' => 2020,
             'semestre_pi'=>"2",
