@@ -1150,22 +1150,26 @@ $promedio_p4=[
 			$message->attachData($pdf->output(), 'Historial de cursos.pdf');
 		});
 		
-		//Pasos necesarios para obtener las ligas a los cursos en los que está inscrito el usuario
 		$infoCursos=array(); 
-		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
 		$cursos=array();
-		foreach($participantesCurso as $participanteCurso){
-			$curso=Curso::findorFail($participanteCurso->curso_id);
-			array_push($cursos,$curso); 
-		}
+		
+		//Obtenemos los cursos en donde ha participado el profesor
+		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+            $cursos=array();
+            foreach($participantesCurso as $participanteCurso){
+            $curso=Curso::findorFail($participanteCurso->curso_id);
+            array_push($cursos,$curso); 
+        }
+		
+		//
 		foreach($cursos as $curso){
-			$catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
-			$tupla = array();
-			array_push($tupla,$curso);
-			array_push($tupla,$catalogoCursos);
-			array_push($infoCursos, $tupla);
-		}
-
+            $catalogoCursos = CatalogoCurso::find($curso->id);
+            $tupla = array();
+            array_push($tupla,$curso);
+            array_push($tupla,$catalogoCursos);
+            array_push($infoCursos, $tupla);
+        }
+		
 		//regresamos a la vista pages.admin con los datos necesarios para su funcionamiento
 		return View::make('pages.admin')
 			->with('profesor',$profesor)
@@ -1181,27 +1185,30 @@ $promedio_p4=[
 	 */
 	public function redirigirAEnviar(Request $request, $profesor_id){
 		
-		//Pasos necesarios para obtener las ligas a los cursos en los que está inscrito el usuario
+		//Obtenemos los cursos en donde ha participado el profesor y los guardamos en un array
 		$infoCursos=array(); 
-		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
 		$cursos=array();
-		foreach($participantesCurso as $participanteCurso){
-			$curso=Curso::findorFail($participanteCurso->curso_id);
-			array_push($cursos,$curso); 
-		}
+		
+		$profesor=Profesor::find($profesor_id);
+		
+		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+            $cursos=array();
+            foreach($participantesCurso as $participanteCurso){
+            $curso=Curso::findorFail($participanteCurso->curso_id);
+            array_push($cursos,$curso); 
+        }
+		
 		foreach($cursos as $curso){
-			$catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
-			$tupla = array();
-			array_push($tupla,$curso);
-			array_push($tupla,$catalogoCursos);
-			array_push($infoCursos, $tupla);
+            $catalogoCursos = CatalogoCurso::find($curso->id);
+            $tupla = array();
+            array_push($tupla,$curso);
+            array_push($tupla,$catalogoCursos);
+            array_push($infoCursos, $tupla);
 		}
 		
-		//Obtenemos todos los cursos
 		$cursos = DB::table('cursos')
             ->get();
 
-		//Obtenemos todas las fechas en que se han dado cursos para mostrar al usuario
         $fechas = array();
         foreach($cursos as $curso){
             $fecha = strval($curso->semestre_anio).'-'.strval($curso->semestre_pi);
@@ -1276,7 +1283,8 @@ $promedio_p4=[
 		
 		//Pasos necesarios para obtener las ligas a los cursos en los que está inscrito el usuario
 		$infoCursos=array(); 
-		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
+		$profesor = Profesor::find($profesor_id);
+		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor_id)->get();
 		$cursos=array();
 		foreach($participantesCurso as $participanteCurso){
 			$curso=Curso::findorFail($participanteCurso->curso_id);
@@ -2102,8 +2110,8 @@ $promedio_p4=[
 			->where('curso_id',$curso_id)
 			->get();
 	
-		if(sizeof($eval)<=0){
-			$eval = DB::table('_evaluacion_final_seminario')
+		if(sizeof($evals)<=0){
+			$evals = DB::table('_evaluacion_final_seminario')
 				->where('curso_id',$curso_id)
 				->get();
 		}
@@ -2130,7 +2138,7 @@ $promedio_p4=[
 		//Empezamps la evaluación del curso
 		$mejor = array(); //mejor
 		$sugerencias = array(); //sug
-		$lugar = 'pages.reporte_global_instructores_1';
+		$lugar = 'pages.reporte_final_instructores_1';
 		$experiencia1 = 0; //4_1
 		$planeacion1 = 0;	//4_2
 		$puntualidad1 = 0;	//4_3
@@ -2170,7 +2178,7 @@ $promedio_p4=[
 	
 			//Si hay dos profesores obtenemos la evaluación del segundo docente
 			if($count>=2){
-				$lugar = 'pages.reporte_global_instructores_2';
+				$lugar = 'pages.reporte_final_instructores_2';
 				$experiencia2 += $eval->p5_1;
 				$planeacion2 += $eval->p5_2;
 				$puntualidad2 += $eval->p5_3;
@@ -2183,7 +2191,7 @@ $promedio_p4=[
 
 			//Si hay tres docentes obtenemos la evaluación del tercero
 			if($count == 3){
-				$lugar = 'pages.reporte_global_instructores_3';
+				$lugar = 'pages.reporte_final_instructores_3';
 				$experiencia3 += $eval->p6_1;
 				$planeacion3 += $eval->p6_2;
 				$puntualidad3 += $eval->p6_3;
@@ -2195,38 +2203,38 @@ $promedio_p4=[
 			}
 
 			array_push($mejor,$eval->mejor);
-			array_push($sug,$eval->sug);
+			array_push($sugerencias,$eval->sug);
 
 		}
 
-		//Obtenemos los promedios de cada profesor
-		$experiencia1 /= sizeof($evals);
-		$experiencia1 /= sizeof($evals); //4_1
-		$planeacion1 /= sizeof($evals);	//4_2
-		$puntualidad1 /= sizeof($evals);	//4_3
-		$materiales1 /= sizeof($evals);	//4_4
-		$dudas1 /= sizeof($evals);		//4_5
-		$control1 /= sizeof($evals);		//4_6
-		$interes1 /= sizeof($evals);		//4_7
-		$actitud1 /= sizeof($evals);	
 
-		$experiencia2 /= sizeof($evals);	
-		$planeacion2 /= sizeof($evals);	
-		$puntualidad2 /= sizeof($evals);	
-		$materiales2 /= sizeof($evals);	
-		$dudas2 /= sizeof($evals);	
-		$control2 /= sizeof($evals);	
-		$interes2 /= sizeof($evals);	
-		$actitud2 /= sizeof($evals);
+		//Obtenemos los promedios de cada profesor
+		$experiencia1 = round($experiencia1/sizeof($evals),2);
+		$planeacion1 = round($planeacion1/sizeof($evals),2);	//4_2
+		$puntualidad1 = round($puntualidad1/sizeof($evals),2);	//4_3
+		$materiales1 = round($materiales1/sizeof($evals),2);	//4_4
+		$dudas1 = round($dudas1/sizeof($evals),2);		//4_5
+		$control1 = round($control1/sizeof($evals),2);		//4_6
+		$interes1 = round($interes1/sizeof($evals),2);		//4_7
+		$actitud1 = round($actitud1/sizeof($evals),2);	
+
+		$experiencia2 = round($experiencia2/sizeof($evals),2);
+		$planeacion2 = round($planeacion2/sizeof($evals),2);	//4_2
+		$puntualidad2 = round($puntualidad2/sizeof($evals),2);	//4_3
+		$materiales2 = round($materiales2/sizeof($evals),2);	//4_4
+		$dudas2 = round($dudas2/sizeof($evals),2);		//4_5
+		$control2 = round($control2/sizeof($evals),2);		//4_6
+		$interes2 = round($interes2/sizeof($evals),2);		//4_7
+		$actitud2 = round($actitud2/sizeof($evals),2);	
 		
-		$experiencia3 /= sizeof($evals);
-		$planeacion3 /= sizeof($evals);
-		$puntualidad3 /= sizeof($evals);
-		$materiales3 /= sizeof($evals);
-		$dudas3 /= sizeof($evals);
-		$control3 /= sizeof($evals);
-		$interes3 /= sizeof($evals);
-		$actitud3 /= sizeof($evals);
+		$experiencia3 = round($experiencia3/sizeof($evals),2);
+		$planeacion3 = round($planeacion3/sizeof($evals),2);	//4_2
+		$puntualidad3 = round($puntualidad3/sizeof($evals),2);	//4_3
+		$materiales3 = round($materiales3/sizeof($evals),2);	//4_4
+		$dudas3 = round($dudas3/sizeof($evals),2);		//4_5
+		$control3 = round($control3/sizeof($evals),2);		//4_6
+		$interes3 = round($interes3/sizeof($evals),2);		//4_7
+		$actitud3 = round($actitud3/sizeof($evals),2);	
 	
 		$envio = $catalogoCurso[0]->nombre_curso.'_'.$eval_id;
 		
