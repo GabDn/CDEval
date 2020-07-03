@@ -1014,22 +1014,22 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
-                                    <input type="radio" name="p5_9" value="40" {{ (old('p5_9') == '40') ? 'checked' : '' } class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_9" value="40" {{ (old('p5_9') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
                                 <div class="form-check">
-                                    <input type="radio" name="p5_9" value="60" {{ (old('p5_9') == '60') ? 'checked' : '' } class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_9" value="60" {{ (old('p5_9') == '60') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
                                 <div class="form-check">
-                                    <input type="radio" name="p5_9" value="80" {{ (old('p5_9') == '80') ? 'checked' : '' } class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_9" value="80" {{ (old('p5_9') == '80') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
                                 <div class="form-check">
-                                    <input type="radio" name="p5_9" value="100" {{ (old('p5_8') == '100') ? 'checked' : '' } class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_9" value="100" {{ (old('p5_8') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                     </tr>
