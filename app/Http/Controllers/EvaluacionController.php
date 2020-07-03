@@ -1,11 +1,5 @@
 <?php
 
-/**
- * To Do list: Crear desde cero una html view para crear el formulario de la evaluacion final global (Formulas basadas en todo lo presente en la funcion que manda a llamar enviarCorreoFinal)
- * Ver que pedo con el tercer formulario
- * Se alteraron las tablas _evaluacion_x_seminario (agrego created_at y curso_id) y _evaluacion_final_seminario (agrego curso_id y constrint participante_curso, de igual forma se quito unique de participante_curso_id)
- */
-
 namespace App\Http\Controllers;
 use App\Profesor;
 use App\Curso;
@@ -29,14 +23,18 @@ use Illuminate\Support\Facades\Session;
 
 ini_set('max_execution_time', '500');
 
+/**
+ * Clase encargada del manejo de las evaluaciones de los cursos (redireccionamiento y almacenamiento de datos)
+ * @author UNICA FI UNAM
+ */
 class EvaluacionController extends Controller{
 
-
+	/**
+	 * Funcion que redirecciona a pages.evaluacionIndex con los datos necesarios del curso seleccionado
+	 * @param $profesor_id: id del profesor que evalua, $curso_id: id del curso a evaluar, $catalogoCurso_id: id del catalogo del curso a evaluar
+	 * @return vista pages.evaluacionIndex
+	 */
 	public function index($profesor_id, $curso_id, $catalogoCurso_id){
-		/*$array = array();
-		array_push($array,$profesor_id);
-		array_push($array,$curso_id);
-		return $array;*/
 		$profesor = Profesor::find($profesor_id);
 		$curso = Curso::find($curso_id);
 		$catalogoCurso = CatalogoCurso::find($curso->catalogo_id);
@@ -44,13 +42,13 @@ class EvaluacionController extends Controller{
 			->where('curso_id',$curso_id)
 			->count();
 		$participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
+
+		//Pasos necesarios para obtener las ligas a los cursos en los que está inscrito el usuario
 		$infoCursos=array(); 
 		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-                //return $participantesCurso;
                 $cursos=array();
                 foreach($participantesCurso as $participanteCurso){
                     $curso=Curso::findorFail($participanteCurso->curso_id);
-                    //return $curso;
                     array_push($cursos,$curso); 
                 }
                 //$cursos=Curso::all();
@@ -67,6 +65,7 @@ class EvaluacionController extends Controller{
 		$curso = Curso::find($curso_id);
 
 		//Se busca mandar a pages.evaluacionIndex las encuestas realizadas por el usuario para manejar los botones
+		//Se busca evitar que el usuario realice una evaluación por segunda vez
 		$evaluacion_x_curso = DB::table('_evaluacion_x_curso')
 			->select('_evaluacion_x_curso.created_at','_evaluacion_x_curso.curso_id')
 			->where([['created_at',$date],['curso_id',$curso_id],['participante_curso_id',$participante[0]->id]])
@@ -106,14 +105,16 @@ class EvaluacionController extends Controller{
 	}
 		
 	/**
-	 * @brief Funcion que retorna la ruta a admin.blade.php
+	 * Funcion que retorna la ruta a admin.blade.php
+	 * @param $profesor_id: id del profesor que tiene los derechos de super usuario
 	 */
 	public function admin($profesor_id){
 		$infoCursos=array(); 
         $profesor = Profesor::find($profesor_id);
         if ('admin' == $profesor->rfc && '1q2w3e4r' == $profesor->numTrabajador) {
             return view("pages.superadmin");
-        }
+		}
+		//Pasos necesarios para obtener las ligas a los cursos en los que está inscrito el usuario
 		$infoCursos=array(); 
 		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
                 $cursos=array();
@@ -133,6 +134,11 @@ class EvaluacionController extends Controller{
 			->with('infoCursos',$infoCursos);
 	}
 
+	/**
+	 * Funcion que se encarga de enviar un correo con el formato en pdf de la vista en cuestion tras haber realizado una evaluación por sesión
+	 * @param $profesor_id: id del profesor que evalua, $curso_id: id del curso evaluado, $catalogoCurso_id: id del catalogo del curso, $eval_curso: 
+	 * evaluación del curso realizado, $lugar: nombre de la vista a pasar a pdf, $salon: salon donde se toma el curso, $numero_horas: horas totales del curso
+	 */
 	public function enviarCorreo($profesor_id, $curso_id, $catalogoCurso_id, $eval_curso, $lugar, $salon, $numero_horas){
 		$profesor = Profesor::find($profesor_id);
 		$curso = CatalogoCurso::find($curso_id);
@@ -141,6 +147,7 @@ class EvaluacionController extends Controller{
 			'name'=>"CDEval",
 		);
 		
+		//Obtenemos el pdf de los datos
 		$pdf = PDF::loadView($lugar,array('curso' => $curso,'profesor'=>$profesor,'semestre'=>$semestre,'evaluacion'=>$eval_curso,'salon'=>$salon,'numero_horas'=>$numero_horas));	
 		  
 		$content = $pdf->download()->getOriginalContent();
@@ -157,6 +164,7 @@ class EvaluacionController extends Controller{
 				$message->attachData($pdf->output(), 'Resultados de Encuesta.pdf');
 			});
 		}else{
+			//Sino iteramos a los profesores enviando los mensajes a cada uno de ellos
 			foreach($profesoresCurso as $profesorCurso){
 				$profesor=Profesor::find($profesorCurso->id);
 				Mail::send('pages.mensaje',$data, function ($message) use($profesor,$pdf,$semestre){
@@ -168,6 +176,9 @@ class EvaluacionController extends Controller{
 		}
 	}
 
+	/**
+	 * Función actualmente despreciada, usada en versiones anteriores para enviar el formato reporte_final_curso al correo del profesor en cuestión
+	 */
 	public function enviarCorreoFinal($evals,$profesor_id,$curso_id, $catalogoCurso_id, $eval_fcurso,$participantes,$factor_acreditacion,$factor,$alumnos,$DP,$DH,$CO,$DI,$Otros,$ocupacion,$factor_respuestas_positivas,$factor_contenido,$factor_coordinacion,$lugar,$salon,$acreditado,$factor_instructor1,$minimo1,$maximo1,$factor_instructor2,$minimo2,$maximo2,$factor_instructor3,$minimo3,$maximo3, $numero_horas,$asistieron,$nombreInstructor){
 		$profesor = Profesor::find($profesor_id);
 		$curso = DB::table('cursos')
@@ -181,6 +192,7 @@ class EvaluacionController extends Controller{
 			->where('id',$catalogoCurso_id)
 			->get();
 
+		//Revisamos si el curso es seminario o no y cuantos profesores tiene
 		$envioPDF = 0;
 		if(strcmp($catalogoCurso[0]->tipo,'Actualizacion')==0){
 			if($minimo3 != 0){
@@ -201,7 +213,8 @@ class EvaluacionController extends Controller{
 		}
 
 		$contestaron = sizeof($evals);
-		
+
+		//Enviamos el pdf
 		$pdf = PDF::loadView($envioPDF,array('evals'=>$evals,'profesor_id'=>$profesor_id,'curso_id'=>$curso_id,'catalogoCurso_id'=>$catalogoCurso_id,'eval_fcurso'=>$eval_fcurso,'participantes'=>$participantes,'factor_acreditacion'=>$factor_acreditacion,'factor'=>$factor,'alumnos'=>$alumnos,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'ocupacion'=>$ocupacion,'positivas'=>$factor_respuestas_positivas,'contenido'=>$factor_contenido,'factor_coordinacion'=>$factor_coordinacion, 'curso'=>$curso[0], 'salon'=>$salon[0], 'acreditaron'=>$acreditado, 'coordinaciones'=>array(),'instructor'=>$factor_instructor1,'minimo'=>$minimo1,'maximo'=>$maximo1,'instructor2'=>$factor_instructor2,'minimo2'=>$minimo2,'maximo2'=>$maximo2,'instructor3'=>$factor_instructor3,'minimo3'=>$minimo3,'maximo3'=>$maximo3, 'numero_horas'=>$numero_horas,'asistieron'=>$asistieron,'nombreInstructor'=>$nombreInstructor,'catalogo'=>$catalogoCurso[0],'contestaron'=>$contestaron));	
           
 		//Obtenemos los profesores de los cursos  
@@ -227,11 +240,18 @@ class EvaluacionController extends Controller{
 		}
 	}
 
+	/**
+	 * Función encargada de redireccionar a la vista de evaluación por sesión adecuada depende de si es o no un seminario el curso
+	 * @param  $profesor_id: id del profesor que evalua, $curso_id: id del curso evaluado, $catalogoCurso_id: id del catalogo del curso
+	 * $coutn: número de profesores que tiene el curso
+	 * @return La vista donde se realizará la evaluación
+	 */
 	public function evaluacionPorSesion($profesor_id, $curso_id, $catalogoCurso_id,$count){
 		 
 		$profesor = Profesor::find($profesor_id);
 		$curso = Curso::find($curso_id);
 		$catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
+		//Pasos necesarios para obtener las ligas a los cursos en los que está inscrito el usuario
 		$infoCursos=array(); 
 		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
                 //return $participantesCurso;
@@ -269,10 +289,17 @@ class EvaluacionController extends Controller{
                
     }
 
+	/**
+	 * Función encargada de redireccionar a la vista de evaluación final del curso adecuada depende de si es o no un seminario el curso
+	 * @param  $profesor_id: id del profesor que evalua, $curso_id: id del curso evaluado, $catalogoCurso_id: id del catalogo del curso
+	 * $coutn: número de profesores que tiene el curso
+	 * @return La vista donde se realizará la evaluación
+	 */
     public function evaluacionPorCurso($profesor_id, $curso_id, $catalogoCurso_id,$count){
 		$profesor = Profesor::find($profesor_id);
 		$curso = Curso::find($curso_id);
 		$catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
+		//Pasos necesarios para obtener las ligas a los cursos en los que está inscrito el usuario
 		$infoCursos=array(); 
 		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
                 $cursos=array();
@@ -330,9 +357,14 @@ class EvaluacionController extends Controller{
 					->with('infoCursos',$infoCursos);
 			}          
 		}         
-		}
-		//Guardar evaluaciones en la BD
-	//Finales
+	}
+		
+	/**
+	 * Función encargada de guardar en la base de datos la evaluación final del curso que no es de tipo seminario
+	 * @param $request: datos ingresados al formulario, $profesor_id: id del profesro que realizó la evaluación, 
+	 * $curso_id: id del curso evaluado, $catalogoCurso_id: id del catalogo del curso evaluado
+	 * @return La vista pages.evaluacionIndex con las indicaciones de que se realizó la evaluación final del curso
+	 */
 	public function saveFinal_Curso(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
 		$eval_fcurso = new EvaluacionFinalCurso;
 		$correo = new EvaluacionController(); 
@@ -484,11 +516,13 @@ class EvaluacionController extends Controller{
 			$eval_fcurso->save();
 		} catch (Exception $e){
 
+			//En caso de que no se haya evaluado correctamente el curso regresamos a la vista anterior indicando que la evaluación fue errónea
 			Session::flash('message','Favor de contestar todas las preguntas del formulario');
 			Session::flash('alert-class', 'alert-danger'); 
 
 			return redirect()->back()->withInput($request->input());
 		}
+		//Pasos despreciados, usados en versiones antiguas para obtener el promedio de toda la evaluación
 		$promedio=[
 			$eval_fcurso->p1_1,
 			$eval_fcurso->p1_2,
@@ -547,6 +581,7 @@ class EvaluacionController extends Controller{
 		$curso = Curso::find($curso_id);
 		$catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
 	
+		//Pasos necesarios para obtener las ligas a los cursos en los que está inscrito el usuario
 		$infoCursos=array(); 
 		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
                 $cursos=array();
@@ -562,7 +597,9 @@ class EvaluacionController extends Controller{
                     array_push($infoCursos, $tupla);
 				}
 
+		//Enviamos a los correos de los profesores como fueron evaluados por dicho y usario y como va la evaluación global
 		$this->reporteInstructor($profesor_id,$curso_id,$catalogoCurso_id,$eval_fcurso->id);
+		$this->reporteFinalInstructor($profesor_id,$curso_id,$catalogoCurso_id,$eval_fcurso->id);
 
 		//Revisamos si hay encuestas realizadas por el alumno en el día actual
 		$evaluacion_x_curso = DB::table('_evaluacion_x_curso')
@@ -589,6 +626,12 @@ class EvaluacionController extends Controller{
 			->with('msj', 'Evaluación enviada');
 	}
 
+	/**
+	 * Función encargada de guardar en la base de datos la evaluación final del curso que  es de tipo seminario
+	 * @param $request: datos ingresados al formulario, $profesor_id: id del profesro que realizó la evaluación, 
+	 * $curso_id: id del curso evaluado, $catalogoCurso_id: id del catalogo del curso evaluado
+	 * @return La vista pages.evaluacionIndex con las indicaciones de que se realizó la evaluación final del curso
+	 */
      public function saveFinal_Seminario(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
           $eval_fseminario = new EvaluacionFinalSeminario;
           $promedio_p1 = new EvaluacionFinalSeminario;
@@ -701,11 +744,15 @@ class EvaluacionController extends Controller{
 			$eval_fseminario->horarioi = $request->horarioi;
 			$eval_fseminario->save();
 		  } catch(Exception $e){
+
+			//En caso de que no se haya evaluado correctamente el curso regresamos a la vista anterior indicando que la evaluación fue errónea
 			Session::flash('message','Favor de contestar todas las preguntas del formulario');
 			Session::flash('alert-class', 'alert-danger'); 
 
 			return redirect()->back()->withInput($request->input());
 		  }
+
+		  //Pasos despreciados en la version actual, usados para obtener el promedio de toda la evaluación del curso
           $promedio_p1 = [
                $eval_fseminario->p1_1,
                $eval_fseminario->p1_2,
@@ -787,6 +834,7 @@ $promedio_p4=[
 		$curso = Curso::find($curso_id);
 		$catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
 	
+		//Pasos necesarios para obtener las ligas a los cursos en los que está inscrito el usuario
 		$infoCursos=array(); 
 		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
                 $cursos=array();
@@ -803,7 +851,9 @@ $promedio_p4=[
                     array_push($infoCursos, $tupla);
                 }
 
+		//Enviamos a los correos de los profesores como fueron evaluados por dicho y usario y como va la evaluación global
 		$this->reporteInstructor($profesor_id,$curso_id,$catalogoCurso_id,$eval_fseminario->id);
+		$this->reporteFinalInstructor($profesor_id,$curso_id,$catalogoCurso_id,$eval_fseminario->id);
 
 		//Revisamos si hay encuestas realizadas por el alumno en el día actual
 		$evaluacion_x_curso = DB::table('_evaluacion_x_seminario')
@@ -830,7 +880,13 @@ $promedio_p4=[
 			->with('msj', 'Evaluación enviada');
      }
      
-//Por sesiones
+
+	 /**
+	 * Función encargada de guardar en la base de datos la evaluación por sesión del curso que no es de tipo seminario
+	 * @param $request: datos ingresados al formulario, $profesor_id: id del profesro que realizó la evaluación, 
+	 * $curso_id: id del curso evaluado, $catalogoCurso_id: id del catalogo del curso evaluado
+	 * @return La vista pages.evaluacionIndex con las indicaciones de que se realizó la evaluación del día actual de la sesión del curso
+	 */
      public function saveXCurso(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
           $eval_xcurso = new EvaluacionXCurso;
           $correo = new EvaluacionController(); 
@@ -856,6 +912,8 @@ $promedio_p4=[
 		  	$eval_xcurso->curso_id=$curso_id;
 			  $eval_xcurso->save();
 		}catch(Exception $e){
+
+			//En caso de que no se haya evaluado correctamente el curso regresamos a la vista anterior indicando que se debe de repetir la evaluación
 			Session::flash('message','Favor de contestar todas las preguntas del formulario');
 			Session::flash('alert-class', 'alert-danger'); 
 
@@ -881,6 +939,8 @@ $promedio_p4=[
 		  $count = ProfesoresCurso::select($curso_id)
 			->where('curso_id',$curso_id)
 			->count();
+
+			//Pasos necesarios para obtener las ligas a los cursos en los que está inscrito el usuario
 			$infoCursos=array(); 
 			$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
                 //return $participantesCurso;
@@ -897,8 +957,6 @@ $promedio_p4=[
                     array_push($tupla,$curso);
                     array_push($tupla,$catalogoCursos);
                     array_push($infoCursos, $tupla);
-                    //return $catalogoCursos;
-                    //return $infoCursos;
                 }
 	
 		//Obtenemos la evaluacion recien realizada para enviarla por correo
@@ -907,12 +965,15 @@ $promedio_p4=[
 			->where([['created_at',$date],['curso_id',$curso_id],['participante_curso_id',$participanteID]])
 			->get();
 	
+		//Obtenemos la evaluación actual
 		$eval_curso = $eval_xcurso[0];
 
+		//Obtenemos el salón donde se realizó el curso
 		$salon = DB::table('salons')
 			->where('id',$curso->salon_id)
 			->get();
 
+		//Obtrenemos el número de horas en que consta el curso
 		$horas_inicio = explode(':',$curso->hora_inicio);
 		$horas_fin = explode(':',$curso->hora_fin);
 	
@@ -950,12 +1011,20 @@ $promedio_p4=[
           
      }
 
+	 /**
+	 * Función encargada de guardar en la base de datos la evaluación por sesión del curso que es de tipo seminario
+	 * @param $request: datos ingresados al formulario, $profesor_id: id del profesro que realizó la evaluación, 
+	 * $curso_id: id del curso evaluado, $catalogoCurso_id: id del catalogo del curso evaluado
+	 * @return La vista pages.evaluacionIndex con las indicaciones de que se realizó la evaluación del día actual de la sesión del curso
+	 */
      public function saveXSeminario(Request $request,$profesor_id,$curso_id,$catalogoCurso_id){
           $eval_xseminario = new EvaluacionXSeminario;
           $correo = new EvaluacionController(); 
           $participante = ParticipantesCurso::where([['profesor_id',$profesor_id],['curso_id',$curso_id]])->get('id');
 		  $semestre=Curso::find($curso_id);
-		  $participanteID = $participante[0]->id;;
+		  $participanteID = $participante[0]->id;
+
+		  //Guardamos en _evaluacion_x_curso todos los datos ingresados por el alumno en la encuesta
 		  try{
 			$eval_xseminario->participante_curso_id=$participanteID;
 			$eval_xseminario->p1=$request->p1;
@@ -978,6 +1047,8 @@ $promedio_p4=[
 
 			$eval_xseminario->save();
 		  }catch(Exception $e){
+
+			//En caso de que no se haya evaluado correctamente el curso regresamos a la vista anterior indicando que se debe de repetir la evaluación
 			Session::flash('message','Favor de contestar todas las preguntas del formulario');
 			Session::flash('alert-class', 'alert-danger'); 
 
@@ -990,6 +1061,8 @@ $promedio_p4=[
 		  $count = ProfesoresCurso::select($curso_id)
 			->where('curso_id',$curso_id)
 			->count();
+
+			//Pasos necesarios para obtener las ligas a los cursos en los que está inscrito el usuario
 			$infoCursos=array(); 
 			$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
                 $cursos=array();
@@ -1011,23 +1084,6 @@ $promedio_p4=[
 			->select('*')
 			->where([['created_at',$date],['curso_id',$curso_id],['participante_curso_id',$participanteID]])
 			->get();
-
-		$eval_curso = $eval_xcurso[0];
-	  
-		$salon = DB::table('salons')
-			->where('id',$curso->salon_id)
-			->get();
-
-		$horas_inicio = explode(':',$curso->hora_inicio);
-		$horas_fin = explode(':',$curso->hora_fin);
-		
-		$inicio = intval($horas_inicio[0]) + floatval($horas_inicio[1]/100);
-		$fin = intval($horas_fin[0]) + floatval($horas_fin[1]/100);
-		
-		$numero_horas = floatval($curso->numero_sesiones) * ($fin-$inicio);
-
-		//Enviamos el correo con los datos a usar
-		//$correo->enviarCorreo($profesor_id,$curso_id, $catalogoCurso_id, $eval_curso, 'pages.evaluacion_x_seminario',$salon,$numero_horas);
 	 
 		//Revisamos si hay encuestas realizadas por el alumno en el día actual
 		$evaluacion_x_curso = DB::table('_evaluacion_x_seminario')
@@ -1057,6 +1113,11 @@ $promedio_p4=[
           
      }
 	
+	/**
+	 * Función encargada de enviar el historial de cursos tomados por el profesor
+	 * @param $request: petición (vacía) del usuario, $id del profesor del que se desean obtener los datos
+	 * @return la vista pages.admin
+	 */
 	public function enviarClaveCrusoHistorico(Request $request, $profesor_id){
 		
 		//Obtenemos todos los cursos en los que ha participado el profesor
@@ -1089,26 +1150,22 @@ $promedio_p4=[
 			$message->attachData($pdf->output(), 'Historial de cursos.pdf');
 		});
 		
+		//Pasos necesarios para obtener las ligas a los cursos en los que está inscrito el usuario
 		$infoCursos=array(); 
-		$cursos=array();
-		
-		//Obtenemos los cursos en donde ha participado el profesor
 		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-            $cursos=array();
-            foreach($participantesCurso as $participanteCurso){
-            $curso=Curso::findorFail($participanteCurso->curso_id);
-            array_push($cursos,$curso); 
-        }
-		
-		//
+		$cursos=array();
+		foreach($participantesCurso as $participanteCurso){
+			$curso=Curso::findorFail($participanteCurso->curso_id);
+			array_push($cursos,$curso); 
+		}
 		foreach($cursos as $curso){
-            $catalogoCursos = CatalogoCurso::find($curso->id);
-            $tupla = array();
-            array_push($tupla,$curso);
-            array_push($tupla,$catalogoCursos);
-            array_push($infoCursos, $tupla);
-        }
-		
+			$catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
+			$tupla = array();
+			array_push($tupla,$curso);
+			array_push($tupla,$catalogoCursos);
+			array_push($infoCursos, $tupla);
+		}
+
 		//regresamos a la vista pages.admin con los datos necesarios para su funcionamiento
 		return View::make('pages.admin')
 			->with('profesor',$profesor)
@@ -1117,32 +1174,34 @@ $promedio_p4=[
 		
 	}
 	
+	/**
+	 * Función encarga de enviar a la vista en donde el usuario elegirá la fecha de los cursos de su historial a revisar
+	 * @param $request: petición (vacía) del usuario, $id del profesor del que se desean obtener los datos
+	 * @return la vista pages.enviar_por_fecha donde el usuario eligirá la fecha que desea observar
+	 */
 	public function redirigirAEnviar(Request $request, $profesor_id){
 		
-		//Obtenemos los cursos en donde ha participado el profesor y los guardamos en un array
+		//Pasos necesarios para obtener las ligas a los cursos en los que está inscrito el usuario
 		$infoCursos=array(); 
-		$cursos=array();
-		
-		$profesor=Profesor::find($profesor_id);
-		
 		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-            $cursos=array();
-            foreach($participantesCurso as $participanteCurso){
-            $curso=Curso::findorFail($participanteCurso->curso_id);
-            array_push($cursos,$curso); 
-        }
-		
+		$cursos=array();
+		foreach($participantesCurso as $participanteCurso){
+			$curso=Curso::findorFail($participanteCurso->curso_id);
+			array_push($cursos,$curso); 
+		}
 		foreach($cursos as $curso){
-            $catalogoCursos = CatalogoCurso::find($curso->id);
-            $tupla = array();
-            array_push($tupla,$curso);
-            array_push($tupla,$catalogoCursos);
-            array_push($infoCursos, $tupla);
+			$catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
+			$tupla = array();
+			array_push($tupla,$curso);
+			array_push($tupla,$catalogoCursos);
+			array_push($infoCursos, $tupla);
 		}
 		
+		//Obtenemos todos los cursos
 		$cursos = DB::table('cursos')
             ->get();
 
+		//Obtenemos todas las fechas en que se han dado cursos para mostrar al usuario
         $fechas = array();
         foreach($cursos as $curso){
             $fecha = strval($curso->semestre_anio).'-'.strval($curso->semestre_pi);
@@ -1164,7 +1223,12 @@ $promedio_p4=[
 			->with('infoCursos',$infoCursos)
 			->with('fechas',$fechas);
 	}
-	
+
+	/**
+	 * Función encargada de enviar el correo con los cursos que tomó el usuario en la fecha seleccionada
+	 * @param $request: fecha elegida por el usuario, $profesor_id: id del ususario
+	 * @return La vista pages.admin
+	 */
 	public function enviarClaveFecha(Request $request, $profesor_id){
 		//Obtenemos el semestre aceptado por el usuario y lo dividimos entre -
 		$semestre = $request->get('semestre');
@@ -1210,24 +1274,21 @@ $promedio_p4=[
 			$message->attachData($pdf->output(), 'Historial de cursos por periodo.pdf');
 		});
 		
-		//Obtenemos los cursos en donde ha participado el profesor
+		//Pasos necesarios para obtener las ligas a los cursos en los que está inscrito el usuario
 		$infoCursos=array(); 
-		$cursos=array();
-		
 		$participantesCurso = ParticipantesCurso::where('profesor_id',$profesor->id)->get();
-            $cursos=array();
-            foreach($participantesCurso as $participanteCurso){
-            $curso=Curso::findorFail($participanteCurso->curso_id);
-            array_push($cursos,$curso); 
-        }
-		
+		$cursos=array();
+		foreach($participantesCurso as $participanteCurso){
+			$curso=Curso::findorFail($participanteCurso->curso_id);
+			array_push($cursos,$curso); 
+		}
 		foreach($cursos as $curso){
-            $catalogoCursos = CatalogoCurso::find($curso->id);
-            $tupla = array();
-            array_push($tupla,$curso);
-            array_push($tupla,$catalogoCursos);
-            array_push($infoCursos, $tupla);
-        }
+			$catalogoCursos = CatalogoCurso::find($curso->catalogo_id);
+			$tupla = array();
+			array_push($tupla,$curso);
+			array_push($tupla,$catalogoCursos);
+			array_push($infoCursos, $tupla);
+		}
 		
 		//Retornamos la vista pages.admin con los datos necesarios para su funcionamiento
 		return View::make('pages.admin')
@@ -1237,6 +1298,9 @@ $promedio_p4=[
 			
 	}
 
+	/**
+	 * Función despreciada, se usaba anteriormente para enviar los formatos reporte_evaluacion_final tras realizarse una evaluacion final
+	 */ 
 	public function enviarEvaluacionFinal($profesor_id, $curso_id, $catalogoCurso_id, $eval_fcurso, $lugar){
 		$correo = new EvaluacionController(); 
 		$evals = 0;
@@ -1888,23 +1952,35 @@ $promedio_p4=[
 
 	}
 
+	/**
+	 * Función encargada de enviar el reporte de Instructores de una evaluación de curso
+	 * @param $profesor_id: profesor que realizó la evaluación, $curso_id: id del curso evaluado,
+	 * $catalogoCurso_id: id del catalogo del curso evaludo, $eval_id: id de la evaluación realizada
+	 */
 	public function reporteInstructor($profesor_id,$curso_id,$catalogoCurso_id,$eval_id){
+		//Obtenemos el curso evaluado
 		$curso = DB::table('cursos')
 			->where('id',$curso_id)
 			->get();
+
+		//Obtenemos el catálogo del curso
 		$catalogoCurso = DB::table('catalogo_cursos')
 			->where('id',$catalogoCurso_id)
 			->get();
+
+		//Obtenemos la evaluación de la tabla _evaluación_final_curso
 		$eval = DB::table('_evaluacion_final_curso')
 			->where('id',$eval_id)
 			->get();
 
+		//Si no existe en dicha tabla, el curso es de tipo seminario
 		if(sizeof($eval)<=0){
 			$eval = DB::table('_evaluacion_final_seminario')
 				->where('id',$eval_id)
 				->get();
 		}
 
+		//Obtenemos los datos de los profesores del curso y su cantidad
 		$profesorsDatos = DB::table('profesor_curso')
 			->where('curso_id',$curso[0]->id)
 			->get();
@@ -1914,10 +1990,8 @@ $promedio_p4=[
 
 		$profesors = array();
 
+		//Metemos en un arreglo a los profesores/facilitadores
 		foreach($profesorsDatos as $Dato){
-			/*$profesor = DB::table('profesors')
-				->where('id',$Dato->profesor_id)
-				->get();*/
 			$profesor = Profesor::find($Dato->id);
 			array_push($profesors,$profesor);
 		}
@@ -1925,9 +1999,10 @@ $promedio_p4=[
 		//return $profesors;
 		//return $eval;
 
+		//Obtenemos el curso
 		$cursos = Curso::find($curso_id)->get();
 
-
+		//Obtenemos los datos de la evaluación
 		$mejor = $eval[0]->mejor;
 		$sugerencias = $eval[0]->sug;
 		$lugar = 'pages.reporte_instructores_1';
@@ -1956,6 +2031,7 @@ $promedio_p4=[
 		$interes3 = 0;
 		$actitud3 = 0;
 
+		//En caso de que haya más de un profesor/facilitador obtenemos su evaluación
 		if($count>=2){
 			$lugar = 'pages.reporte_instructores_2';
 			$experiencia2 += $eval[0]->p5_1;
@@ -1967,6 +2043,7 @@ $promedio_p4=[
 			$interes2 += $eval[0]->p5_7;
 			$actitud2 += $eval[0]->p5_8;
 		}
+		//En caso de que haya más de dos profesor/facilitador obtenemos su evaluación
 		if($count == 3){
 			$lugar = 'pages.reporte_instructores_3';
 			$experiencia3 += $eval[0]->p6_1;
@@ -1979,6 +2056,7 @@ $promedio_p4=[
 			$actitud3 += $eval[0]->p6_8;
 		}
 
+		//Obtenemos el nombre del archivo a obtener
 		$envio = $catalogoCurso[0]->nombre_curso.'_'.$eval_id;
 		
 			
@@ -1989,6 +2067,7 @@ $promedio_p4=[
 
 		$semestre = $curso[0]->semestre_anio;
 
+		//Obtenemos los datos y envíamos el correo
 		$data = array(
 			'name'=>"CDEval",
 		);
@@ -2002,40 +2081,178 @@ $promedio_p4=[
 			});
 		}
 
-		/*return view($lugar)
-			->with('experiencia1',$experiencia1)
-			->with('planeacion1',$planeacion1)
-			->with('puntualidad1',$puntualidad1)
-			->with('materiales1',$materiales1)
-			->with('dudas1',$dudas1)
-			->with('control1',$control1)
-			->with('interes1',$interes1)
-			->with('actitud1',$actitud1)
-			->with('experiencia2',$experiencia2)
-			->with('planeacion2',$planeacion2)
-			->with('puntualidad2',$puntualidad2)
-			->with('materiales2',$materiales2)
-			->with('dudas2',$dudas2)
-			->with('control2',$control2)
-			->with('interes2',$interes2)
-			->with('actitud2',$actitud2)
-			->with('experiencia3',$experiencia3)
-			->with('planeacion3',$planeacion3)
-			->with('puntualidad3',$puntualidad3)
-			->with('materiales3',$materiales3)
-			->with('dudas3',$dudas3)
-			->with('control3',$control3)
-			->with('interes3',$interes3)
-			->with('actitud3',$actitud3)
-			->with('mejor',$mejor)
-			->with('sugerencias',$sugerencias)
-			->with('catalogo',$catalogoCurso[0])
-			->with('curso',$curso[0])
-			->with('cursos',$cursos[0])
-			->with('profesors',$profesors)
-			->with('eval_id',$eval_id);*/
+	}
+
+	/**
+	 * Función encargada de enviar el reporte de Instructores global evaluación de curso
+	 * @param $profesor_id: profesor que realizó la evaluación, $curso_id: id del curso evaluado,
+	 * $catalogoCurso_id: id del catalogo del curso evaludo, $eval_id: id de la evaluación realizada
+	 */
+	public function reporteFinalInstructor($profesor_id,$curso_id,$catalogoCurso_id,$eval_id){
+		//Obtenemos el curso evaluado
+		$curso = DB::table('cursos')
+			->where('id',$curso_id)
+			->get();
+		//Obtenemos el catálogo del curso evaluado
+		$catalogoCurso = DB::table('catalogo_cursos')
+			->where('id',$catalogoCurso_id)
+			->get();
+		//Obtenemos todas las evaluaciones del curso
+		$evals = DB::table('_evaluacion_final_curso')
+			->where('curso_id',$curso_id)
+			->get();
+	
+		if(sizeof($eval)<=0){
+			$eval = DB::table('_evaluacion_final_seminario')
+				->where('curso_id',$curso_id)
+				->get();
+		}
+	
+		//Obtenemos los docentes/facilitadores de los cursos y su número
+		$profesorsDatos = DB::table('profesor_curso')
+			->where('curso_id',$curso[0]->id)
+			->get();
+
+		$count = ProfesoresCurso::select($curso_id)
+			->where('curso_id',$curso_id)
+			->count();
+	
+		$profesors = array();
+	
+		//Obtenemos los datos de los docentes
+		foreach($profesorsDatos as $Dato){
+			$profesor = Profesor::find($Dato->id);
+			array_push($profesors,$profesor);
+		}
+	
+		$cursos = Curso::find($curso_id)->get();
+	
+		//Empezamps la evaluación del curso
+		$mejor = array(); //mejor
+		$sugerencias = array(); //sug
+		$lugar = 'pages.reporte_global_instructores_1';
+		$experiencia1 = 0; //4_1
+		$planeacion1 = 0;	//4_2
+		$puntualidad1 = 0;	//4_3
+		$materiales1 = 0;	//4_4
+		$dudas1 = 0;		//4_5
+		$control1 = 0;		//4_6
+		$interes1 = 0;		//4_6
+		$actitud1 = 0;		//4_8
+		$experiencia2 = 0;
+		$planeacion2 = 0;
+		$puntualidad2 = 0;
+		$materiales2 = 0;
+		$dudas2 = 0;
+		$control2 = 0;
+		$interes2 = 0;
+		$actitud2 = 0;
+		$experiencia3 = 0;
+		$planeacion3 = 0;
+		$puntualidad3 = 0;
+		$materiales3 = 0;
+		$dudas3 = 0;
+		$control3 = 0;
+		$interes3 = 0;
+		$actitud3 = 0;
+
+		//Iteramos todas las evaluaciones para ir sumando los valores de las evaluaciones
+		foreach($evals as $eval){
+
+			$experiencia1 += $eval->p4_1; //4_1
+			$planeacion1 += $eval->p4_2;	//4_2
+			$puntualidad1 += $eval->p4_3;	//4_3
+			$materiales1 += $eval->p4_4;	//4_4
+			$dudas1 += $eval->p4_5;		//4_5
+			$control1 += $eval->p4_6;		//4_6
+			$interes1 += $eval->p4_7;		//4_7
+			$actitud1 += $eval->p4_8;		//4_8
+	
+			//Si hay dos profesores obtenemos la evaluación del segundo docente
+			if($count>=2){
+				$lugar = 'pages.reporte_global_instructores_2';
+				$experiencia2 += $eval->p5_1;
+				$planeacion2 += $eval->p5_2;
+				$puntualidad2 += $eval->p5_3;
+				$materiales2 += $eval->p5_4;
+				$dudas2 += $eval->p5_5;
+				$control2 += $eval->p5_6;
+				$interes2 += $eval->p5_7;
+				$actitud2 += $eval->p5_8;
+			}
+
+			//Si hay tres docentes obtenemos la evaluación del tercero
+			if($count == 3){
+				$lugar = 'pages.reporte_global_instructores_3';
+				$experiencia3 += $eval->p6_1;
+				$planeacion3 += $eval->p6_2;
+				$puntualidad3 += $eval->p6_3;
+				$materiales3 += $eval->p6_4;
+				$dudas3 += $eval->p6_5;
+				$control3 += $eval->p6_6;
+				$interes3 += $eval->p6_7;
+				$actitud3 += $eval->p6_8;
+			}
+
+			array_push($mejor,$eval->mejor);
+			array_push($sug,$eval->sug);
+
+		}
+
+		//Obtenemos los promedios de cada profesor
+		$experiencia1 /= sizeof($evals);
+		$experiencia1 /= sizeof($evals); //4_1
+		$planeacion1 /= sizeof($evals);	//4_2
+		$puntualidad1 /= sizeof($evals);	//4_3
+		$materiales1 /= sizeof($evals);	//4_4
+		$dudas1 /= sizeof($evals);		//4_5
+		$control1 /= sizeof($evals);		//4_6
+		$interes1 /= sizeof($evals);		//4_7
+		$actitud1 /= sizeof($evals);	
+
+		$experiencia2 /= sizeof($evals);	
+		$planeacion2 /= sizeof($evals);	
+		$puntualidad2 /= sizeof($evals);	
+		$materiales2 /= sizeof($evals);	
+		$dudas2 /= sizeof($evals);	
+		$control2 /= sizeof($evals);	
+		$interes2 /= sizeof($evals);	
+		$actitud2 /= sizeof($evals);
+		
+		$experiencia3 /= sizeof($evals);
+		$planeacion3 /= sizeof($evals);
+		$puntualidad3 /= sizeof($evals);
+		$materiales3 /= sizeof($evals);
+		$dudas3 /= sizeof($evals);
+		$control3 /= sizeof($evals);
+		$interes3 /= sizeof($evals);
+		$actitud3 /= sizeof($evals);
+	
+		$envio = $catalogoCurso[0]->nombre_curso.'_'.$eval_id;
+		
+		//Obtenemos el pdf
+		$pdf = PDF::loadView($lugar,array('experiencia1'=>$experiencia1,'planeacion1'=>$planeacion1,'puntualidad1'=>$puntualidad1,'materiales1'=>$materiales1,'dudas1'=>$dudas1,'control1'=>$control1,'interes1'=>$interes1,'actitud1'=>$actitud1,'experiencia2'=>$experiencia2,'planeacion2'=>$planeacion2,'puntualidad2'=>$puntualidad2,'materiales2'=>$materiales2,'dudas2'=>$dudas2,'control2'=>$control2,'interes2'=>$interes2,'actitud2'=>$actitud2,'experiencia3'=>$experiencia3,'planeacion3'=>$planeacion3,'puntualidad3'=>$puntualidad3,'materiales3'=>$materiales3,'dudas3'=>$dudas3,'control3'=>$control3,'interes3'=>$interes3,'actitud3'=>$actitud3,'mejor'=>$mejor,'sugerencias'=>$sugerencias,'catalogo'=>$catalogoCurso[0],'curso'=>$curso[0],'cursos'=>$cursos[0],'profesors'=>$profesors,'eval_id'=>$eval_id));	
+		//return $pdf->download($envio.'.pdf');
+	
+		$profesoresCurso = ProfesoresCurso::where('curso_id',$curso_id)->get();
+	
+		$semestre = $curso[0]->semestre_anio;
+	
+		//Obtenemos los datos de los docentes/facilitadores y enviamos el correo
+		$data = array(
+			'name'=>"CDEval",
+		);
+	
+		foreach($profesoresCurso as $profesorCurso){
+			$profesor=Profesor::find($profesorCurso->id);
+			Mail::send('pages.mensaje',$data, function ($message) use($profesor,$pdf,$semestre){
+				$message->from(Array('cdevalresultados@gmail.com'=>'CDEval'));
+				$message->to(Array($profesor->getCorreo()=>$profesor->getNombre()))->subject('Resultados de Encuesta');
+				$message->attachData($pdf->output(), 'Resultados de Encuesta.pdf');
+			});
+		}
+	
 	}
 
 }
-
 
