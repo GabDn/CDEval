@@ -38,6 +38,7 @@ body {
 .f{
     background-color: #2A4EDF;
     color: white; 
+	text-align:center;
 }
 .n1{
 	border: 0px solid grey;
@@ -108,10 +109,21 @@ body {
 		</table>
         <br>
         <div align="center">
-            <div style="float: left; width: 100%; font-size: 22px;" class="n">{{ $cursos->getNombreCurso()  }}</div>
-            <div style="float: right; width: 15%" class="n">{{ $cursos->getSemestre() }}</div>
-            <div style="clear: both"></div>
-            <hr>
+			<?php
+				//50
+				if(strlen($catalogo->nombre_curso)>50){
+            		echo "<p style=\"float: left; width: 100%; font-size: 22px; line-heigh:5px;\" class=\"n\"> $catalogo->nombre_curso </p>";
+					echo "<br>";
+            		echo "<p style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\"> $cursos->semestre_anio$cursos->semestre_pi$cursos->semestre_si</p>";
+            		echo "<div style=\"clear: both\"></div>";
+					echo "<hr>";
+				}else{
+					echo "<div style=\"float: left; width: 100%; font-size: 22px;\" class=\"n\">$catalogo->nombre_curso</div>";
+					echo "<div style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\">$cursos->semestre_anio$cursos->semestre_pi$cursos->semestre_si</div>";
+					echo "<div style=\"clear: both\"></div>";
+					echo "<hr>";
+				}
+			?>
         </div>
     </div>
     <div>
@@ -146,30 +158,26 @@ body {
 		<br>
 		<br>
 		<table width="100%">
-			<thead>
+			<tr>
 				<th class="f">Lo mejor del curso fue</th>
-			</thead>
-			<tbody>
-                @foreach($mejor as $mejor)
-                    <tr>
-				    <td class="n">{{$mejor}}</td>
-                    </tr>
-                @endforeach
-			</tbody>
+			</tr>
+            @foreach($mejor as $mejor)
+                <tr>
+				<td class="n">{{$mejor}}</td>
+				</tr>
+            @endforeach
 		</table>
 		<br>
 		<br>
 		<table width="100%">
-			<thead>
+			<tr>
 				<th class="f">Comentarios y sugerencias</th>
-			</thead>
-			<tbody>
-                @foreach($sugerencias as $sugerencia)
-                    <tr>
-				    <td class="n">{{$sugerencia}}</td>
-                    </tr>
-                @endforeach
-			</tbody>
+			</tr>
+            @foreach($sugerencias as $sugerencia)
+                <tr>
+				<td class="n">{{$sugerencia}}</td>
+                </tr>
+            @endforeach
 		</table>
     </div>
 
