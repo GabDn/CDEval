@@ -19,6 +19,10 @@ use DB;
 class CoordinadorController extends Controller
 {
 
+    /**
+     * Función que retorna a la vista de super usuario
+     * @return Vista super usuario
+     */
     public function index(){
 
         $coordinaciones = Coordinacion::all();
@@ -27,6 +31,9 @@ class CoordinadorController extends Controller
             ->with("coordinaciones",$coordinaciones); //Route -> coordinador
     }
 
+    /**
+     * Función en estado beta
+     */
     public function searchCursos(Request $request){      
         if ($request->type == "nombre") {
             $catalogos_res = CatalogoCurso::select('id')->where('nombre_curso','ILIKE','%'.$request->pattern.'%')->get();
@@ -48,13 +55,13 @@ class CoordinadorController extends Controller
         }
     }
 
+    /**
+     * Función encargada de redirigir a la página de cursos con los datos de todos los cursos
+     * @param $encargado_id: id del curso, $message: mensaje a mostrar en pantalla
+     * @return La vista pages.cursos con sus datos necesarios
+     */
     public function cursosCoordinaciones($encargado_id,$message){
         $coordinaciones = Coordinacion::all();
-        /**$cursos = Curso::Join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
-                  ->where('catalogo_cursos.coordinacion_id',$encargado_id)->get();*/
-        
-        /*$cursos = Curso::Join('catalogo_cursos','cursos.catalogo_id','catalogo_cursos.id')
-            ->where('catalogo_cursos.coordinacion_id',$encargado_id)->get();*/
 
         $catalogo_curso = DB::table('catalogo_cursos')
             ->where('coordinacion_id',$encargado_id)
@@ -96,6 +103,10 @@ class CoordinadorController extends Controller
 
     }
     
+    /**
+     * Función encargada de retornar la vista de sesiones
+     * @return La vista pages.sesiones
+     */
     public function sesiones(){
         $evaluacion = EvaluacionXCurso::all();
         $coordinaciones = Coordinacion::all();
@@ -104,21 +115,38 @@ class CoordinadorController extends Controller
         ->with("coordinaciones",$coordinaciones);
     }
 
+    /**
+     * Función encargada de retornar la vista de globales
+     * @return La vista pages.globales
+     */
     public function globales(){
         $coordinaciones = Coordinacion::all();
         return view('pages.globales')
         ->with("coordinaciones",$coordinaciones);
     }
     
+    /**
+     * Función encargada de retornar a la vista pages.instructores
+     * @return La vista pages.instructores
+     */
     public function instructores(){
         return view("pages.instructores");
     }
 
+    /**
+     * Función encargada de retornar la descarga del pdf de la vista Evaluacion_area.pdf
+     * @return La descarga del pdf Evaluacion_area
+     */
     public function area_pdf(){
         $pdf = PDF::loadView('pages.area');
         return $pdf->download('Evaluacion_area.pdf');
     }
 
+    /**
+     * Función encargada activadora para obtener el pdf con las evaluaciones de todos los cursos de cierta fecha
+     * @param $request:fecha ingresada por el usuario
+     * @return Lo retornado por la función enviarVista
+     */
     public function enviarGlobal(Request $request){
         //Obtenemos la fecha elegida por el usuario
         $fecha = $request->get('semestre');
@@ -135,6 +163,12 @@ class CoordinadorController extends Controller
         return $this->enviarVista($fecha, $cursos, "", $lugar,0,'elegir.fecha');
     }
 
+    /**
+     * Funcion encargada de retornar ya sea el reporte de evaluaciones globales o por area en vista o formato pdf
+     * @param $request (fecha y coordinación elegidas por el usuario), $cursos: cursos obtenidos por la función activadora,
+     * $lugar: vista final, $pdf variable booleana que indica si se quiere o no el pdf, $inicio: ruta que mandó a llamar la función
+     * @return Dependiendo del caso ya sea la vista seleccionada o el pdf de la vista seleccionada
+     */
     public function enviarVista($request, $cursos, $nombreCoordinacion, $lugar, $pdf, $inicio){
 
         //Obtenemos todos los coordinadores
@@ -303,7 +337,7 @@ class CoordinadorController extends Controller
                     $preguntas++;
                     $preguntas_curso++;
                     $respuestasContenido += $evaluacion->p1_1;
-                    if($evaluacion->p1_1 >= 60){
+                    if($evaluacion->p1_1 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -312,7 +346,7 @@ class CoordinadorController extends Controller
                     $preguntas++;
                     $preguntas_curso++;
                     $respuestasContenido+= $evaluacion->p1_2;
-                    if($evaluacion->p1_2 >= 60){
+                    if($evaluacion->p1_2 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -321,7 +355,7 @@ class CoordinadorController extends Controller
                     $preguntas++;
                     $preguntas_curso++;
                     $respuestasContenido+= $evaluacion->p1_3;
-                    if($evaluacion->p1_3 >= 60){
+                    if($evaluacion->p1_3 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -330,7 +364,7 @@ class CoordinadorController extends Controller
                     $preguntas++;
                     $preguntas_curso++;
                     $respuestasContenido+= $evaluacion->p1_4;
-                    if($evaluacion->p1_4 >= 60){
+                    if($evaluacion->p1_4 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -339,7 +373,7 @@ class CoordinadorController extends Controller
                     $preguntas++;
                     $preguntas_curso++;
                     $respuestasContenido+= $evaluacion->p1_5;
-                    if($evaluacion->p1_5 >= 60){
+                    if($evaluacion->p1_5 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -348,7 +382,7 @@ class CoordinadorController extends Controller
                 if($evaluacion->p2_1 >= 20){
                     $preguntas++;
                     $preguntas_curso++;
-                    if($evaluacion->p2_1 >= 60){
+                    if($evaluacion->p2_1 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -356,7 +390,7 @@ class CoordinadorController extends Controller
                 if($evaluacion->p2_2 >= 20){
                     $preguntas++;
                     $preguntas_curso++;
-                    if($evaluacion->p2_2 >= 60){
+                    if($evaluacion->p2_2 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -364,7 +398,7 @@ class CoordinadorController extends Controller
                 if($evaluacion->p2_3 >= 20){
                     $preguntas++;
                     $preguntas_curso++;
-                    if($evaluacion->p2_3 >= 60){
+                    if($evaluacion->p2_3 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -372,7 +406,7 @@ class CoordinadorController extends Controller
                 if($evaluacion->p2_4 >= 20){
                     $preguntas++;
                     $preguntas_curso++;
-                    if($evaluacion->p2_4 >= 60){
+                    if($evaluacion->p2_4 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -383,7 +417,7 @@ class CoordinadorController extends Controller
                     $preguntas++;
                     $preguntas_curso++;
                     $respuestasCoordinacion += $evaluacion->p3_1;
-                    if($evaluacion->p3_1 >= 60){
+                    if($evaluacion->p3_1 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -392,7 +426,7 @@ class CoordinadorController extends Controller
                     $preguntas++;
                     $preguntas_curso++;
                     $respuestasCoordinacion += $evaluacion->p3_2;
-                    if($evaluacion->p3_2 >= 60){
+                    if($evaluacion->p3_2 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -401,7 +435,7 @@ class CoordinadorController extends Controller
                     $preguntas++;
                     $preguntas_curso++;
                     $respuestasCoordinacion += $evaluacion->p3_3;
-                    if($evaluacion->p3_3 >= 60){
+                    if($evaluacion->p3_3 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -410,7 +444,7 @@ class CoordinadorController extends Controller
                     $preguntas++;
                     $preguntas_curso++;
                     $respuestasCoordinacion += $evaluacion->p3_4;
-                    if($evaluacion->p3_4 >= 60){
+                    if($evaluacion->p3_4 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -433,7 +467,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p4_2;
                     $evaluacionProfesor++;
-                    if($evaluacion->p4_2 >= 60){
+                    if($evaluacion->p4_2 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -443,7 +477,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p4_3;
                     $evaluacionProfesor++;
-                    if($evaluacion->p4_3 >= 60){
+                    if($evaluacion->p4_3 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -453,7 +487,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p4_4;
                     $evaluacionProfesor++;
-                    if($evaluacion->p4_4 >= 60){
+                    if($evaluacion->p4_4 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -463,7 +497,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p4_5;
                     $evaluacionProfesor++;
-                    if($evaluacion->p4_5 >= 60){
+                    if($evaluacion->p4_5 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -473,7 +507,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p4_6;
                     $evaluacionProfesor++;
-                    if($evaluacion->p4_6 >= 60){
+                    if($evaluacion->p4_6 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -483,7 +517,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p4_7;
                     $evaluacionProfesor++;
-                    if($evaluacion->p4_7 >= 60){
+                    if($evaluacion->p4_7 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -493,7 +527,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p4_8;
                     $evaluacionProfesor++;
-                    if($evaluacion->p4_8 >= 60){
+                    if($evaluacion->p4_8 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -503,7 +537,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p4_9;
                     $evaluacionProfesor++;
-                    if($evaluacion->p4_9 >= 60){
+                    if($evaluacion->p4_9 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -513,7 +547,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p4_10;
                     $evaluacionProfesor++;
-                    if($evaluacion->p4_10 >= 60){
+                    if($evaluacion->p4_10 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -523,7 +557,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p4_11;
                     $evaluacionProfesor++;
-                    if($evaluacion->p4_11 >= 60){
+                    if($evaluacion->p4_11 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -536,7 +570,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p5_1;
                     $evaluacionProfesor++;
-                    if($evaluacion->p5_1 == 1){
+                    if($evaluacion->p5_1 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -546,7 +580,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p5_2;
                     $evaluacionProfesor++;
-                    if($evaluacion->p5_2 >= 60){
+                    if($evaluacion->p5_2 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -556,7 +590,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p5_3;
                     $evaluacionProfesor++;
-                    if($evaluacion->p5_3 >= 60){
+                    if($evaluacion->p5_3 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -566,7 +600,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p5_4;
                     $evaluacionProfesor++;
-                    if($evaluacion->p5_4 >= 60){
+                    if($evaluacion->p5_4 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -576,7 +610,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p5_5;
                     $evaluacionProfesor++;
-                    if($evaluacion->p5_5 >= 60){
+                    if($evaluacion->p5_5 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -586,7 +620,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p5_6;
                     $evaluacionProfesor++;
-                    if($evaluacion->p5_6 >= 60){
+                    if($evaluacion->p5_6 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -596,7 +630,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p5_7;
                     $evaluacionProfesor++;
-                    if($evaluacion->p5_7 >= 60){
+                    if($evaluacion->p5_7 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -606,7 +640,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p5_8;
                     $evaluacionProfesor++;
-                    if($evaluacion->p5_8 >= 60){
+                    if($evaluacion->p5_8 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -616,7 +650,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p5_9;
                     $evaluacionProfesor++;
-                    if($evaluacion->p5_9 >= 60){
+                    if($evaluacion->p5_9 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -626,7 +660,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p5_10;
                     $evaluacionProfesor++;
-                    if($evaluacion->p5_10 >= 60){
+                    if($evaluacion->p5_10 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -636,7 +670,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p5_11;
                     $evaluacionProfesor++;
-                    if($evaluacion->p5_11 >= 60){
+                    if($evaluacion->p5_11 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -659,7 +693,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p6_2;
                     $evaluacionProfesor++;
-                    if($evaluacion->p6_2 >= 60){
+                    if($evaluacion->p6_2 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -669,7 +703,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p6_3;
                     $evaluacionProfesor++;
-                    if($evaluacion->p6_3 >= 60){
+                    if($evaluacion->p6_3 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -679,7 +713,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p6_4;
                     $evaluacionProfesor++;
-                    if($evaluacion->p6_4 >= 60){
+                    if($evaluacion->p6_4 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -689,7 +723,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p6_5;
                     $evaluacionProfesor++;
-                    if($evaluacion->p6_5 >= 60){
+                    if($evaluacion->p6_5 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -699,7 +733,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p6_6;
                     $evaluacionProfesor++;
-                    if($evaluacion->p6_6 >= 60){
+                    if($evaluacion->p6_6 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -709,7 +743,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p6_7;
                     $evaluacionProfesor++;
-                    if($evaluacion->p6_7 >= 60){
+                    if($evaluacion->p6_7 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -717,7 +751,7 @@ class CoordinadorController extends Controller
                 if($evaluacion->p6_8 >= 20){
                     $preguntas++;
                     $preguntas_curso++;
-                    if($evaluacion->p6_8 >= 60){
+                    if($evaluacion->p6_8 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -727,7 +761,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p6_9;
                     $evaluacionProfesor++;
-                    if($evaluacion->p6_9 >= 60){
+                    if($evaluacion->p6_9 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -737,7 +771,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p6_10;
                     $evaluacionProfesor++;
-                    if($evaluacion->p6_10 >= 60){
+                    if($evaluacion->p6_10 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -747,7 +781,7 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor += $evaluacion->p6_11;
                     $evaluacionProfesor++;
-                    if($evaluacion->p6_11 >= 60){
+                    if($evaluacion->p6_11 > 60){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -835,7 +869,7 @@ class CoordinadorController extends Controller
         //Si el usuario indico descargar un pdf se procedera a realizarlo
         if($pdf == 1){
             //Retornamos la funcion que permite la descarga del pdf
-            return $this->descargarPDF($nombresCursos,$request,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$positivas,$DP,$DH,$CO,$DI,$Otros,$DPtematica,$DItematica,$COtematica,$DHtematica,$Otrostematica,$coordinaciones,$horariosCurso,$promedio_coordinacion,$promedio_contenido,$profesoresRecontratar,$factor_instructor,$asistieron,$nombreCoordinacion,$lugar,$aritmetico[0],$aritmetico[1],$aritmetico[2],$aritmetico[3]);
+            return $this->descargarPDF($nombresCursos,$request,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$factor_calidad,$DP,$DH,$CO,$DI,$Otros,$DPtematica,$DItematica,$COtematica,$DHtematica,$Otrostematica,$coordinaciones,$horariosCurso,$promedio_coordinacion,$promedio_contenido,$profesoresRecontratar,$factor_instructor,$asistieron,$nombreCoordinacion,$lugar,$aritmetico[0],$aritmetico[1],$aritmetico[2],$aritmetico[3]);
         }
 
         //Retornamos la vista correspondiente (seleccionados por fecah o seleccionados por fecha y coordinacion) con los datos calculados
@@ -874,13 +908,20 @@ class CoordinadorController extends Controller
             ->with('aritmetico_recomendacion',$aritmetico[3]);
     }
 
+    /**
+     * Función encargada de obtener los cálculos aritméticos de la evaluación global
+     * @param $cursos: cursos obtenidos según la selecion del usuario
+     * @return Los cálculos aritméticos
+     */
     public function calculaAritmetico($cursos){
+        //Obtenemos la fecha seleccionada
         $semestre_anio = $cursos[0]->semestre_anio;
         $semestre_pi = $cursos[0]->semestre_pi;
 
         $coordinaciones = Coordinacion::all();
         $catalogo_coordinaciones = array();
 
+        //Obtenemos los cursos de cada coordinación de la fecha seleccionada
         foreach($coordinaciones as $coordinacion){
             $cursos = DB::table('cursos')
                 ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
@@ -899,6 +940,7 @@ class CoordinadorController extends Controller
         $factor_recomendacion_promedio = 0;
         $tam_coordinacion = 0;
 
+        //Empezamos a iterar cada coordinación
         foreach($catalogo_coordinaciones as $coordinacion){
 
             $contenido_curso = 0;
@@ -913,8 +955,10 @@ class CoordinadorController extends Controller
 
             $tam_coordinacion++;
 
+            //Empezamos a iterar los cursos de cada coordinación
             foreach($coordinacion as $curso){
                 $evals = 0;
+                //Obtenemos las evaluaciones
                 if(strcmp($curso->tipo,'Actualizacion')==0){
                     $evals = DB::table('_evaluacion_final_seminario')
                         ->where('curso_id',$curso->id)
@@ -927,6 +971,7 @@ class CoordinadorController extends Controller
 
                 $tam += sizeof($evals);
 
+                //Iteramos las evaluaciones y acumulamos sus valores
                 foreach($evals as $eval){
 
                     $contenido_curso += $eval->p1_1;
@@ -952,6 +997,7 @@ class CoordinadorController extends Controller
                     $instructor_curso_1 += $eval->p4_10;
                     $instructor_curso_1 += $eval->p4_11;
 
+                    //En caso de tener de que se haya evaluado un segundo instructor acumulamos sus calificaciones
                     if($eval->p5_1 >= 20){
                         $tam2++;
                         $instructor_curso_2 += $eval->p5_1;
@@ -967,6 +1013,7 @@ class CoordinadorController extends Controller
                         $instructor_curso_2 += $eval->p5_11; 
                     }
 
+                    //En caso de tener de que se haya evaluado un tercer instructor acumulamos sus calificaciones
                     if($eval->p6_1 >= 20){
                         $tam3++;
                         $instructor_curso_3 += $eval->p6_1;
@@ -982,12 +1029,14 @@ class CoordinadorController extends Controller
                         $instructor_curso_3 += $eval->p6_11; 
                     }
 
+                    //incrementamos el número de profesores que recomendaron el curso
                     if(intval($eval->p7) == 1){
                         $factor_recomendacion_curso++;
                     }
                 }
             }
 
+            //Serie de pasos necesarios para obtener el promedio de la coordinación de cada variable
             $divisor = 1;
             if($tam2 != 0){
                 $divisor = 2;
@@ -1007,6 +1056,7 @@ class CoordinadorController extends Controller
 
         }
 
+        //Obtenemos el promedio de todas las coordinaciones
         $factor_contenido_aritmetico = round($contenido_promedio / $tam_coordinacion,2);
         $factor_instructor_aritmetico = round($instructor_promedio / $tam_coordinacion,2);
         $factor_coordinacion_aritmetico = round($coordinacion_promedio / $tam_coordinacion,2);
@@ -1017,6 +1067,11 @@ class CoordinadorController extends Controller
 
     }
 
+    /**
+     * Función encargada de obtener los cálculos aritméticos de la evaluación por área
+     * @param $cursos: cursos obtenidos según la selecion del usuario
+     * @return Los cálculos aritméticos
+     */
     public function calculaAritmeticoArea($cursos, $nombreCoordinacion){
 
         $contenido_promedio = 0;
@@ -1025,8 +1080,10 @@ class CoordinadorController extends Controller
         $factor_recomendacion_promedio = 0;
         $tam_coordinacion = 0;
         
+        //Iteramos cada curso del área seleccionada
         foreach($cursos as $curso){
             $tam_coordinacion++;
+            //Obtenemos el catálogo y evaluaciones de dichos cursos
             $catalogo_curso = DB::table('catalogo_cursos')
                 ->where('id',$curso->catalogo_id)
                 ->get();
@@ -1048,6 +1105,8 @@ class CoordinadorController extends Controller
             $tam3 = 0;
             $instructor_2 = 0;
             $instructor_3 = 0;
+
+            //Iteramos las evaluaciones de cada curso y acumulamos las calificaciones de cada rubro
             foreach($evals as $eval){
                 $tam_curso++;
                 $contenido_curso += $eval->p1_1;
@@ -1073,6 +1132,7 @@ class CoordinadorController extends Controller
                 $instructor_1 += $eval->p4_10;
                 $instructor_1 += $eval->p4_11;
 
+                //Si hay dos profesores acumulamos la evaluación del segundo
                 if($eval->p5_1>=20){
                     $tam2++;
                     $instructor_2 += $eval->p5_1;
@@ -1088,6 +1148,7 @@ class CoordinadorController extends Controller
                     $instructor_2 += $eval->p5_11;
                 }
 
+                //Si hay tres profesores acumulamos la evaluación del tecero
                 if($eval->p6_1>=20){
                     $tam3++;
                     $instructor_3 += $eval->p6_1;
@@ -1109,6 +1170,7 @@ class CoordinadorController extends Controller
 
             }
 
+            //Serie de pasos necesarios para obtener el promedio por curso
             $divisor = 1;
             if($tam2 == 0){
                 $tam2 = 1;
@@ -1128,6 +1190,7 @@ class CoordinadorController extends Controller
 
         }
 
+        //Serie de pasos necesarios para obtener el promedio de toda el área
         $factor_contenido_aritmetico = round($contenido_promedio / $tam_coordinacion,2);
         $factor_instructor_aritmetico = round($instructor_promedio / $tam_coordinacion,2);
         $factor_coordinacion_aritmetico = round($coordinacion_promedio / $tam_coordinacion,2);
@@ -1138,6 +1201,11 @@ class CoordinadorController extends Controller
 
     }
 
+    /**
+     * Función encargada de retornar la vista donde el usuario va a elegir la fecha del historial
+     * @param $message: mensaje de error al usuario (en caso de haberlo)
+     * @return La vista con los datos necesarios para que el usuario elija la fecha
+     */
     public function elegirFecha($message){
         //Obtenemos todos los cursos y todas las coordinaciones
         $coordinaciones = Coordinacion::all();
@@ -1169,6 +1237,11 @@ class CoordinadorController extends Controller
             ->with('message',$message);
     }
 
+    /**
+     * Función que se encarga de retornar la vista donde el usario elije fecha y área
+     * @param $message: mensaje de error (en caso de haberlo)
+     * @return La vista donde el usuario elijirá coordinación y fecha de la que quiere el historial
+     */
     public function elegirFechaCoordinacion($message){
         //Obtenemos todos los cursos y todas las coordinaciones
         $coordinaciones = Coordinacion::all();
@@ -1198,6 +1271,11 @@ class CoordinadorController extends Controller
             ->with('message',$message);
     }
 
+    /**
+     * Función activadora de enviarVista donde se obtienen los cursos de la fecha y área elegida
+     * @param $request: fecha y área elegidas por el usuario
+     * @return Lo retornado por la función enviarVista
+     */
     public function enviarCoordinacion(Request $request){
 
         //Obtenemos la fecha y la coordinacion seleccionadas por el usuario
@@ -1239,6 +1317,11 @@ class CoordinadorController extends Controller
         
     }
 
+    /**
+     * Función activadora de la vista enviarVista que obtiene los datos globales de los cursos de cierta fecha
+     * @param $fecha escogida por el usuario
+     * @return Lo retornado por la función enviarVista
+     */
     public function globalPDF($fecha){
         //Obtenemos la fecha seleccionada por el usuario
         $semestre = explode('-',$fecha);
@@ -1252,6 +1335,11 @@ class CoordinadorController extends Controller
         return $this->enviarVista($fecha, $cursos, "", $lugar,1,'');
     }
 
+    /**
+     * Función activadora de la vista enviarVista que obtiene los datos globales de los cursos de cierta fecha y coordinación
+     * @param $fecha escogida por el usuario, $coordinación: coordinación elegida por el usuario (id)
+     * @return Lo retornado por la función enviarVista
+     */
     public function areaPDF($fecha,$coordinacion){
 
         //Obtenemos la fecha ingresada por el usuario
@@ -1293,6 +1381,12 @@ class CoordinadorController extends Controller
         return $this->enviarVista($semestre, $cursos, $nombreCoordinacion, $lugar,1,'');
     }
 
+
+    /**
+     * Función encargada de retornar la descarga del pdf de los reportes finales de área y global
+     * @param Todos los datos necesarios para generar el reporte 
+     * @return La descarga del pdf
+     */
     public function descargarPDF($nombres,$periodo,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$positivas,$DP,$DH,$CO,$DI,$Otros,$DPtematicas,$DItematicas,$COtematicas,$DHtematicas,$Otrostematicas,$coordinaciones,$horarios,$coordinacion,$contenido,$profesors,$instructor,$asistencia,$nombreCoordinacion,$lugar,$factor_contenido_aritmetico,$factor_instructor_aritmetico,$factor_coordinacion_aritmetico,$factor_recomendacion_aritmetico){
         $coordinaciones = Coordinacion::all();
 
@@ -1309,6 +1403,11 @@ class CoordinadorController extends Controller
         return $pdf->download($envioPDF.'.pdf');
     }
 
+    /**
+     * Función encargada de obtener el reporte final de un curso
+     * @param $curso: curso elegido por el uduario, $pdf: si se quiere o no un pdf, $encargado_id: coordinación
+     * @return Vista o descarga del reporte según lo elegido por el usuario
+     */
     public function globalFinal($curso_id,$pdf,$encargado_id){
 
         $coordinaciones = Coordinacion::all();
@@ -1484,60 +1583,60 @@ class CoordinadorController extends Controller
 			if($evaluacion->p1_1 >= 20){
 				$preguntas++;
 				$respuestasContenido += $evaluacion->p1_1;
-				if($evaluacion->p1_1 >= 60){
+				if($evaluacion->p1_1 > 60){
 					$positivas++;
 				}
 			}
 			if($evaluacion->p1_2 >= 20){
 				$preguntas++;
 				$respuestasContenido+= $evaluacion->p1_2;
-				if($evaluacion->p1_2 >= 60){
+				if($evaluacion->p1_2 > 60){
 					$positivas++;
 				}
 			}
 			if($evaluacion->p1_3 >= 20){
 				$preguntas++;
 				$respuestasContenido+= $evaluacion->p1_3;
-				if($evaluacion->p1_3 >= 60){
+				if($evaluacion->p1_3 > 60){
 					$positivas++;
 				}
 			}
 			if($evaluacion->p1_4 >= 20){
 				$preguntas++;
 				$respuestasContenido+= $evaluacion->p1_4;
-				if($evaluacion->p1_4 >= 60){
+				if($evaluacion->p1_4 > 60){
 					$positivas++;
 				}
 			}
 			if($evaluacion->p1_5 >= 20){
 				$preguntas++;
 				$respuestasContenido+= $evaluacion->p1_5;
-				if($evaluacion->p1_5 >= 60){
+				if($evaluacion->p1_5 > 60){
 					$positivas++;
 				}
 			}
 
 			if($evaluacion->p2_1 >= 20){
 				$preguntas++;
-				if($evaluacion->p2_1 >= 60){
+				if($evaluacion->p2_1 > 60){
 					$positivas++;
 				}
 			}
 			if($evaluacion->p2_2 >= 20){
 				$preguntas++;
-				if($evaluacion->p2_2 >= 60){
+				if($evaluacion->p2_2 > 60){
 					$positivas++;
 				}
 			}
 			if($evaluacion->p2_3 >= 20){
 				$preguntas++;
-				if($evaluacion->p2_3 >= 60){
+				if($evaluacion->p2_3 > 60){
 					$positivas++;
 				}
 			}
 			if($evaluacion->p2_4 >= 20){
 				$preguntas++;
-				if($evaluacion->p2_4 >= 60){
+				if($evaluacion->p2_4 > 60){
 					$positivas++;
 				}
 			}
@@ -1546,28 +1645,28 @@ class CoordinadorController extends Controller
 			if($evaluacion->p3_1 >= 20){
 				$preguntas++;
 				$respuestasCoordinacion += $evaluacion->p3_1;
-				if($evaluacion->p3_1 >= 60){
+				if($evaluacion->p3_1 > 60){
 					$positivas++;
 				}
 			}
 			if($evaluacion->p3_2 >= 20){
 				$preguntas++;
 				$respuestasCoordinacion += $evaluacion->p3_2;
-				if($evaluacion->p3_2 >= 60){
+				if($evaluacion->p3_2 > 60){
 					$positivas++;
 				}
 			}
 			if($evaluacion->p3_3 >= 20){
 				$preguntas++;
 				$respuestasCoordinacion += $evaluacion->p3_3;
-				if($evaluacion->p3_3 >= 60){
+				if($evaluacion->p3_3 > 60){
 					$positivas++;
 				}
 			}
 			if($evaluacion->p3_4 >= 20){
 				$preguntas++;
 				$respuestasCoordinacion += $evaluacion->p3_4;
-				if($evaluacion->p3_4 >= 60){
+				if($evaluacion->p3_4 > 60){
 					$positivas++;
 				}
 			}
@@ -1586,7 +1685,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_2;
 				$respuesta_individual1+= $evaluacion->p4_2;
-				if($evaluacion->p4_2 >= 60){
+				if($evaluacion->p4_2 > 60){
 					$positivas++;
 				}
 			}
@@ -1594,7 +1693,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_3;
 				$respuesta_individual1+= $evaluacion->p4_3;
-				if($evaluacion->p4_3 >= 60){
+				if($evaluacion->p4_3 > 60){
 					$positivas++;
 				}
 			}
@@ -1602,7 +1701,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_4;
 				$respuesta_individual1+= $evaluacion->p4_4;
-				if($evaluacion->p4_4 >= 60){
+				if($evaluacion->p4_4 > 60){
 					$positivas++;
 				}
 			}
@@ -1610,7 +1709,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_5;
 				$respuesta_individual1+= $evaluacion->p4_5;
-				if($evaluacion->p4_5 >= 60){
+				if($evaluacion->p4_5 > 60){
 					$positivas++;
 				}
 			}
@@ -1618,7 +1717,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_6;
 				$respuesta_individual1+= $evaluacion->p4_6;
-				if($evaluacion->p4_6 >= 60){
+				if($evaluacion->p4_6 > 60){
 					$positivas++;
 				}
 			}
@@ -1626,7 +1725,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_7;
 				$respuesta_individual1+= $evaluacion->p4_7;
-				if($evaluacion->p4_7 >= 60){
+				if($evaluacion->p4_7 > 60){
 					$positivas++;
 				}
 			}
@@ -1634,7 +1733,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_8;
 				$respuesta_individual1+= $evaluacion->p4_8;
-				if($evaluacion->p4_8 >= 60){
+				if($evaluacion->p4_8 > 60){
 					$positivas++;
 				}
 			}
@@ -1642,7 +1741,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_9;
 				$respuesta_individual1+= $evaluacion->p4_9;
-				if($evaluacion->p4_9 >= 60){
+				if($evaluacion->p4_9 > 60){
 					$positivas++;
 				}
 			}
@@ -1650,7 +1749,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_10;
 				$respuesta_individual1+= $evaluacion->p4_10;
-				if($evaluacion->p4_10 >= 60){
+				if($evaluacion->p4_10 > 60){
 					$positivas++;
 				}
 			}
@@ -1661,7 +1760,7 @@ class CoordinadorController extends Controller
 				$respuesta_individual1+= $evaluacion->p4_11;
 				array_push($promedios1, round($respuesta_individual1/11,2));
 				$respuesta_individual1 = 0;
-				if($evaluacion->p4_11 >= 60){
+				if($evaluacion->p4_11 > 60){
 					$positivas++;
 				}
 			}
@@ -1672,7 +1771,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_1;
 				$respuesta_individual2+= $evaluacion->p5_1;
-				if($evaluacion->p5_1 == 1){
+				if($evaluacion->p5_1 > 60){
 					$positivas++;
 				}
 			}
@@ -1680,7 +1779,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_2;
 				$respuesta_individual2+= $evaluacion->p5_2;
-				if($evaluacion->p5_2 >= 60){
+				if($evaluacion->p5_2 > 60){
 					$positivas++;
 				}
 			}
@@ -1688,7 +1787,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_3;
 				$respuesta_individual2+= $evaluacion->p5_3;
-				if($evaluacion->p5_3 >= 60){
+				if($evaluacion->p5_3 > 60){
 					$positivas++;
 				}
 			}
@@ -1696,7 +1795,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_4;
 				$respuesta_individual2+= $evaluacion->p5_4;
-				if($evaluacion->p5_4 >= 60){
+				if($evaluacion->p5_4 > 60){
 					$positivas++;
 				}
 			}
@@ -1704,7 +1803,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_5;
 				$respuesta_individual2+= $evaluacion->p5_5;
-				if($evaluacion->p5_5 >= 60){
+				if($evaluacion->p5_5 > 60){
 					$positivas++;
 				}
 			}
@@ -1712,7 +1811,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_6;
 				$respuesta_individual2+= $evaluacion->p5_6;
-				if($evaluacion->p5_6 >= 60){
+				if($evaluacion->p5_6 > 60){
 					$positivas++;
 				}
 			}
@@ -1720,7 +1819,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_7;
 				$respuesta_individual2+= $evaluacion->p5_7;
-				if($evaluacion->p5_7 >= 60){
+				if($evaluacion->p5_7 > 60){
 					$positivas++;
 				}
 			}
@@ -1728,7 +1827,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_8;
 				$respuesta_individual2+= $evaluacion->p5_8;
-				if($evaluacion->p5_8 >= 60){
+				if($evaluacion->p5_8 > 60){
 					$positivas++;
 				}
 			}
@@ -1736,7 +1835,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_9;
 				$respuesta_individual2+= $evaluacion->p5_9;
-				if($evaluacion->p5_9 >= 60){
+				if($evaluacion->p5_9 > 60){
 					$positivas++;
 				}
 			}
@@ -1744,7 +1843,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_10;
 				$respuesta_individual2+= $evaluacion->p5_10;
-				if($evaluacion->p5_10 >= 60){
+				if($evaluacion->p5_10 > 60){
 					$positivas++;
 				}
 			}
@@ -1755,7 +1854,7 @@ class CoordinadorController extends Controller
 				$respuesta_individual2+= $evaluacion->p5_11;
 				array_push($promedios2, round($respuesta_individual2/11,2));
 				$respuesta_individual2 = 0;
-				if($evaluacion->p5_11 >= 60){
+				if($evaluacion->p5_11 > 60){
 					$positivas++;
 				}
 			}
@@ -1774,7 +1873,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_2;
 				$respuesta_individual3+= $evaluacion->p6_2;
-				if($evaluacion->p6_2 >= 60){
+				if($evaluacion->p6_2 > 60){
 					$positivas++;
 				}
 			}
@@ -1782,7 +1881,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_3;
 				$respuesta_individual3+= $evaluacion->p6_3;
-				if($evaluacion->p6_3 >= 60){
+				if($evaluacion->p6_3 > 60){
 					$positivas++;
 				}
 			}
@@ -1790,7 +1889,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_4;
 				$respuesta_individual3+= $evaluacion->p6_4;
-				if($evaluacion->p6_4 >= 60){
+				if($evaluacion->p6_4 > 60){
 					$positivas++;
 				}
 			}
@@ -1798,7 +1897,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_5;
 				$respuesta_individual3+= $evaluacion->p6_5;
-				if($evaluacion->p6_5 >= 60){
+				if($evaluacion->p6_5 > 60){
 					$positivas++;
 				}
 			}
@@ -1806,7 +1905,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_6;
 				$respuesta_individual3+= $evaluacion->p6_6;
-				if($evaluacion->p6_6 >= 60){
+				if($evaluacion->p6_6 > 60){
 					$positivas++;
 				}
 			}
@@ -1814,7 +1913,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_7;
 				$respuesta_individual3+= $evaluacion->p6_7;
-				if($evaluacion->p6_7 >= 60){
+				if($evaluacion->p6_7 > 60){
 					$positivas++;
 				}
 			}
@@ -1822,7 +1921,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_8;
 				$respuesta_individual3+= $evaluacion->p6_8;
-				if($evaluacion->p6_8 >= 60){
+				if($evaluacion->p6_8 > 60){
 					$positivas++;
 				}
 			}
@@ -1830,7 +1929,7 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_9;
 				$respuesta_individual3+= $evaluacion->p6_9;
-				if($evaluacion->p6_9 >= 60){
+				if($evaluacion->p6_9 > 60){
 					$positivas++;
 				}
 			}
@@ -1838,19 +1937,19 @@ class CoordinadorController extends Controller
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_10;
 				$respuesta_individual3+= $evaluacion->p6_10;
-				if($evaluacion->p6_10 >= 60){
+				if($evaluacion->p6_10 > 60){
 					$positivas++;
 				}
 			}
 
 			//Queremos obtener todas las evaluaciones para luego comparar promedio, minimo y maximo del instructor
-			if($evaluacion->p6_11 >= 20){
+			if($evaluacion->p6_11 >= 50){
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_11;
 				$respuesta_individual3+= $evaluacion->p6_11;
 				array_push($promedios3, round($respuesta_individual3/11,2));
 				$respuesta_individual3 = 0;
-				if($evaluacion->p6_11 >= 60){
+				if($evaluacion->p6_11 > 60){
 					$positivas++;
 				}
 			}
@@ -2030,6 +2129,11 @@ class CoordinadorController extends Controller
 
     }
     
+    /**
+     * Función encargada de obtener el reporte de sesion de un curso
+     * @param $curso: curso elegido por el uduario, $pdf: si se quiere o no un pdf, $encargado_id: coordinación
+     * @return Vista o descarga del reporte según lo elegido por el usuario
+     */
     public function globalSesion($curso_id,$pdf,$encargado_id){
 
         $curso = DB::table('cursos')
@@ -2078,13 +2182,8 @@ class CoordinadorController extends Controller
                 ->where('id',$participante[0]->profesor_id)
                 ->get();
             $tupla = [$profesor[0],$eval];
-            //return $profesor[0];
             array_push($Datos,$tupla);
         }
-
-        /*foreach($Datos as $dato){
-            return $dato[0]->nombres;
-        }*/
 
         $curso = Curso::find($curso_id);
 

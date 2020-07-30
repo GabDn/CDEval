@@ -105,10 +105,21 @@ body {
 		</table>
         <br>
         <div align="center">
-            <div style="float: left; width: 100%; font-size: 22px;">{{$catalogo->nombre_curso}}</div> 
-            <div style="float: right; width: 15%">{{$curso->semestre_anio}}-{{$curso->semestre_pi}}-{{$curso->semestre_si}}</div>
-            <div style="clear: both"></div>
-            <hr>
+            <?php
+				//50
+				if(strlen($catalogo->nombre_curso)>50){
+            		echo "<p style=\"float: left; width: 100%; font-size: 22px; line-heigh:5px;\" class=\"n\"> $catalogo->nombre_curso </p>";
+					echo "<br>";
+            		echo "<p style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\"> $curso->semestre_anio$curso->semestre_pi$curso->semestre_si</p>";
+            		echo "<div style=\"clear: both\"></div>";
+					echo "<hr>";
+				}else{
+					echo "<div style=\"float: left; width: 100%; font-size: 22px;\" class=\"n\">$catalogo->nombre_curso</div>";
+					echo "<div style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\">$curso->semestre_anio$curso->semestre_pi$curso->semestre_si</div>";
+					echo "<div style=\"clear: both\"></div>";
+					echo "<hr>";
+				}
+			?>
         </div>
     </div>
     <div>
@@ -117,12 +128,16 @@ body {
                 <th>1. DATOS GENERALES DEL SEMINARIO</th>
             </tr>
             <tr>
-                <td style="font-weight: bold" class="n">a) Facilitador del seminario</td>
+                <td style="font-weight: bold" class="n">a) Facilitadores del seminario</td>
+                <td class="n">
+                <ul>
                 <?php
                     foreach($nombreInstructor as $instructorCurso){
-                        echo "<td class=\"n\"> $instructorCurso->nombres $instructorCurso->apellido_paterno $instructorCurso->apellido_materno, </td>";
+                        echo "<li> $instructorCurso->nombres $instructorCurso->apellido_paterno $instructorCurso->apellido_materno, </li>";
                     }
                 ?>
+                </ul>
+                </td>
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">b) Fecha de impartición</td>

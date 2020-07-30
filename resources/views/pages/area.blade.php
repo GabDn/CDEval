@@ -326,6 +326,47 @@
 
 		</table> 
 <br>
+            <?php
+                $calif_contenido = $contenido;
+                $calif_contenido_aritmetico = $aritmetico_contenido;
+                $calif_instructor = $instructor;
+                $calif_instrcutor_aritmetico = $aritmetico_instructor;
+                $calif_coordinacion = $coordinacion;
+                $calif_coordinacion_aritmetico = $aritmetico_coordinacion;
+                $calif_recomendacion = $factor_recomendacion;
+                $calif_recomendacion_aritmetico = $aritmetico_recomendacion;
+                $calif = [$contenido, $aritmetico_contenido, $instructor, $aritmetico_instructor,$coordinacion,$aritmetico_coordinacion,$factor_recomendacion,$aritmetico_recomendacion];
+                $masAltos = [0];
+                $alto = $contenido;
+                for($i=1; $i<8; $i++){
+                    if($calif[$i] > $alto){
+                        $masAltos = [$i];
+                        $alto = $calif[$i];
+                    }else if($calif[$i] == $alto){
+                        array_push($masAltos,$i);
+                    }
+                }
+                foreach($masAltos as $altos){
+                    if($altos == 0){
+                        $calif_contenido = strval($contenido).' *';
+                    }else if($altos == 1){
+                        $calif_contenido_aritmetico = strval($aritmetico_contenido).' *';
+                    }else if($altos == 2){
+                        $calif_instructor = strval($instructor).' *';
+                    }else if($altos == 3){
+                        $calif_instrcutor_aritmetico = strval($aritmetico_instructor).' *';
+                    }else if($altos == 4){
+                        $calif_coordinacion = strval($coordinacion).' *';
+                    }else if($altos == 5){
+                        $calif_coordinacion_aritmetico = strval($aritmetico_coordinacion).' *';
+                    }else if($altos == 6){
+                        $calif_recomendacion = strval($factor_recomendacion).' *';
+                    }else{
+                        $calif_recomendacion_aritmetico = strval($aritmetico_recomendacion).' *';
+                    }
+                }
+                
+            ?>  
         <table style="width: 100%">
             <tr>
                 <th colspan="3" class="titulos" align= left >11. CRITERIOS DE ACEPTACIÓN DE LOS CURSOS</th>
@@ -337,26 +378,44 @@
             </tr>
             <tr>
                 <td class="margen">Contenido de los cursos: </td>
-                <td class="margen">{{$contenido}}</td>
-                <td class="margen">{{$aritmetico_contenido}}</td>
+                <td class="margen">{{$calif_contenido}}</td>
+                <td class="margen">{{$calif_contenido_aritmetico}}</td>
             </tr>
             <tr>
                 <td class="margen">Desempeño de los instructores: </td>
-                <td class="margen">{{$instructor}}</td>
-                <td class="margen">{{$aritmetico_instructor}}</td>
+                <td class="margen">{{$calif_instructor}}</td>
+                <td class="margen">{{$calif_instrcutor_aritmetico}}</td>
             </tr>
             <tr>
                 <td class="margen">Coordinación de los cursos: </td>
-                <td class="margen">{{$coordinacion}}</td>
-                <td class="margen">{{$aritmetico_coordinacion}}</td>
+                <td class="margen">{{$calif_coordinacion}}</td>
+                <td class="margen">{{$calif_coordinacion_aritmetico}}</td>
             </tr>
             <tr>
                 <td class="margen">Recomendación de los cursos: </td>
-                <td class="margen">{{$factor_recomendacion}}</td>
-                <td class="margen">{{$aritmetico_recomendacion}}</td>
+                <td class="margen">{{$calif_recomendacion}}</td>
+                <td class="margen">{{$calif_recomendacion_aritmetico}}</td>
             </tr>
 
 		</table> 
+
+        <table class = "tabla-centro" width="100%">
+            <tr>
+                <td  class="firma" style="font-weight: bold; text-align: center;">Analista de Área</td>
+                <td  class="firma" style="font-weight: bold; text-align: center;">Coordinador del centro de Docencia</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td  class="firma1">___________________</td>
+                <td  class="firma1" style=" text-align: center;">___________________</td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <p>Fecha:___________________</p>
 <br>
 
 </div>

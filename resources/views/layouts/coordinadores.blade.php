@@ -28,7 +28,7 @@
                     </a>
                     <ul class="dropdown-menu" role="menu">
 
-
+                    <a href="{{ route('logout') }}" style="text-align:center"> logout </a>
                         
                     </ul>
 

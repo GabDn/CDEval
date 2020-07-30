@@ -50,7 +50,6 @@
                             @foreach($cursos as $curso)
                             <tbody>
                                 <tr>
-                                    <td>{{ $curso[0]->id }}</td>
                                     <td>{{ $curso[1]->nombre_curso }}</td>
                                     <td>
                                     @foreach($curso[2] as $profesors)

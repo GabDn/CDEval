@@ -32,7 +32,7 @@
                         <i id="usericon" class="fa fa-2x fa-user-circle"></i>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-
+                    <a href="{{ route('logout') }}"  style="text-align:center"> logout </a>
                     </ul>
 
             </ul>

@@ -68,12 +68,7 @@
                         <td align="justify">La participación de los asistentes fue </td>
                         <td align="center">
                         <div class="form-check">
-                                <input type="radio" name="p1_1" value="20"  {{ (old('p1_1') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="radio" name="p1_1" value="40"  {{ (old('p1_1') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p1_1" value="50"  {{ (old('p1_1') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
@@ -88,6 +83,11 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
+                                <input type="radio" name="p1_1" value="95"  {{ (old('p1_1') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
                                 <input type="radio" name="p1_1" value="100"  {{ (old('p1_1') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
@@ -96,12 +96,7 @@
                         <td align="justify">La temática central del seminario fue</td>
                         <td align="center">
                         <div class="form-check">
-                                <input type="radio" name="p1_2" value="20"  {{ (old('p1_2') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="radio" name="p1_2" value="40"  {{ (old('p1_2') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p1_2" value="50"  {{ (old('p1_2') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
@@ -116,6 +111,11 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
+                                <input type="radio" name="p1_2" value="95"  {{ (old('p1_2') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
                                 <input type="radio" name="p1_2" value="100"  {{ (old('p1_2') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
@@ -124,12 +124,7 @@
                         <td align="justify">La información útil que aportó el seminario a su práctica docente fue</td>
                         <td align="center">
                         <div class="form-check">
-                                <input type="radio" name="p1_3" value="20" {{ (old('p1_3') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="radio" name="p1_3" value="40" {{ (old('p1_3') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p1_3" value="50" {{ (old('p1_3') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
@@ -144,6 +139,11 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
+                                <input type="radio" name="p1_3" value="95" {{ (old('p1_3') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
                                 <input type="radio" name="p1_3" value="100" {{ (old('p1_3') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
@@ -152,12 +152,7 @@
                         <td align="justify">La moderación del seminario se desarrolló de manera</td>
                         <td align="center">
                         <div class="form-check">
-                                <input type="radio" name="p1_4" value="20" {{ (old('p1_4') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="radio" name="p1_4" value="40" {{ (old('p1_4') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p1_4" value="50" {{ (old('p1_4') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
@@ -172,6 +167,11 @@
                         </td>
                         <td align="center">
                             <div class="form-check">
+                                <input type="radio" name="p1_4" value="95" {{ (old('p1_4') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
                                 <input type="radio" name="p1_4" value="100" {{ (old('p1_4') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
@@ -180,12 +180,7 @@
                         <td align="justify">Las conclusiones a las que se llegó en el seminario son aplicables en mi desarrollo académico de forma</td>
                         <td align="center">
                         <div class="form-check">
-                                <input type="radio" name="p1_5" value="20" {{ (old('p1_5') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                            </div>
-                        </td>
-                        <td align="center">
-                            <div class="form-check">
-                                <input type="radio" name="p1_5" value="40" {{ (old('p1_5') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="p1_5" value="50" {{ (old('p1_5') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
@@ -196,6 +191,11 @@
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p1_5" value="80" {{ (old('p1_5') == '80') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p1_5" value="95" {{ (old('p1_5') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
@@ -219,12 +219,7 @@
                         <td align="justify">Mi puntualidad fue </td>
                         <td align="center">
                             <div class="form-check">
-                                    <input type="radio" name="p2_1" value="20" {{ (old('p2_1') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p2_1" value="40" {{ (old('p2_1') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p2_1" value="50" {{ (old('p2_1') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -239,6 +234,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p2_1" value="95" {{ (old('p2_1') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p2_1" value="100" {{ (old('p2_1') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -247,12 +247,7 @@
                         <td align="justify">Mi participación fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p2_2" value="20" {{ (old('p2_2') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p2_2" value="40" {{ (old('p2_2') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p2_2" value="50" {{ (old('p2_2') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -267,6 +262,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p2_2" value="95" {{ (old('p2_2') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p2_2" value="100" {{ (old('p2_2') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -275,12 +275,7 @@
                         <td align="justify">Mi actitud durante el seminario fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p2_3" value="20" {{ (old('p2_3') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p2_3" value="40" {{ (old('p2_3') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p2_3" value="50" {{ (old('p2_3') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -295,6 +290,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p2_3" value="95" {{ (old('p2_3') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p2_3" value="100" {{ (old('p2_3') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -303,12 +303,7 @@
                         <td align="justify">Mi asimilación en este seminario</td>
                         <td align="center">
                                 <div class="form-check">
-                                    <input type="radio" name="p2_4" value="20" {{ (old('p2_4') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p2_4" value="40" {{ (old('p2_4') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p2_4" value="50" {{ (old('p2_4') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -319,6 +314,11 @@
                             <td align="center">
                                 <div class="form-check">
                                     <input type="radio" name="p2_4" value="80" {{ (old('p2_4') == '80') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p2_4" value="95" {{ (old('p2_4') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -342,12 +342,7 @@
                         <td align="justify">La coordinación del seminario desde su difusión, inscripción, hasta el cierre fue </td>
                         <td align="center">
                             <div class="form-check">
-                                        <input type="radio" name="p3_1" value="20" {{ (old('p3_1') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                    </div>
-                                </td>
-                                <td align="center">
-                                    <div class="form-check">
-                                        <input type="radio" name="p3_1" value="40" {{ (old('p3_1') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                        <input type="radio" name="p3_1" value="50" {{ (old('p3_1') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                     </div>
                                 </td>
                                 <td align="center">
@@ -362,6 +357,11 @@
                                 </td>
                                 <td align="center">
                                     <div class="form-check">
+                                        <input type="radio" name="p3_1" value="95" {{ (old('p3_1') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    </div>
+                                </td>
+                                <td align="center">
+                                    <div class="form-check">
                                         <input type="radio" name="p3_1" value="100" {{ (old('p3_1') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                     </div>
                                 </td>
@@ -370,12 +370,7 @@
                         <td align="justify">La calidad del servicio en cuanto a trato personal fue</td>
                         <td align="center">
                         <div class="form-check">
-                                        <input type="radio" name="p3_2" value="20" {{ (old('p3_2') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                    </div>
-                                </td>
-                                <td align="center">
-                                    <div class="form-check">
-                                        <input type="radio" name="p3_2" value="40" {{ (old('p3_2') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                        <input type="radio" name="p3_2" value="50" {{ (old('p3_2') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                     </div>
                                 </td>
                                 <td align="center">
@@ -390,6 +385,11 @@
                                 </td>
                                 <td align="center">
                                     <div class="form-check">
+                                        <input type="radio" name="p3_2" value="95" {{ (old('p3_2') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    </div>
+                                </td>
+                                <td align="center">
+                                    <div class="form-check">
                                         <input type="radio" name="p3_2" value="100" {{ (old('p3_2') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                     </div>
                                 </td>
@@ -398,12 +398,7 @@
                         <td align="justify">La calidad del servicio en cuanto a instalaciones, ventilación, ilumniación, mobiliario y equipo fue</td>
                         <td align="center">
                         <div class="form-check">
-                                        <input type="radio" name="p3_3" value="20" {{ (old('p3_3') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                    </div>
-                                </td>
-                                <td align="center">
-                                    <div class="form-check">
-                                        <input type="radio" name="p3_3" value="40" {{ (old('p3_3') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                        <input type="radio" name="p3_3" value="50" {{ (old('p3_3') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                     </div>
                                 </td>
                                 <td align="center">
@@ -418,6 +413,11 @@
                                 </td>
                                 <td align="center">
                                     <div class="form-check">
+                                        <input type="radio" name="p3_3" value="95" {{ (old('p3_3') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    </div>
+                                </td>
+                                <td align="center">
+                                    <div class="form-check">
                                         <input type="radio" name="p3_3" value="100" {{ (old('p3_3') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                     </div>
                                 </td>
@@ -426,12 +426,7 @@
                         <td align="justify">La limpieza, el orden y acústica de las instalaciones fue</td>
                         <td align="center">
                         <div class="form-check">
-                                        <input type="radio" name="p3_4" value="20" {{ (old('p3_4') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                    </div>
-                                </td>
-                                <td align="center">
-                                    <div class="form-check">
-                                        <input type="radio" name="p3_4" value="40" {{ (old('p3_4') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                        <input type="radio" name="p3_4" value="50" {{ (old('p3_4') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                     </div>
                                 </td>
                                 <td align="center">
@@ -442,6 +437,11 @@
                                 <td align="center">
                                     <div class="form-check">
                                         <input type="radio" name="p3_4" value="80" {{ (old('p3_4') == '80') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    </div>
+                                </td>
+                                <td align="center">
+                                    <div class="form-check">
+                                        <input type="radio" name="p3_4" value="95" {{ (old('p3_4') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                     </div>
                                 </td>
                                 <td align="center">
@@ -465,12 +465,7 @@
                         <td align="justify">Considero la experiencia del facilitador como </td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p4_1" value="20" {{ (old('p4_1') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p4_1" value="40" {{ (old('p4_1') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p4_1" value="50" {{ (old('p4_1') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -485,6 +480,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p4_1" value="95" {{ (old('p4_1') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p4_1" value="100" {{ (old('p4_1') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -493,12 +493,7 @@
                         <td align="justify">La planeación y organización de las sesiones y lecturas de acuerdo a los temas fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p4_2" value="20" {{ (old('p4_2') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p4_2" value="40" {{ (old('p4_2') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p4_2" value="50" {{ (old('p4_2') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -513,6 +508,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p4_2" value="95" {{ (old('p4_2') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p4_2" value="100" {{ (old('p4_2') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -521,12 +521,7 @@
                         <td align="justify">La puntualidad del facilitador fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p4_3" value="20" {{ (old('p4_3') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p4_3" value="40" {{ (old('p4_3') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p4_3" value="50" {{ (old('p4_3') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -541,6 +536,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p4_3" value="95" {{ (old('p4_3') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p4_3" value="100" {{ (old('p4_3') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -549,12 +549,7 @@
                         <td align="justify">La forma de utilizar el equipo y materiales de apoyo al seminario fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p4_4" value="20" {{ (old('p4_4') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p4_4" value="40" {{ (old('p4_4') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p4_4" value="50" {{ (old('p4_4') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -569,6 +564,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p4_4" value="95" {{ (old('p4_4') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p4_4" value="100" {{ (old('p4_4') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -577,12 +577,7 @@
                         <td align="justify">La manera de aclarar las dudas planteadas por los participantes fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p4_5" value="20" {{ (old('p4_5') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p4_5" value="40" {{ (old('p4_5') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p4_5" value="50" {{ (old('p4_5') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -597,6 +592,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p4_5" value="95" {{ (old('p4_5') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p4_5" value="100" {{ (old('p4_5') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -605,12 +605,7 @@
                         <td align="justify">El manejo del control de grupo por parte del facilitador fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p4_6" value="20" {{ (old('p4_6') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p4_6" value="40" {{ (old('p4_6') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p4_6" value="50" {{ (old('p4_6') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -625,6 +620,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p4_6" value="95" {{ (old('p4_6') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p4_6" value="100" {{ (old('p4_6') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -633,12 +633,7 @@
                         <td align="justify">La forma de interesar a los participantes durante el curso fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p4_7" value="20" {{ (old('p4_7') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p4_7" value="40" {{ (old('p4_7') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p4_7" value="50" {{ (old('p4_7') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -653,6 +648,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p4_7" value="95" {{ (old('p4_7') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p4_7" value="100" {{ (old('p4_7') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -661,12 +661,7 @@
                         <td align="justify">La actitud del facilitador(a) fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p4_8" value="20" {{ (old('p4_8') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p4_8" value="40" {{ (old('p4_8') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p4_8" value="50" {{ (old('p4_8') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -681,6 +676,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p4_8" value="95" {{ (old('p4_8') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p4_8" value="100" {{ (old('p4_8') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -689,12 +689,7 @@
                         <td align="justify">El manejo de las relaciones interpersonales del facilitador(a) fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p4_9" value="20" {{ (old('p4_9') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p4_9" value="40" {{ (old('p4_9') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p4_9" value="50" {{ (old('p4_9') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -709,6 +704,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p4_9" value="95" {{ (old('p4_9') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p4_9" value="100" {{ (old('p4_9') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -717,12 +717,7 @@
                         <td align="justify">La calidad del trato humano hacia los participantes fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p4_10" value="20" {{ (old('p4_10') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p4_10" value="40" {{ (old('p4_10') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p4_10" value="50" {{ (old('p4_10') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -737,6 +732,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p4_10" value="95" {{ (old('p4_10') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p4_10" value="100" {{ (old('p4_10') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -745,12 +745,7 @@
                         <td align="justify">El manejo de las emociones en las sesiones por parte del facilitador(a) fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p4_11" value="20" {{ (old('p4_11') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p4_11" value="40" {{ (old('p4_11') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p4_11" value="50" {{ (old('p4_11') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -761,6 +756,11 @@
                             <td align="center">
                                 <div class="form-check">
                                     <input type="radio" name="p4_11" value="80" {{ (old('p4_11') == '80') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p4_11" value="95" {{ (old('p4_11') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -785,12 +785,7 @@
                         <td align="justify">Considero la experiencia del facilitador como </td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p5_1" value="20" {{ (old('p5_1') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p5_1" value="40" {{ (old('p5_1') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_1" value="50" {{ (old('p5_1') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -805,6 +800,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p5_1" value="95" {{ (old('p5_1') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p5_1" value="100" {{ (old('p5_1') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -813,12 +813,7 @@
                         <td align="justify">La planeación y organización de las sesiones y lecturas de acuerdo a los temas fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p5_2" value="20" {{ (old('p5_2') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p5_2" value="40" {{ (old('p5_2') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_2" value="50" {{ (old('p5_2') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -833,6 +828,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p5_2" value="95" {{ (old('p5_2') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p5_2" value="100" {{ (old('p5_2') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -841,12 +841,7 @@
                         <td align="justify">La puntualidad del facilitador fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p5_3" value="20" {{ (old('p5_3') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p5_3" value="40" {{ (old('p5_3') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_3" value="50" {{ (old('p5_3') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -861,6 +856,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p5_3" value="95" {{ (old('p5_3') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p5_3" value="100" {{ (old('p5_3') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -869,12 +869,7 @@
                         <td align="justify">La forma de utilizar el equipo y materiales de apoyo al seminario fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p5_4" value="20" {{ (old('p5_4') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p5_4" value="40" {{ (old('p5_4') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_4" value="50" {{ (old('p5_4') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -889,6 +884,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p5_4" value="95" {{ (old('p5_4') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p5_4" value="100" {{ (old('p5_4') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -897,12 +897,7 @@
                         <td align="justify">La manera de aclarar las dudas planteadas por los participantes fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p5_5" value="20" {{ (old('p5_5') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p5_5" value="40" {{ (old('p5_5') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_5" value="50" {{ (old('p5_5') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -917,6 +912,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p5_5" value="95" {{ (old('p5_5') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p5_5" value="100" {{ (old('p5_5') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -925,12 +925,7 @@
                         <td align="justify">El manejo del control de grupo por parte del facilitador fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p5_6" value="20" {{ (old('p5_6') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p5_6" value="40" {{ (old('p5_6') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_6" value="50" {{ (old('p5_6') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -945,6 +940,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p5_6" value="95" {{ (old('p5_6') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p5_6" value="100" {{ (old('p5_6') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -953,12 +953,7 @@
                         <td align="justify">La forma de interesar a los participantes durante el curso fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p5_7" value="20" {{ (old('p5_7') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p5_7" value="40" {{ (old('p5_7') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_7" value="50" {{ (old('p5_7') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -973,7 +968,12 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
-                                    <input type="radio" name="p5_7" value="100" {{ (old('p5_7') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_7" value="95" {{ (old('p5_7') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p5_7" value="100" {{ (old('p5_7') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                     </tr>
@@ -981,12 +981,7 @@
                         <td align="justify">La actitud del facilitador(a) fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p5_8" {{ (old('p5_8') == '20') ? 'checked' : '' }} value="20" class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p5_8" {{ (old('p5_8') == '40') ? 'checked' : '' }} value="40" class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_8" {{ (old('p5_8') == '50') ? 'checked' : '' }} value="50" class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -1001,6 +996,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p5_8" {{ (old('p5_8') == '95') ? 'checked' : '' }} value="95" class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p5_8" {{ (old('p5_8') == '100') ? 'checked' : '' }} value="100" class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -1009,27 +1009,27 @@
                         <td align="justify">El manejo de las relaciones interpersonales del facilitador(a) fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p5_9" {{ (old('p5_9') == '20') ? 'checked' : '' }} value="20" class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_9" {{ (old('p5_9') == '50') ? 'checked' : '' }} value="50" class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
                                 <div class="form-check">
-                                    <input type="radio" name="p5_9" value="40" {{ (old('p5_9') == '40') ? 'checked' : '' } class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_9" value="60" {{ (old('p5_9') == '60') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
                                 <div class="form-check">
-                                    <input type="radio" name="p5_9" value="60" {{ (old('p5_9') == '60') ? 'checked' : '' } class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_9" value="80" {{ (old('p5_9') == '80') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
                                 <div class="form-check">
-                                    <input type="radio" name="p5_9" value="80" {{ (old('p5_9') == '80') ? 'checked' : '' } class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_9" value="95" {{ (old('p5_9') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
                                 <div class="form-check">
-                                    <input type="radio" name="p5_9" value="100" {{ (old('p5_8') == '100') ? 'checked' : '' } class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_9" value="100" {{ (old('p5_8') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                     </tr>
@@ -1037,12 +1037,7 @@
                         <td align="justify">La calidad del trato humano hacia los participantes fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p5_10" value="20" {{ (old('p5_10') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p5_10" value="40" {{ (old('p5_10') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_10" value="50" {{ (old('p5_10') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -1057,6 +1052,11 @@
                             </td>
                             <td align="center">
                                 <div class="form-check">
+                                    <input type="radio" name="p5_10" value="95" {{ (old('p5_10') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
                                     <input type="radio" name="p5_10" value="100" {{ (old('p5_10') == '100') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
@@ -1065,12 +1065,7 @@
                         <td align="justify">El manejo de las emociones en las sesiones por parte del facilitador(a) fue</td>
                         <td align="center">
                         <div class="form-check">
-                                    <input type="radio" name="p5_11" value="20" {{ (old('p5_11') == '20') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
-                                </div>
-                            </td>
-                            <td align="center">
-                                <div class="form-check">
-                                    <input type="radio" name="p5_11" value="40" {{ (old('p5_11') == '40') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                    <input type="radio" name="p5_11" value="50" {{ (old('p5_11') == '50') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
@@ -1081,6 +1076,11 @@
                             <td align="center">
                                 <div class="form-check">
                                     <input type="radio" name="p5_11" value="80" {{ (old('p5_11') == '80') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
+                                </div>
+                            </td>
+                            <td align="center">
+                                <div class="form-check">
+                                    <input type="radio" name="p5_11" value="95" {{ (old('p5_11') == '95') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                                 </div>
                             </td>
                             <td align="center">
