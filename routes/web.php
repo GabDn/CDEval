@@ -20,8 +20,6 @@ Route::get('global/sesion/{curso_id}/{pdf}/{encargado_id}',"CoordinadorControlle
 Route::get('area',"CoordinadorController@area_pdf")->name("boton.area");
 
 //Para enviar correos
-//echo "<td style=\"text-align:left;\">$evals[0]->nombres $evals[0]->apellido_paterno $evals[0]->apellido_materno</td>";
-//echo "<td style=\"text-align:left;\">$evals[1]->sug</td>";
 Route::get('evaluarCurso/{profesor_id}/{curso_id}','EvaluacionController@enviarCorreo')->name('evaluacion.correo');
 //Guardar evaluaciones en la BD
 Route::get('evaluar/{profesor_id}/{curso_id}/{catalogoCurso_id}','EvaluacionController@index')->name('evaluacion.index');

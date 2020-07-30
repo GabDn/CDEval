@@ -305,11 +305,6 @@
                     </ul>
                 </td>
             </tr>
-            <!--<td class="margen"></td>
-            <td class="margen"></td>
-            <td class="margen"></td>
-            <td class="margen"></td>
-            </tr>-->
 
 		</table> 
 <br>
