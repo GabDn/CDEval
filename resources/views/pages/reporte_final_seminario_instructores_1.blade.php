@@ -106,19 +106,19 @@ body {
 					Página 1 de 1
 				</td>
 		</table>
-        <br>
         <div align="center">
 		<?php
+				$catalog = $catalogo[0];
 				//50
-				if(strlen($catalogo->nombre_curso)>50){
-            		echo "<p style=\"float: left; width: 100%; font-size: 22px; line-heigh:5px;\" class=\"n\"> $catalogo->nombre_curso </p>";
+				if(strlen($catalog->nombre_curso)>50){
+            		echo "<p style=\"float: left; width: 100%; font-size: 22px; line-heigh:5px;\" class=\"n\"> $catalog->nombre_curso </p>";
 					echo "<br>";
-            		echo "<p style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\"> $cursos->semestre_anio$cursos->semestre_pi$cursos->semestre_si</p>";
+            		echo "<p style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\"> $curso->semestre_anio$curso->semestre_pi$curso->semestre_si</p>";
             		echo "<div style=\"clear: both\"></div>";
 					echo "<hr>";
 				}else{
-					echo "<div style=\"float: left; width: 100%; font-size: 22px;\" class=\"n\">$catalogo->nombre_curso</div>";
-					echo "<div style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\">$cursos->semestre_anio$cursos->semestre_pi$cursos->semestre_si</div>";
+					echo "<div style=\"float: left; width: 100%; font-size: 22px;\" class=\"n\">$catalog->nombre_curso</div>";
+					echo "<div style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\">$curso->semestre_anio$curso->semestre_pi$curso->semestre_si</div>";
 					echo "<div style=\"clear: both\"></div>";
 					echo "<hr>";
 				}

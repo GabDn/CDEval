@@ -106,7 +106,6 @@ body {
 					Página 1 de 1
 				</td>
 		</table>
-        <br>
         <div align="center">
 		<?php
 				//50

@@ -36,9 +36,12 @@ body {
   font-size: 15px;
 }
 .f{
-    background-color: #2A4EDF;
-    color: white; 
+    color: #2A4EDF;
 	text-align:center;
+}
+.f1{
+	font-weight: bold;
+	border: 0px solid white;
 }
 .n1{
 	border: 0px solid grey;
@@ -107,7 +110,6 @@ body {
 					Página 1 de 1
 				</td>
 		</table>
-        <br>
         <div align="center">
 			<?php
 				//50
@@ -159,7 +161,7 @@ body {
 		<br>
 		<table width="100%">
 			<tr>
-				<th class="f">Lo mejor del curso fue</th>
+				<th class="f1">Lo mejor del curso fue</th>
 			</tr>
             @foreach($mejor as $mejor)
                 <tr>
@@ -171,7 +173,7 @@ body {
 		<br>
 		<table width="100%">
 			<tr>
-				<th class="f">Comentarios y sugerencias</th>
+				<th class="f1">Comentarios y sugerencias</th>
 			</tr>
             @foreach($sugerencias as $sugerencia)
                 <tr>

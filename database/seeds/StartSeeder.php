@@ -6558,13 +6558,15 @@ class StartSeeder extends Seeder
         DB::table('catalogo_cursos')->insert([
             'id'=> 201,
             'nombre_curso'=>'Aprendizaje a través de dispositivos móviles',
-            'duracion_curso' => '20',
+            'duracion_curso' => '10',
             'coordinacion_id' => 201,
-            'tipo' => 'C',
+            'tipo' => 'Curso',
             'institucion' => 'DGAPA',
             'fecha_disenio'=>'2012-12-12',
             'coordinacion_id'=>2,
-            'clave_curso'=>'ADMDGAPA'
+            'clave_curso'=>'DPCU157',
+            'objetivo'=>'Al finalizar el curso-taller el profesor será capaz de integrar a su práctica docente algunas aplicaciones móviles que le permitan propiciar el aprendizaje y comunicación con sus estudiantes',
+            'dirigido'=>'A los profesores de la Facultad de ingeniería, de la UNAM y externos'
         ]);
         
         DB::table('cursos')->insert([
@@ -7746,7 +7748,9 @@ class StartSeeder extends Seeder
             'tipo' => 'C',
             'institucion' => 'DGAPA',
             'fecha_disenio'=>'2012-12-12',
-            'clave_curso'=>'CAADGAPA'
+            'clave_curso'=>'DHCU157',
+            'dirigo'=>'Profesores de la Facultad de ingeniería',
+            'objetivo'=>'El docente conocera, analizará y aplicará los conecptos fundamentales de la personalidad y comunicación asertiva para mejorar sus habilidades docentes. El docente indentificará las conductas disruptivas de los estudiantes con la finalidad de generar un clima [...]'
         ]);
         
         DB::table('cursos')->insert([
@@ -8380,12 +8384,12 @@ class StartSeeder extends Seeder
         DB::table('catalogo_cursos')->insert([
             'id'=> 203,
             'nombre_curso'=>'La gimnasia cerebral para el fortalecimiento ddel aprendizaje',
-            'duracion_curso' => '20',
+            'duracion_curso' => '12',
             'coordinacion_id' => 201,
             'tipo' => 'C',
             'institucion' => 'DGAPA',
             'fecha_disenio'=>'2012-12-12',
-            'clave_curso'=>'GCFAGAPA'
+            'clave_curso'=>'DPCU159'
         ]);
         
         DB::table('cursos')->insert([

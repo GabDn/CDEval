@@ -100,7 +100,7 @@ hr{
 			<tbody align="center">
 			@foreach($cursos as $cursos)
 				<tr align="center">
-					<td style="border: none; border-bottom: 1pt solid black;"></td>
+					<td style="border: none; border-bottom: 1pt solid black;">{{ $cursos[0]->nombre_coordinacion }}</td>
 					<td style="border: none; border-bottom: 1pt solid black;">{{ $cursos[0]->nombre_curso }}</td>
 					<td style="border: none; border-bottom: 1pt solid black;">{{ $cursos[0]->duracion_curso }}</td>
 					<td style="border: none; border-bottom: 1pt solid black;">{{ $cursos[0]->clave_curso }}</td>

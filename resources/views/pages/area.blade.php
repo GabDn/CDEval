@@ -399,6 +399,8 @@
 
 		</table> 
 
+        <br>
+        <br>
         <table class = "tabla-centro" width="100%">
             <tr>
                 <td  class="firma" style="font-weight: bold; text-align: center;">Analista de Área</td>
@@ -409,7 +411,7 @@
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td  class="firma1">___________________</td>
+                <td  class="firma1" style="text-align: center;">___________________</td>
                 <td  class="firma1" style=" text-align: center;">___________________</td>
             </tr>
         </table>

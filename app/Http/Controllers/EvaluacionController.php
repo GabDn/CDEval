@@ -66,29 +66,32 @@ class EvaluacionController extends Controller{
 
 		//Se busca mandar a pages.evaluacionIndex las encuestas realizadas por el usuario para manejar los botones
 		//Se busca evitar que el usuario realice una evaluación por segunda vez
-		$evaluacion_x_curso = DB::table('_evaluacion_x_curso')
-			->select('_evaluacion_x_curso.created_at','_evaluacion_x_curso.curso_id')
-			->where([['created_at',$date],['curso_id',$curso_id],['participante_curso_id',$participante[0]->id]])
-			->get();
-		
-		if(sizeof($evaluacion_x_curso) <= 0){
+		$evaluacion_x_curso = 0;
+		$evaluacion_final_curso = 0;
+
+		if(strcmp($catalogoCurso->tipo,"S")==0){
 			$evaluacion_x_curso = DB::table('_evaluacion_x_seminario')
 			->select('_evaluacion_x_seminario.created_at','_evaluacion_x_seminario.curso_id')
 			->where([['created_at',$date],['curso_id',$curso_id],['participante_curso_id',$participante[0]->id]])
 			->get();
+		}else{
+			$evaluacion_x_curso = DB::table('_evaluacion_x_curso')
+			->select('_evaluacion_x_curso.created_at','_evaluacion_x_curso.curso_id')
+			->where([['created_at',$date],['curso_id',$curso_id],['participante_curso_id',$participante[0]->id]])
+			->get();
 		}
 
-		
-		$evaluacion_final_curso = DB::table('_evaluacion_final_curso')
-			->select('_evaluacion_final_curso.participante_curso_id','_evaluacion_final_curso.curso_id')
-			->where([['curso_id',$curso_id],['participante_curso_id',$participante[0]->id]])
-			->get();
-
-		if(sizeof($evaluacion_final_curso) <= 0){
+		if(strcmp($catalogoCurso->tipo,"S") == 0){
 			$evaluacion_final_curso = DB::table('_evaluacion_final_seminario')
 				->select('_evaluacion_final_seminario.participante_curso_id')
 				->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
 				->get();
+		}
+		else{
+			$evaluacion_final_curso = DB::table('_evaluacion_final_curso')
+			->select('_evaluacion_final_curso.participante_curso_id','_evaluacion_final_curso.curso_id')
+			->where([['curso_id',$curso_id],['participante_curso_id',$participante[0]->id]])
+			->get();
 		}
 
 		//Retornamos la vista pages.evaluacionIndex con todos los datos necesarios para su funcionamiento
@@ -208,7 +211,7 @@ class EvaluacionController extends Controller{
 				
 		$curso = Curso::find($curso_id);
             
-		if($catalogoCurso->tipo == "Actualizacion"){
+		if($catalogoCurso->tipo == "S"){
             return view("pages.xsesion_seminario")
 				->with("profesor",$profesor)
 				->with("curso",$curso)
@@ -252,7 +255,7 @@ class EvaluacionController extends Controller{
 				}
 				
 		$curso = Curso::find($curso_id);
-		if($catalogoCurso->tipo == "Actualizacion"){
+		if($catalogoCurso->tipo == "S"){
 			if($count==1){
                 return view("pages.final_seminario_1")
 					->with("profesor",$profesor)
@@ -305,7 +308,7 @@ class EvaluacionController extends Controller{
 		$eval_fcurso = new EvaluacionFinalCurso;
 		$correo = new EvaluacionController(); 
 		$participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
-		try{
+		
 			$eval_fcurso->participante_curso_id=$participante[0]->id;
 			//Obtenemos la fecha actual para usarla en consultas posteriores	
 			$date = date("Y-m-j");  
@@ -450,14 +453,14 @@ class EvaluacionController extends Controller{
 			$eval_fcurso->horarioi = $request->horarioi;
 			$eval_fcurso->curso_id = $curso_id;
 			$eval_fcurso->save();
-		} catch (Exception $e){
+		/*} catch (Exception $e){
 
 			//En caso de que no se haya evaluado correctamente el curso regresamos a la vista anterior indicando que la evaluación fue errónea
 			Session::flash('message','Favor de contestar todas las preguntas del formulario');
 			Session::flash('alert-class', 'alert-danger'); 
 
 			return redirect()->back()->withInput($request->input());
-		}
+		}*/
 		//Pasos despreciados, usados en versiones antiguas para obtener el promedio de toda la evaluación
 		$promedio=[
 			$eval_fcurso->p1_1,
@@ -1068,12 +1071,17 @@ $promedio_p4=[
 		
 		//Guardamos los datos de los cursos en los que ha participado el profesor dentro de un arreglo
 		foreach($cursosParticipante as $cursosParticipante){
-			$curso = DB::table('catalogo_cursos')
-				->select('nombre_curso','duracion_curso','clave_curso','tipo')
-				->where('id',$cursosParticipante->curso_id)
+			$datos = array();
+			$curso = DB::table('cursos')
+				->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
+				->join('coordinacions','catalogo_cursos.coordinacion_id','=','coordinacions.id')
+				->select('catalogo_cursos.nombre_curso','catalogo_cursos.duracion_curso','catalogo_cursos.clave_curso','catalogo_cursos.tipo','coordinacions.nombre_coordinacion')
+				->where('cursos.id',$cursosParticipante->curso_id)
 				->get();
 			array_push($cursos, $curso);
 		}
+
+
 		
 		//Creamos un pdf con la información de los cursos tomados y también lo enviamos por correo
 		$pdf = PDF::loadView('pages.concentrado_claves_curso_historico',array('cursos' => $cursos));
@@ -1177,27 +1185,28 @@ $promedio_p4=[
 		
 		//Obtenemos los cursos en los que ha estado inscrito el profesor
 		$cursos_tomados=DB::table('participante_curso')
-			->select('*')
 			->where('profesor_id',$profesor_id)
 			->get();
-			
+
 		$cursos=array();
 			
 		//Iteramos los cursos y obtenemos su informacion
-		foreach($cursos_tomados as $curso){
-			$catalogo=DB::table('catalogo_cursos')
-				->select('nombre_curso','duracion_curso','clave_curso','tipo')
-				->where('id',$curso->curso_id)
+		foreach($cursos_tomados as $curso_tomado){
+			$curso = DB::table('cursos')
+				->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
+				->join('coordinacions','catalogo_cursos.coordinacion_id','=','coordinacions.id')
+				->select('catalogo_cursos.nombre_curso','catalogo_cursos.duracion_curso','catalogo_cursos.clave_curso','catalogo_cursos.tipo','coordinacions.nombre_coordinacion')
+				->where('cursos.id',$curso_tomado->curso_id)
 				->get();
 			
 			$curso_lista=DB::table('cursos')
 				->select('*')
-				->where('id',$curso->curso_id)
+				->where('id',$curso_tomado->curso_id)
 				->get();
 			
 			//Si el curso corresponde al semestre ingresado por el profesor entonces lo guardamos en la lista
 			if($curso_lista[0]->semestre_anio==$fecha_semestre[0] && $curso_lista[0]->semestre_pi==$fecha_semestre[1]){
-				array_push($cursos,$catalogo);
+				array_push($cursos,$curso);
 			}
 			
 		}

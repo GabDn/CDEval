@@ -959,7 +959,7 @@ class CoordinadorController extends Controller
             foreach($coordinacion as $curso){
                 $evals = 0;
                 //Obtenemos las evaluaciones
-                if(strcmp($curso->tipo,'Actualizacion')==0){
+                if(strcmp($curso->tipo,'S')==0){
                     $evals = DB::table('_evaluacion_final_seminario')
                         ->where('curso_id',$curso->id)
                         ->get();
@@ -1087,7 +1087,7 @@ class CoordinadorController extends Controller
             $catalogo_curso = DB::table('catalogo_cursos')
                 ->where('id',$curso->catalogo_id)
                 ->get();
-            if(strcmp($catalogo_curso[0]->tipo,'Actualizacion') == 0)
+            if(strcmp($catalogo_curso[0]->tipo,'S') == 0)
                 $evals = DB::table('_evaluacion_final_seminario')
                     ->where('curso_id',$curso->id)
                     ->get();
@@ -1230,6 +1230,8 @@ class CoordinadorController extends Controller
                 array_push($fechas,$fecha);
             }
         }
+
+        //return $coordinaciones;
 
         return view('pages.global_fecha')
             ->with('coordinaciones',$coordinaciones)
@@ -1424,7 +1426,7 @@ class CoordinadorController extends Controller
             ->get('tipo');
 
 		//Checamos si el usuario desea los reportes de los cursos o de los seminarios
-		if(strcmp($catalogoCurso[0]->tipo,'Actualizacion')==0){
+		if(strcmp($catalogoCurso[0]->tipo,'S')==0){
             $evals = DB::table('_evaluacion_final_seminario')
 			    ->where("curso_id",$curso_id)
                 ->get();
@@ -2008,28 +2010,40 @@ class CoordinadorController extends Controller
         $envio = 0;
         $envioPDF = 0;
         $nombre = 0;
-		if(strcmp($catalogoCurso[0]->tipo,'Actualizacion')==0){
-            $nombre = 'seminario';
+
+        if($minimo3 != 0){
+            $envio = 'pages.reporte_final_curso3';
+            $envioPDF = 'pages.validacion_3';
+        }else if($minimo2 != 0){
+            $envio = 'pages.reporte_final_curso2';
+            $envioPDF = 'pages.validacion_2';
+        }else{
+            $envio = 'pages.reporte_final_curso1';
+            $envioPDF = 'pages.validacion_1';
+        }
+
+		if(strcmp($catalogoCurso[0]->tipo,'S')==0){
+            $nombre = 'SEMINARIO';
 			if($minimo3 != 0){
-                $envio = 'pages.reporte_final_seminario3';
+                //$envio = 'pages.reporte_final_seminario_instructores_3';
                 $envioPDF = 'pages.validacion_seminario_3';
 			}else if($minimo2 != 0){
-                $envio = 'pages.reporte_final_seminario2';
+                //$envio = 'pages.reporte_final_seminario_instructores_2';
                 $envioPDF = 'pages.validacion_seminario_2';
 			}else{
-                $envio = 'pages.reporte_final_seminario1';
+                //$envio = 'pages.reporte_final_seminario_instructores_1';
                 $envioPDF = 'pages.validacion_seminario_1';
 			}
 		}else{
-            $nombre = 'curso';
+            $nombre = 'CURSO';
 			if($minimo3 != 0){
-                $envio = 'pages.reporte_final_curso3';
+                //$envio = 'pages.reporte_final_curso3';
                 $envioPDF = 'pages.validacion_3';
 			}else if($minimo2 != 0){
-                $envio = 'pages.reporte_final_curso2';
+                //$envio = 'pages.reporte_final_curso2';
                 $envioPDF = 'pages.validacion_2';
 			}else{
-                $envio = 'pages.reporte_final_curso1';
+                //$envio = 'pages.reporte_final_curso1';
                 $envioPDF = 'pages.validacion_1';
 			}
 		}
@@ -2124,7 +2138,8 @@ class CoordinadorController extends Controller
             ->with('coordinaciones',$coordinaciones)
             ->with('encargado_id',$encargado_id)
             ->with('contestaron',$contestaron)
-            ->with('catalogo',$catalogo_curso);
+            ->with('catalogo',$catalogo_curso)
+            ->with('nombre',$nombre);
 		
 
     }
@@ -2150,7 +2165,7 @@ class CoordinadorController extends Controller
         $evaluaciones = 0;
         
 
-        if(strcmp($catalogo_curso[0]->tipo,'Actualizacion')==0){
+        if(strcmp($catalogo_curso[0]->tipo,'S')==0){
             $evaluaciones = DB::table('_evaluacion_x_seminario')
                 ->where('curso_id',$curso_id)
                 ->get();

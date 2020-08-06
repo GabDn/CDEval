@@ -7,8 +7,6 @@
 @if($message != '0')
     <div class="alert alert-success" style = "text-align:center;"> {{ $message }}</div>
 @endif
-
-<form method="POST" action="{{ action('CoordinadorController@enviarCoordinacion')}}">
   <div class="content">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
@@ -24,6 +22,7 @@
                 <h3> Curso:  Seleccione semestre</h3>
             </div>
             <div class="panel-body">
+            <form method="POST" action="{{ action('CoordinadorController@enviarCoordinacion')}}">
                 <select name='semestre' width="25%">
                 <?php 
                     foreach($fechas as $fecha){
@@ -44,12 +43,8 @@
                     <option value='s'>Semestral</option>
                 </select>
 				{{ csrf_field() }}
-				<button id="dia"  type="submit" class="btn btn-primary active">Enviar</button>
+        <button id="dia"  type="submit" class="btn btn-primary active">Enviar</button>
+        </form>
             </div>
-     </section>
-	 </div>
-  </div>	
-</form>
-<br>
-<br>	
+     </section>	
 @endsection

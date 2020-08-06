@@ -71,26 +71,26 @@ body {
                 <div>
         <table width="100%">
             <tr>
-                <th class="thead-light">1. DATOS GENERALES DEL CURSO</th>
+                <th class="thead-light">1. DATOS GENERALES DEL {{$nombre}}</th>
             </tr>
             <tr>
                 <td style="font-weight: bold; border: 0px solid white;">a) Instructor</td>
                 <?php
                     foreach($nombreInstructor as $instructorCurso){
-                        echo "<td style=\"border: 0px solid white;\"> $instructorCurso->nombres $instructorCurso->apellido_paterno $instructorCurso->apellido_materno, </td>";
+                        echo "<td style=\"border: 0px solid white;\">$instructorCurso->nombres $instructorCurso->apellido_paterno $instructorCurso->apellido_materno,</td>";
                     }
                 ?>
             </tr>
             <tr>
                 <td style="font-weight: bold; border: 0px solid white;">b) Fecha de impartición</td>
                 <td style="border: 0px solid white;">{{$curso->fecha_inicio}}, {{$curso->fecha_fin}}</td>
-                <td style="font-weight: bold ; margin-left: 50px white;; border: 0px solid white;" >e) Capacidad</td>
+                <td style="font-weight: bold; border: 0px solid white;">e) Capacidad</td>
                 <td style="border: 0px solid white;">{{$curso->cupo_maximo}}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold; border: 0px solid white;">c) Horario</td>
                 <td style="border: 0px solid white;">{{$curso->hora_inicio}}, {{$curso->hora_fin}}</td>
-                <td style="font-weight: bold ; margin-left: 50px white; border: 0px solid white;" class="n">f) Total de horas</td>
+                <td style="font-weight: bold; border: 0px solid white;">f) Total de horas</td>
                 <td style="border: 0px solid white;">{{$numero_horas}}</td>
             </tr>
             <tr>

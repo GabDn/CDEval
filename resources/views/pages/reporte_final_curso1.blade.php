@@ -71,7 +71,7 @@ body {
                 <div>
         <table width="100%">
             <tr>
-                <th class="thead-light">1. DATOS GENERALES DEL CURSO</th>
+                <th class="thead-light">1. DATOS GENERALES DEL {{$nombre}}</th>
             </tr>
             <tr>
                 <td style="font-weight: bold; border: 0px solid white;">a) Instructor</td>
