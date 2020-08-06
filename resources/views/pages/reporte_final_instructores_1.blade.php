@@ -157,8 +157,6 @@ body {
 				</tr>
 			</tbody>
         </table>
-		<br>
-		<br>
 		<table width="100%">
 			<tr>
 				<th class="f1">Lo mejor del curso fue</th>
