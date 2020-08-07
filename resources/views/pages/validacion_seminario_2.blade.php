@@ -110,12 +110,12 @@ body {
 				if(strlen($catalogo->nombre_curso)>50){
             		echo "<p style=\"float: left; width: 100%; font-size: 22px; line-heigh:5px;\" class=\"n\"> $catalogo->nombre_curso </p>";
 					echo "<br>";
-            		echo "<p style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\"> $curso->semestre_anio$curso->semestre_pi$curso->semestre_si</p>";
+            		echo "<p style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\"> $curso->semestre_anio-$curso->semestre_pi$curso->semestre_si</p>";
             		echo "<div style=\"clear: both\"></div>";
 					echo "<hr>";
 				}else{
 					echo "<div style=\"float: left; width: 100%; font-size: 22px;\" class=\"n\">$catalogo->nombre_curso</div>";
-					echo "<div style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\">$curso->semestre_anio$curso->semestre_pi$curso->semestre_si</div>";
+					echo "<div style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\">$curso->semestre_anio-$curso->semestre_pi$curso->semestre_si</div>";
 					echo "<div style=\"clear: both\"></div>";
 					echo "<hr>";
 				}
@@ -133,7 +133,7 @@ body {
                 <ul>
                 <?php
                     foreach($nombreInstructor as $instructorCurso){
-                        echo "<li> $instructorCurso->nombres $instructorCurso->apellido_paterno $instructorCurso->apellido_materno, </li>";
+                        echo "<li> $instructorCurso->nombres $instructorCurso->apellido_paterno $instructorCurso->apellido_materno </li>";
                     }
                 ?>
                 </ul>

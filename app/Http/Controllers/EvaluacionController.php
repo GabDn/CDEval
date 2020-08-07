@@ -308,7 +308,7 @@ class EvaluacionController extends Controller{
 		$eval_fcurso = new EvaluacionFinalCurso;
 		$correo = new EvaluacionController(); 
 		$participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
-		
+		try{
 			$eval_fcurso->participante_curso_id=$participante[0]->id;
 			//Obtenemos la fecha actual para usarla en consultas posteriores	
 			$date = date("Y-m-j");  
@@ -453,14 +453,14 @@ class EvaluacionController extends Controller{
 			$eval_fcurso->horarioi = $request->horarioi;
 			$eval_fcurso->curso_id = $curso_id;
 			$eval_fcurso->save();
-		/*} catch (Exception $e){
+		} catch (Exception $e){
 
 			//En caso de que no se haya evaluado correctamente el curso regresamos a la vista anterior indicando que la evaluación fue errónea
 			Session::flash('message','Favor de contestar todas las preguntas del formulario');
 			Session::flash('alert-class', 'alert-danger'); 
 
 			return redirect()->back()->withInput($request->input());
-		}*/
+		}
 		//Pasos despreciados, usados en versiones antiguas para obtener el promedio de toda la evaluación
 		$promedio=[
 			$eval_fcurso->p1_1,
@@ -790,6 +790,7 @@ $promedio_p4=[
                 }
 
 		//Enviamos a los correos de los profesores como fueron evaluados por dicho y usario y como va la evaluación global
+		//return $this->reporteFinalInstructorSeminario($profesor_id,$curso_id,$catalogoCurso_id,$eval_fseminario->id);
 		$this->reporteFinalInstructorSeminario($profesor_id,$curso_id,$catalogoCurso_id,$eval_fseminario->id);
 
 		//Revisamos si hay encuestas realizadas por el alumno en el día actual
@@ -1548,6 +1549,8 @@ $promedio_p4=[
 		$actitud3 = round($actitud3/sizeof($evals),2);	
 	
 		$envio = $catalogoCurso[0]->nombre_curso.'_'.$eval_id;
+
+		//return $profesors[0];
 		
 		//Obtenemos el pdf
 		$pdf = PDF::loadView($lugar,array('experiencia1'=>$experiencia1,'planeacion1'=>$planeacion1,'puntualidad1'=>$puntualidad1,'materiales1'=>$materiales1,'dudas1'=>$dudas1,'control1'=>$control1,'interes1'=>$interes1,'actitud1'=>$actitud1,'experiencia2'=>$experiencia2,'planeacion2'=>$planeacion2,'puntualidad2'=>$puntualidad2,'materiales2'=>$materiales2,'dudas2'=>$dudas2,'control2'=>$control2,'interes2'=>$interes2,'actitud2'=>$actitud2,'experiencia3'=>$experiencia3,'planeacion3'=>$planeacion3,'puntualidad3'=>$puntualidad3,'materiales3'=>$materiales3,'dudas3'=>$dudas3,'control3'=>$control3,'interes3'=>$interes3,'actitud3'=>$actitud3,'mejor'=>$mejor,'sugerencias'=>$sugerencias,'catalogo'=>$catalogoCurso[0],'curso'=>$curso[0],'cursos'=>$cursos[0],'profesors'=>$profesors,'eval_id'=>$eval_id));	

@@ -45,6 +45,7 @@ body {
 }
 .n1{
 	border: 0px solid grey;
+	text-align: center;
 }
 .n{
     border: 0px solid white;
@@ -192,6 +193,10 @@ body {
 		</table>
     </div>
 
+	<br>
+	<br>
+	<p>_______________________________________</p>
+	<p>SAD,CDD</p>
 
 </div>
 

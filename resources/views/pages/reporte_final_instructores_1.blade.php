@@ -45,6 +45,7 @@ body {
 }
 .n1{
 	border: 0px solid grey;
+	text-align: center;
 }
 .n{
     border: 0px solid white;
@@ -157,6 +158,7 @@ body {
 				</tr>
 			</tbody>
         </table>
+		<br>
 		<table width="100%">
 			<tr>
 				<th class="f1">Lo mejor del curso fue</th>
@@ -179,10 +181,15 @@ body {
                 </tr>
             @endforeach
 		</table>
+
     </div>
 
-
 </div>
+
+<br>
+<br>
+<p>_______________________________________</p>
+<p>SAD,CDD</p>
 
 </body>
 </html>

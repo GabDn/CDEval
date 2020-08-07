@@ -4336,7 +4336,7 @@ class StartSeeder extends Seeder
             'tipo' => 'C',
             'institucion' => 'DGAPA',
 			'fecha_disenio'=>'2012-12-12',
-			'coordinacion_id'=>1,
+			'coordinacion_id'=>202,
 			'clave_curso'=>'TECDDGAPA6'
 		]);
 		

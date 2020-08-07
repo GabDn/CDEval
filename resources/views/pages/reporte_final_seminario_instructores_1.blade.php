@@ -36,11 +36,16 @@ body {
   font-size: 15px;
 }
 .f{
-    background-color: #2A4EDF;
-    color: white; 
+    color: #2A4EDF;
+	text-align:center;
+}
+.f1{
+	font-weight: bold;
+	border: 0px solid white;
 }
 .n1{
 	border: 0px solid grey;
+	text-align: center;
 }
 .n{
     border: 0px solid white;
@@ -108,17 +113,16 @@ body {
 		</table>
         <div align="center">
 		<?php
-				$catalog = $catalogo[0];
 				//50
-				if(strlen($catalog->nombre_curso)>50){
-            		echo "<p style=\"float: left; width: 100%; font-size: 22px; line-heigh:5px;\" class=\"n\"> $catalog->nombre_curso </p>";
+				if(strlen($catalogo->nombre_curso)>50){
+            		echo "<p style=\"float: left; width: 100%; font-size: 22px; line-heigh:5px;\" class=\"n\"> $catalogo->nombre_curso </p>";
 					echo "<br>";
-            		echo "<p style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\"> $curso->semestre_anio$curso->semestre_pi$curso->semestre_si</p>";
+            		echo "<p style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\"> $cursos->semestre_anio$cursos->semestre_pi$cursos->semestre_si</p>";
             		echo "<div style=\"clear: both\"></div>";
 					echo "<hr>";
 				}else{
-					echo "<div style=\"float: left; width: 100%; font-size: 22px;\" class=\"n\">$catalog->nombre_curso</div>";
-					echo "<div style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\">$curso->semestre_anio$curso->semestre_pi$curso->semestre_si</div>";
+					echo "<div style=\"float: left; width: 100%; font-size: 22px;\" class=\"n\">$catalogo->nombre_curso</div>";
+					echo "<div style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\">$cursos->semestre_anio$cursos->semestre_pi$cursos->semestre_si</div>";
 					echo "<div style=\"clear: both\"></div>";
 					echo "<hr>";
 				}
@@ -158,7 +162,7 @@ body {
 		<br>
 		<table width="100%">
 			<tr>
-				<th class="f">Lo mejor del curso fue</th>
+				<th class="f1">Lo mejor del curso fue</th>
 			</tr>
             @foreach($mejor as $mejor)
                 <tr>
@@ -170,7 +174,7 @@ body {
 		<br>
 		<table width="100%">
 			<tr>
-				<th class="f">Comentarios y sugerencias</th>
+				<th class="f1">Comentarios y sugerencias</th>
 			</tr>
             @foreach($sugerencias as $sugerencia)
                 <tr>

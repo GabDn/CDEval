@@ -1,7 +1,6 @@
 @extends('layouts.principal')
 
 @section('contenido')
-<form method="POST" action="{{ action('EvaluacionController@enviarClaveFecha',[ $profesor->id] ) }}">
   <div class="content">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
@@ -11,6 +10,7 @@
       </a>      
     </div>
     <section class="content-inner">
+    <form method="POST" action="{{ action('EvaluacionController@enviarClaveFecha',[ $profesor->id] ) }}">
     <br>
       <div class="panel panel-default">
 			<div class="panel-heading">
@@ -28,9 +28,4 @@
 				<button id="dia"  type="submit" class="btn btn-primary active">Enviar</button>
             </div>
      </section>
-	 </div>
-  </div>	
-</form>
-<br>
-<br>	
 @endsection
