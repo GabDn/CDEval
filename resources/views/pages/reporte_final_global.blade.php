@@ -284,7 +284,7 @@ body {
         </div>
     </div>
 
-    <button id="dia"  type="button" class="btn btn-primary active"><a href="{{route('global.pdf',[$periodo])}}" style="color:white">Descargar PDF</a></button>
+    <button id="dia"  type="button" class="btn btn-primary active"><a href="{{route('global.pdf',[$periodo, $semestral])}}" style="color:white">Descargar PDF</a></button>
                                                                                                         
     <?php
         

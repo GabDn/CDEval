@@ -30,6 +30,10 @@
             }
           ?>
 				</select>
+        <select name='periodo' with = '25%'>
+            <option value='s'>s</option>
+            <option value='i'>i</option>
+        </select>
 				{{ csrf_field() }}
 				<button id="dia"  type="submit" class="btn btn-primary active">Enviar</button>
         </div>

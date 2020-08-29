@@ -283,7 +283,7 @@ body {
         </div>
     </div>
 
-    <button id="dia"  type="button" class="btn btn-primary active"><a href="{{route('area.pdf',[$periodo,$nombreCoordinacion])}}" style="color:white">Descargar PDF</a></button>
+    <button id="dia"  type="button" class="btn btn-primary active"><a href="{{route('area.pdf',[$periodo,$nombreCoordinacion,$semestral])}}" style="color:white">Descargar PDF</a></button>
                          
                 </div>
      </section>

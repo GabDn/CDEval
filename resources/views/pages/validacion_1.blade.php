@@ -205,32 +205,27 @@ body {
                 <th class="f">Promedio</th>
                 <th class="f">Mínimo</th>
                 <th class="f">Máximo</th>
+                <th class="f">Juicio Sumario</th>
             </tr>
             <tr>
                 <td style="width: 65%" class="n" >{{$nombreInstructor[0]->nombres}} {{$nombreInstructor[0]->apellido_paterno}} {{$nombreInstructor[0]->apellido_materno}}</td>
                 <td class="n">{{$instructor}}</td>
                 <td class="n">{{$minimo}}</td>
                 <td class="n">{{$maximo}}</td>
+                <td class="n"><?php
+                    if($factor >= 80){
+                        echo "Si";
+                    }else{
+                        echo "No";
+                    }
+                ?></td>
             </tr>
         </table>
 
         <br>
         <table width="100%">
             <tr>
-            <th style="width: 20%">8. JUICIO SUMARIO INSTRUCTOR a)</th>
-                <?php
-                    if($factor >= 80){
-                        echo "<td style=\"width: 30%\" class=\"n\">Si</td>";
-                    }else{
-                        echo "<td style=\"width: 30%\" class=\"n\">No</td>";
-                    }
-                ?>
-            </tr>
-        </table>
-        <br>
-        <table width="100%">
-            <tr>
-                <th style="width: 20%">8. JUICIO SUMARIO  CURSO b)</th>
+                <th style="width: 20%">8. JUICIO SUMARIO  CURSO</th>
                 <?php
                     $num = round(($factor+$factor_acreditacion+$positivas)/3,2);
                     if($factor >= 80 && $factor_acreditacion >= 80 && $positivas >= 80){

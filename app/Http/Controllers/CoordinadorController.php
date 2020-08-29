@@ -151,16 +151,17 @@ class CoordinadorController extends Controller
         //Obtenemos la fecha elegida por el usuario
         $fecha = $request->get('semestre');
         $semestre = explode('-',$fecha);
+        $periodo = $request->get('periodo');
 
         //Obtenemos los cursos correspondientes al semestre elegido por el usuario
         $cursos = DB::table('cursos')
-            ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]]])
+            ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]],['cursos.semestre_si',$periodo]])
             ->get();
 
         //Indicamos la vista a observar
         $lugar = "pages.reporte_final_global";
 
-        return $this->enviarVista($fecha, $cursos, "", $lugar,0,'elegir.fecha');
+        return $this->enviarVista($fecha, $cursos, "", $lugar,0,'elegir.fecha',$periodo);
     }
 
     /**
@@ -169,7 +170,7 @@ class CoordinadorController extends Controller
      * $lugar: vista final, $pdf variable booleana que indica si se quiere o no el pdf, $inicio: ruta que mandó a llamar la función
      * @return Dependiendo del caso ya sea la vista seleccionada o el pdf de la vista seleccionada
      */
-    public function enviarVista($request, $cursos, $nombreCoordinacion, $lugar, $pdf, $inicio){
+    public function enviarVista($request, $cursos, $nombreCoordinacion, $lugar, $pdf, $inicio, $semestral){
 
         //Obtenemos todos los coordinadores
         $coordinaciones = Coordinacion::all();
@@ -283,8 +284,13 @@ class CoordinadorController extends Controller
         $horariosCurso = array();
         $profesoresRecontratar = array();
         $curso_recomendaron = 0;
-        $desempenioProfesor = 0;
         $evaluacionProfesor = 0;
+        $preguntas_contenido = 0;
+        $preguntas_coordinacion = 0;
+
+        $cont_prom = array();
+
+        $desempenioProfesores = array(); 
 
         foreach($evaluacionesCursos as $curso){
             $curso_id = $curso[0]->curso_id;
@@ -299,7 +305,23 @@ class CoordinadorController extends Controller
             $positivas_curso = 0;
             $preguntas_curso = 0;
 
+            $desempenioProfesor1 = 0;
+            $desempenioProfesor2 = 0;
+            $desempenioProfesor3 = 0;
+
+            $instructor_1 = 0;
+            $instructor_2 = 0;
+            $instructor_3 = 0;
+
+            $desempenioProfesoresCurso = array();
+
+            $cont_curso = 0;
+            $tam_curso = 0;
+
             foreach($curso as $evaluacion){
+
+
+                $tupla = array();
 
                 $alumno_curso++;
 
@@ -333,118 +355,137 @@ class CoordinadorController extends Controller
 
                 //Obtenemos la cantidad de preguntas positivas del curso valor >= 60
                 //De las preguntas 1_1 a 1_5 obtenemmos las evaluaciones del contenido del curso
-                if($evaluacion->p1_1 >= 20){
+                if($evaluacion->p1_1 >= 50){
+                    $preguntas_contenido++;
                     $preguntas++;
                     $preguntas_curso++;
                     $respuestasContenido += $evaluacion->p1_1;
-                    if($evaluacion->p1_1 > 60){
+                    $cont_curso += $evaluacion->p1_1;
+                    $tam_curso++;
+                    if($evaluacion->p1_1 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p1_2 >= 20){
+                if($evaluacion->p1_2 >= 50){
+                    $preguntas_contenido++;
                     $preguntas++;
                     $preguntas_curso++;
                     $respuestasContenido+= $evaluacion->p1_2;
-                    if($evaluacion->p1_2 > 60){
+                    $cont_curso += $evaluacion->p1_2;
+                    $tam_curso++;
+                    if($evaluacion->p1_2 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p1_3 >= 20){
+                if($evaluacion->p1_3 >= 50){
+                    $preguntas_contenido++;
                     $preguntas++;
                     $preguntas_curso++;
                     $respuestasContenido+= $evaluacion->p1_3;
-                    if($evaluacion->p1_3 > 60){
+                    $cont_curso += $evaluacion->p1_3;
+                    $tam_curso++;
+                    if($evaluacion->p1_3 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p1_4 >= 20){
+                if($evaluacion->p1_4 >= 50){
+                    $preguntas_contenido++;
                     $preguntas++;
                     $preguntas_curso++;
                     $respuestasContenido+= $evaluacion->p1_4;
-                    if($evaluacion->p1_4 > 60){
+                    $cont_curso += $evaluacion->p1_4;
+                    $tam_curso++;
+                    if($evaluacion->p1_4 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p1_5 >= 20){
+                if($evaluacion->p1_5 >= 50){
+                    $preguntas_contenido++;
                     $preguntas++;
                     $preguntas_curso++;
                     $respuestasContenido+= $evaluacion->p1_5;
-                    if($evaluacion->p1_5 > 60){
+                    $cont_curso += $evaluacion->p1_5;
+                    $tam_curso++;
+                    if($evaluacion->p1_5 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
     
-                if($evaluacion->p2_1 >= 20){
+                if($evaluacion->p2_1 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    if($evaluacion->p2_1 > 60){
+                    if($evaluacion->p2_1 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p2_2 >= 20){
+                if($evaluacion->p2_2 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    if($evaluacion->p2_2 > 60){
+                    if($evaluacion->p2_2 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p2_3 >= 20){
+                if($evaluacion->p2_3 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    if($evaluacion->p2_3 > 60){
+                    if($evaluacion->p2_3 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p2_4 >= 20){
+                if($evaluacion->p2_4 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    if($evaluacion->p2_4 > 60){
+                    if($evaluacion->p2_4 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
     
                 //De las preguntas 3_1 a 3_4 obtenemos el puntaje dado a la coordinacion
-                if($evaluacion->p3_1 >= 20){
+                if($evaluacion->p3_1 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
                     $respuestasCoordinacion += $evaluacion->p3_1;
-                    if($evaluacion->p3_1 > 60){
+                    $preguntas_coordinacion++;
+                    if($evaluacion->p3_1 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p3_2 >= 20){
+                if($evaluacion->p3_2 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
+                    $preguntas_coordinacion++;
                     $respuestasCoordinacion += $evaluacion->p3_2;
-                    if($evaluacion->p3_2 > 60){
+                    if($evaluacion->p3_2 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p3_3 >= 20){
+                if($evaluacion->p3_3 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
+                    $preguntas_coordinacion++;
                     $respuestasCoordinacion += $evaluacion->p3_3;
-                    if($evaluacion->p3_3 > 60){
+                    if($evaluacion->p3_3 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p3_4 >= 20){
+                if($evaluacion->p3_4 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
+                    $preguntas_coordinacion++;
                     $respuestasCoordinacion += $evaluacion->p3_4;
-                    if($evaluacion->p3_4 > 60){
+                    if($evaluacion->p3_4 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -452,112 +493,112 @@ class CoordinadorController extends Controller
     
                 //De la 4_1 a la 4_11 obtenemos la evaluacion del primer instructor
                 //Queremos tanto el desempeño del instructor del curso como la cantidad de preguntas positivas del instructor
-                if($evaluacion->p4_1 >= 20){
+                if($evaluacion->p4_1 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p4_1;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p4_1 == 1){
+                    $desempenioProfesor1 += $evaluacion->p4_1;
+                    $instructor_1++;
+                    if($evaluacion->p4_1 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p4_2 >= 20){
+                if($evaluacion->p4_2 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p4_2;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p4_2 > 60){
+                    $desempenioProfesor1 += $evaluacion->p4_2;
+                    $instructor_1++;
+                    if($evaluacion->p4_2 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p4_3 >= 20){
+                if($evaluacion->p4_3 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p4_3;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p4_3 > 60){
+                    $desempenioProfesor1 += $evaluacion->p4_3;
+                    $instructor_1++;
+                    if($evaluacion->p4_3 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p4_4 >= 20){
+                if($evaluacion->p4_4 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p4_4;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p4_4 > 60){
+                    $desempenioProfesor1 += $evaluacion->p4_4;
+                    $instructor_1++;
+                    if($evaluacion->p4_4 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p4_5 >= 20){
+                if($evaluacion->p4_5 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p4_5;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p4_5 > 60){
+                    $desempenioProfesor1 += $evaluacion->p4_5;
+                    $instructor_1++;
+                    if($evaluacion->p4_5 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p4_6 >= 20){
+                if($evaluacion->p4_6 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p4_6;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p4_6 > 60){
+                    $desempenioProfesor1 += $evaluacion->p4_6;
+                    $instructor_1++;
+                    if($evaluacion->p4_6 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p4_7 >= 20){
+                if($evaluacion->p4_7 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p4_7;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p4_7 > 60){
+                    $desempenioProfesor1 += $evaluacion->p4_7;
+                    $instructor_1++;
+                    if($evaluacion->p4_7 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p4_8 >= 20){
+                if($evaluacion->p4_8 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p4_8;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p4_8 > 60){
+                    $desempenioProfesor1 += $evaluacion->p4_8;
+                    $instructor_1++;
+                    if($evaluacion->p4_8 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p4_9 >= 20){
+                if($evaluacion->p4_9 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p4_9;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p4_9 > 60){
+                    $desempenioProfesor1 += $evaluacion->p4_9;
+                    $instructor_1++;
+                    if($evaluacion->p4_9 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p4_10 >= 20){
+                if($evaluacion->p4_10 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p4_10;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p4_10 > 60){
+                    $desempenioProfesor1 += $evaluacion->p4_10;
+                    $instructor_1++;
+                    if($evaluacion->p4_10 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p4_11 >= 20){
+                if($evaluacion->p4_11 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p4_11;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p4_11 > 60){
+                    $desempenioProfesor1 += $evaluacion->p4_11;
+                    $instructor_1++;
+                    if($evaluacion->p4_11 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -565,112 +606,112 @@ class CoordinadorController extends Controller
     
                 //De la 5_1 a la 5_11 obtenemos la evaluacion del segundo instructor
                 //Queremos tanto el desempeño del instructor del curso como la cantidad de preguntas positivas del instructor
-                if($evaluacion->p5_1 >= 20){
+                if($evaluacion->p5_1 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p5_1;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p5_1 > 60){
+                    $desempenioProfesor2 += $evaluacion->p5_1;
+                    $instructor_2++;
+                    if($evaluacion->p5_1 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p5_2 >= 20){
+                if($evaluacion->p5_2 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p5_2;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p5_2 > 60){
+                    $desempenioProfesor2 += $evaluacion->p5_2;
+                    $instructor_2++;
+                    if($evaluacion->p5_2 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p5_3 >= 20){
+                if($evaluacion->p5_3 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p5_3;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p5_3 > 60){
+                    $desempenioProfesor2 += $evaluacion->p5_3;
+                    $instructor_2++;
+                    if($evaluacion->p5_3 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p5_4 >= 20){
+                if($evaluacion->p5_4 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p5_4;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p5_4 > 60){
+                    $desempenioProfesor2 += $evaluacion->p5_4;
+                    $instructor_2++;
+                    if($evaluacion->p5_4 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p5_5 >= 20){
+                if($evaluacion->p5_5 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p5_5;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p5_5 > 60){
+                    $desempenioProfesor2 += $evaluacion->p5_5;
+                    $instructor_2++;
+                    if($evaluacion->p5_5 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p5_6 >= 20){
+                if($evaluacion->p5_6 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p5_6;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p5_6 > 60){
+                    $desempenioProfesor2 += $evaluacion->p5_6;
+                    $instructor_2++;
+                    if($evaluacion->p5_6 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p5_7 >= 20){
+                if($evaluacion->p5_7 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p5_7;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p5_7 > 60){
+                    $desempenioProfesor2 += $evaluacion->p5_7;
+                    $instructor_2++;
+                    if($evaluacion->p5_7 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p5_8 >= 20){
+                if($evaluacion->p5_8 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p5_8;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p5_8 > 60){
+                    $desempenioProfesor2 += $evaluacion->p5_8;
+                    $instructor_2++;
+                    if($evaluacion->p5_8 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p5_9 >= 20){
+                if($evaluacion->p5_9 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p5_9;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p5_9 > 60){
+                    $desempenioProfesor2 += $evaluacion->p5_9;
+                    $instructor_2++;
+                    if($evaluacion->p5_9 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p5_10 >= 20){
+                if($evaluacion->p5_10 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p5_10;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p5_10 > 60){
+                    $desempenioProfesor2 += $evaluacion->p5_10;
+                    $instructor_2++;
+                    if($evaluacion->p5_10 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p5_11 >= 20){
+                if($evaluacion->p5_11 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p5_11;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p5_11 > 60){
+                    $desempenioProfesor2 += $evaluacion->p5_11;
+                    $instructor_2++;
+                    if($evaluacion->p5_11 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
@@ -678,115 +719,119 @@ class CoordinadorController extends Controller
     
                 //De la 6_1 a la 6_11 obtenemos la evaluacion del tercer instructor
                 //Queremos tanto el desempeño del instructor del curso como la cantidad de preguntas positivas del instructor
-                if($evaluacion->p6_1 >= 20){
+                if($evaluacion->p6_1 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p6_1;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p6_1 == 1){
+                    $desempenioProfesor3 += $evaluacion->p6_1;
+                    $instructor_3++;
+                    if($evaluacion->p6_1 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p6_2 >= 20){
+                if($evaluacion->p6_2 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p6_2;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p6_2 > 60){
+                    $desempenioProfesor3 += $evaluacion->p6_2;
+                    $instructor_3++;
+                    if($evaluacion->p6_2 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p6_3 >= 20){
+                if($evaluacion->p6_3 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p6_3;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p6_3 > 60){
+                    $desempenioProfesor3 += $evaluacion->p6_3;
+                    $instructor_3++;
+                    if($evaluacion->p6_3 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p6_4 >= 20){
+                if($evaluacion->p6_4 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p6_4;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p6_4 > 60){
+                    $desempenioProfesor3 += $evaluacion->p6_4;
+                    $instructor_3++;
+                    if($evaluacion->p6_4 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p6_5 >= 20){
+                if($evaluacion->p6_5 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p6_5;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p6_5 > 60){
+                    $desempenioProfesor3 += $evaluacion->p6_5;
+                    $instructor_3++;
+                    if($evaluacion->p6_5 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p6_6 >= 20){
+                if($evaluacion->p6_6 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p6_6;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p6_6 > 60){
+                    $desempenioProfesor3 += $evaluacion->p6_6;
+                    $instructor_3++;
+                    if($evaluacion->p6_6 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p6_7 >= 20){
+                if($evaluacion->p6_7 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p6_7;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p6_7 > 60){
+                    $desempenioProfesor3 += $evaluacion->p6_7;
+                    $instructor_3++;
+                    if($evaluacion->p6_7 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p6_8 >= 20){
+                if($evaluacion->p6_8 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    if($evaluacion->p6_8 > 60){
+                    $desempenioProfesor3 += $evaluacion->p6_8;
+                    $instructor_3++;
+                    if($evaluacion->p6_8 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p6_9 >= 20){
+                if($evaluacion->p6_9 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p6_9;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p6_9 > 60){
+                    $desempenioProfesor3 += $evaluacion->p6_9;
+                    $instructor_3++;
+                    if($evaluacion->p6_9 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p6_10 >= 20){
+                if($evaluacion->p6_10 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p6_10;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p6_10 > 60){
+                    $desempenioProfesor3 += $evaluacion->p6_10;
+                    $instructor_3++;
+                    if($evaluacion->p6_10 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
-                if($evaluacion->p6_11 >= 20){
+                if($evaluacion->p6_11 >= 50){
                     $preguntas++;
                     $preguntas_curso++;
-                    $desempenioProfesor += $evaluacion->p6_11;
-                    $evaluacionProfesor++;
-                    if($evaluacion->p6_11 > 60){
+                    $desempenioProfesor3 += $evaluacion->p6_11;
+                    $instructor_3++;
+                    if($evaluacion->p6_11 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
                 }
             }
+
+            array_push($cont_prom, $cont_curso/$tam_curso);
 
             if($preguntas_curso == 0){
                 $preguntas_curso = 1;
@@ -802,6 +847,20 @@ class CoordinadorController extends Controller
             $factor_calidad_curso = ($positivas_curso*100)/$preguntas_curso;
             $factora_acreditacion = ($acreditaronCurso*100)/$alumno_curso;
             $factor_recomendacion_curso = ($alumnos_recomendaron_curso*100)/$recomendaciones_curso;
+
+            //array_push($array_prueba_coord,$curso_id);
+
+            array_push($desempenioProfesoresCurso,(round($desempenioProfesor1/$instructor_1,2)));
+            if($instructor_2==0){
+                array_push($desempenioProfesoresCurso,0);    
+            }else{
+                array_push($desempenioProfesoresCurso,(round($desempenioProfesor2/$instructor_2,2)));
+            }
+            if($instructor_3 == 0){
+                array_push($desempenioProfesoresCurso,0);
+            }else{
+                array_push($desempenioProfesoresCurso,(round($desempenioProfesor3/$instructor_3,2)));
+            }
 
             //Si un curso obtiene calificacion >= 80 en cada uno de los tres factores sus profesores se vuelven a contratar
             if($factor_calidad_curso >= 80 && $factora_acreditacion >= 80 && $factor_recomendacion_curso >= 80){
@@ -823,8 +882,22 @@ class CoordinadorController extends Controller
                         array_push($profesoresRecontratar,$profesor[0]);
                     }
                 }
+
             }
 
+            array_push($desempenioProfesores, $desempenioProfesoresCurso);
+
+        }
+
+        $instructores_factor = 0;
+        $num = 0;
+        foreach($desempenioProfesores as $desempenio){
+            foreach($desempenio as $calif){
+                if($calif > 0){
+                    $instructores_factor += $calif;
+                    $num++;
+                }
+            }
         }
 
 
@@ -833,29 +906,38 @@ class CoordinadorController extends Controller
         $promedio_coordinacion = 0;
         $promedio_contenido = 0;
         $factor_recomendacion = 0;
-        $factor_instructor = 0;
+        $factor_instructor = round($instructores_factor/$num,2);
         $factor_ocupacion = 0;
 
         //Obtenemos los factores de recomendacion
         //Necesario evitar la division entre cero, es posible pedir ver resumen de una fecha sin cursos
         if($alumnosRecomendaron != 0){
             $factor_recomendacion = round($recomendaciones*100 / $alumnosRecomendaron,2);
+            //$factor_recomendacion = $recomendaciones*100 / $alumnosRecomendaron;
         }
         if($inscritos != 0){
-            $factor_acreditacion = round($acreditaron*100 / $inscritos,2);
+            $factor_acreditacion = round($acreditaron*100 / $asistieron,2);
+            //$factor_acreditacion = $acreditaron*100 / $asistieron;
         }
         if($preguntas != 0){
             $factor_calidad = round($positivas*100 / $preguntas,2);
+            //$factor_calidad = $positivas*100 / $preguntas;
         }
         if($contestaron != 0){
-            $promedio_coordinacion = round($respuestasCoordinacion / ($contestaron*4),2);
-            $promedio_contenido = round($respuestasContenido / ($contestaron*5),2);
+            $promedio_coordinacion = round($respuestasCoordinacion / $preguntas_coordinacion,2);
+            $promedio_contenido = round($respuestasContenido / $preguntas_contenido,2);
+            //$promedio_coordinacion = $respuestasCoordinacion / $preguntas_coordinacion;
+            //$promedio_contenido = $respuestasContenido / $preguntas_contenido;
         }
-        if($evaluacionProfesor != 0){
-            $factor_instructor = round($desempenioProfesor / $evaluacionProfesor,2);
-        }
+        /*if($instructor_1 != 0){
+            //return ($instructor_1+$instructor_2+$instructor_3);
+            $factor_instructor = round($desempenioProfesor / ($instructor_1+$instructor_2+$instructor_3),2);
+            //$factor_instructor = $desempenioProfesor / $evaluacionProfesor;
+        }*/
         if($capacidad_total != 0){
-            $factor_ocupacion = round((($inscritos*100)-1) / $capacidad_total,2);
+            $factor_ocupacion = round((($asistieron*100)) / $capacidad_total,2);
+            //$factor_ocupacion = round((($asistieron*100)-1) / $capacidad_total,2);
+            //$factor_ocupacion = (($asistieron*100)-1) / $capacidad_total;
         }
 
         $aritmetico = [0,0,0,0];
@@ -864,12 +946,13 @@ class CoordinadorController extends Controller
             //return $this->calculaAritmetico($cursos);
         }else{
             $aritmetico = $this->calculaAritmeticoArea($cursos, $nombreCoordinacion);
+            //return $aritmetico;
         }
 
         //Si el usuario indico descargar un pdf se procedera a realizarlo
         if($pdf == 1){
             //Retornamos la funcion que permite la descarga del pdf
-            return $this->descargarPDF($nombresCursos,$request,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$factor_calidad,$DP,$DH,$CO,$DI,$Otros,$DPtematica,$DItematica,$COtematica,$DHtematica,$Otrostematica,$coordinaciones,$horariosCurso,$promedio_coordinacion,$promedio_contenido,$profesoresRecontratar,$factor_instructor,$asistieron,$nombreCoordinacion,$lugar,$aritmetico[0],$aritmetico[1],$aritmetico[2],$aritmetico[3]);
+            return $this->descargarPDF($nombresCursos,$request,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$factor_calidad,$DP,$DH,$CO,$DI,$Otros,$DPtematica,$DItematica,$COtematica,$DHtematica,$Otrostematica,$coordinaciones,$horariosCurso,$promedio_coordinacion,$promedio_contenido,$profesoresRecontratar,$factor_instructor,$asistieron,$nombreCoordinacion,$lugar,$aritmetico[0],$aritmetico[1],$aritmetico[2],$aritmetico[3],$semestral);
         }
 
         //Retornamos la vista correspondiente (seleccionados por fecah o seleccionados por fecha y coordinacion) con los datos calculados
@@ -905,7 +988,8 @@ class CoordinadorController extends Controller
             ->with('aritmetico_contenido',$aritmetico[0])
             ->with('aritmetico_instructor',$aritmetico[1])
             ->with('aritmetico_coordinacion',$aritmetico[2])
-            ->with('aritmetico_recomendacion',$aritmetico[3]);
+            ->with('aritmetico_recomendacion',$aritmetico[3])
+            ->with('semestral',$semestral);
     }
 
     /**
@@ -950,8 +1034,12 @@ class CoordinadorController extends Controller
             $coordinacion_curso = 0;
             $factor_recomendacion_curso = 0;
             $tam = 0;
+            $tam1 = 0;
             $tam2 = 0;
             $tam3 = 0;
+            $tam_coord = 0;
+            $tam_contenido = 0;
+            $tam_recomendacion = 0;
 
             $tam_coordinacion++;
 
@@ -974,64 +1062,187 @@ class CoordinadorController extends Controller
                 //Iteramos las evaluaciones y acumulamos sus valores
                 foreach($evals as $eval){
 
-                    $contenido_curso += $eval->p1_1;
-                    $contenido_curso += $eval->p1_2;
-                    $contenido_curso += $eval->p1_3;
-                    $contenido_curso += $eval->p1_4;
-                    $contenido_curso += $eval->p1_5;
+                    if($eval->p1_1 >= 50){
+                        $contenido_curso += $eval->p1_1;
+                        $tam_contenido++;
+                    }
+                    if($eval->p1_2 >= 50){
+                        $contenido_curso += $eval->p1_2;
+                        $tam_contenido++;
+                    }
+                    if($eval->p1_3 >= 50){
+                        $contenido_curso += $eval->p1_3;
+                        $tam_contenido++;
+                    }
+                    if($eval->p1_4 >= 50){
+                        $contenido_curso += $eval->p1_4;
+                        $tam_contenido++;
+                    }
+                    if($eval->p1_5 >= 50){
+                        $contenido_curso += $eval->p1_5;
+                        $tam_contenido++;
+                    }
 
-                    $coordinacion_curso += $eval->p3_1;
-                    $coordinacion_curso += $eval->p3_2;
-                    $coordinacion_curso += $eval->p3_3;
-                    $coordinacion_curso += $eval->p3_4;
+                    if($eval->p3_1 >= 50){
+                        $coordinacion_curso += $eval->p3_1;
+                        $tam_coord++;
+                    }
+                    if($eval->p3_2 >= 50){
+                        $coordinacion_curso += $eval->p3_2;
+                        $tam_coord++;
+                    }
+                    if($eval->p3_3 >= 50){
+                        $coordinacion_curso += $eval->p3_3;
+                        $tam_coord++;
+                    }
+                    if($eval->p3_4 >= 50){
+                        $coordinacion_curso += $eval->p3_4;
+                        $tam_coord++;
+                    }
 
-                    $instructor_curso_1 += $eval->p4_1;
-                    $instructor_curso_1 += $eval->p4_2;
-                    $instructor_curso_1 += $eval->p4_3;
-                    $instructor_curso_1 += $eval->p4_4;
-                    $instructor_curso_1 += $eval->p4_5;
-                    $instructor_curso_1 += $eval->p4_6;
-                    $instructor_curso_1 += $eval->p4_7;
-                    $instructor_curso_1 += $eval->p4_8;
-                    $instructor_curso_1 += $eval->p4_9;
-                    $instructor_curso_1 += $eval->p4_10;
-                    $instructor_curso_1 += $eval->p4_11;
+                    if($eval->p4_1 >= 50){
+                        $instructor_curso_1 += $eval->p4_1;
+                        $tam1++;
+                    }
+                    if($eval->p4_2 >= 50){
+                        $instructor_curso_1 += $eval->p4_2;
+                        $tam1++;
+                    }
+                    if($eval->p4_3 >= 50){
+                        $instructor_curso_1 += $eval->p4_3;
+                        $tam1++;
+                    }
+                    if($eval->p4_4 >= 50){
+                        $instructor_curso_1 += $eval->p4_4;
+                        $tam1++;
+                    }
+                    if($eval->p4_5 >= 50){
+                        $instructor_curso_1 += $eval->p4_5;
+                        $tam1++;
+                    }
+                    if($eval->p4_6 >= 50){
+                        $instructor_curso_1 += $eval->p4_6;
+                        $tam1++;
+                    }
+                    if($eval->p4_7 >= 50){
+                        $instructor_curso_1 += $eval->p4_7;
+                        $tam1++;
+                    }
+                    if($eval->p4_8 >= 50){
+                        $instructor_curso_1 += $eval->p4_8;
+                        $tam1++;
+                    }
+                    if($eval->p4_9 >= 50){
+                        $instructor_curso_1 += $eval->p4_9;
+                        $tam1++;
+                    }
+                    if($eval->p4_10 >= 50){
+                        $instructor_curso_1 += $eval->p4_10;
+                        $tam1++;
+                    }
+                    if($eval->p4_11 >= 50){
+                        $instructor_curso_1 += $eval->p4_11;
+                        $tam1++;
+                    }
 
                     //En caso de tener de que se haya evaluado un segundo instructor acumulamos sus calificaciones
-                    if($eval->p5_1 >= 20){
+                    if($eval->p5_1 >= 50){
                         $tam2++;
                         $instructor_curso_2 += $eval->p5_1;
+                    }
+                    if($eval->p5_2 >= 50){
+                        $tam2++;
                         $instructor_curso_2 += $eval->p5_2;
+                    }
+                    if($eval->p5_3 >= 50){
+                        $tam2++;
                         $instructor_curso_2 += $eval->p5_3;
+                    }
+                    if($eval->p5_4 >= 50){
+                        $tam2++;
                         $instructor_curso_2 += $eval->p5_4;
+                    }
+                    if($eval->p5_5 >= 50){
+                        $tam2++;
                         $instructor_curso_2 += $eval->p5_5;
+                    }
+                    if($eval->p5_6 >= 50){
+                        $tam2++;
                         $instructor_curso_2 += $eval->p5_6;
+                    }
+                    if($eval->p5_7 >= 50){
+                        $tam2++;
                         $instructor_curso_2 += $eval->p5_7;
+                    }
+                    if($eval->p5_8 >= 50){
+                        $tam2++;
                         $instructor_curso_2 += $eval->p5_8;
+                    }
+                    if($eval->p5_9 >= 50){
+                        $tam2++;
                         $instructor_curso_2 += $eval->p5_9;
+                    }
+                    if($eval->p5_10 >= 50){
+                        $tam2++;
                         $instructor_curso_2 += $eval->p5_10;
-                        $instructor_curso_2 += $eval->p5_11; 
+                    }
+                    if($eval->p5_11 >= 50){
+                        $tam2++;
+                        $instructor_curso_2 += $eval->p5_11;
                     }
 
                     //En caso de tener de que se haya evaluado un tercer instructor acumulamos sus calificaciones
-                    if($eval->p6_1 >= 20){
+                    if($eval->p6_1 >= 50){
                         $tam3++;
                         $instructor_curso_3 += $eval->p6_1;
+                    }
+                    if($eval->p6_2 >= 50){
+                        $tam3++;
                         $instructor_curso_3 += $eval->p6_2;
+                    }
+                    if($eval->p6_3 >= 50){
+                        $tam3++;
                         $instructor_curso_3 += $eval->p6_3;
+                    }
+                    if($eval->p6_4 >= 50){
+                        $tam3++;
                         $instructor_curso_3 += $eval->p6_4;
+                    }
+                    if($eval->p6_5 >= 50){
+                        $tam3++;
                         $instructor_curso_3 += $eval->p6_5;
+                    }
+                    if($eval->p6_6 >= 50){
+                        $tam3++;
                         $instructor_curso_3 += $eval->p6_6;
+                    }
+                    if($eval->p6_7 >= 50){
+                        $tam3++;
                         $instructor_curso_3 += $eval->p6_7;
+                    }
+                    if($eval->p6_8 >= 50){
+                        $tam3++;
                         $instructor_curso_3 += $eval->p6_8;
+                    }
+                    if($eval->p6_9 >= 50){
+                        $tam3++;
                         $instructor_curso_3 += $eval->p6_9;
+                    }
+                    if($eval->p6_10 >= 50){
+                        $tam3++;
                         $instructor_curso_3 += $eval->p6_10;
-                        $instructor_curso_3 += $eval->p6_11; 
+                    }
+                    if($eval->p6_11 >= 50){
+                        $tam3++;
+                        $instructor_curso_3 += $eval->p6_11;
                     }
 
                     //incrementamos el número de profesores que recomendaron el curso
                     if(intval($eval->p7) == 1){
                         $factor_recomendacion_curso++;
+                        $tam_recomendacion++;
+                    }elseif(intval($eval->p7) == 0){
+                        $tam_recomendacion++;
                     }
                 }
             }
@@ -1049,10 +1260,13 @@ class CoordinadorController extends Controller
                 $tam3 = 1;
             }
 
-            $contenido_promedio += $contenido_curso/($tam*5);
-            $instructor_promedio += (($instructor_curso_1/($tam*11))+($instructor_curso_2/($tam2*11))+($instructor_curso_3/($tam3*11)))/$divisor;
-            $coordinacion_promedio += $coordinacion_curso/($tam*4);
-            $factor_recomendacion_promedio += ($factor_recomendacion_curso*100/$tam);
+            //Aritmetico promedio de los primedios a cada instructor (se obtienen individualmente el de cada instructor de cada curso), ponderado promedio de los cursos (se promedian todos los instructores de cada curso)
+            //Juicio Sumario B es promedio de los tres factores y que sea mayor o igual a 80
+             
+            $contenido_promedio += $contenido_curso/($tam_contenido);
+            $instructor_promedio += (($instructor_curso_1/($tam1))+($instructor_curso_2/($tam2))+($instructor_curso_3/($tam3)))/$divisor;
+            $coordinacion_promedio += $coordinacion_curso/($tam_coord);
+            $factor_recomendacion_promedio += ($factor_recomendacion_curso*100/$tam_recomendacion);
 
         }
 
@@ -1079,7 +1293,8 @@ class CoordinadorController extends Controller
         $coordinacion_promedio = 0;
         $factor_recomendacion_promedio = 0;
         $tam_coordinacion = 0;
-        
+
+
         //Iteramos cada curso del área seleccionada
         foreach($cursos as $curso){
             $tam_coordinacion++;
@@ -1101,67 +1316,191 @@ class CoordinadorController extends Controller
             $instructor_1 = 0;
             $coordinacion_curso = 0;
             $factor_recomendacion_curso = 0;
+            $tam1 = 0;
             $tam2 = 0;
             $tam3 = 0;
             $instructor_2 = 0;
             $instructor_3 = 0;
+            $tam_contenido = 0;
+            $tam_coord = 0;
 
             //Iteramos las evaluaciones de cada curso y acumulamos las calificaciones de cada rubro
             foreach($evals as $eval){
                 $tam_curso++;
-                $contenido_curso += $eval->p1_1;
-                $contenido_curso += $eval->p1_2;
-                $contenido_curso += $eval->p1_3;
-                $contenido_curso += $eval->p1_4;
-                $contenido_curso += $eval->p1_5;
 
-                $coordinacion_curso += $eval->p3_1;
-                $coordinacion_curso += $eval->p3_2;
-                $coordinacion_curso += $eval->p3_3;
-                $coordinacion_curso += $eval->p3_4; 
+                if($eval->p1_1>=50){
+                    $contenido_curso += $eval->p1_1;
+                    $tam_contenido++;
+                }
+                if($eval->p1_2>=50){
+                    $contenido_curso += $eval->p1_2;
+                    $tam_contenido++;
+                }
+                if($eval->p1_3>=50){
+                    $contenido_curso += $eval->p1_3;
+                    $tam_contenido++;
+                }
+                if($eval->p1_4>=50){
+                    $contenido_curso += $eval->p1_4;
+                    $tam_contenido++;
+                }
+                if($eval->p1_5>=50){
+                    $contenido_curso += $eval->p1_5;
+                    $tam_contenido++;
+                }
 
-                $instructor_1 += $eval->p4_1;
-                $instructor_1 += $eval->p4_2;
-                $instructor_1 += $eval->p4_3;
-                $instructor_1 += $eval->p4_4;
-                $instructor_1 += $eval->p4_5;
-                $instructor_1 += $eval->p4_6; 
-                $instructor_1 += $eval->p4_7; 
-                $instructor_1 += $eval->p4_8; 
-                $instructor_1 += $eval->p4_9; 
-                $instructor_1 += $eval->p4_10;
-                $instructor_1 += $eval->p4_11;
+                if($eval->p3_1>=50){
+                    $coordinacion_curso += $eval->p3_1;
+                    $tam_coord++;
+                }
+                if($eval->p3_2>=50){
+                    $coordinacion_curso += $eval->p3_2;
+                    $tam_coord++;
+                }
+                if($eval->p3_3>=50){
+                    $coordinacion_curso += $eval->p3_3;
+                    $tam_coord++;
+                }
+                if($eval->p3_4>=50){
+                    $coordinacion_curso += $eval->p3_4;
+                    $tam_coord++;
+                }
+
+                if($eval->p4_1>=50){
+                    $instructor_1 += $eval->p4_1;
+                    $tam1++;
+                }
+                if($eval->p4_2>=50){
+                    $instructor_1 += $eval->p4_2;
+                    $tam1++;
+                }
+                if($eval->p4_3>=50){
+                    $instructor_1 += $eval->p4_3;
+                    $tam1++;
+                }
+                if($eval->p4_4>=50){
+                    $instructor_1 += $eval->p4_4;
+                    $tam1++;
+                }
+                if($eval->p4_5>=50){
+                    $instructor_1 += $eval->p4_5;
+                    $tam1++;
+                }
+                if($eval->p4_6>=50){
+                    $instructor_1 += $eval->p4_6;
+                    $tam1++;
+                }
+                if($eval->p4_7>=50){
+                    $instructor_1 += $eval->p4_7;
+                    $tam1++;
+                }
+                if($eval->p4_8>=50){
+                    $instructor_1 += $eval->p4_8;
+                    $tam1++;
+                }
+                if($eval->p4_9>=50){
+                    $instructor_1 += $eval->p4_9;
+                    $tam1++;
+                }
+                if($eval->p4_10>=50){
+                    $instructor_1 += $eval->p4_10;
+                    $tam1++;
+                }
+                if($eval->p4_11>=50){
+                    $instructor_1 += $eval->p4_11;
+                    $tam1++;
+                }
 
                 //Si hay dos profesores acumulamos la evaluación del segundo
-                if($eval->p5_1>=20){
-                    $tam2++;
+                if($eval->p5_1>=50){
                     $instructor_2 += $eval->p5_1;
+                    $tam2++;
+                }
+                if($eval->p5_2>=50){
                     $instructor_2 += $eval->p5_2;
+                    $tam2++;
+                }
+                if($eval->p5_3>=50){
                     $instructor_2 += $eval->p5_3;
+                    $tam2++;
+                }
+                if($eval->p5_4>=50){
                     $instructor_2 += $eval->p5_4;
+                    $tam2++;
+                }
+                if($eval->p5_5>=50){
                     $instructor_2 += $eval->p5_5;
-                    $instructor_2 += $eval->p5_6; 
-                    $instructor_2 += $eval->p5_7; 
-                    $instructor_2 += $eval->p5_8; 
-                    $instructor_2 += $eval->p5_9; 
+                    $tam2++;
+                }
+                if($eval->p5_6>=50){
+                    $instructor_2 += $eval->p5_6;
+                    $tam2++;
+                }
+                if($eval->p5_7>=50){
+                    $instructor_2 += $eval->p5_7;
+                    $tam2++;
+                }
+                if($eval->p5_8>=50){
+                    $instructor_2 += $eval->p5_8;
+                    $tam2++;
+                }
+                if($eval->p5_9>=50){
+                    $instructor_2 += $eval->p5_9;
+                    $tam2++;
+                }
+                if($eval->p5_10>=50){
                     $instructor_2 += $eval->p5_10;
+                    $tam2++;
+                }
+                if($eval->p5_11>=50){
                     $instructor_2 += $eval->p5_11;
+                    $tam2++;
                 }
 
                 //Si hay tres profesores acumulamos la evaluación del tecero
-                if($eval->p6_1>=20){
-                    $tam3++;
+                if($eval->p6_1>=50){
                     $instructor_3 += $eval->p6_1;
+                    $tam3++;
+                }
+                if($eval->p6_2>=50){
                     $instructor_3 += $eval->p6_2;
+                    $tam3++;
+                }
+                if($eval->p6_3>=50){
                     $instructor_3 += $eval->p6_3;
+                    $tam3++;
+                }
+                if($eval->p6_4>=50){
                     $instructor_3 += $eval->p6_4;
+                    $tam3++;
+                }
+                if($eval->p6_5>=50){
                     $instructor_3 += $eval->p6_5;
-                    $instructor_3 += $eval->p6_6; 
-                    $instructor_3 += $eval->p6_7; 
-                    $instructor_3 += $eval->p6_8; 
-                    $instructor_3 += $eval->p6_9; 
+                    $tam3++;
+                }
+                if($eval->p6_6>=50){
+                    $instructor_3 += $eval->p6_6;
+                    $tam3++;
+                }
+                if($eval->p6_7>=50){
+                    $instructor_3 += $eval->p6_7;
+                    $tam3++;
+                }
+                if($eval->p6_8>=50){
+                    $instructor_3 += $eval->p6_8;
+                    $tam3++;
+                }
+                if($eval->p6_9>=50){
+                    $instructor_3 += $eval->p6_9;
+                    $tam3++;
+                }
+                if($eval->p6_10>=50){
                     $instructor_3 += $eval->p6_10;
+                    $tam3++;
+                }
+                if($eval->p6_11>=50){
                     $instructor_3 += $eval->p6_11;
+                    $tam3++;
                 }
 
                 if(intval($eval->p7) == 1){
@@ -1183,12 +1522,13 @@ class CoordinadorController extends Controller
                 $divisor = 3;
             }
 
-            $contenido_promedio += round($contenido_curso/($tam_curso*5),2);
-            $coordinacion_promedio += round($coordinacion_curso/($tam_curso*4),2);
-            $instructor_promedio += round((($instructor_1/($tam_curso*11))+($instructor_2/($tam2*11))+($instructor_3/($tam3*11)))/$divisor,2);
-            $factor_recomendacion_promedio += round(($factor_recomendacion_curso*100)/$tam_curso,2);
+            $contenido_promedio += $contenido_curso/($tam_contenido);
+            $coordinacion_promedio += $coordinacion_curso/($tam_coord);
+            $instructor_promedio += (($instructor_1/($tam1))+($instructor_2/($tam2))+($instructor_3/($tam3)))/$divisor;
+            $factor_recomendacion_promedio += ($factor_recomendacion_curso*100)/$tam_curso;
 
         }
+
 
         //Serie de pasos necesarios para obtener el promedio de toda el área
         $factor_contenido_aritmetico = round($contenido_promedio / $tam_coordinacion,2);
@@ -1315,7 +1655,7 @@ class CoordinadorController extends Controller
         $nombreCoordinacion = $coordinaciones[0]->nombre_coordinacion;
         $lugar = "pages.reporte_final_area";
 
-        return $this->enviarVista($semestre, $cursos, $nombreCoordinacion, $lugar,0,'elegir.coordinacion');
+        return $this->enviarVista($semestre, $cursos, $nombreCoordinacion, $lugar,0,'elegir.coordinacion',$request->get('periodo'));
         
     }
 
@@ -1324,17 +1664,17 @@ class CoordinadorController extends Controller
      * @param $fecha escogida por el usuario
      * @return Lo retornado por la función enviarVista
      */
-    public function globalPDF($fecha){
+    public function globalPDF($fecha, $semestral){
         //Obtenemos la fecha seleccionada por el usuario
         $semestre = explode('-',$fecha);
         //Obtenemos los cursos de dicha fecha
         $cursos = DB::table('cursos')
-            ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]]])
+            ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]],['cursos.semestre_si',$semestral]])
             ->get();
         //Procedemos a obtener todos los datos e indicamos que queremos pasarlo a pdf
         $lugar = "pages.reporte_final_global";
 
-        return $this->enviarVista($fecha, $cursos, "", $lugar,1,'');
+        return $this->enviarVista($fecha, $cursos, "", $lugar,1,'',$semestral);
     }
 
     /**
@@ -1342,7 +1682,7 @@ class CoordinadorController extends Controller
      * @param $fecha escogida por el usuario, $coordinación: coordinación elegida por el usuario (id)
      * @return Lo retornado por la función enviarVista
      */
-    public function areaPDF($fecha,$coordinacion){
+    public function areaPDF($fecha,$coordinacion,$semestral){
 
         //Obtenemos la fecha ingresada por el usuario
         $semestre = $fecha;
@@ -1361,7 +1701,7 @@ class CoordinadorController extends Controller
             ->get();
         //Obtenemos los cursos que corresponden a la fecha indicada
         $cursosFecha = DB::table('cursos')
-            ->where([['semestre_anio',$fechaRec[0]],['semestre_pi',$fechaRec[1]]])
+            ->where([['semestre_anio',$fechaRec[0]],['semestre_pi',$fechaRec[1]],['semestre_si',$semestral]])
             ->get();
 
         $cursos = array();
@@ -1380,7 +1720,7 @@ class CoordinadorController extends Controller
         $nombreCoordinacion = $coordinaciones[0]->nombre_coordinacion;
         $lugar = "pages.reporte_final_area";
 
-        return $this->enviarVista($semestre, $cursos, $nombreCoordinacion, $lugar,1,'');
+        return $this->enviarVista($semestre, $cursos, $nombreCoordinacion, $lugar,1,'',$semestral);
     }
 
 
@@ -1389,11 +1729,11 @@ class CoordinadorController extends Controller
      * @param Todos los datos necesarios para generar el reporte 
      * @return La descarga del pdf
      */
-    public function descargarPDF($nombres,$periodo,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$positivas,$DP,$DH,$CO,$DI,$Otros,$DPtematicas,$DItematicas,$COtematicas,$DHtematicas,$Otrostematicas,$coordinaciones,$horarios,$coordinacion,$contenido,$profesors,$instructor,$asistencia,$nombreCoordinacion,$lugar,$factor_contenido_aritmetico,$factor_instructor_aritmetico,$factor_coordinacion_aritmetico,$factor_recomendacion_aritmetico){
+    public function descargarPDF($nombres,$periodo,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$positivas,$DP,$DH,$CO,$DI,$Otros,$DPtematicas,$DItematicas,$COtematicas,$DHtematicas,$Otrostematicas,$coordinaciones,$horarios,$coordinacion,$contenido,$profesors,$instructor,$asistencia,$nombreCoordinacion,$lugar,$factor_contenido_aritmetico,$factor_instructor_aritmetico,$factor_coordinacion_aritmetico,$factor_recomendacion_aritmetico,$semestral){
         $coordinaciones = Coordinacion::all();
 
         $envio = 'pages.global';
-        $envioPDF = 'global_'.$periodo;
+        $envioPDF = 'global_'.$periodo.'-'.$semestral;
         if(strcmp($lugar,'pages.reporte_final_area') == 0){
             $envio = 'pages.area';
             $envioPDF = 'area_'.$nombreCoordinacion.'_periodo';
@@ -1525,11 +1865,11 @@ class CoordinadorController extends Controller
 			$factor_acreditacion = round(($acreditado * 100) / 1,2);
 		}else
 		{
-			$factor_acreditacion = round(($acreditado * 100) / $alumnos,2);
+			$factor_acreditacion = round(($acreditado * 100) / $asistieron,2);
 		}
 
 		//Obtenemos el factor de ocupacion
-		$ocupacion = ($alumnos*100)/$curso_ocupacion;
+		$ocupacion = ($asistieron*100)/$curso_ocupacion;
 
 		//Obtenemos la cantidad de integrantes de cada area
 		$DP=0;
@@ -1575,383 +1915,424 @@ class CoordinadorController extends Controller
 		$promedios3 = array();
 		$respuesta_individual1 = 0;
 		$respuesta_individual2 = 0;
-		$respuesta_individual3 = 0;
+        $respuesta_individual3 = 0;
+        $preguntas_contenido = 0;
+        $preguntas_coordinacion = 0;
 
 		//Bucle necesario para obtener el numero de preguntas positivas, evaluaciones de cada uno de los instructores y los factores de calidad de contenido, de calidad de la coordinacion, y los factores de calidad de los instructores
 		foreach($evals as $evaluacion){
 			//Aumentamos el numero de alumnos que respondieron el cuestionario
 			$alumnos++;
 			//Desde 1_1 a 1_5 obtenemos el factor de calidad del contenido ($respuestasContenido/$alumnos*5) valor >= 60
-			if($evaluacion->p1_1 >= 20){
+			if($evaluacion->p1_1 >= 50){
 				$preguntas++;
-				$respuestasContenido += $evaluacion->p1_1;
-				if($evaluacion->p1_1 > 60){
+                $respuestasContenido += $evaluacion->p1_1;
+                $preguntas_contenido++;
+				if($evaluacion->p1_1 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p1_2 >= 20){
+			if($evaluacion->p1_2 >= 50){
 				$preguntas++;
-				$respuestasContenido+= $evaluacion->p1_2;
-				if($evaluacion->p1_2 > 60){
+                $respuestasContenido+= $evaluacion->p1_2;
+                $preguntas_contenido++;
+				if($evaluacion->p1_2 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p1_3 >= 20){
+			if($evaluacion->p1_3 >= 50){
 				$preguntas++;
-				$respuestasContenido+= $evaluacion->p1_3;
-				if($evaluacion->p1_3 > 60){
+                $respuestasContenido+= $evaluacion->p1_3;
+                $preguntas_contenido++;
+				if($evaluacion->p1_3 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p1_4 >= 20){
+			if($evaluacion->p1_4 >= 50){
 				$preguntas++;
-				$respuestasContenido+= $evaluacion->p1_4;
-				if($evaluacion->p1_4 > 60){
+                $respuestasContenido+= $evaluacion->p1_4;
+                $preguntas_contenido++;
+				if($evaluacion->p1_4 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p1_5 >= 20){
+			if($evaluacion->p1_5 >= 50){
 				$preguntas++;
-				$respuestasContenido+= $evaluacion->p1_5;
-				if($evaluacion->p1_5 > 60){
+                $respuestasContenido+= $evaluacion->p1_5;
+                $preguntas_contenido++;
+				if($evaluacion->p1_5 >= 80){
 					$positivas++;
 				}
 			}
 
-			if($evaluacion->p2_1 >= 20){
+			if($evaluacion->p2_1 >= 50){
 				$preguntas++;
-				if($evaluacion->p2_1 > 60){
+				if($evaluacion->p2_1 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p2_2 >= 20){
+			if($evaluacion->p2_2 >= 50){
 				$preguntas++;
-				if($evaluacion->p2_2 > 60){
+				if($evaluacion->p2_2 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p2_3 >= 20){
+			if($evaluacion->p2_3 >= 50){
 				$preguntas++;
-				if($evaluacion->p2_3 > 60){
+				if($evaluacion->p2_3 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p2_4 >= 20){
+			if($evaluacion->p2_4 >= 50){
 				$preguntas++;
-				if($evaluacion->p2_4 > 60){
+				if($evaluacion->p2_4 >= 80){
 					$positivas++;
 				}
 			}
 
 			//Desde 1_1 a 1_5 obtenemos el factor de calidad de la coordinacion ($respuestasCoordinacion/$alumnos*4)
-			if($evaluacion->p3_1 >= 20){
+			if($evaluacion->p3_1 >= 50){
 				$preguntas++;
-				$respuestasCoordinacion += $evaluacion->p3_1;
-				if($evaluacion->p3_1 > 60){
+                $respuestasCoordinacion += $evaluacion->p3_1;
+                $preguntas_coordinacion++;
+				if($evaluacion->p3_1 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p3_2 >= 20){
+			if($evaluacion->p3_2 >= 50){
 				$preguntas++;
-				$respuestasCoordinacion += $evaluacion->p3_2;
-				if($evaluacion->p3_2 > 60){
+                $respuestasCoordinacion += $evaluacion->p3_2;
+                $preguntas_coordinacion++;
+				if($evaluacion->p3_2 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p3_3 >= 20){
+			if($evaluacion->p3_3 >= 50){
 				$preguntas++;
-				$respuestasCoordinacion += $evaluacion->p3_3;
-				if($evaluacion->p3_3 > 60){
+                $respuestasCoordinacion += $evaluacion->p3_3;
+                $preguntas_coordinacion++;
+				if($evaluacion->p3_3 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p3_4 >= 20){
+			if($evaluacion->p3_4 >= 50){
 				$preguntas++;
-				$respuestasCoordinacion += $evaluacion->p3_4;
-				if($evaluacion->p3_4 > 60){
+                $respuestasCoordinacion += $evaluacion->p3_4;
+                $preguntas_coordinacion++;
+				if($evaluacion->p3_4 >= 80){
 					$positivas++;
 				}
 			}
 
 			//Las preguntas correspondientes al primer instructor
-			if($evaluacion->p4_1 >= 20){
+			if($evaluacion->p4_1 >= 50){
 				$alumnos_eval_instructor1++;
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_1;
 				$respuesta_individual1+= $evaluacion->p4_1;
-				if($evaluacion->p4_1 == 1){
+				if($evaluacion->p4_1 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p4_2 >= 20){
+			if($evaluacion->p4_2 >= 50){
+                $alumnos_eval_instructor1++;
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_2;
 				$respuesta_individual1+= $evaluacion->p4_2;
-				if($evaluacion->p4_2 > 60){
+				if($evaluacion->p4_2 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p4_3 >= 20){
+			if($evaluacion->p4_3 >= 50){
+                $alumnos_eval_instructor1++;
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_3;
 				$respuesta_individual1+= $evaluacion->p4_3;
-				if($evaluacion->p4_3 > 60){
+				if($evaluacion->p4_3 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p4_4 >= 20){
+			if($evaluacion->p4_4 >= 50){
+                $alumnos_eval_instructor1++;
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_4;
 				$respuesta_individual1+= $evaluacion->p4_4;
-				if($evaluacion->p4_4 > 60){
+				if($evaluacion->p4_4 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p4_5 >= 20){
-				$preguntas++;
+			if($evaluacion->p4_5 >= 50){
+                $preguntas++;
+                $alumnos_eval_instructor1++;
 				$respuestasInstructores1+= $evaluacion->p4_5;
 				$respuesta_individual1+= $evaluacion->p4_5;
-				if($evaluacion->p4_5 > 60){
+				if($evaluacion->p4_5 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p4_6 >= 20){
+			if($evaluacion->p4_6 >= 50){
+                $alumnos_eval_instructor1++;
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_6;
 				$respuesta_individual1+= $evaluacion->p4_6;
-				if($evaluacion->p4_6 > 60){
+				if($evaluacion->p4_6 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p4_7 >= 20){
+			if($evaluacion->p4_7 >= 50){
+                $alumnos_eval_instructor1++;
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_7;
 				$respuesta_individual1+= $evaluacion->p4_7;
-				if($evaluacion->p4_7 > 60){
+				if($evaluacion->p4_7 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p4_8 >= 20){
+			if($evaluacion->p4_8 >= 50){
+                $alumnos_eval_instructor1++;
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_8;
 				$respuesta_individual1+= $evaluacion->p4_8;
-				if($evaluacion->p4_8 > 60){
+				if($evaluacion->p4_8 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p4_9 >= 20){
+			if($evaluacion->p4_9 >= 50){
+                $alumnos_eval_instructor1++;
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_9;
 				$respuesta_individual1+= $evaluacion->p4_9;
-				if($evaluacion->p4_9 > 60){
+				if($evaluacion->p4_9 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p4_10 >= 20){
+			if($evaluacion->p4_10 >= 50){
+                $alumnos_eval_instructor1++;
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_10;
 				$respuesta_individual1+= $evaluacion->p4_10;
-				if($evaluacion->p4_10 > 60){
+				if($evaluacion->p4_10 >= 80){
 					$positivas++;
 				}
 			}
 			//Queremos obtener todas las evaluaciones para luego comparar promedio, minimo y maximo del instructor
-			if($evaluacion->p4_11 >= 20){
+			if($evaluacion->p4_11 >= 50){
+                $alumnos_eval_instructor1++;
 				$preguntas++;
 				$respuestasInstructores1+= $evaluacion->p4_11;
 				$respuesta_individual1+= $evaluacion->p4_11;
 				array_push($promedios1, round($respuesta_individual1/11,2));
 				$respuesta_individual1 = 0;
-				if($evaluacion->p4_11 > 60){
+				if($evaluacion->p4_11 >= 80){
 					$positivas++;
 				}
 			}
 
 			//Las preguntas correspondientes al segundo instructor
-			if($evaluacion->p5_1 >= 20){
+			if($evaluacion->p5_1 >= 50){
 				$alumnos_eval_instructor2++;
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_1;
 				$respuesta_individual2+= $evaluacion->p5_1;
-				if($evaluacion->p5_1 > 60){
+				if($evaluacion->p5_1 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p5_2 >= 20){
+			if($evaluacion->p5_2 >= 50){
+                $alumnos_eval_instructor2++;
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_2;
 				$respuesta_individual2+= $evaluacion->p5_2;
-				if($evaluacion->p5_2 > 60){
+				if($evaluacion->p5_2 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p5_3 >= 20){
+			if($evaluacion->p5_3 >= 50){
+                $alumnos_eval_instructor2++;
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_3;
 				$respuesta_individual2+= $evaluacion->p5_3;
-				if($evaluacion->p5_3 > 60){
+				if($evaluacion->p5_3 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p5_4 >= 20){
+			if($evaluacion->p5_4 >= 50){
+                $alumnos_eval_instructor2++;
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_4;
 				$respuesta_individual2+= $evaluacion->p5_4;
-				if($evaluacion->p5_4 > 60){
+				if($evaluacion->p5_4 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p5_5 >= 20){
+			if($evaluacion->p5_5 >= 50){
+                $alumnos_eval_instructor2++;
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_5;
 				$respuesta_individual2+= $evaluacion->p5_5;
-				if($evaluacion->p5_5 > 60){
+				if($evaluacion->p5_5 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p5_6 >= 20){
+			if($evaluacion->p5_6 >= 50){
+                $alumnos_eval_instructor2++;
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_6;
 				$respuesta_individual2+= $evaluacion->p5_6;
-				if($evaluacion->p5_6 > 60){
+				if($evaluacion->p5_6 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p5_7 >= 20){
+			if($evaluacion->p5_7 >= 50){
+                $alumnos_eval_instructor2++;
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_7;
 				$respuesta_individual2+= $evaluacion->p5_7;
-				if($evaluacion->p5_7 > 60){
+				if($evaluacion->p5_7 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p5_8 >= 20){
+			if($evaluacion->p5_8 >= 50){
+                $alumnos_eval_instructor2++;
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_8;
 				$respuesta_individual2+= $evaluacion->p5_8;
-				if($evaluacion->p5_8 > 60){
+				if($evaluacion->p5_8 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p5_9 >= 20){
+			if($evaluacion->p5_9 >= 50){
+                $alumnos_eval_instructor2++;
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_9;
 				$respuesta_individual2+= $evaluacion->p5_9;
-				if($evaluacion->p5_9 > 60){
+				if($evaluacion->p5_9 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p5_10 >= 20){
+			if($evaluacion->p5_10 >= 50){
+                $alumnos_eval_instructor2++;
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_10;
 				$respuesta_individual2+= $evaluacion->p5_10;
-				if($evaluacion->p5_10 > 60){
+				if($evaluacion->p5_10 >= 80){
 					$positivas++;
 				}
 			}
 			//Queremos obtener todas las evaluaciones para luego comparar promedio, minimo y maximo del instructor
-			if($evaluacion->p5_11 >= 20){
+			if($evaluacion->p5_11 >= 50){
+                $alumnos_eval_instructor2++;
 				$preguntas++;
 				$respuestasInstructores2+= $evaluacion->p5_11;
 				$respuesta_individual2+= $evaluacion->p5_11;
 				array_push($promedios2, round($respuesta_individual2/11,2));
 				$respuesta_individual2 = 0;
-				if($evaluacion->p5_11 > 60){
+				if($evaluacion->p5_11 >= 80){
 					$positivas++;
 				}
 			}
 			
 			//Las preguntas correspondientes al tercer instructor
-			if($evaluacion->p6_1 >= 20){
+			if($evaluacion->p6_1 >= 50){
 				$alumnos_eval_instructor3++;
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_1;
 				$respuesta_individual3+= $evaluacion->p6_1;
-				if($evaluacion->p6_1 == 1){
+				if($evaluacion->p6_1 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p6_2 >= 20){
+			if($evaluacion->p6_2 >= 50){
+                $alumnos_eval_instructor3++;
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_2;
 				$respuesta_individual3+= $evaluacion->p6_2;
-				if($evaluacion->p6_2 > 60){
+				if($evaluacion->p6_2 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p6_3 >= 20){
+			if($evaluacion->p6_3 >= 50){
+                $alumnos_eval_instructor3++;
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_3;
 				$respuesta_individual3+= $evaluacion->p6_3;
-				if($evaluacion->p6_3 > 60){
+				if($evaluacion->p6_3 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p6_4 >= 20){
+			if($evaluacion->p6_4 >= 50){
+                $alumnos_eval_instructor3++;
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_4;
 				$respuesta_individual3+= $evaluacion->p6_4;
-				if($evaluacion->p6_4 > 60){
+				if($evaluacion->p6_4 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p6_5 >= 20){
+			if($evaluacion->p6_5 >= 50){
+                $alumnos_eval_instructor3++;
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_5;
 				$respuesta_individual3+= $evaluacion->p6_5;
-				if($evaluacion->p6_5 > 60){
+				if($evaluacion->p6_5 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p6_6 >= 20){
+			if($evaluacion->p6_6 >= 50){
+                $alumnos_eval_instructor3++;
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_6;
 				$respuesta_individual3+= $evaluacion->p6_6;
-				if($evaluacion->p6_6 > 60){
+				if($evaluacion->p6_6 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p6_7 >= 20){
+			if($evaluacion->p6_7 >= 50){
+                $alumnos_eval_instructor3++;
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_7;
 				$respuesta_individual3+= $evaluacion->p6_7;
-				if($evaluacion->p6_7 > 60){
+				if($evaluacion->p6_7 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p6_8 >= 20){
+			if($evaluacion->p6_8 >= 50){
+                $alumnos_eval_instructor3++;
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_8;
 				$respuesta_individual3+= $evaluacion->p6_8;
-				if($evaluacion->p6_8 > 60){
+				if($evaluacion->p6_8 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p6_9 >= 20){
+			if($evaluacion->p6_9 >= 50){
+                $alumnos_eval_instructor3++;
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_9;
 				$respuesta_individual3+= $evaluacion->p6_9;
-				if($evaluacion->p6_9 > 60){
+				if($evaluacion->p6_9 >= 80){
 					$positivas++;
 				}
 			}
-			if($evaluacion->p6_10 >= 20){
+			if($evaluacion->p6_10 >= 50){
+                $alumnos_eval_instructor3++;
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_10;
 				$respuesta_individual3+= $evaluacion->p6_10;
-				if($evaluacion->p6_10 > 60){
+				if($evaluacion->p6_10 >= 80){
 					$positivas++;
 				}
 			}
 
 			//Queremos obtener todas las evaluaciones para luego comparar promedio, minimo y maximo del instructor
 			if($evaluacion->p6_11 >= 50){
+                $alumnos_eval_instructor3++;
 				$preguntas++;
 				$respuestasInstructores3+= $evaluacion->p6_11;
 				$respuesta_individual3+= $evaluacion->p6_11;
 				array_push($promedios3, round($respuesta_individual3/11,2));
 				$respuesta_individual3 = 0;
-				if($evaluacion->p6_11 > 60){
+				if($evaluacion->p6_11 >= 80){
 					$positivas++;
 				}
 			}
@@ -2023,7 +2404,7 @@ class CoordinadorController extends Controller
         }
 
 		if(strcmp($catalogoCurso[0]->tipo,'S')==0){
-            $nombre = 'SEMINARIO';
+            $nombre = 'seminario';
 			if($minimo3 != 0){
                 //$envio = 'pages.reporte_final_seminario_instructores_3';
                 $envioPDF = 'pages.validacion_seminario_3';
@@ -2035,7 +2416,7 @@ class CoordinadorController extends Controller
                 $envioPDF = 'pages.validacion_seminario_1';
 			}
 		}else{
-            $nombre = 'CURSO';
+            $nombre = 'curso';
 			if($minimo3 != 0){
                 //$envio = 'pages.reporte_final_curso3';
                 $envioPDF = 'pages.validacion_3';
@@ -2061,36 +2442,36 @@ class CoordinadorController extends Controller
 
 		//Si hay un instructor obtenemos su factor
 		if($alumnos_eval_instructor1 != 0){
-			$factor_instructor1 = round($respuestasInstructores1 / ($alumnos_eval_instructor1*11),2);
+			$factor_instructor1 = round($respuestasInstructores1 / ($alumnos_eval_instructor1),2);
 		}
 
 		$factor_instructor2 = 0;
 
 		//Si hay dos instructores obtenemos su factor
 		if($alumnos_eval_instructor2 != 0){
-			$factor_instructor2 = round($respuestasInstructores2 / ($alumnos_eval_instructor2*11),2);
+			$factor_instructor2 = round($respuestasInstructores2 / ($alumnos_eval_instructor2),2);
 		}
 
 		$factor_instructor3 = 0;
 
 		//Si hay tres instructores obtenemos su factor
 		if($alumnos_eval_instructor3 != 0){
-			$factor_instructor3 = round($respuestasInstructores3 / ($alumnos_eval_instructor3*11),2);
+			$factor_instructor3 = round($respuestasInstructores3 / ($alumnos_eval_instructor3),2);
 		}
 
 		//Obtenemos los factores de respuestas positivas, contenido y coordinacion
 		$factor_respuestas_positivas = round($positivas*100 / $preguntas, 2);
-		$factor_contenido = round($respuestasContenido / ($alumnos*5),2);
-		$factor_coordinacion = round($respuestasCoordinacion / ($alumnos*4),2);
+		$factor_contenido = round($respuestasContenido / ($preguntas_contenido),2);
+		$factor_coordinacion = round($respuestasCoordinacion / ($preguntas_coordinacion),2);
 
 		//Obtenemos el numero de horas a partir del numero de sesiones y las horas de cada sesion
 		$horas_inicio = explode(':',$curso[0]->hora_inicio);
 		$horas_fin = explode(':',$curso[0]->hora_fin);
 
-		$inicio = intval($horas_inicio[0]) + floatval($horas_inicio[1]/100);
-		$fin = intval($horas_fin[0]) + floatval($horas_fin[1]/100);
+        $inicio = intval($horas_inicio[0]) + floatval($horas_inicio[1]/100);
+        $fin = intval($horas_fin[0]) + floatval($horas_fin[1]/100);
 
-		$numero_horas = floatval($curso[0]->numero_sesiones) * ($fin-$inicio);
+        $numero_horas = floatval($curso[0]->numero_sesiones) * ($fin-$inicio);
 
         $catalogo_curso = DB::table('catalogo_cursos')
             ->where('id',$curso[0]->catalogo_id)

@@ -173,7 +173,7 @@ body {
 		<br>
 		<table width="100%">
 			<tr>
-				<th class="f">Lo mejor del curso fue</th>
+				<th class="f1">Lo mejor del curso fue</th>
 			</tr>
             @foreach($mejor as $mejor)
                 <tr>
@@ -183,7 +183,7 @@ body {
 		</table>
 		<table width="100%">
 			<tr>
-				<th class="f">Comentarios y sugerencias</th>
+				<th class="f1">Comentarios y sugerencias</th>
 			</tr>
             @foreach($sugerencias as $sugerencia)
                 <tr>

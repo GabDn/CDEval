@@ -44,8 +44,8 @@ Route::get('admin/','CoordinadorController@index')->name('superadmin');
 
 Route::post('enviar_global',"CoordinadorController@enviarGlobal")->name('enviar.global');
 Route::post('enviar_coordinacion',"CoordinadorController@enviarCoordinacion")->name('enviar.coordinacion');
-Route::get('descargar/global/{fecha}','CoordinadorController@globalPDF')->name('global.pdf');
-Route::get('descargar/area/{fecha}/{nombreCoordinacion}','CoordinadorController@areaPDF')->name('area.pdf');
+Route::get('descargar/global/{fecha}/{semestral}','CoordinadorController@globalPDF')->name('global.pdf');
+Route::get('descargar/area/{fecha}/{nombreCoordinacion}/{semestral}','CoordinadorController@areaPDF')->name('area.pdf');
 
 Route::get('area',function(){
     return view('pages.area');

@@ -2011,16 +2011,16 @@ class StartSeeder extends Seeder
 			'semestre_anio'=>2020,
 			'semestre_pi'=>'1',
 			'semestre_si'=>'s',
-			'fecha_inicio' => '2018-05-20',
-            'fecha_fin' => '2018-05-30',
-            'hora_inicio' => '14:00',
-            'hora_fin' => '16:00',
+			'fecha_inicio' => '2019-08-20',
+            'fecha_fin' => '2019-09-30',
+            'hora_inicio' => '10:00',
+            'hora_fin' => '14:00',
             'dias_semana' => 'Lunes,Miércoles',
-            'numero_sesiones' => 10,
+            'numero_sesiones' => 5,
             'texto_diploma' => 'Texto diploma',
             'costo' => 2000,
-            'cupo_maximo' => 20,
-            'cupo_minimo' => 5,
+            'cupo_maximo' => 16,
+            'cupo_minimo' => 8,
             'catalogo_id' => 50,
             'salon_id' => 1
 			
@@ -2057,47 +2057,15 @@ class StartSeeder extends Seeder
 			'curso_id'=>50,
 			'profesor_id'=>93,
         ]);
-        
-        DB::table('profesors')->insert([
-            'id'=>500,
-            'nombres'=>'Guillermo Gabriel',
-            'apellido_paterno'=>'Aguilar',
-            'apellido_materno'=>'Lacavex',
-            'rfc'=>'AGLG740101AGLG',
-            'numero_trabajador' => '1214324500',
-            'fecha_nacimiento'=>'1974-01-01'
-        ]);
-
-        DB::table('participante_curso')->insert([
-            'id'=>500,
-            'profesor_id'=>500,
-            'curso_id'=>50
-        ]);
-
-        DB::table('profesors')->insert([
-            'id'=>501,
-            'nombres'=>'Victorino',
-            'apellido_paterno'=>'Garcia',
-            'apellido_materno'=>'Ramos',
-            'rfc'=>'GARV740102GARV',
-            'numero_trabajador' => '1214324501',
-            'fecha_nacimiento'=>'1974-01-02'
-        ]);
-
-        DB::table('participante_curso')->insert([
-            'id'=>501,
-            'profesor_id'=>501,
-            'curso_id'=>50
-        ]);
 
         DB::table('profesors')->insert([
             'id'=>502,
-            'nombres'=>'Luis Bruno',
-            'apellido_paterno'=>'Garduño',
-            'apellido_materno'=>'Castro',
-            'rfc'=>'GACL740103GACL',
+            'nombres'=>'Guillermo Gabriel',
+            'apellido_paterno'=>'Aguilar',
+            'apellido_materno'=>'Lacavez',
+            'rfc'=>'AALG740106AALG',
             'numero_trabajador' => '1214324502',
-            'fecha_nacimiento'=>'1974-01-03'
+            'fecha_nacimiento'=>'1974-01-06'
         ]);
 
         DB::table('participante_curso')->insert([
@@ -2107,13 +2075,29 @@ class StartSeeder extends Seeder
         ]);
 
         DB::table('profesors')->insert([
+            'id'=>503,
+            'nombres'=>'Luis Bruno',
+            'apellido_paterno'=>'Garduño',
+            'apellido_materno'=>'Castro',
+            'rfc'=>'GACL740106AALG',
+            'numero_trabajador' => '1214324503',
+            'fecha_nacimiento'=>'1974-01-06'
+        ]);
+
+        DB::table('participante_curso')->insert([
+            'id'=>503,
+            'profesor_id'=>503,
+            'curso_id'=>50
+        ]);
+
+        DB::table('profesors')->insert([
             'id'=>504,
             'nombres'=>'Manuel',
             'apellido_paterno'=>'Hernandez',
             'apellido_materno'=>'Gonzalez',
-            'rfc'=>'HEGM740105HEGM',
+            'rfc'=>'HEGM740106AALG',
             'numero_trabajador' => '1214324504',
-            'fecha_nacimiento'=>'1974-01-05'
+            'fecha_nacimiento'=>'1974-01-06'
         ]);
 
         DB::table('participante_curso')->insert([
@@ -2121,6 +2105,7 @@ class StartSeeder extends Seeder
             'profesor_id'=>504,
             'curso_id'=>50
         ]);
+
 
         DB::table('profesors')->insert([
             'id'=>505,
@@ -2130,12 +2115,6 @@ class StartSeeder extends Seeder
             'rfc'=>'MALJ740106MALJ',
             'numero_trabajador' => '1214324505',
             'fecha_nacimiento'=>'1974-01-06'
-        ]);
-
-        DB::table('participante_curso')->insert([
-            'id'=>505,
-            'profesor_id'=>505,
-            'curso_id'=>50
         ]);
 
         DB::table('profesors')->insert([
@@ -2148,12 +2127,6 @@ class StartSeeder extends Seeder
             'fecha_nacimiento'=>'1974-01-07'
         ]);
 
-        DB::table('participante_curso')->insert([
-            'id'=>506,
-            'profesor_id'=>506,
-            'curso_id'=>50
-        ]);
-
         DB::table('profesors')->insert([
             'id'=>507,
             'nombres'=>'Luis Enrique',
@@ -2162,12 +2135,6 @@ class StartSeeder extends Seeder
             'rfc'=>'QUCL740108QUCL',
             'numero_trabajador' => '1214324507',
             'fecha_nacimiento'=>'1974-01-08'
-        ]);
-
-        DB::table('participante_curso')->insert([
-            'id'=>507,
-            'profesor_id'=>507,
-            'curso_id'=>50
         ]);
 
         DB::table('profesors')->insert([
@@ -2212,11 +2179,6 @@ class StartSeeder extends Seeder
             'fecha_nacimiento'=>'1974-01-10'
         ]);
 
-        DB::table('participante_curso')->insert([
-            'id'=>510,
-            'profesor_id'=>510,
-            'curso_id'=>50
-        ]);
 
 		DB::table('profesors')->insert([
 			'id'=>50,
@@ -2237,15 +2199,15 @@ class StartSeeder extends Seeder
 		]);
 		
 		DB::table('_evaluacion_final_curso')->insert([
-			'p1_1'=>'80',
-			'p1_2'=>'80',
-			'p1_3'=>'80',
-			'p1_4'=>'80',
-			'p1_5'=>'80',
-			'p2_1'=>'80',
-			'p2_2'=>'80',
+			'p1_1'=>'95',
+			'p1_2'=>'95',
+			'p1_3'=>'95',
+			'p1_4'=>'95',
+			'p1_5'=>'95',
+			'p2_1'=>'95',
+			'p2_2'=>'95',
 			'p2_3'=>'100',
-			'p2_4'=>'80',
+			'p2_4'=>'95',
 			'p3_1'=>'100',
 			'p3_2'=>'100',
 			'p3_3'=>'100',
@@ -2253,7 +2215,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["1","null"]',
 			'mejor'=>'El conocimiento de nuevas herramientas',
-			'sug'=>'Ninguna',
+			'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -2262,9 +2224,9 @@ class StartSeeder extends Seeder
 			'p4_6'=>'100',
 			'p4_7'=>'100',
 			'p4_8'=>'100',
-			'p4_9'=>'80',
+			'p4_9'=>'95',
 			'p4_10'=>'100',
-			'p4_11'=>'80',
+			'p4_11'=>'95',
 			'p5_1'=>'100',
 			'p5_2'=>'100',
 			'p5_3'=>'100',
@@ -2273,9 +2235,9 @@ class StartSeeder extends Seeder
 			'p5_6'=>'100',
 			'p5_7'=>'100',
 			'p5_8'=>'100',
-			'p5_9'=>'80',
+			'p5_9'=>'95',
 			'p5_10'=>'100',
-            'p5_11'=>'80',
+            'p5_11'=>'95',
             'otros'=>'Otros',
 			'conocimiento'=>'["2"]',
 			'tematica'=>'tematica',
@@ -2305,12 +2267,12 @@ class StartSeeder extends Seeder
 		
 		DB::table('_evaluacion_final_curso')->insert([
 			'p1_1'=>'100',
-			'p1_2'=>'80',
-			'p1_3'=>'80',
+			'p1_2'=>'95',
+			'p1_3'=>'95',
 			'p1_4'=>'100',
-			'p1_5'=>'60',
-			'p2_1'=>'80',
-			'p2_2'=>'60',
+			'p1_5'=>'80',
+			'p2_1'=>'95',
+			'p2_2'=>'80',
 			'p2_3'=>'100',
 			'p2_4'=>'100',
 			'p3_1'=>'100',
@@ -2319,7 +2281,7 @@ class StartSeeder extends Seeder
 			'p3_4'=>'100',
 			'p7'=>true,
 			'p8'=>'["1","null"]',
-			'mejor'=>'Todo porque me pareció muye buano y que lo puedo aplicar en las clases',
+			'mejor'=>'Todo porque me pareció muy bueno y que lo puedo aplicar en las clases',
 			'sug'=>'Me pareció bueno así tal y como se impartió',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
@@ -2371,18 +2333,18 @@ class StartSeeder extends Seeder
 		]);
 		
 		DB::table('_evaluacion_final_curso')->insert([
-			'p1_1'=>'80',
-			'p1_2'=>'80',
-			'p1_3'=>'80',
+			'p1_1'=>'95',
+			'p1_2'=>'95',
+			'p1_3'=>'95',
 			'p1_4'=>'100',
 			'p1_5'=>'100',
 			'p2_1'=>'100',
-			'p2_2'=>'40',
-			'p2_3'=>'80',
+			'p2_2'=>'60',
+			'p2_3'=>'95',
 			'p2_4'=>'100',
-			'p3_1'=>'40',
+			'p3_1'=>'60',
 			'p3_2'=>'100',
-			'p3_3'=>'60',
+			'p3_3'=>'80',
 			'p3_4'=>'100',
 			'p7'=>true,
 			'p8'=>'["2","null"]',
@@ -2439,18 +2401,18 @@ class StartSeeder extends Seeder
 		
 		DB::table('_evaluacion_final_curso')->insert([
 			'p1_1'=>'100',
-			'p1_2'=>'80',
+			'p1_2'=>'95',
 			'p1_3'=>'100',
-			'p1_4'=>'80',
-			'p1_5'=>'80',
-			'p2_1'=>'80',
+			'p1_4'=>'95',
+			'p1_5'=>'95',
+			'p2_1'=>'95',
 			'p2_2'=>'100',
 			'p2_3'=>'100',
 			'p2_4'=>'100',
-			'p3_1'=>'80',
+			'p3_1'=>'95',
 			'p3_2'=>'100',
 			'p3_3'=>'100',
-			'p3_4'=>'80',
+			'p3_4'=>'95',
 			'p7'=>true,
 			'p8'=>'["1","null"]',
 			'mejor'=>'Todo me gusto porque es nuevo para mí y ayuda a construir un curso desde otra perspectiva',
@@ -2514,10 +2476,10 @@ class StartSeeder extends Seeder
 			'p2_2'=>'100',
 			'p2_3'=>'100',
 			'p2_4'=>'100',
-			'p3_1'=>'80',
+			'p3_1'=>'100',
 			'p3_2'=>'100',
 			'p3_3'=>'100',
-			'p3_4'=>'80',
+			'p3_4'=>'100',
 			'p7'=>true,
 			'p8'=>'["1","null"]',
 			'mejor'=>'Los temas tratados y la calidad humana por parte de los doscentes',
@@ -2572,12 +2534,12 @@ class StartSeeder extends Seeder
 		]);
 		
 		DB::table('_evaluacion_final_curso')->insert([
-			'p1_1'=>'80',
-			'p1_2'=>'80',
-			'p1_3'=>'80',
-			'p1_4'=>'80',
+			'p1_1'=>'95',
+			'p1_2'=>'95',
+			'p1_3'=>'95',
+			'p1_4'=>'95',
 			'p1_5'=>'100',
-			'p2_1'=>'80',
+			'p2_1'=>'95',
 			'p2_2'=>'100',
 			'p2_3'=>'100',
 			'p2_4'=>'100',
@@ -2589,9 +2551,9 @@ class StartSeeder extends Seeder
 			'p8'=>'["4","Gaceta"]',
 			'mejor'=>'El trato con los profesores',
 			'sug'=>'Que no esté tan cargado porque no se profundiza',
-			'p4_1'=>'80',
-			'p4_2'=>'80',
-			'p4_3'=>'80',
+			'p4_1'=>'95',
+			'p4_2'=>'95',
+			'p4_3'=>'95',
 			'p4_4'=>'100',
 			'p4_5'=>'100',
 			'p4_6'=>'100',
@@ -2602,7 +2564,7 @@ class StartSeeder extends Seeder
 			'p4_11'=>'100',
 			'p5_1'=>'100',
 			'p5_2'=>'100',
-			'p5_3'=>'80',
+			'p5_3'=>'95',
 			'p5_4'=>'100',
 			'p5_5'=>'100',
 			'p5_6'=>'100',
@@ -2644,10 +2606,10 @@ class StartSeeder extends Seeder
 			'p1_3'=>'100',
 			'p1_4'=>'100',
 			'p1_5'=>'100',
-			'p2_1'=>'80',
-			'p2_2'=>'80',
-			'p2_3'=>'80',
-			'p2_4'=>'80',
+			'p2_1'=>'95',
+			'p2_2'=>'95',
+			'p2_3'=>'95',
+			'p2_4'=>'95',
 			'p3_1'=>'100',
 			'p3_2'=>'100',
 			'p3_3'=>'100',
@@ -2706,16 +2668,16 @@ class StartSeeder extends Seeder
 		]);
 		
 		DB::table('_evaluacion_final_curso')->insert([
-			'p1_1'=>'80',
-			'p1_2'=>'80',
+			'p1_1'=>'95',
+			'p1_2'=>'95',
 			'p1_3'=>'100',
-			'p1_4'=>'80',
-			'p1_5'=>'80',
+			'p1_4'=>'95',
+			'p1_5'=>'95',
 			'p2_1'=>'100',
 			'p2_2'=>'100',
 			'p2_3'=>'100',
 			'p2_4'=>'100',
-			'p3_1'=>'80',
+			'p3_1'=>'95',
 			'p3_2'=>'100',
 			'p3_3'=>'100',
 			'p3_4'=>'100',
@@ -2723,28 +2685,28 @@ class StartSeeder extends Seeder
 			'p8'=>'["2","null"]',
 			'mejor'=>'El uso de las TIC para las asignaturas',
 			'sug'=>'Debería haber dos sesiones a la semana',
-			'p4_1'=>'80',
+			'p4_1'=>'95',
 			'p4_2'=>'100',
-			'p4_3'=>'80',
+			'p4_3'=>'95',
 			'p4_4'=>'100',
-			'p4_5'=>'80',
-			'p4_6'=>'80',
-			'p4_7'=>'80',
-			'p4_8'=>'80',
+			'p4_5'=>'95',
+			'p4_6'=>'95',
+			'p4_7'=>'95',
+			'p4_8'=>'95',
 			'p4_9'=>'100',
 			'p4_10'=>'100',
-			'p4_11'=>'80',
-			'p5_1'=>'80',
-			'p5_2'=>'80',
+			'p4_11'=>'95',
+			'p5_1'=>'95',
+			'p5_2'=>'95',
 			'p5_3'=>'100',
-			'p5_4'=>'80',
-			'p5_5'=>'80',
-			'p5_6'=>'80',
-			'p5_7'=>'80',
-			'p5_8'=>'80',
-			'p5_9'=>'80',
-			'p5_10'=>'80',
-            'p5_11'=>'80',
+			'p5_4'=>'95',
+			'p5_5'=>'95',
+			'p5_6'=>'95',
+			'p5_7'=>'95',
+			'p5_8'=>'95',
+			'p5_9'=>'95',
+			'p5_10'=>'95',
+            'p5_11'=>'95',
             'otros'=>'Otros',
 			'conocimiento'=>'["3"]',
 			'tematica'=>'tematica',
@@ -2779,7 +2741,7 @@ class StartSeeder extends Seeder
 			'p1_4'=>'100',
 			'p1_5'=>'100',
 			'p2_1'=>'100',
-			'p2_2'=>'80',
+			'p2_2'=>'95',
 			'p2_3'=>'100',
 			'p2_4'=>'100',
 			'p3_1'=>'100',
@@ -2843,38 +2805,38 @@ class StartSeeder extends Seeder
 		DB::table('_evaluacion_final_curso')->insert([
 			'p1_1'=>'100',
 			'p1_2'=>'100',
-			'p1_3'=>'80',
+			'p1_3'=>'95',
 			'p1_4'=>'100',
 			'p1_5'=>'100',
-			'p2_1'=>'80',
-			'p2_2'=>'80',
-			'p2_3'=>'80',
-			'p2_4'=>'80',
-			'p3_1'=>'80',
-			'p3_2'=>'80',
-			'p3_3'=>'80',
-			'p3_4'=>'80',
+			'p2_1'=>'95',
+			'p2_2'=>'95',
+			'p2_3'=>'95',
+			'p2_4'=>'95',
+			'p3_1'=>'95',
+			'p3_2'=>'95',
+			'p3_3'=>'95',
+			'p3_4'=>'95',
 			'p7'=>true,
 			'p8'=>'["1","null"]',
 			'mejor'=>'Conocimiento acerca de nuevas herramientas',
 			'sug'=>'Dar continuidad con otros cursos',
-			'p4_1'=>'80',
-			'p4_2'=>'80',
+			'p4_1'=>'95',
+			'p4_2'=>'95',
 			'p4_3'=>'100',
-			'p4_4'=>'80',
+			'p4_4'=>'95',
 			'p4_5'=>'100',
 			'p4_6'=>'80',
 			'p4_7'=>'80',
 			'p4_8'=>'100',
-			'p4_9'=>'80',
-			'p4_10'=>'80',
+			'p4_9'=>'95',
+			'p4_10'=>'95',
 			'p4_11'=>'100',
 			'p5_1'=>'100',
-			'p5_2'=>'80',
+			'p5_2'=>'95',
 			'p5_3'=>'100',
 			'p5_4'=>'100',
-			'p5_5'=>'80',
-			'p5_6'=>'80',
+			'p5_5'=>'95',
+			'p5_6'=>'95',
 			'p5_7'=>'100',
 			'p5_8'=>'100',
 			'p5_9'=>'100',
@@ -2918,16 +2880,16 @@ class StartSeeder extends Seeder
 			'semestre_anio'=>2020,
 			'semestre_pi'=>'1',
 			'semestre_si'=>'s',
-			'fecha_inicio' => '2018-05-20',
-            'fecha_fin' => '2018-05-30',
-            'hora_inicio' => '14:00',
-            'hora_fin' => '16:00',
+			'fecha_inicio' => '2019-09-30',
+            'fecha_fin' => '2019-10-14',
+            'hora_inicio' => '08:00',
+            'hora_fin' => '12:00',
             'dias_semana' => 'Lunes,Miércoles',
-            'numero_sesiones' => 10,
+            'numero_sesiones' => 5,
             'texto_diploma' => 'Texto diploma',
             'costo' => 2000,
-            'cupo_maximo' => 20,
-            'cupo_minimo' => 5,
+            'cupo_maximo' => 19,
+            'cupo_minimo' => 15,
             'catalogo_id' => 51,
             'salon_id' => 2
 			
@@ -3099,7 +3061,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["1","null"]',
 			'mejor'=>'La forma en que la instructora presentó los temas aterrizados a la realidad',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -3155,7 +3117,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["2","null"]',
 			'mejor'=>'La estrategia de enseñanza-aprendizaje denominado aula invertida',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -3211,7 +3173,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["4","Diplomado"]',
 			'mejor'=>'La forma en como se desarrollaron los contenidos',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -3267,7 +3229,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["2","null"]',
 			'mejor'=>'Aula invertida',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -3322,8 +3284,8 @@ class StartSeeder extends Seeder
 			'p3_4'=>'100',
 			'p7'=>true,
 			'p8'=>'["2","null"]',
-			'mejor'=>'Ninguna',
-            'sug'=>'Ninguna',
+			'mejor'=>'-',
+            'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -3603,7 +3565,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["4","Póster en FCA"]',
 			'mejor'=>'El conocimiento de algunas hailidades que he desarrollado en la práctica docente',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'95',
 			'p4_3'=>'100',
@@ -3659,7 +3621,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["2","null"]',
 			'mejor'=>'Trabajo y comunicación de trabajo en equipo',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
 			'p4_1'=>'95',
 			'p4_2'=>'95',
 			'p4_3'=>'80',
@@ -3697,16 +3659,16 @@ class StartSeeder extends Seeder
 			'semestre_anio'=>2020,
 			'semestre_pi'=>'1',
 			'semestre_si'=>'s',
-			'fecha_inicio' => '2018-05-20',
-            'fecha_fin' => '2018-05-30',
-            'hora_inicio' => '14:00',
-            'hora_fin' => '16:00',
+			'fecha_inicio' => '2019-10-16',
+            'fecha_fin' => '2019-10-30',
+            'hora_inicio' => '08:00',
+            'hora_fin' => '12:00',
             'dias_semana' => 'Lunes,Miércoles',
             'numero_sesiones' => 10,
             'texto_diploma' => 'Texto diploma',
             'costo' => 2000,
-            'cupo_maximo' => 20,
-            'cupo_minimo' => 5,
+            'cupo_maximo' => 19,
+            'cupo_minimo' => 15,
             'catalogo_id' => 52,
             'salon_id' => 2
 			
@@ -3749,7 +3711,7 @@ class StartSeeder extends Seeder
 			'p2_3'=>'100',
 			'p2_4'=>'100',
 			'p3_1'=>'100',
-			'p3_2'=>'100',
+			'p3_2'=>'95',
 			'p3_3'=>'100',
 			'p3_4'=>'100',
 			'p7'=>true,
@@ -3846,8 +3808,8 @@ class StartSeeder extends Seeder
 			'p3_4'=>'100',
 			'p7'=>true,
 			'p8'=>'["1","null"]',
-			'mejor'=>'Ninguna',
-            'sug'=>'Ninguna',
+			'mejor'=>'-',
+            'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -3893,7 +3855,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["2","null"]',
 			'mejor'=>'El conocer como se maneja la inteligencia emocional y que puede ser aplicada en el aula. Identificar cada una de las emociones que rige el docente en el aula',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -3985,7 +3947,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["2","null"]',
 			'mejor'=>'El conocer la utilidad de la inteligencia emocional dentro y fuera del aula',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -4031,7 +3993,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["null","null"]',
 			'mejor'=>'Todo lo que aportó el instructor y mis compañeros en el tema de Inteligencia emocional',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -4306,8 +4268,8 @@ class StartSeeder extends Seeder
 			'p3_4'=>'95',
 			'p7'=>true,
 			'p8'=>'["2","null"]',
-			'mejor'=>'Ninguna',
-            'sug'=>'Ninguna',
+			'mejor'=>'-',
+            'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'95',
 			'p4_3'=>'95',
@@ -4345,16 +4307,16 @@ class StartSeeder extends Seeder
 			'semestre_anio'=>2020,
 			'semestre_pi'=>'1',
 			'semestre_si'=>'s',
-			'fecha_inicio' => '2018-05-20',
-            'fecha_fin' => '2018-05-30',
-            'hora_inicio' => '14:00',
-            'hora_fin' => '16:00',
+			'fecha_inicio' => '2019-11-04',
+            'fecha_fin' => '2019-11-20',
+            'hora_inicio' => '08:00',
+            'hora_fin' => '12:00',
             'dias_semana' => 'Lunes,Miércoles',
-            'numero_sesiones' => 10,
+            'numero_sesiones' => 5,
             'texto_diploma' => 'Texto diploma',
             'costo' => 2000,
-            'cupo_maximo' => 20,
-            'cupo_minimo' => 5,
+            'cupo_maximo' => 19,
+            'cupo_minimo' => 15,
             'catalogo_id' => 53,
             'salon_id' => 2
 			
@@ -4541,7 +4503,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["2","null"]',
 			'mejor'=>'Las diferentes estrategias didácticas implementadas',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -4633,7 +4595,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["2","null"]',
 			'mejor'=>'Todo, cada sesión fue interesante y productiva',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -4679,7 +4641,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["4","Otros"]',
 			'mejor'=>'Las clases muy dinámicas',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -4725,7 +4687,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["4","Por la Coordinación"]',
 			'mejor'=>'Las exposiciones y los trabajos aplicativos durante la clase que permitieron la aplicación de la teoría',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -4910,7 +4872,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["4","Póster en FCA"]',
 			'mejor'=>'El modo de poder, querer y romper cambiar paradigmas',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -4956,7 +4918,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["2","null"]',
 			'mejor'=>'Experiencias profesionales del instructor',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
 			'p4_1'=>'95',
 			'p4_2'=>'80',
 			'p4_3'=>'95',
@@ -5005,16 +4967,16 @@ class StartSeeder extends Seeder
 			'semestre_anio'=>2020,
 			'semestre_pi'=>'1',
 			'semestre_si'=>'s',
-			'fecha_inicio' => '2018-05-20',
-            'fecha_fin' => '2018-05-30',
-            'hora_inicio' => '14:00',
-            'hora_fin' => '16:00',
+			'fecha_inicio' => '2019-08-15',
+            'fecha_fin' => '2019-08-29',
+            'hora_inicio' => '10:00',
+            'hora_fin' => '14:00',
             'dias_semana' => 'Lunes,Miércoles',
-            'numero_sesiones' => 10,
+            'numero_sesiones' => 5,
             'texto_diploma' => 'Texto diploma',
             'costo' => 2000,
-            'cupo_maximo' => 20,
-            'cupo_minimo' => 5,
+            'cupo_maximo' => 16,
+            'cupo_minimo' => 8,
             'catalogo_id' => 54,
             'salon_id' => 2
 			
@@ -5293,7 +5255,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["1","2","null"]',
 			'mejor'=>'Programación',
-			'sug'=>'Ninguna',
+			'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -5349,7 +5311,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["2","null"]',
 			'mejor'=>'La capacidad del instructor',
-			'sug'=>'Ninguna',
+			'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -5483,25 +5445,14 @@ class StartSeeder extends Seeder
         ]);
         
         //Curso 5
-		DB::table('coordinacions')->insert([
-			'id'=>52,
-			'abreviatura'=>'ADEE',
-			'nombre_coordinacion'=>'Área Disciplinar y evaluación educativa',
-			'coordinador'=>'Roman Dominguez Perez',
-			'grado'=>'M.E.M.',
-			'usuario'=>'R0m4n1nEZ',
-			'password'=>'$10$Sli0p2.SdjP7JTbyze.RIucCUJA5MOG6AEB40sJG3Ok3Kb33ltibn'
-		]);
-
         DB::table('catalogo_cursos')->insert([
 			'id'=> 55,
 			'nombre_curso'=>'Redescubriendo a la vida de Michael Faraday',
 			'duracion_curso' => '20',
-            'coordinacion_id' => 52,
+            'coordinacion_id' => 51,
             'tipo' => 'C',
             'institucion' => 'DGAPA',
 			'fecha_disenio'=>'2012-12-12',
-			'coordinacion_id'=>52,
 			'clave_curso'=>'RVMFEYMEE'
 		]);
 		
@@ -5510,16 +5461,16 @@ class StartSeeder extends Seeder
 			'semestre_anio'=>2020,
 			'semestre_pi'=>'1',
 			'semestre_si'=>'s',
-			'fecha_inicio' => '2018-05-20',
-            'fecha_fin' => '2018-05-30',
-            'hora_inicio' => '14:00',
-            'hora_fin' => '16:00',
+			'fecha_inicio' => '2019-09-04',
+            'fecha_fin' => '2019-09-25',
+            'hora_inicio' => '16:00',
+            'hora_fin' => '19:00',
             'dias_semana' => 'Lunes,Miércoles',
-            'numero_sesiones' => 10,
+            'numero_sesiones' => 4,
             'texto_diploma' => 'Texto diploma',
             'costo' => 2000,
-            'cupo_maximo' => 20,
-            'cupo_minimo' => 5,
+            'cupo_maximo' => 16,
+            'cupo_minimo' => 8,
             'catalogo_id' => 55,
             'salon_id' => 1
 			
@@ -5589,8 +5540,8 @@ class StartSeeder extends Seeder
 			'id'=>514,
 			'curso_id'=>55,
 			'profesor_id'=>514,
-			'asistencia'=>true,
-			'acreditacion'=>true
+			'asistencia'=>false,
+			'acreditacion'=>false
         ]);
         
         DB::table('profesors')->insert([
@@ -5607,8 +5558,8 @@ class StartSeeder extends Seeder
 			'id'=>515,
 			'curso_id'=>55,
 			'profesor_id'=>515,
-			'asistencia'=>true,
-			'acreditacion'=>true
+			'asistencia'=>false,
+			'acreditacion'=>false
         ]);
         
         DB::table('profesors')->insert([
@@ -5625,8 +5576,8 @@ class StartSeeder extends Seeder
 			'id'=>516,
 			'curso_id'=>55,
 			'profesor_id'=>516,
-			'asistencia'=>true,
-			'acreditacion'=>true
+			'asistencia'=>false,
+			'acreditacion'=>false
 		]);
 		
 		DB::table('profesors')->insert([
@@ -5664,7 +5615,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["2","null"]',
 			'mejor'=>'INTERES SOBRE LA VIDA DE ESTE CIENTIFICO',
-			'sug'=>'NINGUNA',
+			'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -5898,7 +5849,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["2","null"]',
 			'mejor'=>'Conocimiento histórico de la época de los descubrimientos con los experimentos de Faraday. Aportación a la ciencia y aplicación para los [...]',
-			'sug'=>'Ninguna',
+			'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -6132,7 +6083,7 @@ class StartSeeder extends Seeder
 			'p7'=>true,
 			'p8'=>'["2","null"]',
 			'mejor'=>'Aprendizaje y curiosidad por seguir preparandome, en temas actuales',
-			'sug'=>'Ninguna',
+			'sug'=>'-',
 			'p4_1'=>'100',
 			'p4_2'=>'100',
 			'p4_3'=>'100',
@@ -6599,16 +6550,16 @@ class StartSeeder extends Seeder
             'semestre_anio'=>2020,
             'semestre_pi'=>'1',
             'semestre_si'=>'s',
-            'fecha_inicio' => '2018-05-20',
-            'fecha_fin' => '2018-05-30',
-            'hora_inicio' => '14:00',
-            'hora_fin' => '16:00',
+            'fecha_inicio' => '2019-10-03',
+            'fecha_fin' => '2019-10-31',
+            'hora_inicio' => '8:00',
+            'hora_fin' => '10:00',
             'dias_semana' => 'Lunes,Miércoles',
-            'numero_sesiones' => 10,
+            'numero_sesiones' => 5,
             'texto_diploma' => 'Texto diploma',
             'costo' => 2000,
-            'cupo_maximo' => 20,
-            'cupo_minimo' => 5,
+            'cupo_maximo' => 16,
+            'cupo_minimo' => 8,
             'catalogo_id' => 201,
             'salon_id' => 1
         ]);
@@ -7085,7 +7036,7 @@ class StartSeeder extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Las apps revisadas',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -7391,7 +7342,7 @@ class StartSeeder extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Las nuevas aplicaciones',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -7772,15 +7723,15 @@ class StartSeeder extends Seeder
             'semestre_anio'=>2020,
             'semestre_pi'=>'1',
             'semestre_si'=>'s',
-            'fecha_inicio' => '2018-05-20',
-            'fecha_fin' => '2018-05-30',
-            'hora_inicio' => '14:00',
-            'hora_fin' => '16:00',
+            'fecha_inicio' => '2019-09-10',
+            'fecha_fin' => '2019-10-08',
+            'hora_inicio' => '16:00',
+            'hora_fin' => '20:00',
             'dias_semana' => 'Lunes,Miércoles',
-            'numero_sesiones' => 10,
+            'numero_sesiones' => 5,
             'texto_diploma' => 'Texto diploma',
             'costo' => 2000,
-            'cupo_maximo' => 20,
+            'cupo_maximo' => 15,
             'cupo_minimo' => 5,
             'catalogo_id' => 202,
             'salon_id' => 1
@@ -7876,7 +7827,7 @@ class StartSeeder extends Seeder
             'p1_3'=>'100',
             'p1_4'=>'100',
             'p1_5'=>'100',
-            'p2_1'=>'80',
+            'p2_1'=>'60',
             'p2_2'=>'95',
             'p2_3'=>'95',
             'p2_4'=>'95',
@@ -7935,7 +7886,7 @@ class StartSeeder extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Los ejercicios realizados',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -8086,7 +8037,7 @@ class StartSeeder extends Seeder
             'curso_id'=>202,
             'profesor_id'=>233,
             'asistencia'=>true,
-            'acreditacion'=>true
+            'acreditacion'=>false
         ]);
         //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
         DB::table('_evaluacion_final_curso')->insert([
@@ -8199,8 +8150,8 @@ class StartSeeder extends Seeder
             'id'=>232,
             'curso_id'=>202,
             'profesor_id'=>235,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'asistencia'=>false,
+            'acreditacion'=>false
         ]);
 
         DB::table('profesors')->insert([
@@ -8219,7 +8170,7 @@ class StartSeeder extends Seeder
             'curso_id'=>202,
             'profesor_id'=>236,
             'asistencia'=>true,
-            'acreditacion'=>true
+            'acreditacion'=>false
         ]);
 
         DB::table('profesors')->insert([
@@ -8411,17 +8362,17 @@ class StartSeeder extends Seeder
             'semestre_anio'=>2020,
             'semestre_pi'=>'1',
             'semestre_si'=>'s',
-            'fecha_inicio' => '2018-05-20',
-            'fecha_fin' => '2018-05-30',
+            'fecha_inicio' => '2019-11-04',
+            'fecha_fin' => '2019-11-08',
             'hora_inicio' => '14:00',
             'hora_fin' => '16:00',
             'dias_semana' => 'Lunes,Miércoles',
-            'numero_sesiones' => 10,
+            'numero_sesiones' => 3,
             'texto_diploma' => 'Texto diploma',
             'costo' => 2000,
             'cupo_maximo' => 20,
-            'cupo_minimo' => 5,
-            'catalogo_id' => 202,
+            'cupo_minimo' => 15,
+            'catalogo_id' => 203,
             'salon_id' => 1
         ]);
         //Instructor
@@ -9292,15 +9243,15 @@ class StartSeeder extends Seeder
             'semestre_anio'=>2020,
             'semestre_pi'=>'1',
             'semestre_si'=>'s',
-            'fecha_inicio' => '2018-05-20',
-            'fecha_fin' => '2018-05-30',
-            'hora_inicio' => '14:00',
-            'hora_fin' => '16:00',
+            'fecha_inicio' => '2019-10-04',
+            'fecha_fin' => '2019-11-08',
+            'hora_inicio' => '10:00',
+            'hora_fin' => '14:00',
             'dias_semana' => 'Lunes,Miércoles',
-            'numero_sesiones' => 10,
+            'numero_sesiones' => 5,
             'texto_diploma' => 'Texto diploma',
             'costo' => 2000,
-            'cupo_maximo' => 20,
+            'cupo_maximo' => 15,
             'cupo_minimo' => 5,
             'catalogo_id' => 204,
             'salon_id' => 1
@@ -9406,7 +9357,7 @@ class StartSeeder extends Seeder
             'p7'=>1,
             'p8'=>'["1"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'El material y los comentarios sobre el tema por parte de todos los asistentes',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -10050,16 +10001,16 @@ class StartSeeder extends Seeder
             'semestre_anio'=>2020,
             'semestre_pi'=>'1',
             'semestre_si'=>'s',
-            'fecha_inicio' => '2018-05-20',
-            'fecha_fin' => '2018-05-30',
-            'hora_inicio' => '14:00',
-            'hora_fin' => '16:00',
+            'fecha_inicio' => '2019-09-17',
+            'fecha_fin' => '2019-09-19',
+            'hora_inicio' => '10:00',
+            'hora_fin' => '13:00',
             'dias_semana' => 'Lunes,Miércoles',
-            'numero_sesiones' => 10,
+            'numero_sesiones' => 2,
             'texto_diploma' => 'Texto diploma',
             'costo' => 2000,
             'cupo_maximo' => 20,
-            'cupo_minimo' => 5,
+            'cupo_minimo' => 10,
             'catalogo_id' => 205,
             'salon_id' => 1
         ]);
@@ -10140,7 +10091,7 @@ class StartSeeder extends Seeder
             'tematica'=>'tematica',
             'horarios'=>'9:00-13:00',
             'horarioi'=>'13:00-15:00',
-            'curso_id'=>204,
+            'curso_id'=>205,
             'participante_curso_id'=>266
         ]);
         
@@ -10197,7 +10148,7 @@ class StartSeeder extends Seeder
             'tematica'=>'tematica',
             'horarios'=>'9:00-13:00',
             'horarioi'=>'13:00-15:00',
-            'curso_id'=>204,
+            'curso_id'=>205,
             'participante_curso_id'=>267
         ]);
 
@@ -10265,7 +10216,7 @@ class StartSeeder extends Seeder
             'tematica'=>'tematica',
             'horarios'=>'9:00-13:00',
             'horarioi'=>'13:00-15:00',
-            'curso_id'=>204,
+            'curso_id'=>205,
             'participante_curso_id'=>268
         ]);
         
@@ -10341,7 +10292,7 @@ class StartSeeder extends Seeder
             'tematica'=>'tematica',
             'horarios'=>'9:00-13:00',
             'horarioi'=>'13:00-15:00',
-            'curso_id'=>204,
+            'curso_id'=>205,
             'participante_curso_id'=>270
         ]);
         
@@ -10389,7 +10340,7 @@ class StartSeeder extends Seeder
             'p7'=>1,
             'p8'=>'["3"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Que me llevo las rúbricas como un nuevo mecanismo de evaluación. No tenía una iddea definida de cómo se utilizaban, sin embargo ahora ya me queda claro.',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -10417,7 +10368,7 @@ class StartSeeder extends Seeder
             'tematica'=>'tematica',
             'horarios'=>'9:00-13:00',
             'horarioi'=>'13:00-15:00',
-            'curso_id'=>204,
+            'curso_id'=>205,
             'participante_curso_id'=>272
         ]);
         
@@ -10474,7 +10425,7 @@ class StartSeeder extends Seeder
             'tematica'=>'tematica',
             'horarios'=>'9:00-13:00',
             'horarioi'=>'13:00-15:00',
-            'curso_id'=>204,
+            'curso_id'=>205,
             'participante_curso_id'=>273
         ]);
 
@@ -10948,7 +10899,7 @@ class StartSeeder extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'El desarrollo de una rúbrica',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -11163,22 +11114,12 @@ class StartSeeder extends Seeder
         ]);
         //Segundo curso
         //insertar coordinacion y continuar editando los datos
-        DB::table('coordinacions')->insert([
-                'id' => 203,
-                'nombre_coordinacion' => 'Área de Cómputo',
-                'abreviatura' => 'AC',
-                'coordinador' => 'Daniela Galvan',
-                'grado' => 'M.E.M.',
-                'usuario' => 'daniela',
-                'password' => Hash::make('1234'),
-                'comentarios' => '-'
-            ]);
         
         DB::table('catalogo_cursos')->insert([
             'id'=> 206,
             'nombre_curso'=>'Manejo básico de R aplicado a la enseñanza de las matemáticas',
             'duracion_curso' => '20',
-            'coordinacion_id' => 203,
+            'coordinacion_id' => 50,
             'tipo' => 'C',
             'institucion' => 'DGAPA',
             'fecha_disenio'=>'2012-12-12',
@@ -11190,16 +11131,16 @@ class StartSeeder extends Seeder
             'semestre_anio'=>2020,
             'semestre_pi'=>'1',
             'semestre_si'=>'s',
-            'fecha_inicio' => '2018-05-20',
-            'fecha_fin' => '2018-05-30',
-            'hora_inicio' => '14:00',
-            'hora_fin' => '16:00',
+            'fecha_inicio' => '2019-10-03',
+            'fecha_fin' => '2019-10-31',
+            'hora_inicio' => '10:00',
+            'hora_fin' => '14:00',
             'dias_semana' => 'Lunes,Miércoles',
-            'numero_sesiones' => 10,
+            'numero_sesiones' => 5,
             'texto_diploma' => 'Texto diploma',
             'costo' => 2000,
-            'cupo_maximo' => 20,
-            'cupo_minimo' => 5,
+            'cupo_maximo' => 16,
+            'cupo_minimo' => 8,
             'catalogo_id' => 206,
             'salon_id' => 1
         ]);
@@ -11453,7 +11394,7 @@ class StartSeeder extends Seeder
             'p1_2'=>'100',
             'p1_3'=>'100',
             'p1_4'=>'100',
-            'p1_5'=>'0',
+            'p1_5'=>'0', 
             'p2_1'=>'100',
             'p2_2'=>'100',
             'p2_3'=>'100',
@@ -11774,9 +11715,7 @@ class StartSeeder extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>296,
             'curso_id'=>206,
-            'profesor_id'=>300,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'profesor_id'=>300
         ]);
 
         DB::table('profesors')->insert([
@@ -11793,9 +11732,7 @@ class StartSeeder extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>297,
             'curso_id'=>206,
-            'profesor_id'=>301,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'profesor_id'=>301
         ]);
 
         DB::table('profesors')->insert([
@@ -11958,7 +11895,6 @@ class StartSeeder extends Seeder
             'tipo' => 'C',
             'institucion' => 'DGAPA',
             'fecha_disenio'=>'2012-12-12',
-            'coordinacion_id'=>2,
             'clave_curso'=>'MLEFDHDGAPA'
         ]);
         
@@ -11967,16 +11903,16 @@ class StartSeeder extends Seeder
             'semestre_anio'=>2020,
             'semestre_pi'=>'1',
             'semestre_si'=>'s',
-            'fecha_inicio' => '2018-05-20',
-            'fecha_fin' => '2018-05-30',
-            'hora_inicio' => '14:00',
-            'hora_fin' => '16:00',
+            'fecha_inicio' => '2019-08-05',
+            'fecha_fin' => '2019-08-19',
+            'hora_inicio' => '08:00',
+            'hora_fin' => '12:00',
             'dias_semana' => 'Lunes,Miércoles',
-            'numero_sesiones' => 10,
+            'numero_sesiones' => 5,
             'texto_diploma' => 'Texto diploma',
             'costo' => 2000,
-            'cupo_maximo' => 20,
-            'cupo_minimo' => 5,
+            'cupo_maximo' => 19,
+            'cupo_minimo' => 15,
             'catalogo_id' => 207,
             'salon_id' => 1
         ]);
@@ -12097,8 +12033,8 @@ class StartSeeder extends Seeder
                             'id'=>303,
                             'curso_id'=>207,
                             'profesor_id'=>306,
-                            'asistencia'=>true,
-                            'acreditacion'=>true
+                            'asistencia'=>false,
+                            'acreditacion'=>false
                         ]);
         DB::table('profesors')->insert([
                             'id'=>307,
@@ -12113,9 +12049,9 @@ class StartSeeder extends Seeder
         DB::table('participante_curso')->insert([
                             'id'=>304,
                             'curso_id'=>207,
-                            'profesor_id'=>60,
+                            'profesor_id'=>307,
                             'asistencia'=>true,
-                            'acreditacion'=>true
+                            'acreditacion'=>false
                         ]);
         //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
         DB::table('_evaluacion_final_curso')->insert([
@@ -12182,8 +12118,8 @@ class StartSeeder extends Seeder
                                             'mejor'=>'Le puse nombre y apellido a mi forma de enseñar',
                                             'sug'=>'-',
                                             'p4_1'=>'100',
-                                            'p4_2'=>'80',
-                                            'p4_3'=>'80',
+                                            'p4_2'=>'95',
+                                            'p4_3'=>'95',
                                             'p4_4'=>'100',
                                             'p4_5'=>'100',
                                             'p4_6'=>'100',
@@ -12214,8 +12150,8 @@ class StartSeeder extends Seeder
     'id'=>306,
     'curso_id'=>207,
     'profesor_id'=>309,
-    'asistencia'=>true,
-    'acreditacion'=>true
+    'asistencia'=>false,
+    'acreditacion'=>false
     ]);
         DB::table('participante_curso')->insert([
     'id'=>307,
@@ -12329,7 +12265,7 @@ class StartSeeder extends Seeder
         'p2_4'=>'100',
         'p3_1'=>'100',
         'p3_2'=>'100',
-        'p3_3'=>'80',
+        'p3_3'=>'95',
         'p3_4'=>'100',
         'p7'=>1,
         'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
@@ -12461,7 +12397,7 @@ class StartSeeder extends Seeder
             'curso_id'=>207,
             'profesor_id'=>312,
             'asistencia'=>true,
-            'acreditacion'=>true
+            'acreditacion'=>false
             ]);
         //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
         DB::table('_evaluacion_final_curso')->insert([
@@ -12573,7 +12509,7 @@ class StartSeeder extends Seeder
                     'p7'=>1,
                     'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
                     'mejor'=>'Actualizarme en el desarrollo humano desde la perspectiva educativa. Me gustó mucho, conocer las experiencias docentes de maestros dde otras [...]',
-                    'sug'=>'Ninguna',
+                    'sug'=>'-',
                     'p4_1'=>'100',
                     'p4_2'=>'100',
                     'p4_3'=>'100',
@@ -12643,7 +12579,7 @@ class StartSeeder extends Seeder
         DB::table('participante_curso')->insert([
                             'id'=>316,
                             'curso_id'=>207,
-                            'profesor_id'=>72,
+                            'profesor_id'=>71,
                             'asistencia'=>true,
                             'acreditacion'=>true
                             ]);
@@ -12701,7 +12637,7 @@ class StartSeeder extends Seeder
                                 'curso_id'=>207,
                                 'profesor_id'=>316,
                                 'asistencia'=>true,
-                                'acreditacion'=>true
+                                'acreditacion'=>false
                                 ]);
         //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
         DB::table('_evaluacion_final_curso')->insert([
@@ -12745,8 +12681,8 @@ class StartSeeder extends Seeder
                                     'id'=>318,
                                     'curso_id'=>207,
                                     'profesor_id'=>253,
-                                    'asistencia'=>true,
-                                    'acreditacion'=>true
+                                    'asistencia'=>false,
+                                    'acreditacion'=>false
                                 ]);
 
         DB::table('participante_curso')->insert([
@@ -12773,7 +12709,7 @@ class StartSeeder extends Seeder
                                     'p3_4'=>'95',
                                     'p7'=>1,
                                     'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
-                                    'mejor'=>'El trabajo',
+                                    'mejor'=>'El trabajo colaborativo',
                                     'sug'=>'-',
                                     'p4_1'=>'95',
                                     'p4_2'=>'95',
@@ -12811,16 +12747,16 @@ class StartSeeder extends Seeder
                                         'semestre_anio'=>2020,
                                         'semestre_pi'=>'1',
                                         'semestre_si'=>'s',
-                                        'fecha_inicio' => '2018-05-20',
-                                        'fecha_fin' => '2018-05-30',
-                                        'hora_inicio' => '14:00',
-                                        'hora_fin' => '16:00',
+                                        'fecha_inicio' => '2019-08-29',
+                                        'fecha_fin' => '2019-09-04',
+                                        'hora_inicio' => '08:00',
+                                        'hora_fin' => '12:00',
                                         'dias_semana' => 'Lunes,Miércoles',
-                                        'numero_sesiones' => 10,
+                                        'numero_sesiones' => 5,
                                         'texto_diploma' => 'Texto diploma',
                                         'costo' => 2000,
-                                        'cupo_maximo' => 20,
-                                        'cupo_minimo' => 5,
+                                        'cupo_maximo' => 19,
+                                        'cupo_minimo' => 15,
                                         'catalogo_id' => 208,
                                         'salon_id' => 1
                                     ]);
@@ -12869,7 +12805,7 @@ class StartSeeder extends Seeder
                     'p7'=>1,
                     'p8'=>'["4","Por otro profesor"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
                     'mejor'=>'Interacción entre el grupo, el aprendizaje de conceptos nuevos y experiencia en lo vivido por los demás profesores',
-                    'sug'=>'Ninguna',
+                    'sug'=>'-',
                     'p4_1'=>'95',
                     'p4_2'=>'95',
                     'p4_3'=>'95',
@@ -12941,7 +12877,7 @@ class StartSeeder extends Seeder
                             'curso_id'=>208,
                             'profesor_id'=>307,
                             'asistencia'=>true,
-                            'acreditacion'=>true
+                            'acreditacion'=>false
                         ]);
         //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
         DB::table('_evaluacion_final_curso')->insert([
@@ -13006,7 +12942,7 @@ class StartSeeder extends Seeder
                                             'p7'=>1,
                                             'p8'=>'["4","Recomendación"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
                                             'mejor'=>'Ambiente',
-                                            'sug'=>'Ninguna',
+                                            'sug'=>'-',
                                             'p4_1'=>'100',
                                             'p4_2'=>'100',
                                             'p4_3'=>'100',
@@ -13437,14 +13373,14 @@ class StartSeeder extends Seeder
                                                                                                                     'curso_id'=>208,
                                                                                                                     'profesor_id'=>316,
                                                                                                                     'asistencia'=>true,
-                                                                                                                    'acreditacion'=>true
+                                                                                                                    'acreditacion'=>false
                                                                                                                 ]);
                                                                                                                 DB::table('participante_curso')->insert([
                                                                                                                     'id'=>334,
                                                                                                                     'curso_id'=>208,
                                                                                                                     'profesor_id'=>253,
-                                                                                                                    'asistencia'=>true,
-                                                                                                                    'acreditacion'=>true
+                                                                                                                    'asistencia'=>false,
+                                                                                                                    'acreditacion'=>false
                                                                                                                 ]);
                                                                                                                 DB::table('participante_curso')->insert([
                                                                                                                     'id'=>335,
@@ -13508,16 +13444,16 @@ class StartSeeder extends Seeder
             'semestre_anio'=>2020,
             'semestre_pi'=>'1',
             'semestre_si'=>'s',
-            'fecha_inicio' => '2018-05-20',
-            'fecha_fin' => '2018-05-30',
-            'hora_inicio' => '14:00',
-            'hora_fin' => '16:00',
+            'fecha_inicio' => '2019-09-09',
+            'fecha_fin' => '2019-09-25',
+            'hora_inicio' => '08:00',
+            'hora_fin' => '12:00',
             'dias_semana' => 'Lunes,Miércoles',
-            'numero_sesiones' => 10,
+            'numero_sesiones' => 5,
             'texto_diploma' => 'Texto diploma',
             'costo' => 2000,
-            'cupo_maximo' => 20,
-            'cupo_minimo' => 5,
+            'cupo_maximo' => 19,
+            'cupo_minimo' => 15,
             'catalogo_id' => 209,
             'salon_id' => 1
         ]);
@@ -13788,7 +13724,7 @@ class StartSeeder extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Saber acerca de más redes sociales educativas',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
             'p4_1'=>'95',
             'p4_2'=>'95',
             'p4_3'=>'100',
@@ -13964,7 +13900,7 @@ class StartSeeder extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'La discusión en clase',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -14096,7 +14032,7 @@ class StartSeeder extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Intercambio de experiencias sobre los tópicos tratados',
-            'sug'=>'Ninguna',
+            'sug'=>'-',
             'p4_1'=>'100',
             'p4_2'=>'80',
             'p4_3'=>'95',
@@ -14129,19 +14065,25 @@ class StartSeeder extends Seeder
             'curso_id'=>54
         ]);
 
-        DB::table('participante_curso')->insert([
-            'id'=>503,
-            'profesor_id'=>245,
-            'curso_id'=>50
-        ]);
-
         //Cuarto documento: 1_RespuestasEvalCursosTodasAreas_2020-1s_2
         //Primer curso
+
+        DB::table('coordinacions')->insert([
+            'id' => 302,
+            'nombre_coordinacion' => 'Área Ingeniería Civil',
+            'abreviatura' => 'DIC',
+            'coordinador' => 'Rodrigo Rodriguez',
+            'grado' => 'M.E.M.',
+            'usuario' => 'rodrigo',
+            'password' => Hash::make('1234'),
+            'comentarios' => '-'
+        ]);
+
         DB::table('catalogo_cursos')->insert([
             'id'=> 2010,
             'nombre_curso'=>'Tendencias actuales en el diseño y construcción de túneles',
             'duracion_curso' => '20',
-            'coordinacion_id' => 201,
+            'coordinacion_id' => 302,
             'tipo' => 'C',
             'institucion' => 'DGAPA',
             'fecha_disenio'=>'2012-12-12',
@@ -14163,7 +14105,7 @@ class StartSeeder extends Seeder
             'costo' => 2000,
             'cupo_maximo' => 20,
             'cupo_minimo' => 5,
-            'catalogo_id' => 205,
+            'catalogo_id' => 2010,
             'salon_id' => 1
         ]);
 

@@ -205,36 +205,60 @@ body {
                 <th class="f">Promedio</th>
                 <th class="f">Mínimo</th>
                 <th class="f">Máximo</th>
+                <th class="f">Juicio Sumario</th>
             </tr>
             <tr>
                 <td style="width: 65%" class="n" >{{$nombreInstructor[0]->nombres}} {{$nombreInstructor[0]->apellido_paterno}} {{$nombreInstructor[0]->apellido_materno}}</td>
                 <td class="n">{{$instructor}}</td>
                 <td class="n">{{$minimo}}</td>
                 <td class="n">{{$maximo}}</td>
+                <td class="n"><?php
+                    if($factor >= 80){
+                        echo "Si";
+                    }else{
+                        echo "No";
+                    }
+                ?></td>
             </tr>
             <tr>
                 <th style="width: 65%" class="f" >Facilitador 2</th>
                 <th class="f">Promedio</th>
                 <th class="f">Mínimo</th>
                 <th class="f">Máximo</th>
+                <th class="f">Juicio Sumario</th>
             </tr>
             <tr>
                 <td style="width: 65%" class="n" >{{$nombreInstructor[1]->nombres}} {{$nombreInstructor[1]->apellido_paterno}} {{$nombreInstructor[1]->apellido_materno}}</td>
                 <td class="n">{{$instructor2}}</td>
                 <td class="n">{{$minimo2}}</td>
                 <td class="n">{{$maximo2}}</td>
+                <td class="n"><?php
+                    if($factor >= 80){
+                        echo "Si";
+                    }else{
+                        echo "No";
+                    }
+                ?></td>
             </tr>
             <tr>
                 <th style="width: 65%" class="f" >Facilitador 3</th>
                 <th class="f">Promedio</th>
                 <th class="f">Mínimo</th>
                 <th class="f">Máximo</th>
+                <th class="f">Juicio Sumario</th>
             </tr>
             <tr>
                 <td style="width: 65%" class="n" >{{$nombreInstructor[2]->nombres}} {{$nombreInstructor[2]->apellido_paterno}} {{$nombreInstructor[2]->apellido_materno}}</td>
                 <td class="n">{{$instructor3}}</td>
                 <td class="n">{{$minimo3}}</td>
                 <td class="n">{{$maximo3}}</td>
+                <td class="n"><?php
+                    if($factor >= 80){
+                        echo "Si";
+                    }else{
+                        echo "No";
+                    }
+                ?></td>
             </tr>
         </table>
 
