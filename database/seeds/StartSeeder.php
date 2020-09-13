@@ -1991,7 +1991,7 @@ class StartSeeder extends Seeder
 			'coordinador'=>'Gerardo Lopez Gomez',
 			'grado'=>'M.C.C',
 			'usuario'=>'G3rardo1nEZ',
-			'password'=>'$10$Sli0p2.SdjP7JTbyze.RIucCUJA5MOG6AEB40sJG3Ok3Kb33ltibl'
+			'password'=>Hash::make(1234)
 		]);
 		
 		DB::table('catalogo_cursos')->insert([
@@ -4947,7 +4947,7 @@ class StartSeeder extends Seeder
 			'coordinador'=>'Gonzalo Lopez Juarez',
 			'grado'=>'M.E.M.',
 			'usuario'=>'G0nz4l0o1nEZ',
-			'password'=>'$10$Sli0p2.SdjP7JTbyze.RIucCUJA5MOG6AEB40sJG3Ok3Kb33ltibm'
+			'password'=>Hash::make(1234)
 		]);
 
         DB::table('catalogo_cursos')->insert([

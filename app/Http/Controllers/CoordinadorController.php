@@ -34,6 +34,7 @@ class CoordinadorController extends Controller
     public function superadmin($coordinacion_id){
 
         $encargado = Coordinacion::findorFail($coordinacion_id);
+        session(['coordinacion_id'=>$coordinacion_id]);
         return view('pages.superadminCoordinadores')
             ->with('encargado',$encargado);
     }
@@ -96,12 +97,21 @@ class CoordinadorController extends Controller
                 array_push($datos,$profesores);
                 array_push($cursos,$datos);
             }
-        }        
-        return view("pages.cursos")
-            ->with("cursos",$cursos)
-            ->with("coordinaciones",$coordinaciones)
-            ->with('encargado_id',$encargado_id)
-            ->with('message',$message);
+        }  
+        if(Session::has('coordinacion_id')){
+            return view("pages.cursos_coordinadores")
+                ->with("cursos",$cursos)
+                ->with("coordinaciones",$coordinaciones)
+                ->with('encargado_id',$encargado_id)
+                ->with('message',$message)
+                ->with('encargado',$encargado_id);
+        }else{
+            return view("pages.cursos")
+                ->with("cursos",$cursos)
+                ->with("coordinaciones",$coordinaciones)
+                ->with('encargado_id',$encargado_id)
+                ->with('message',$message);
+        }
     }
 
 
@@ -170,8 +180,6 @@ class CoordinadorController extends Controller
                  array_push($fechas,$fecha);
              }
          }
-
-         session(['coordinacion_id'=>$coordinacion_id]);
 
          //return $coordinacion_id;
 
@@ -2609,6 +2617,12 @@ class CoordinadorController extends Controller
             return $pdf->download($nombre);
         }
 
+        $encargado = 0;
+        if(Session::has('coordinacion_id')){
+            $envio = $envio.'_coordinacion';
+            $encargado = Session::get('coordinacion_id');
+        }
+
         return view($envio)
             ->with('evals',$evals)
             ->with('curso_id',$curso_id)
@@ -2646,7 +2660,8 @@ class CoordinadorController extends Controller
             ->with('encargado_id',$encargado_id)
             ->with('contestaron',$contestaron)
             ->with('catalogo',$catalogo_curso)
-            ->with('nombre',$nombre);
+            ->with('nombre',$nombre)
+            ->with('encargado',$encargado);
 		
 
     }
@@ -2686,6 +2701,10 @@ class CoordinadorController extends Controller
                 $lugar = "pages.resumen_x_sesion_curso";
                 $enviopdf = "pages.resumen_x_sesion_pdf";
                 $final = 'curso';
+        }
+
+        if(Session::has('coordinacion_id')){
+            $lugar = $lugar.'_coordinacion';
         }
         
         if(sizeof($evaluaciones)==0){
