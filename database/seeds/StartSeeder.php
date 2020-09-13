@@ -5013,7 +5013,9 @@ class StartSeeder extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>512,
             'profesor_id'=>512,
-            'curso_id'=>54
+            'curso_id'=>54,
+            'asistencia'=>false,
+            'acreditacion'=>false
         ]);
 
         DB::table('profesors')->insert([
@@ -5029,7 +5031,9 @@ class StartSeeder extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>513,
             'profesor_id'=>513,
-            'curso_id'=>54
+            'curso_id'=>54,
+            'asistencia'=>true,
+            'acreditacion'=>true
         ]);
 		
 		DB::table('profesors')->insert([
@@ -5103,8 +5107,8 @@ class StartSeeder extends Seeder
 			'id'=>701,
 			'curso_id'=>54,
 			'profesor_id'=>306,
-			'asistencia'=>true,
-			'acreditacion'=>true
+			'asistencia'=>false,
+			'acreditacion'=>false
 		]);
         
 		DB::table('profesors')->insert([
@@ -5191,11 +5195,11 @@ class StartSeeder extends Seeder
 			'p2_1'=>'100',
 			'p2_2'=>'100',
 			'p2_3'=>'100',
-			'p2_4'=>'60',
+			'p2_4'=>'50',
 			'p3_1'=>'100',
 			'p3_2'=>'100',
 			'p3_3'=>'100',
-			'p3_4'=>'60',
+			'p3_4'=>'50',
 			'p7'=>true,
 			'p8'=>'["2","null"]',
 			'mejor'=>'El compañerismo',
@@ -5247,7 +5251,7 @@ class StartSeeder extends Seeder
 			'p2_1'=>'100',
 			'p2_2'=>'80',
 			'p2_3'=>'95',
-			'p2_4'=>'60',
+			'p2_4'=>'50',
 			'p3_1'=>'100',
 			'p3_2'=>'100',
 			'p3_3'=>'100',
@@ -5307,7 +5311,7 @@ class StartSeeder extends Seeder
 			'p3_1'=>'100',
 			'p3_2'=>'100',
 			'p3_3'=>'100',
-			'p3_4'=>'60',
+			'p3_4'=>'50',
 			'p7'=>true,
 			'p8'=>'["2","null"]',
 			'mejor'=>'La capacidad del instructor',
@@ -5416,10 +5420,10 @@ class StartSeeder extends Seeder
 			'p2_2'=>'100',
 			'p2_3'=>'100',
 			'p2_4'=>'100',
-			'p3_1'=>'100',
-			'p3_2'=>'100',
-			'p3_3'=>'100',
-			'p3_4'=>'100',
+			'p3_1'=>'0',
+			'p3_2'=>'0',
+			'p3_3'=>'0',
+			'p3_4'=>'0',
 			'p7'=>true,
 			'p8'=>'["1","null"]',
 			'mejor'=>'Todo',
@@ -5443,6 +5447,25 @@ class StartSeeder extends Seeder
 			'curso_id'=>54,
 			'participante_curso_id'=>105
         ]);
+
+        DB::table('profesors')->insert([
+            'id'=>283,
+            'nombres'=>'Juan Angel',
+            'apellido_paterno'=>'Rodriguez',
+            'apellido_materno'=>'Gomez',
+            'rfc'=>'ROGJ010101QM4',
+            'curp' =>'ROGJ010101HDFDMN08',
+            'numero_trabajador' => '12345650',
+            'fecha_nacimiento'=>'1901-01-01'
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>816,
+			'curso_id'=>54,
+			'profesor_id'=>283,
+			'asistencia'=>true,
+			'acreditacion'=>false
+		]);
         
         //Curso 5
         DB::table('catalogo_cursos')->insert([
@@ -6539,7 +6562,6 @@ class StartSeeder extends Seeder
             'tipo' => 'Curso',
             'institucion' => 'DGAPA',
             'fecha_disenio'=>'2012-12-12',
-            'coordinacion_id'=>2,
             'clave_curso'=>'DPCU157',
             'objetivo'=>'Al finalizar el curso-taller el profesor será capaz de integrar a su práctica docente algunas aplicaciones móviles que le permitan propiciar el aprendizaje y comunicación con sus estudiantes',
             'dirigido'=>'A los profesores de la Facultad de ingeniería, de la UNAM y externos'
@@ -6871,8 +6893,8 @@ class StartSeeder extends Seeder
             'id'=>205,
             'curso_id'=>201,
             'profesor_id'=>75,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'asistencia'=>false,
+            'acreditacion'=>false
         ]);
 
         DB::table('profesors')->insert([
@@ -7151,16 +7173,16 @@ class StartSeeder extends Seeder
             'id'=>210,
             'curso_id'=>201,
             'profesor_id'=>212,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'asistencia'=>false,
+            'acreditacion'=>false
         ]);
 
         DB::table('participante_curso')->insert([
             'id'=>211,
             'curso_id'=>201,
             'profesor_id'=>76,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'asistencia'=>false,
+            'acreditacion'=>false
         ]);
         DB::table('profesors')->insert([
             'id'=>214,
@@ -7177,8 +7199,8 @@ class StartSeeder extends Seeder
             'id'=>212,
             'curso_id'=>201,
             'profesor_id'=>214,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'asistencia'=>false,
+            'acreditacion'=>false
         ]);
 
         DB::table('profesors')->insert([
@@ -7196,8 +7218,8 @@ class StartSeeder extends Seeder
             'id'=>213,
             'curso_id'=>201,
             'profesor_id'=>215,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'asistencia'=>false,
+            'acreditacion'=>false
         ]);
 
         DB::table('profesors')->insert([
@@ -7215,8 +7237,8 @@ class StartSeeder extends Seeder
             'id'=>214,
             'curso_id'=>201,
             'profesor_id'=>216,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'asistencia'=>false,
+            'acreditacion'=>false
         ]);
 
         DB::table('profesors')->insert([
@@ -7302,8 +7324,8 @@ class StartSeeder extends Seeder
             'id'=>216,
             'curso_id'=>201,
             'profesor_id'=>218,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'asistencia'=>false,
+            'acreditacion'=>false
         ]);
 
         DB::table('profesors')->insert([
@@ -7459,8 +7481,8 @@ class StartSeeder extends Seeder
             'id'=>219,
             'curso_id'=>201,
             'profesor_id'=>221,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'asistencia'=>false,
+            'acreditacion'=>false
         ]);
 
         DB::table('profesors')->insert([
@@ -7700,8 +7722,8 @@ class StartSeeder extends Seeder
             'id'=>224,
             'curso_id'=>201,
             'profesor_id'=>226,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'asistencia'=>false,
+            'acreditacion'=>false
         ]);
         
         //Segundo curso
@@ -8348,7 +8370,7 @@ class StartSeeder extends Seeder
 
         DB::table('catalogo_cursos')->insert([
             'id'=> 203,
-            'nombre_curso'=>'La gimnasia cerebral para el fortalecimiento ddel aprendizaje',
+            'nombre_curso'=>'La gimnasia cerebral para el fortalecimiento del aprendizaje',
             'duracion_curso' => '12',
             'coordinacion_id' => 201,
             'tipo' => 'C',
@@ -8410,8 +8432,8 @@ class StartSeeder extends Seeder
             'id'=>236,
             'curso_id'=>203,
             'profesor_id'=>240,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'asistencia'=>false,
+            'acreditacion'=>false
         ]);
 
         DB::table('profesors')->insert([
@@ -9166,8 +9188,8 @@ class StartSeeder extends Seeder
             'id'=>251,
             'curso_id'=>203,
             'profesor_id'=>221,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'asistencia'=>false,
+            'acreditacion'=>false
         ]);
 
         DB::table('profesors')->insert([
@@ -10300,8 +10322,8 @@ class StartSeeder extends Seeder
             'id'=>271,
             'curso_id'=>205,
             'profesor_id'=>63,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'asistencia'=>false,
+            'acreditacion'=>false
         ]);
 
         DB::table('profesors')->insert([
@@ -10512,7 +10534,7 @@ class StartSeeder extends Seeder
             'curso_id'=>205,
             'profesor_id'=>280,
             'asistencia'=>true,
-            'acreditacion'=>true
+            'acreditacion'=>false
         ]);
         //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
         DB::table('_evaluacion_final_curso')->insert([
@@ -10636,8 +10658,8 @@ class StartSeeder extends Seeder
             'id'=>277,
             'curso_id'=>205,
             'profesor_id'=>69,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'asistencia'=>false,
+            'acreditacion'=>false
         ]);
 
         DB::table('profesors')->insert([
@@ -10707,24 +10729,13 @@ class StartSeeder extends Seeder
             'curso_id'=>205,
             'participante_curso_id'=>278
         ]);
-
-        DB::table('profesors')->insert([
-            'id'=>283,
-            'nombres'=>'Juan Angel',
-            'apellido_paterno'=>'Rodriguez',
-            'apellido_materno'=>'Gomez',
-            'rfc'=>'ROGJ010101QM4',
-            'curp' =>'ROGJ010101HDFDMN08',
-            'numero_trabajador' => '12345650',
-            'fecha_nacimiento'=>'1901-01-01'
-        ]);
         
         DB::table('participante_curso')->insert([
             'id'=>279,
             'curso_id'=>205,
             'profesor_id'=>283,
             'asistencia'=>true,
-            'acreditacion'=>true
+            'acreditacion'=>false
         ]);
         //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
         DB::table('_evaluacion_final_curso')->insert([
@@ -10858,8 +10869,8 @@ class StartSeeder extends Seeder
             'id'=>281,
             'curso_id'=>205,
             'profesor_id'=>285,
-            'asistencia'=>true,
-            'acreditacion'=>true
+            'asistencia'=>false,
+            'acreditacion'=>false
         ]);
 
 

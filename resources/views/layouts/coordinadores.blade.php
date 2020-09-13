@@ -17,7 +17,7 @@
 <div class="wrap">
     <nav class="nav-bar navbar-inverse" role="navigation">
         <div id ="top-menu" class="container-fluid active">
-            <a class="navbar-brand" href="{{ URL::to('admin/') }}">Centro de Docencia - Evaluaciones</a>
+            <a class="navbar-brand" href="{{ route('superadminCoordinacion',[@Session::get('coordinador_id')]) }}">Centro de Docencia - Evaluaciones</a>
             <ul class="nav navbar-nav">
 
                 <li class="dropdown movable">
@@ -46,7 +46,7 @@
                 <div class="link"><i class="fa fa-list-alt"></i>Cursos<i class="fa fa-chevron-down"></i></div>
                 <ul class="submenu">
                 
-                    <li><a href="{{ route('cursos.coordinacion',[$encargado->id] ) }}">Evaluaciones</a></li>
+                    <li><a href="{{ route('cursos.coordinacion',[$encargado,'0'] ) }}">Evaluaciones</a></li>
                 
                 </ul>
             </li>

@@ -31,6 +31,13 @@ class CoordinadorController extends Controller
             ->with("coordinaciones",$coordinaciones); //Route -> coordinador
     }
 
+    public function superadmin($coordinacion_id){
+
+        $encargado = Coordinacion::findorFail($coordinacion_id);
+        return view('pages.superadminCoordinadores')
+            ->with('encargado',$encargado);
+    }
+
     /**
      * Función en estado beta
      */
@@ -137,9 +144,42 @@ class CoordinadorController extends Controller
      * Función encargada de retornar la descarga del pdf de la vista Evaluacion_area.pdf
      * @return La descarga del pdf Evaluacion_area
      */
-    public function area_pdf(){
-        $pdf = PDF::loadView('pages.area');
-        return $pdf->download('Evaluacion_area.pdf');
+    public function area_pdf($coordinacion_id,$message){
+
+         //Obtenemos todos los cursos y todas las coordinaciones
+         $coordinaciones = Coordinacion::all();
+         $encargado = Coordinacion::find($coordinacion_id);
+         $cursos = DB::table('cursos')
+             ->get();
+             
+         //Buscamos Obtener las fechas de todos los cursos
+         $fechas = array();
+         foreach($cursos as $curso){
+             $fecha = strval($curso->semestre_anio).'-'.strval($curso->semestre_pi);
+             $inList = false;
+             //Iteramos los cursos para buscar su fecha
+             foreach($fechas as $fechaIn){
+                 //Si las fechas coinciden indicamos que no se debe de ingresar el curso al arreglo
+                 if(strcmp($fechaIn,$fecha)==0){
+                     $inList = True;
+                     break;
+                 }
+             }
+             //Si no hubieron coincidencias ingresamos la fecha del curso al arreglo las fechas en que se darán los cursos
+             if($inList == false){
+                 array_push($fechas,$fecha);
+             }
+         }
+
+         session(['coordinacion_id'=>$coordinacion_id]);
+
+         //return $coordinacion_id;
+
+        return view("pages.coordinacion_fecha")
+            ->with('coordinacion_id',$coordinacion_id)
+            ->with('message',$message)
+            ->with('fechas',$fechas)
+            ->with('encargado',$encargado);
     }
 
     /**
@@ -161,7 +201,7 @@ class CoordinadorController extends Controller
         //Indicamos la vista a observar
         $lugar = "pages.reporte_final_global";
 
-        return $this->enviarVista($fecha, $cursos, "", $lugar,0,'elegir.fecha',$periodo);
+        return $this->enviarVista($request, $fecha, $cursos, "", $lugar,0,'elegir.fecha',$periodo);
     }
 
     /**
@@ -170,7 +210,7 @@ class CoordinadorController extends Controller
      * $lugar: vista final, $pdf variable booleana que indica si se quiere o no el pdf, $inicio: ruta que mandó a llamar la función
      * @return Dependiendo del caso ya sea la vista seleccionada o el pdf de la vista seleccionada
      */
-    public function enviarVista($request, $cursos, $nombreCoordinacion, $lugar, $pdf, $inicio, $semestral){
+    public function enviarVista(Request $datos, $request, $cursos, $nombreCoordinacion, $lugar, $pdf, $inicio, $semestral){
 
         //Obtenemos todos los coordinadores
         $coordinaciones = Coordinacion::all();
@@ -952,7 +992,15 @@ class CoordinadorController extends Controller
         //Si el usuario indico descargar un pdf se procedera a realizarlo
         if($pdf == 1){
             //Retornamos la funcion que permite la descarga del pdf
-            return $this->descargarPDF($nombresCursos,$request,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$factor_calidad,$DP,$DH,$CO,$DI,$Otros,$DPtematica,$DItematica,$COtematica,$DHtematica,$Otrostematica,$coordinaciones,$horariosCurso,$promedio_coordinacion,$promedio_contenido,$profesoresRecontratar,$factor_instructor,$asistieron,$nombreCoordinacion,$lugar,$aritmetico[0],$aritmetico[1],$aritmetico[2],$aritmetico[3],$semestral);
+            return $this->descargarPDF($datos, $nombresCursos,$request,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$factor_calidad,$DP,$DH,$CO,$DI,$Otros,$DPtematica,$DItematica,$COtematica,$DHtematica,$Otrostematica,$coordinaciones,$horariosCurso,$promedio_coordinacion,$promedio_contenido,$profesoresRecontratar,$factor_instructor,$asistieron,$nombreCoordinacion,$lugar,$aritmetico[0],$aritmetico[1],$aritmetico[2],$aritmetico[3],$semestral);
+        }
+
+        $coordinadores = 0;
+
+        if($datos->session()->has('coordinacion_id')){
+            $coordinadores = DB::table('coordinacions')
+                ->where('id',$datos->session()->get('coordinacion_id'))
+                ->get();
         }
 
         //Retornamos la vista correspondiente (seleccionados por fecah o seleccionados por fecha y coordinacion) con los datos calculados
@@ -989,7 +1037,8 @@ class CoordinadorController extends Controller
             ->with('aritmetico_instructor',$aritmetico[1])
             ->with('aritmetico_coordinacion',$aritmetico[2])
             ->with('aritmetico_recomendacion',$aritmetico[3])
-            ->with('semestral',$semestral);
+            ->with('semestral',$semestral)
+            ->with('encargado',$coordinadores[0]->id);
     }
 
     /**
@@ -1655,7 +1704,77 @@ class CoordinadorController extends Controller
         $nombreCoordinacion = $coordinaciones[0]->nombre_coordinacion;
         $lugar = "pages.reporte_final_area";
 
-        return $this->enviarVista($semestre, $cursos, $nombreCoordinacion, $lugar,0,'elegir.coordinacion',$request->get('periodo'));
+        return $this->enviarVista($request,$semestre, $cursos, $nombreCoordinacion, $lugar,0,'elegir.coordinacion',$request->get('periodo'));
+        
+    }
+
+    public function enviarArea(Request $request){
+
+        //return 'Hola';
+        //Obtenemos la fecha y la coordinacion seleccionadas por el usuario
+        $semestre = $request->get('semestre');
+        $fecha = explode('-',$semestre);
+
+        $coordinacion_id = $request->session()->get('coordinacion_id');
+        $coordinaciones = DB::table('coordinacions')
+            ->where('id',$coordinacion_id)
+            ->get();
+
+        //Buscamos los cursos de dicha coordinacion
+        $catalogs = DB::table('catalogo_cursos')
+            ->where('coordinacion_id',$coordinacion_id)
+            ->get();
+
+        //return $request->get('periodo');
+        //Buscamos los cursos de dicha fecha
+        $cursosFecha = DB::table('cursos')
+            ->where([['semestre_anio',$fecha[0]],['semestre_pi',$fecha[1]],['semestre_si',$request->get('periodo')]])
+            ->get();
+
+        $cursos = array();
+        
+        //Buscamos los cursos que coinciden en fecha y coordinacion
+        foreach($catalogs as $catalogo){
+            foreach($cursosFecha as $curso){
+                if($curso->catalogo_id == $catalogo->id){
+                    array_push($cursos,$curso);
+                    break;
+                }
+            }
+        }
+
+        $evaluacionesCursos = array();
+        foreach($cursos as $curso){
+
+            //Las evaluaciones finales de los cursos
+            $eval = DB::table('_evaluacion_final_curso')
+                ->where('curso_id',$curso->id)
+                ->get();
+            
+            //Las evaluaciones finales de los seminarios
+            $eval2 = DB::table('_evaluacion_final_seminario')
+                ->where('curso_id',$curso->id)
+                ->get();
+
+            //Si hay evaluacions finales de cursos los incluimos en el arreglo de evaluacionesCursos
+            if(sizeof($eval)>0){
+                array_push($evaluacionesCursos,$eval);
+            }
+            //Si hay evaluacions finales de seminarios los incluimos en el arreglo de evaluacionesCursos
+            if(sizeof($eval2)>0){
+                array_push($evaluacionesCursos,$eval2);
+            }
+        }
+
+        if(sizeof($evaluacionesCursos)==0){
+            return redirect()->route('coordinacion.pdf',[$coordinacion_id,'Curso no ha sido evaluado']);
+        }
+
+        //Pasamos el nombre de la coordinacion y la vista a retornar
+        $nombreCoordinacion = $coordinaciones[0]->nombre_coordinacion;
+        $lugar = "pages.reporte_final_coordinacion";
+
+        return $this->enviarVista($request,$semestre, $cursos, $nombreCoordinacion, $lugar,0,'elegir.coordinacion',$request->get('periodo'));
         
     }
 
@@ -1664,7 +1783,7 @@ class CoordinadorController extends Controller
      * @param $fecha escogida por el usuario
      * @return Lo retornado por la función enviarVista
      */
-    public function globalPDF($fecha, $semestral){
+    public function globalPDF(Request $request, $fecha, $semestral){
         //Obtenemos la fecha seleccionada por el usuario
         $semestre = explode('-',$fecha);
         //Obtenemos los cursos de dicha fecha
@@ -1674,7 +1793,7 @@ class CoordinadorController extends Controller
         //Procedemos a obtener todos los datos e indicamos que queremos pasarlo a pdf
         $lugar = "pages.reporte_final_global";
 
-        return $this->enviarVista($fecha, $cursos, "", $lugar,1,'',$semestral);
+        return $this->enviarVista($request, $fecha, $cursos, "", $lugar,1,'',$semestral);
     }
 
     /**
@@ -1682,7 +1801,7 @@ class CoordinadorController extends Controller
      * @param $fecha escogida por el usuario, $coordinación: coordinación elegida por el usuario (id)
      * @return Lo retornado por la función enviarVista
      */
-    public function areaPDF($fecha,$coordinacion,$semestral){
+    public function areaPDF(Request $request, $fecha,$coordinacion,$semestral){
 
         //Obtenemos la fecha ingresada por el usuario
         $semestre = $fecha;
@@ -1720,7 +1839,7 @@ class CoordinadorController extends Controller
         $nombreCoordinacion = $coordinaciones[0]->nombre_coordinacion;
         $lugar = "pages.reporte_final_area";
 
-        return $this->enviarVista($semestre, $cursos, $nombreCoordinacion, $lugar,1,'',$semestral);
+        return $this->enviarVista($request, $semestre, $cursos, $nombreCoordinacion, $lugar,1,'',$semestral);
     }
 
 
@@ -1729,7 +1848,7 @@ class CoordinadorController extends Controller
      * @param Todos los datos necesarios para generar el reporte 
      * @return La descarga del pdf
      */
-    public function descargarPDF($nombres,$periodo,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$positivas,$DP,$DH,$CO,$DI,$Otros,$DPtematicas,$DItematicas,$COtematicas,$DHtematicas,$Otrostematicas,$coordinaciones,$horarios,$coordinacion,$contenido,$profesors,$instructor,$asistencia,$nombreCoordinacion,$lugar,$factor_contenido_aritmetico,$factor_instructor_aritmetico,$factor_coordinacion_aritmetico,$factor_recomendacion_aritmetico,$semestral){
+    public function descargarPDF(Request $datos, $nombres,$periodo,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$positivas,$DP,$DH,$CO,$DI,$Otros,$DPtematicas,$DItematicas,$COtematicas,$DHtematicas,$Otrostematicas,$coordinaciones,$horarios,$coordinacion,$contenido,$profesors,$instructor,$asistencia,$nombreCoordinacion,$lugar,$factor_contenido_aritmetico,$factor_instructor_aritmetico,$factor_coordinacion_aritmetico,$factor_recomendacion_aritmetico,$semestral){
         $coordinaciones = Coordinacion::all();
 
         $envio = 'pages.global';
@@ -1738,12 +1857,19 @@ class CoordinadorController extends Controller
             $envio = 'pages.area';
             $envioPDF = 'area_'.$nombreCoordinacion.'_periodo';
         }
+        
+        if($datos->session()->has('coordinacion_id')){
+            $pdf = PDF::loadView('pages.area',array('nombres'=>$nombres,'periodo'=>$periodo,'acreditaron'=>$acreditaron,'inscritos'=>$inscritos,'contestaron'=>$contestaron,'factor_ocupacion'=>$factor_ocupacion,'factor_recomendacion'=>$factor_recomendacion,'factor_acreditacion'=>$factor_acreditacion,'positivas'=>$positivas,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'DPtematicas'=>$DPtematicas,'DItematicas'=>$DItematicas,'COtematicas'=>$COtematicas,'DHtematicas'=>$DHtematicas,'Otrostematicas'=>$Otrostematicas,'coordinaciones'=>$coordinaciones,'horarios'=>$horarios,'coordinacion'=>$coordinacion,'contenido'=>$contenido,'profesors'=>$profesors,'instructor'=>$instructor,'asistencia'=>$asistencia,'nombreCoordinacion'=>$nombreCoordinacion,'aritmetico_contenido'=>$factor_contenido_aritmetico,'aritmetico_instructor'=>$factor_instructor_aritmetico,'aritmetico_coordinacion'=>$factor_coordinacion_aritmetico,'aritmetico_recomendacion'=>$factor_recomendacion_aritmetico));	
+            $datos->session()->forget('coordinacion_id');
+        }else{
         //Obtenemos el pdf con los datos calculados
-        $pdf = PDF::loadView($envio,array('nombres'=>$nombres,'periodo'=>$periodo,'acreditaron'=>$acreditaron,'inscritos'=>$inscritos,'contestaron'=>$contestaron,'factor_ocupacion'=>$factor_ocupacion,'factor_recomendacion'=>$factor_recomendacion,'factor_acreditacion'=>$factor_acreditacion,'positivas'=>$positivas,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'DPtematicas'=>$DPtematicas,'DItematicas'=>$DItematicas,'COtematicas'=>$COtematicas,'DHtematicas'=>$DHtematicas,'Otrostematicas'=>$Otrostematicas,'coordinaciones'=>$coordinaciones,'horarios'=>$horarios,'coordinacion'=>$coordinacion,'contenido'=>$contenido,'profesors'=>$profesors,'instructor'=>$instructor,'asistencia'=>$asistencia,'nombreCoordinacion'=>$nombreCoordinacion,'aritmetico_contenido'=>$factor_contenido_aritmetico,'aritmetico_instructor'=>$factor_instructor_aritmetico,'aritmetico_coordinacion'=>$factor_coordinacion_aritmetico,'aritmetico_recomendacion'=>$factor_recomendacion_aritmetico));	
+           $pdf = PDF::loadView($envio,array('nombres'=>$nombres,'periodo'=>$periodo,'acreditaron'=>$acreditaron,'inscritos'=>$inscritos,'contestaron'=>$contestaron,'factor_ocupacion'=>$factor_ocupacion,'factor_recomendacion'=>$factor_recomendacion,'factor_acreditacion'=>$factor_acreditacion,'positivas'=>$positivas,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'DPtematicas'=>$DPtematicas,'DItematicas'=>$DItematicas,'COtematicas'=>$COtematicas,'DHtematicas'=>$DHtematicas,'Otrostematicas'=>$Otrostematicas,'coordinaciones'=>$coordinaciones,'horarios'=>$horarios,'coordinacion'=>$coordinacion,'contenido'=>$contenido,'profesors'=>$profesors,'instructor'=>$instructor,'asistencia'=>$asistencia,'nombreCoordinacion'=>$nombreCoordinacion,'aritmetico_contenido'=>$factor_contenido_aritmetico,'aritmetico_instructor'=>$factor_instructor_aritmetico,'aritmetico_coordinacion'=>$factor_coordinacion_aritmetico,'aritmetico_recomendacion'=>$factor_recomendacion_aritmetico));	
+        }
 
         //Retornamos la descarga del pdf
         return $pdf->download($envioPDF.'.pdf');
     }
+    
 
     /**
      * Función encargada de obtener el reporte final de un curso

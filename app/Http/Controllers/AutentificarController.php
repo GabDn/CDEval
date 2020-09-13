@@ -9,6 +9,7 @@ use App\CatalogoCurso;
 use App\ParticipantesCurso;
 use App\Coordinacion;
 use App\Http\Controllers\Controller;
+use Session; 
 
 class AutentificarController extends Controller{
 # 2143246
@@ -44,7 +45,7 @@ class AutentificarController extends Controller{
             if($coordinador->password == $request->numTrabajador){
                 //El coordinador está en la BD y las credenciales son correctas
                 $encargado = Coordinacion::findorFail($coordinador->id);
-                
+                Session::put('coordinador_id',$encargado->id);
                 return view("pages.superadminCoordinadores")
                         ->with("encargado",$encargado);
             }else return back()->with('error', 'Contraseña incorrecta');

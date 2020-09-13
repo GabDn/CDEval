@@ -1,9 +1,14 @@
 <?php
+
 Route::get('/', function () {
 
     //return view('layouts.principal');
     return view('welcome');
 });
+
+
+Route::get('/area/{coordinacion_id}/{message}',['uses'=>'CoordinadorController@area_pdf','as'=>'coordinacion.pdf']);
+
 
 Route::post('/autentificar', "AutentificarController@index")->name("autentificar");
 //Vista de coordinador
@@ -17,7 +22,6 @@ Route::get('sesion',"CoordinadorController@sesiones")->name("ver.sesion");
 Route::get('global',"CoordinadorController@globales")->name("ver.global");
 Route::get('global/{curso_id}/{pdf}/{encargado_id}',"CoordinadorController@globalFinal")->name("ver.global.final");
 Route::get('global/sesion/{curso_id}/{pdf}/{encargado_id}',"CoordinadorController@globalSesion")->name("ver.sesion.final");
-Route::get('area',"CoordinadorController@area_pdf")->name("boton.area");
 
 //Para enviar correos
 Route::get('evaluarCurso/{profesor_id}/{curso_id}','EvaluacionController@enviarCorreo')->name('evaluacion.correo');
@@ -36,6 +40,11 @@ Route::get('enviar/{profesor_id}',"EvaluacionController@enviarClaveCrusoHistoric
 Route::get('enviarFecha/{profesor_id}',"EvaluacionController@redirigirAEnviar")->name('evaluacion.enviarClaveFecha');
 Route::post('enviarFechaArchivo/{profesor}',"EvaluacionController@enviarClaveFecha")->name('evaluacion.enviarClaveFechaArchivo');
 Route::get('admin/{profesor_id}',"EvaluacionController@admin")->name('evaluacion.admin');
+
+Route::post('/area/pdf','CoordinadorController@enviarArea')->name('enviar.area.pdf');
+/*Route::post('/area/pdf/{$coordinacion_id}',function($coordinacion_id){
+    return 'Hola '.$coordinacion_id;
+})->name('enviar.area');*/
 
 Route::get('fecha_global/{message}/', "CoordinadorController@elegirFecha")->name('elegir.fecha');
 Route::get('fecha_coordinacion/{message}/', "CoordinadorController@elegirFechaCoordinacion")->name('elegir.coordinacion');
@@ -60,3 +69,5 @@ Route::get('instructores',function(){
 })->name('instructores');
 
 Route::get('logout','\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+
+Route::get('coordinador/{coordinacion_id}','CoordinadorController@superadmin')->name('superadminCoordinacion');
