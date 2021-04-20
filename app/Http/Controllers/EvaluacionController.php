@@ -185,7 +185,7 @@ class EvaluacionController extends Controller{
 	 * $coutn: número de profesores que tiene el curso
 	 * @return La vista donde se realizará la evaluación
 	 */
-	public function evaluacionPorSesion($profesor_id, $curso_id, $catalogoCurso_id,$count){
+	public function evaluacionPorSesion($profesor_id, $curso_id, $catalogoCurso_id, $count){
 		 
 		$profesor = Profesor::find($profesor_id);
 		$curso = Curso::find($curso_id);
@@ -234,7 +234,7 @@ class EvaluacionController extends Controller{
 	 * $coutn: número de profesores que tiene el curso
 	 * @return La vista donde se realizará la evaluación
 	 */
-    public function evaluacionPorCurso($profesor_id, $curso_id, $catalogoCurso_id,$count){
+    public function evaluacionPorCurso($profesor_id, $curso_id, $catalogoCurso_id, $count){
 		$profesor = Profesor::find($profesor_id);
 		$curso = Curso::find($curso_id);
 		$catalogoCurso = CatalogoCurso::find($catalogoCurso_id);

@@ -97,21 +97,14 @@ class CoordinadorController extends Controller
                 array_push($datos,$profesores);
                 array_push($cursos,$datos);
             }
-        }  
-        if(Session::has('coordinacion_id')){
-            return view("pages.cursos_coordinadores")
-                ->with("cursos",$cursos)
-                ->with("coordinaciones",$coordinaciones)
-                ->with('encargado_id',$encargado_id)
-                ->with('message',$message)
-                ->with('encargado',$encargado_id);
-        }else{
-            return view("pages.cursos")
-                ->with("cursos",$cursos)
-                ->with("coordinaciones",$coordinaciones)
-                ->with('encargado_id',$encargado_id)
-                ->with('message',$message);
         }
+        return view("pages.cursos")
+            ->with("cursos",$cursos)
+            ->with("coordinaciones",$coordinaciones)
+            ->with('encargado_id',$encargado_id)
+            ->with('encargado',$encargado_id)
+            ->with('message',$message)
+            ->with('layout',Session::has('coordinador_id') ? 'layouts.coordinadores' : 'layouts.app');
     }
 
 
@@ -2742,6 +2735,10 @@ class CoordinadorController extends Controller
             ->with('curso',$curso)
             ->with('encargado_id',$encargado_id);
 
+    }
+    public function realizarEvaluaciones()
+    {
+        # code...
     }
 
 }
