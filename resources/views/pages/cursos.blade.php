@@ -64,7 +64,7 @@
                                     <a href="{{ route('ver.sesion.final',['curso_id'=>$curso[0]->id,'pdf'=>0,'encargado_id'=>$encargado_id]) }}" class="btn btn-warning">Sesión</a>
                                     <a href="{{ route('ver.global.final',['curso_id'=>$curso[0]->id,'pdf'=>0,'encargado_id'=>$encargado_id]) }}" class="btn btn-success">Final</a>
                                     </td>
-                                    <td><a href="{{ route('ver.global.final',['curso_id'=>$curso[0]->id,'pdf'=>0,'encargado_id'=>$encargado_id]) }}" class="btn btn-primary">Evaluar</a></td>
+                                    <td><a href="{{ route('realizar.evaluaciones',['encargado_id'=>$encargado_id,'curso_id'=>$curso[0]->id]) }}" class="btn btn-primary">Evaluar</a></td>
                                 </tr>
                             </tbody>
                             @endforeach

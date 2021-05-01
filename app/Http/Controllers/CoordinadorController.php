@@ -10,7 +10,11 @@ use App\CatalogoCurso;
 use App\Profesor;
 use App\ProfesoresCurso;
 use App\EvaluacionXCurso;
+use App\EvaluacionXSeminario;
 use App\Coordinacion;
+use App\ParticipantesCurso;
+use App\EvaluacionFinalCurso;
+use App\EvaluacionFinalSeminario;
 use Illuminate\Support\Facades\Storage;
 use Mail;
 use PDF;
@@ -2736,9 +2740,58 @@ class CoordinadorController extends Controller
             ->with('encargado_id',$encargado_id);
 
     }
-    public function realizarEvaluaciones()
-    {
-        # code...
+    public function realizarEvaluaciones($encargado_id, $curso_id){
+        $curso = Curso::findOrFail($curso_id);
+
+        $participantes = Profesor::leftJoin('participante_curso','profesors.id','=','participante_curso.profesor_id')
+            ->where('participante_curso.curso_id',$curso_id)
+            ->where('cancelación', false)
+            ->where('estuvo_en_lista', false)
+            /*->orWhereNull('estuvo_en_lista')//Este no funciono :/*/
+            ->select('profesors.*')
+            ->orderBy('apellido_paterno')
+            ->orderBy('apellido_materno')
+            ->get();
+        
+        $final_resp = array();
+        $clase_resp = array();
+        foreach ($participantes as $participante) {
+            
+            $parCurso = ParticipantesCurso::select('id')
+            ->where('curso_id', $curso_id)
+            ->where('profesor_id', $participante->id)
+            ->get();
+
+            if (EvaluacionFinalCurso::where('participante_curso_id',$parCurso[0]->id)->count()!=0
+                or EvaluacionFinalSeminario::where('participante_curso_id',$parCurso[0]->id)->count()!=0) {
+                $final_resp[$participante->id] = 1;
+            }else   $final_resp[$participante->id] = 0;
+
+            if (EvaluacionXCurso::where('participante_curso_id',$parCurso[0]->id)->count()!=0
+                or EvaluacionXSeminario::where('participante_curso_id',$parCurso[0]->id)->count()!=0) {
+                $clase_resp[$participante->id] = 1;
+            }else   $clase_resp[$participante->id] = 0;
+        }
+
+        $profesors = Profesor::leftJoin('profesor_curso','profesors.id','=','profesor_curso.profesor_id')
+            ->where('curso_id', $curso_id)
+            ->get();
+
+        $count = ProfesoresCurso::select($curso_id)
+            ->where('curso_id',$curso_id)
+            ->count();
+
+        return view("pages.rellenar_evaluaciones_profes")
+            ->with('participantes',$participantes)
+            ->with('curso',$curso)
+            ->with('profesors',$profesors)
+            ->with('catalogoCurso',CatalogoCurso::find($curso->catalogo_id))
+            ->with('count',$count)
+            ->with("coordinaciones",Coordinacion::all())
+            ->with('encargado',$encargado_id)
+            ->with('final_resp',$final_resp)
+            ->with('clase_resp',$clase_resp)
+            ->with('layout',Session::has('coordinador_id') ? 'layouts.coordinadores' : 'layouts.app');
     }
 
 }

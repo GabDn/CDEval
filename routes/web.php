@@ -71,3 +71,4 @@ Route::get('instructores',function(){
 Route::get('logout','\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 Route::get('coordinador/{coordinacion_id}','CoordinadorController@superadmin')->name('superadminCoordinacion');
+Route::get('coordinador/realizarEvaluacion/{encargado_id}/{curso_id}',"CoordinadorController@realizarEvaluaciones")->name("realizar.evaluaciones");
