@@ -30,6 +30,7 @@ class AutentificarController extends Controller{
         //Usuario general
         if ('admin' == $request->rfc && '1q2w3e4r' == $request->numTrabajador) {
             //return redirect()->route("superadmin",[$coordinaciones]);
+            Session::put('superadmin',1);
             return view('pages.superadmin')
                 ->with("coordinaciones",$coordinaciones); //Route -> coordinador
         }
@@ -49,7 +50,7 @@ class AutentificarController extends Controller{
                 $encargado = Coordinacion::findorFail($coordinador->id);
                 Session::put('coordinador_id',$encargado->id);
                 return view("pages.superadminCoordinadores")
-                        ->with("encargado",$encargado);
+                    ->with("encargado",$encargado);
             }else return back()->with('error', 'Contraseña incorrecta');
         }
         
