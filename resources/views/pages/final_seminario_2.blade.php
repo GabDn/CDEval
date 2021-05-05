@@ -1,6 +1,6 @@
 <!-- Guardado en resources/views/pages/xsesion.blade.php -->
 
-@extends('layouts.principal')
+@extends($layout)
 
 @section('contenido')
   <!--Body content-->

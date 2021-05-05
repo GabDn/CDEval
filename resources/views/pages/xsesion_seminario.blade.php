@@ -1,5 +1,5 @@
 <!-- Guardado en resources/views/pages/xsesion.blade.php -->
-@extends('layouts.principal')
+@extends($layout)
 
 @section('contenido')
 <form action="{{ action('EvaluacionController@saveXSeminario',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,'catalogoCurso_id'=>$catalogoCurso->id]) }}" method="POST">

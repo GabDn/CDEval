@@ -221,14 +221,18 @@ class EvaluacionController extends Controller{
 				->with("profesor",$profesor)
 				->with("curso",$curso)
                 ->with('catalogoCurso',$catalogoCurso)
-                ->with('infoCursos',$infoCursos);
+                ->with('infoCursos',$infoCursos)
+                ->with('layout',Session::has('coordinador_id') ? 'layouts.coordinadores' : (Session::has('superadmin') ? 'layouts.app' : 'layouts.principal'))
+                ->with(Session::has('coordinador_id') ? 'encargado' : (Session::has('superadmin') ? 'coordinaciones' : 'a_') ,Session::has('coordinador_id') ? Coordinacion::findorFail(Session::get('coordinador_id')) : (Session::has('superadmin') ? Coordinacion::all() : '.'));
                    
         }else{
             return view("pages.xsesion")
                 ->with("profesor",$profesor)
                 ->with("curso",$curso)
                 ->with('catalogoCurso',$catalogoCurso)
-                ->with('infoCursos',$infoCursos);
+                ->with('infoCursos',$infoCursos)
+                ->with('layout',Session::has('coordinador_id') ? 'layouts.coordinadores' : (Session::has('superadmin') ? 'layouts.app' : 'layouts.principal'))
+                ->with(Session::has('coordinador_id') ? 'encargado' : (Session::has('superadmin') ? 'coordinaciones' : 'a_') ,Session::has('coordinador_id') ? Coordinacion::findorFail(Session::get('coordinador_id')) : (Session::has('superadmin') ? Coordinacion::all() : '.'));
         }
                
     }
@@ -266,19 +270,25 @@ class EvaluacionController extends Controller{
 					->with("profesor",$profesor)
                     ->with("curso",$curso)
                     ->with('catalogoCurso',$catalogoCurso)
-                    ->with('infoCursos',$infoCursos);
+                    ->with('infoCursos',$infoCursos)
+                    ->with('layout',Session::has('coordinador_id') ? 'layouts.coordinadores' : (Session::has('superadmin') ? 'layouts.app' : 'layouts.principal'))
+                    ->with(Session::has('coordinador_id') ? 'encargado' : (Session::has('superadmin') ? 'coordinaciones' : 'a_') ,Session::has('coordinador_id') ? Coordinacion::findorFail(Session::get('coordinador_id')) : (Session::has('superadmin') ? Coordinacion::all() : '.'));
 			}elseif($count==2){
                 return view("pages.final_seminario_2")
 					->with("profesor",$profesor)
                     ->with("curso",$curso)
                     ->with('catalogoCurso',$catalogoCurso)
-                    ->with('infoCursos',$infoCursos);
+                    ->with('infoCursos',$infoCursos)
+                    ->with('layout',Session::has('coordinador_id') ? 'layouts.coordinadores' : (Session::has('superadmin') ? 'layouts.app' : 'layouts.principal'))
+                    ->with(Session::has('coordinador_id') ? 'encargado' : (Session::has('superadmin') ? 'coordinaciones' : 'a_') ,Session::has('coordinador_id') ? Coordinacion::findorFail(Session::get('coordinador_id')) : (Session::has('superadmin') ? Coordinacion::all() : '.'));
 			}elseif($count==3){
                 return view("pages.final_seminario_3")
                     ->with("profesor",$profesor)
                     ->with("curso",$curso)
                     ->with('catalogoCurso',$catalogoCurso)
-                    ->with('infoCursos',$infoCursos);
+                    ->with('infoCursos',$infoCursos)
+                    ->with('layout',Session::has('coordinador_id') ? 'layouts.coordinadores' : (Session::has('superadmin') ? 'layouts.app' : 'layouts.principal'))
+                    ->with(Session::has('coordinador_id') ? 'encargado' : (Session::has('superadmin') ? 'coordinaciones' : 'a_') ,Session::has('coordinador_id') ? Coordinacion::findorFail(Session::get('coordinador_id')) : (Session::has('superadmin') ? Coordinacion::all() : '.'));
 			}      
 		}else{
 			if($count==1){
@@ -286,19 +296,25 @@ class EvaluacionController extends Controller{
 					->with("profesor",$profesor)
 					->with("curso",$curso)
 					->with('catalogoCurso',$catalogoCurso)
-					->with('infoCursos',$infoCursos);
+					->with('infoCursos',$infoCursos)
+					->with('layout',Session::has('coordinador_id') ? 'layouts.coordinadores' : (Session::has('superadmin') ? 'layouts.app' : 'layouts.principal'))
+					->with(Session::has('coordinador_id') ? 'encargado' : (Session::has('superadmin') ? 'coordinaciones' : 'a_') ,Session::has('coordinador_id') ? Coordinacion::findorFail(Session::get('coordinador_id')) : (Session::has('superadmin') ? Coordinacion::all() : '.'));
 			}elseif($count==2){
 				return view("pages.final_curso_2")
 					->with("profesor",$profesor)
 					->with("curso",$curso)
 					->with('catalogoCurso',$catalogoCurso)
-					->with('infoCursos',$infoCursos);
+					->with('infoCursos',$infoCursos)
+					->with('layout',Session::has('coordinador_id') ? 'layouts.coordinadores' : (Session::has('superadmin') ? 'layouts.app' : 'layouts.principal'))
+					->with(Session::has('coordinador_id') ? 'encargado' : (Session::has('superadmin') ? 'coordinaciones' : 'a_') ,Session::has('coordinador_id') ? Coordinacion::findorFail(Session::get('coordinador_id')) : (Session::has('superadmin') ? Coordinacion::all() : '.'));
 			}elseif($count==3){
 				return view("pages.final_curso_3")
 					->with("profesor",$profesor)
 					->with("curso",$curso)
 					->with('catalogoCurso',$catalogoCurso)
-					->with('infoCursos',$infoCursos);
+					->with('infoCursos',$infoCursos)
+					->with('layout',Session::has('coordinador_id') ? 'layouts.coordinadores' : (Session::has('superadmin') ? 'layouts.app' : 'layouts.principal'))
+					->with(Session::has('coordinador_id') ? 'encargado' : (Session::has('superadmin') ? 'coordinaciones' : 'a_') ,Session::has('coordinador_id') ? Coordinacion::findorFail(Session::get('coordinador_id')) : (Session::has('superadmin') ? Coordinacion::all() : '.'));
 			}          
 		}         
 	}
