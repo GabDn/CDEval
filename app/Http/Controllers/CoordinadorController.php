@@ -1002,9 +1002,9 @@ class CoordinadorController extends Controller
 
         $coordinadores = 0;
 
-        if($datos->session()->has('coordinacion_id')){
+        if($datos->session()->has('coordinador_id')){
             $coordinadores = DB::table('coordinacions')
-                ->where('id',$datos->session()->get('coordinacion_id'))
+                ->where('id',$datos->session()->get('coordinador_id'))
                 ->get();
         }
 
@@ -1720,7 +1720,7 @@ class CoordinadorController extends Controller
         $semestre = $request->get('semestre');
         $fecha = explode('-',$semestre);
 
-        $coordinacion_id = $request->session()->get('coordinacion_id');
+        $coordinacion_id = $request->session()->get('coordinador_id');
         $coordinaciones = DB::table('coordinacions')
             ->where('id',$coordinacion_id)
             ->get();
@@ -1772,13 +1772,12 @@ class CoordinadorController extends Controller
         }
 
         if(sizeof($evaluacionesCursos)==0){
-            return redirect()->route('coordinacion.pdf',[$coordinacion_id,'Curso no ha sido evaluado']);
+            return redirect()->route('coordinacion.pdf',[$coordinacion_id,'Ningun curso, del periodo indicado, ha sido evaluado.']);
         }
 
         //Pasamos el nombre de la coordinacion y la vista a retornar
         $nombreCoordinacion = $coordinaciones[0]->nombre_coordinacion;
         $lugar = "pages.reporte_final_coordinacion";
-
         return $this->enviarVista($request,$semestre, $cursos, $nombreCoordinacion, $lugar,0,'elegir.coordinacion',$request->get('periodo'));
         
     }
@@ -1863,7 +1862,7 @@ class CoordinadorController extends Controller
             $envioPDF = 'area_'.$nombreCoordinacion.'_periodo';
         }
         
-        if($datos->session()->has('coordinacion_id')){
+        if($datos->session()->has('coordinador_id')){
             $pdf = PDF::loadView('pages.area',array('nombres'=>$nombres,'periodo'=>$periodo,'acreditaron'=>$acreditaron,'inscritos'=>$inscritos,'contestaron'=>$contestaron,'factor_ocupacion'=>$factor_ocupacion,'factor_recomendacion'=>$factor_recomendacion,'factor_acreditacion'=>$factor_acreditacion,'positivas'=>$positivas,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'DPtematicas'=>$DPtematicas,'DItematicas'=>$DItematicas,'COtematicas'=>$COtematicas,'DHtematicas'=>$DHtematicas,'Otrostematicas'=>$Otrostematicas,'coordinaciones'=>$coordinaciones,'horarios'=>$horarios,'coordinacion'=>$coordinacion,'contenido'=>$contenido,'profesors'=>$profesors,'instructor'=>$instructor,'asistencia'=>$asistencia,'nombreCoordinacion'=>$nombreCoordinacion,'aritmetico_contenido'=>$factor_contenido_aritmetico,'aritmetico_instructor'=>$factor_instructor_aritmetico,'aritmetico_coordinacion'=>$factor_coordinacion_aritmetico,'aritmetico_recomendacion'=>$factor_recomendacion_aritmetico));	
             $datos->session()->forget('coordinacion_id');
         }else{
