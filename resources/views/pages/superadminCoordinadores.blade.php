@@ -17,8 +17,8 @@
     <br>
       <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>Bienvenido(a)  {{ $encargado->coordinador }}</h3>
-                    <h3>Coordinación de {{ $encargado->nombre_coordinacion }}</h3>
+                    <h3>Bienvenid@<!--   {{ $encargado->coordinador }} --></h3>
+                    <!-- <h3>Coordinación de {{ $encargado->nombre_coordinacion }}</h3> -->
                 </div>
                 <div class="panel-body">
 
