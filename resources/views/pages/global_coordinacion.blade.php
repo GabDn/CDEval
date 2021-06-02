@@ -30,6 +30,10 @@
                     }
                 ?>
                 </select>
+                <select name='periodo' width="25%">
+                    <option value='i'>Intersemestral</option>
+                    <option value='s'>Semestral</option>
+                </select>
                 <br>
                 <select name='coordinacion' width="25%">
                 <?php 
@@ -38,10 +42,6 @@
                     }
                 ?>
 				        </select>
-                <select name='periodo' width="25%">
-                    <option value='i'>Intersemestral</option>
-                    <option value='s'>Semestral</option>
-                </select>
 				{{ csrf_field() }}
         <button id="dia"  type="submit" class="btn btn-primary active">Enviar</button>
         </form>
