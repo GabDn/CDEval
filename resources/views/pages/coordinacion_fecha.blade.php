@@ -18,7 +18,7 @@
     <br>
       <div class="panel panel-default">
 			<div class="panel-heading">
-        <h3> Área:  Seleccione semestre</h3>
+        <h3> Área:  Seleccione periodo</h3>
       </div>
       <div class="panel-body">
       <form method="POST" action="{{ route('enviar.area.pdf')}}">

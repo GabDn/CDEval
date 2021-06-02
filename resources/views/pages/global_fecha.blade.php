@@ -19,7 +19,7 @@
     <br>
       <div class="panel panel-default">
 			<div class="panel-heading">
-        <h3> Global:  Seleccione semestre</h3>
+        <h3> Global:  Seleccione periodo</h3>
       </div>
       <div class="panel-body">
         <form method="POST" action="{{ action('CoordinadorController@enviarGlobal')}}">

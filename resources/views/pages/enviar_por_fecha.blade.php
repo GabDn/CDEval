@@ -14,7 +14,7 @@
     <br>
       <div class="panel panel-default">
 			<div class="panel-heading">
-                <h3> Curso:  Seleccione semestre</h3>
+                <h3> Curso:  Seleccione periodo</h3>
             </div>
             <div class="panel-body">
             <select name='semestre' width="25%">
