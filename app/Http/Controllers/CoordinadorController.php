@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Storage;
 use Mail;
 use PDF;
 use DB; 
+use Carbon\Carbon;
 
 class CoordinadorController extends Controller
 {
@@ -73,6 +74,15 @@ class CoordinadorController extends Controller
      * @return La vista pages.cursos con sus datos necesarios
      */
     public function cursosCoordinaciones($encargado_id,$message){
+        $fecha = Carbon::now();
+
+        //Ajustes para simplificar las condiciones de abajo,
+        //Ya que de estaforma el semestre par ocupa los meses de febrero-julio exactamente
+        //y el otro semestre ocupa los meses agosto-enero exactamente.
+        //sin este ajuste el semestre par inicia en enero(ultima semana) y termina en agosto(1ra semana)
+        // lo que complejisa las condiciones de abajo.
+        $fecha = ($fecha->month==8)? $fecha->subWeek() : ($fecha->month==1)? $fecha->addWeek() : $fecha;
+
         $coordinaciones = Coordinacion::all();
 
         $catalogo_curso = DB::table('catalogo_cursos')
@@ -83,6 +93,14 @@ class CoordinadorController extends Controller
         foreach($catalogo_curso as $catalogo){
             $cursosDatos = DB::table('cursos')
                 ->where('catalogo_id',$catalogo->id)
+                ->where(
+                    [
+                        ['semestre_si', '=', in_array($fecha->month,array(1, 6, 7, 12))? 'i':'s'],
+                        ['semestre_pi', '=', in_array($fecha->month,array(2, 3, 4, 5, 6, 7))? '2':'1'],
+                        ['semestre_anio', '=', in_array($fecha->month,array(8, 9, 10, 11, 12))? $fecha->year+1:$fecha->year],
+                        ['fecha_fin', '<=', Carbon::now()]
+                    ]
+                )
                 ->get();
             foreach($cursosDatos as $curso){
                 $datos = array();
@@ -1005,6 +1023,10 @@ class CoordinadorController extends Controller
         if($datos->session()->has('coordinador_id')){
             $coordinadores = DB::table('coordinacions')
                 ->where('id',$datos->session()->get('coordinador_id'))
+                ->get();
+        }else if ($datos->session()->has('superadmin')){
+            $coordinadores = DB::table('coordinacions')
+                ->where('abreviatura',$datos->get('coordinacion'))
                 ->get();
         }
 
