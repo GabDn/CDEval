@@ -22,7 +22,7 @@
 <div class="wrap">
     <nav class="nav-bar navbar-inverse" role="navigation">
         <div id ="top-menu" class="container-fluid active">
-            <a class="navbar-brand" href="{{ route('evaluacion.admin', [$profesor->id]) }}">Centro de Docencia - Evaluaciones</a>
+            <a class="navbar-brand" id="nav-a" href="{{ route('evaluacion.admin', [$profesor->id]) }}">Centro de Docencia - Evaluaciones</a>
             <ul class="nav navbar-nav">
 
                 <li class="dropdown movable">
@@ -32,7 +32,7 @@
                         <i id="usericon" class="fa fa-2x fa-user-circle"></i>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                    <a href="{{ route('logout') }}"  style="text-align:center"> logout </a>
+                    <a href="{{ route('logout') }}" class="btn btn-logout"> Cerrar sesión </a>
                     </ul>
 
             </ul>

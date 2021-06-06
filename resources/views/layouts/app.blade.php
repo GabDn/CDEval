@@ -11,13 +11,14 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('dist/jquery.fancybox.min.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/font-awesome.min.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin.css') }}"/>
+    
 
 </head>
 <body>
 <div class="wrap">
     <nav class="nav-bar navbar-inverse" role="navigation">
         <div id ="top-menu" class="container-fluid active">
-            <a class="navbar-brand" href="{{ URL::to('admin/') }}">Centro de Docencia - Evaluaciones</a>
+            <a class="navbar-brand" id="nav-a" href="{{ URL::to('admin/') }}">Centro de Docencia - Evaluaciones</a>
             <ul class="nav navbar-nav">
 
                 <li class="dropdown movable">
@@ -29,8 +30,7 @@
                     </a>
                     <ul class="dropdown-menu" role="menu">
 
-                        <a href="{{ route('logout') }}"  style="text-align:center"> logout </a>
-                        
+                        <a href="{{ route('logout') }}" class="btn logout"> Cerrar sesión</a>
                     </ul>
 
             </ul>
@@ -44,13 +44,13 @@
     
 
             <li class="nav-header">
-                <div class="link"><i class="fa fa-list-alt"></i>Coordinaciones<i class="fa fa-chevron-down"></i></div>
+                <div class="btn link"><i class="fa fa-list-alt"></i><p>Coordinaciones</p><i class="fa fa-chevron-down"></i></div>
                 <ul class="submenu">
                 <p>
                     <!--<?php echo json_encode($coordinaciones) ?>-->
                 </p>
                 @foreach($coordinaciones as $coordinacion)
-                    <li><a href="{{ route('cursos.coordinacion',[$coordinacion->id,0]) }}">{{ $coordinacion->nombre_coordinacion }}</a></li>
+                    <li><a class="btn" href="{{ route('cursos.coordinacion',[$coordinacion->id,0]) }}">{{ $coordinacion->nombre_coordinacion }}</a></li>
                 @endforeach
                 </ul>
             </li>

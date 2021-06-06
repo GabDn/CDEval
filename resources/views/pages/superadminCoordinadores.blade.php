@@ -28,7 +28,7 @@
                   </div>
                   <br>
                   <hr>
-                  <button id="final" type="button" class="btn btn-primary active"> <a href="{{ route('coordinacion.pdf',['coordinacion_id'=>$encargado->id,'message'=>'0']) }}" style="color:white">Evaluación de área</a></button> 
+                  <a class="btn btn-primary" href="{{ route('coordinacion.pdf',['coordinacion_id'=>$encargado->id,'message'=>'0']) }}" style="color:white">Evaluación de área</a>
 
                 
                 </div>

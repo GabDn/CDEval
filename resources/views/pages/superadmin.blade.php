@@ -28,8 +28,8 @@
                   
                   </div>
 
-                  <button id="dia"  type="button" class="btn btn-primary active"><a href="{{ route('elegir.fecha',['message'=>0]) }}" style="color:white">Enviar historial cursos</a></button>
-                  <button id="dia"  type="button" class="btn btn-primary active"><a href="{{ route('elegir.coordinacion',['message'=>0]) }}" style="color:white">Enviar historial cursos Coordinacion</a></button>
+                  <a href="{{ route('elegir.fecha',['message'=>0]) }}" class="btn btn-primary">Enviar historial cursos</a>
+                  <a href="{{ route('elegir.coordinacion',['message'=>0]) }}" class="btn btn-primary">Enviar historial cursos Coordinacion</a>
                 
                 </div>
 
