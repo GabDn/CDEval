@@ -81,7 +81,7 @@ class CoordinadorController extends Controller
         //y el otro semestre ocupa los meses agosto-enero exactamente.
         //sin este ajuste el semestre par inicia en enero(ultima semana) y termina en agosto(1ra semana)
         // lo que complejisa las condiciones de abajo.
-        $fecha = ($fecha->month==8)? $fecha->subWeek() : ($fecha->month==1)? $fecha->addWeek() : $fecha;
+        $fecha = ($fecha->month==8)? $fecha->subWeek() : (($fecha->month==1)? $fecha->addWeek() : $fecha);
 
         $coordinaciones = Coordinacion::all();
 
