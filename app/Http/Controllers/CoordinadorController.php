@@ -73,7 +73,7 @@ class CoordinadorController extends Controller
      * @param $encargado_id: id del curso, $message: mensaje a mostrar en pantalla
      * @return La vista pages.cursos con sus datos necesarios
      */
-    public function cursosCoordinaciones($encargado_id,$message){
+    public function cursosCoordinaciones($encargado_id,$message, Request $request){
         $fecha = Carbon::now();
 
         //Ajustes para simplificar las condiciones de abajo,
@@ -89,15 +89,19 @@ class CoordinadorController extends Controller
             ->where('coordinacion_id',$encargado_id)
             ->get();
 
+        $periodo_si = $request->filled('periodo_anio')? $request->periodo_si : (in_array($fecha->month,array(1, 6, 7, 12))? 'i':'s');
+        $periodo_pi = $request->filled('periodo_anio')? $request->periodo_pi : (in_array($fecha->month,array(2, 3, 4, 5, 6, 7))? '2':'1');
+        $periodo_anio = $request->filled('periodo_anio')? $request->periodo_anio : (in_array($fecha->month,array(8, 9, 10, 11, 12))? $fecha->year+1:$fecha->year);
+
         $cursos = array();
         foreach($catalogo_curso as $catalogo){
             $cursosDatos = DB::table('cursos')
                 ->where('catalogo_id',$catalogo->id)
                 ->where(
                     [
-                        ['semestre_si', '=', in_array($fecha->month,array(1, 6, 7, 12))? 'i':'s'],
-                        ['semestre_pi', '=', in_array($fecha->month,array(2, 3, 4, 5, 6, 7))? '2':'1'],
-                        ['semestre_anio', '=', in_array($fecha->month,array(8, 9, 10, 11, 12))? $fecha->year+1:$fecha->year],
+                        ['semestre_si', '=', $periodo_si],
+                        ['semestre_pi', '=', $periodo_pi],
+                        ['semestre_anio', '=', $periodo_anio],
                         ['fecha_fin', '<=', Carbon::now()]
                     ]
                 )
@@ -126,6 +130,9 @@ class CoordinadorController extends Controller
             ->with('encargado_id',$encargado_id)
             ->with('encargado',$encargado_id)
             ->with('message',$message)
+            ->with('periodo_si',$periodo_si)
+            ->with('periodo_pi',$periodo_pi)
+            ->with('periodo_anio',$periodo_anio)
             ->with('layout',Session::has('coordinador_id') ? 'layouts.coordinadores' : 'layouts.app');
     }
 
