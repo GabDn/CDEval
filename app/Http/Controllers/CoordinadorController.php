@@ -222,12 +222,12 @@ class CoordinadorController extends Controller
         $fecha = $request->get('semestre');
         $semestre = explode('-',$fecha);
         $periodo = $request->get('periodo');
-
+        
         //Obtenemos los cursos correspondientes al semestre elegido por el usuario
         $cursos = DB::table('cursos')
             ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]],['cursos.semestre_si',$periodo]])
             ->get();
-
+        
         //Indicamos la vista a observar
         $lugar = "pages.reporte_final_global";
 
@@ -917,7 +917,7 @@ class CoordinadorController extends Controller
             $factor_calidad_curso = ($positivas_curso*100)/$preguntas_curso;
             $factora_acreditacion = ($acreditaronCurso*100)/$alumno_curso;
             $factor_recomendacion_curso = ($alumnos_recomendaron_curso*100)/$recomendaciones_curso;
-
+            
             //array_push($array_prueba_coord,$curso_id);
 
             array_push($desempenioProfesoresCurso,(round($desempenioProfesor1/$instructor_1,2)));
@@ -1072,7 +1072,7 @@ class CoordinadorController extends Controller
             ->with('aritmetico_coordinacion',$aritmetico[2])
             ->with('aritmetico_recomendacion',$aritmetico[3])
             ->with('semestral',$semestral)
-            ->with('encargado',$coordinadores[0]->id);
+            /*->with('encargado',$coordinadores[0]->id);*/;
     }
 
     /**
