@@ -23,9 +23,9 @@
             <div class="row">
                 <form action="{{route('cursos.coordinacion',['encargado_id'=>$encargado_id,'message'=>$message])}}">
                     <div class="form-group">
-                        <div class="col-md-4"><input class="form-control" type="text" name="periodo_anio" placeholder="Periodo" value="{{$periodo_anio}}"></div>
+                        <div class="col-md-4"><input class="form-control" type="text" name="periodo_anio" placeholder="Periodo" value="{{isset($periodo_anio)? $periodo_anio:null}}"></div>
                         <div class="col-md-2"><select class="form-control" name="periodo_pi">
-                            @if ($periodo_pi == '1')
+                            @if (isset($periodo_pi) && $periodo_pi == '1')
                             <option value="1" selected>1</option>
                             <option value="2">2</option>
                             @else
@@ -34,7 +34,7 @@
                             @endif
                         </select></div>
                         <div class="col-md-2"><select class="form-control" name="periodo_si">
-                            @if ($periodo_si == 's')
+                            @if (isset($periodo_si) && $periodo_si == 's')
                             <option value="s" selected>s</option>
                             <option value="i">i</option>
                             @else
@@ -48,7 +48,7 @@
             </div>
             <hr>
             <h4>Buscar</h4>
-            {!! Form::open(["route" => "buscar.curso", "method" => "GET"]) !!}
+            {!! Form::open(["route" => ["buscar.curso",$encargado_id,$message], "method" => "GET"]) !!}
               <div class="input-group">
                   {!!Form::text("pattern", null, [ "class" => "form-control", "placeholder" => "Buscar Curso"])!!}
                   {!! Form::select('type', array(
@@ -59,6 +59,9 @@
                   <span class="input-group-btn col-md-2">
                     <button class="btn btn-search " type="submit">Buscar</button>
                 </span>
+                <input type="hidden" name="periodo_anio" value="{{isset($periodo_anio)? $periodo_anio:null}}">
+                <input type="hidden" name="periodo_pi" value="{{isset($periodo_pi)? $periodo_pi:null}}">
+                <input type="hidden" name="periodo_si" value="{{isset($periodo_si)? $periodo_si:null}}">
               </div>
             {!! Form::close() !!}
           </div>
@@ -69,7 +72,7 @@
                                 <tr>
                                     <th>Curso</th>
                                     <th>Instructor(es)</th>
-                                    <th>Semestre</th>
+                                    <th>Periodo</th>
                                     <th>Evaluación</th>
                                     <th>Evaluar</th>
                                 </tr>

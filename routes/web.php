@@ -24,7 +24,7 @@ Route::get('/cursos',"CoordinadorController@cursos")->name("cursos");
 //Route::get('/cursosCoordinacion/{id}/{message}',"CoordinadorController@cursosCoordinaciones")->name("cursos.coordinacion");
 Route::get('/cursosCoordinacion/{id}/{message}/',"CoordinadorController@cursosCoordinaciones")->name("cursos.coordinacion");
 Route::get('/instructores',"CoordinadorController@instructores")->name("instructores");
-Route::get('cursos/buscar',"CoordinadorController@searchCursos")->name("buscar.curso");
+Route::get('cursos/buscar/{id}/{message}/',"CoordinadorController@searchCursos")->name("buscar.curso");
 Route::get('sesion',"CoordinadorController@sesiones")->name("ver.sesion");
 Route::get('global',"CoordinadorController@globales")->name("ver.global");
 Route::get('global/{curso_id}/{pdf}/{encargado_id}',"CoordinadorController@globalFinal")->name("ver.global.final");

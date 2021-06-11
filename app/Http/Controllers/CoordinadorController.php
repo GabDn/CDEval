@@ -47,25 +47,99 @@ class CoordinadorController extends Controller
     /**
      * Función en estado beta
      */
-    public function searchCursos(Request $request){      
+    public function searchCursos($encargado_id,$message, Request $request){      
+        $fecha = Carbon::now();
+
+        //Ajustes para simplificar las condiciones de abajo,
+        //Ya que de estaforma el semestre par ocupa los meses de febrero-julio exactamente
+        //y el otro semestre ocupa los meses agosto-enero exactamente.
+        //sin este ajuste el semestre par inicia en enero(ultima semana) y termina en agosto(1ra semana)
+        // lo que complejisa las condiciones de abajo.
+        $fecha = ($fecha->month==8)? $fecha->subWeek() : (($fecha->month==1)? $fecha->addWeek() : $fecha);
+
+        $periodo_si = $request->filled('periodo_anio')? $request->periodo_si : (in_array($fecha->month,array(1, 6, 7, 12))? 'i':'s');
+        $periodo_pi = $request->filled('periodo_anio')? $request->periodo_pi : (in_array($fecha->month,array(2, 3, 4, 5, 6, 7))? '2':'1');
+        $periodo_anio = $request->filled('periodo_anio')? $request->periodo_anio : (in_array($fecha->month,array(8, 9, 10, 11, 12))? $fecha->year+1:$fecha->year);
+
         if ($request->type == "nombre") {
-            $catalogos_res = CatalogoCurso::select('id')->where('nombre_curso','ILIKE','%'.$request->pattern.'%')->get();
-            $res_busqueda = Curso::whereIn('catalogo_id', $catalogos_res)
+            $catalogo_curso = DB::table('catalogo_cursos')
+                ->where('coordinacion_id',$encargado_id)
+                ->whereRaw("lower(unaccent(nombre_curso)) ILIKE lower(unaccent('%".$request->pattern."%'))")
                 ->get();
-            return view('pages.cursos')->with("cursos",$res_busqueda);
             
         }elseif ($request->type == "instructor"){
-            $words=explode(" ", $request->pattern);
-            foreach($words as $word){
-                $profesores = Profesor::select('id')->where('nombres','ILIKE','%'.$word.'%')
-                ->orWhere('apellido_paterno','ILIKE','%'.$word.'%')
-                ->orWhere('apellido_materno','ILIKE','%'.$word.'%')
+            $catalogo_curso = DB::table('catalogo_cursos')
+                ->where('coordinacion_id',$encargado_id)
                 ->get();
-            }
-            $curso_prof = ProfesoresCurso::select('curso_id')->whereIn('profesor_id', $profesores)->get();
-            $res_busqueda = Curso::whereIn('id',$curso_prof)->get();
-            return view('pages.cursos')->with("cursos",$res_busqueda);
         }
+
+        $cursos = array();
+        foreach($catalogo_curso as $catalogo){
+
+            if ($request->type == "nombre") {
+                $cursosDatos = DB::table('cursos')
+                    ->where('catalogo_id',$catalogo->id)
+                    ->where(
+                        [
+                            ['semestre_si', '=', $periodo_si],
+                            ['semestre_pi', '=', $periodo_pi],
+                            ['semestre_anio', '=', $periodo_anio],
+                            ['fecha_fin', '<=', Carbon::now()]
+                        ]
+                    )
+                    ->get();
+            }elseif ($request->type == "instructor"){
+                $words=explode(" ", $request->pattern);
+                foreach($words as $word){
+                    $profesores = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$word."%'))")
+                    ->orWhereRaw("lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$word."%'))")
+                    ->orWhereaw("lower(unaccent(apellido_materno)) ILIKE lower(unaccent('%".$word."%'))")
+                    ->get();
+                }
+                $curso_prof = ProfesoresCurso::select('curso_id')->whereIn('profesor_id', $profesores)->get();
+
+                $cursosDatos = DB::table('cursos')
+                    ->where('catalogo_id',$catalogo->id)
+                    ->where(
+                        [
+                            ['semestre_si', '=', $periodo_si],
+                            ['semestre_pi', '=', $periodo_pi],
+                            ['semestre_anio', '=', $periodo_anio],
+                            ['fecha_fin', '<=', Carbon::now()]
+                        ]
+                    )
+                    ->whereIn('id',$curso_prof)
+                    ->get();
+            }
+
+            foreach($cursosDatos as $curso){
+                $datos = array();
+                $profesores = array();
+                $profesores_curso = DB::table('profesor_curso')
+                    ->where('curso_id',$curso->id)
+                    ->get();
+                foreach($profesores_curso as $profesor_curso){
+                    $profesor = DB::table('profesors')
+                        ->where('id',$profesor_curso->profesor_id)
+                        ->get();
+                    array_push($profesores,$profesor);
+                }
+                array_push($datos,$curso);
+                array_push($datos,$catalogo);
+                array_push($datos,$profesores);
+                array_push($cursos,$datos);
+            }
+        }
+
+        return view('pages.cursos')->with("cursos",$cursos)
+            ->with("coordinaciones",Coordinacion::all())
+            ->with('encargado_id',$encargado_id)
+            ->with('encargado',$encargado_id)
+            ->with('message',$message)
+            ->with('periodo_si',$periodo_si)
+            ->with('periodo_pi',$periodo_pi)
+            ->with('periodo_anio',$periodo_anio)
+            ->with('layout',Session::has('coordinador_id') ? 'layouts.coordinadores' : 'layouts.app');
     }
 
     /**
