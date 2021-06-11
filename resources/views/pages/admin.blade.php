@@ -18,6 +18,7 @@
     </div>
     <section class="content-inner">
     <br>
+		@include ('partials.messages')
       <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3>Bienvenido Prof(a). {{ $profesor->nombres }} {{ $profesor->apellido_paterno }}</h3>
@@ -32,7 +33,7 @@
                   </div>
 				<br>
 				<br>
-					<button id="dia"  type="button" class="btn btn-primary active"><a href="{{ route('evaluacion.enviarClaveCrusoHistorico',[ $profesor->id] ) }}" style="color:white">Enviar historial cursos</a></button>
+					<button id="dia"  type="button" class="btn btn-primary active"><a href="{{ route('evaluacion.enviarClaveCursoHistorico',[ $profesor->id] ) }}" style="color:white">Enviar historial cursos</a></button>
 					<button id="dia"  type="button" class="btn btn-primary active"><a href="{{ route('evaluacion.enviarClaveFecha',[ $profesor->id] ) }}" style="color:white">Enviar cursos por fecha</a></button>
                 </div>
 

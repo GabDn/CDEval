@@ -21,14 +21,14 @@ class Curso extends Model
     ];
 
     public function getNombreCurso(){
-        $salon = CatalogoCurso::findOrFail($this->catalogo_id)->nombre_curso;
-        return $salon;
+        return CatalogoCurso::findOrFail($this->catalogo_id)->nombre_curso;
     }
     
     public function getSalon(){
         $salon = Salon::findOrFail($this->salon_id)->sede;
         return $salon;
     }
+		// TODO Eliminar este metodo, el curso tiene profesores no solo un profesor
     public function getProfesor(){
         $nombre = Profesor::findOrFail($this->profesor_id)->nombres;
         $ap_pat = Profesor::findOrFail($this->profesor_id)->apellido_paterno;
@@ -37,6 +37,7 @@ class Curso extends Model
         return $nombre." ".$ap_pat." ".$ap_mat;
     }
 
+		// TODO Eliminar estos metodos, se puede acceder a los atributos por medio del operador ->atributo
     public function getIdCatalogo(){
         return $this->catalogo_id;
     }

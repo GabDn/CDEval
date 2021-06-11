@@ -19,7 +19,7 @@ class AutentificarController extends Controller{
 # RAGJ720101T72
 
 #JUFM720101M74 
-#12143235
+# 12143235
 
      public function index(Request $request){
         //return view("pages.superadmin");
@@ -84,9 +84,10 @@ class AutentificarController extends Controller{
                     //return $infoCursos;
                 }
                 //return $infoCursos[0][1];
-                return view("pages.admin")
-					->with("profesor",$profesor)
-					->with('infoCursos',$infoCursos);
+								return redirect()->route('home.profesor', $profesor->id);
+          //       return view("pages.admin")
+					// ->with("profesor",$profesor)
+					// ->with('infoCursos',$infoCursos);
             }else return back()->with('error', 'Número de trabajador inválido'); 
         }else return back()->with('error', 'RFC o usuario inválido');
         return back()->with('error','Datos inválidos');

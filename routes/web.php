@@ -11,7 +11,14 @@ Route::get('/area/{coordinacion_id}/{message}',['uses'=>'CoordinadorController@a
 
 
 Route::post('/autentificar', "AutentificarController@index")->name("autentificar");
+
+//Vistas home
+Route::get('/home/{profesor_id}', "ProfesorController@index")->name("home.profesor");
+Route::get('/home/{coordinador_id}', "CoordinadorController@index")->name("home.coordinador");
+Route::get('/home/root', "RootController@index")->name("home.root");
+
 //Vista de coordinador
+
 //Route::post('/coordinador', "AutentificarController@index")->name("coordinador");
 Route::get('/cursos',"CoordinadorController@cursos")->name("cursos");
 //Route::get('/cursosCoordinacion/{id}/{message}',"CoordinadorController@cursosCoordinaciones")->name("cursos.coordinacion");
@@ -36,7 +43,7 @@ Route::post('/finals/{profesor_id}/{curso_id}/{catalogoCurso_id}','EvaluacionCon
 Route::post('evaluar/xcurso/{profesor_id}/{curso_id}/{catalogoCurso_id}',"EvaluacionController@saveXCurso")->name('x.curso');
 Route::post('evaluar/xseminario/{profesor_id}/{curso_id}/{catalogoCurso_id}',"EvaluacionController@saveXSeminario")->name('x.seminario');
 
-Route::get('enviar/{profesor_id}',"EvaluacionController@enviarClaveCrusoHistorico")->name('evaluacion.enviarClaveCrusoHistorico');
+Route::get('enviar/{profesor_id}',"EvaluacionController@enviarClaveCursoHistorico")->name('evaluacion.enviarClaveCursoHistorico');
 Route::get('enviarFecha/{profesor_id}',"EvaluacionController@redirigirAEnviar")->name('evaluacion.enviarClaveFecha');
 Route::post('enviarFechaArchivo/{profesor}',"EvaluacionController@enviarClaveFecha")->name('evaluacion.enviarClaveFechaArchivo');
 Route::get('admin/{profesor_id}',"EvaluacionController@admin")->name('evaluacion.admin');

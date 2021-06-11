@@ -48,11 +48,8 @@
             <li class="nav-header">
                 <div class="link"><i class="fa fa-pencil"></i>Cursos Inscritos<i class="fa fa-chevron-down"></i></div>
                 <ul class="submenu">
-				<p>
-					<!--<?php echo json_encode($infoCursos) ?>-->
-				</p>
-                @foreach($infoCursos as $infoCurso)
-                    <li><a href="{{ route('evaluacion.index',['profesor_id'=> $profesor->id,'curso_id'=>$infoCurso[0]->id,'catalogoCurso_id'=>$infoCurso[1]->id] ) }}">{{ $infoCurso[1]->nombre_curso }} {{$infoCurso[0]->semestre_anio}}</a></li>
+                @foreach($cursos as $curso)
+                    <li><a href="{{ route('evaluacion.index',['profesor_id'=> $profesor->id,'curso_id'=>$curso->id,'catalogoCurso_id'=>$curso->catalogo_id] ) }}">{{ $curso->getNombreCurso() }} {{$curso->semestre_imparticion}}</a></li>
                 @endforeach
                 </ul>
             </li>

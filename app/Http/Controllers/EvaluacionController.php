@@ -1105,18 +1105,19 @@ $promedio_p4=[
 	 * @param $request: petición (vacía) del usuario, $id del profesor del que se desean obtener los datos
 	 * @return la vista pages.admin
 	 */
-	public function enviarClaveCrusoHistorico(Request $request, $profesor_id){
+	public function enviarClaveCursoHistorico(Request $request, $profesor_id){
 		//Si el formulario no fue rellenado por un profesor, no hace falta enviar el correo
 		if (Session::has('coordinador_id') or Session::has('superadmin'))
-			return
+			return;
 
 
 		//Obtenemos todos los cursos en los que ha participado el profesor
-		$cursosParticipante=DB::table('participante_curso')
+		$cursosParticipante = DB::table('participante_curso')
 			->select('curso_id')
 			->where('profesor_id',$profesor_id)
 			->get();
-			
+		if ($cursosParticipante->isEmpty())
+			return redirect()->back()->with('danger', 'El profesor no tiene registro de haber sido inscrito en algún curso');
 		$data = array(
 			'name'=>"CDEval",
 		);
@@ -1235,7 +1236,7 @@ $promedio_p4=[
 	public function enviarClaveFecha(Request $request, $profesor_id){
 		//Si el formulario no fue rellenado por un profesor, no hace falta enviar el correo
 		if (Session::has('coordinador_id') or Session::has('superadmin'))
-			return
+			return;
 
 
 		//Obtenemos el semestre aceptado por el usuario y lo dividimos entre -
