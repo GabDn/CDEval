@@ -991,8 +991,6 @@ class CoordinadorController extends Controller
             $factor_calidad_curso = ($positivas_curso*100)/$preguntas_curso;
             $factora_acreditacion = ($acreditaronCurso*100)/$alumno_curso;
             $factor_recomendacion_curso = ($alumnos_recomendaron_curso*100)/$recomendaciones_curso;
-            
-            //array_push($array_prueba_coord,$curso_id);
 
             array_push($desempenioProfesoresCurso,(round($desempenioProfesor1/$instructor_1,2)));
             if($instructor_2==0){
@@ -1057,40 +1055,25 @@ class CoordinadorController extends Controller
         //Necesario evitar la division entre cero, es posible pedir ver resumen de una fecha sin cursos
         if($alumnosRecomendaron != 0){
             $factor_recomendacion = round($recomendaciones*100 / $alumnosRecomendaron,2);
-            //$factor_recomendacion = $recomendaciones*100 / $alumnosRecomendaron;
         }
         if($inscritos != 0){
             $factor_acreditacion = round($acreditaron*100 / $asistieron,2);
-            //$factor_acreditacion = $acreditaron*100 / $asistieron;
         }
         if($preguntas != 0){
             $factor_calidad = round($positivas*100 / $preguntas,2);
-            //$factor_calidad = $positivas*100 / $preguntas;
         }
         if($contestaron != 0){
             $promedio_coordinacion = round($respuestasCoordinacion / $preguntas_coordinacion,2);
             $promedio_contenido = round($respuestasContenido / $preguntas_contenido,2);
-            //$promedio_coordinacion = $respuestasCoordinacion / $preguntas_coordinacion;
-            //$promedio_contenido = $respuestasContenido / $preguntas_contenido;
         }
-        /*if($instructor_1 != 0){
-            //return ($instructor_1+$instructor_2+$instructor_3);
-            $factor_instructor = round($desempenioProfesor / ($instructor_1+$instructor_2+$instructor_3),2);
-            //$factor_instructor = $desempenioProfesor / $evaluacionProfesor;
-        }*/
         if($capacidad_total != 0){
             $factor_ocupacion = round((($asistieron*100)) / $capacidad_total,2);
-            //$factor_ocupacion = round((($asistieron*100)-1) / $capacidad_total,2);
-            //$factor_ocupacion = (($asistieron*100)-1) / $capacidad_total;
         }
-
         $aritmetico = [0,0,0,0];
         if(strcmp($nombreCoordinacion,"")==0){
             $aritmetico = $this->calculaAritmetico($cursos);
-            //return $this->calculaAritmetico($cursos);
         }else{
             $aritmetico = $this->calculaAritmeticoArea($cursos, $nombreCoordinacion);
-            //return $aritmetico;
         }
 
         //Si el usuario indico descargar un pdf se procedera a realizarlo
@@ -1158,6 +1141,7 @@ class CoordinadorController extends Controller
         //Obtenemos la fecha seleccionada
         $semestre_anio = $cursos[0]->semestre_anio;
         $semestre_pi = $cursos[0]->semestre_pi;
+        $semestre_si = $cursos[0]->semestre_si;
 
         $coordinaciones = Coordinacion::all();
         $catalogo_coordinaciones = array();
@@ -1166,8 +1150,8 @@ class CoordinadorController extends Controller
         foreach($coordinaciones as $coordinacion){
             $cursos = DB::table('cursos')
                 ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
-                ->select('cursos.id','catalogo_cursos.nombre_curso','catalogo_cursos.tipo')
-                ->where([['catalogo_cursos.coordinacion_id',$coordinacion->id],['cursos.semestre_anio',$semestre_anio],['cursos.semestre_pi',$semestre_pi]])
+                ->select('cursos.id','catalogo_cursos.nombre_curso','catalogo_cursos.tipo','catalogo_id')
+                ->where([['catalogo_cursos.coordinacion_id',$coordinacion->id],['cursos.semestre_anio',$semestre_anio],['cursos.semestre_pi',$semestre_pi],['cursos.semestre_si',$semestre_si]])
                 ->get();
             
             if(sizeof($cursos)>0){
@@ -1180,28 +1164,30 @@ class CoordinadorController extends Controller
         $coordinacion_promedio = 0;
         $factor_recomendacion_promedio = 0;
         $tam_coordinacion = 0;
+        $cont = 0;
+        $num_cursos = 0;
 
         //Empezamos a iterar cada coordinación
         foreach($catalogo_coordinaciones as $coordinacion){
 
-            $contenido_curso = 0;
-            $instructor_curso_1 = 0;
-            $instructor_curso_2 = 0;
-            $instructor_curso_3 = 0;
-            $coordinacion_curso = 0;
-            $factor_recomendacion_curso = 0;
-            $tam = 0;
-            $tam1 = 0;
-            $tam2 = 0;
-            $tam3 = 0;
-            $tam_coord = 0;
-            $tam_contenido = 0;
-            $tam_recomendacion = 0;
-
-            $tam_coordinacion++;
-
             //Empezamos a iterar los cursos de cada coordinación
             foreach($coordinacion as $curso){
+
+                $contenido_curso = 0;
+                $instructor_curso_1 = 0;
+                $instructor_curso_2 = 0;
+                $instructor_curso_3 = 0;
+                $coordinacion_curso = 0;
+                $factor_recomendacion_curso = 0;
+                $tam = 0;
+                $tam1 = 0;
+                $tam2 = 0;
+                $tam3 = 0;
+                $tam_coord = 0;
+                $tam_contenido = 0;
+                $tam_recomendacion = 0;
+
+                $num_cursos++;
                 $evals = 0;
                 //Obtenemos las evaluaciones
                 if(strcmp($curso->tipo,'S')==0){
@@ -1402,36 +1388,32 @@ class CoordinadorController extends Controller
                         $tam_recomendacion++;
                     }
                 }
-            }
+                
+                $divisor = 1;
+                if($tam2 != 0){
+                    $divisor = 2;
+                }else{
+                    $tam2 = 1;
+                }
+                if($tam3 != 0){
+                    $divisor = 3;
+                }else{
+                    $tam3 = 1;
+                }
 
-            //Serie de pasos necesarios para obtener el promedio de la coordinación de cada variable
-            $divisor = 1;
-            if($tam2 != 0){
-                $divisor = 2;
-            }else{
-                $tam2 = 1;
+                //Aritmetico promedio de los primedios a cada instructor (se obtienen individualmente el de cada instructor de cada curso), ponderado promedio de los cursos (se promedian todos los instructores de cada curso)
+                //Juicio Sumario B es promedio de los tres factores y que sea mayor o igual a 80
+                $contenido_promedio += $contenido_curso/$tam_contenido;
+                $instructor_promedio += ((($instructor_curso_1/($tam1))+($instructor_curso_2/($tam2))+($instructor_curso_3/($tam3)))/$divisor);
+                $coordinacion_promedio += ($coordinacion_curso/$tam_coord);
+                $factor_recomendacion_promedio += ($factor_recomendacion_curso*100/$tam_recomendacion);
             }
-            if($tam3 != 0){
-                $divisor = 3;
-            }else{
-                $tam3 = 1;
-            }
-
-            //Aritmetico promedio de los primedios a cada instructor (se obtienen individualmente el de cada instructor de cada curso), ponderado promedio de los cursos (se promedian todos los instructores de cada curso)
-            //Juicio Sumario B es promedio de los tres factores y que sea mayor o igual a 80
-             
-            $contenido_promedio += $contenido_curso/($tam_contenido);
-            $instructor_promedio += (($instructor_curso_1/($tam1))+($instructor_curso_2/($tam2))+($instructor_curso_3/($tam3)))/$divisor;
-            $coordinacion_promedio += $coordinacion_curso/($tam_coord);
-            $factor_recomendacion_promedio += ($factor_recomendacion_curso*100/$tam_recomendacion);
-
         }
 
-        //Obtenemos el promedio de todas las coordinaciones
-        $factor_contenido_aritmetico = round($contenido_promedio / $tam_coordinacion,2);
-        $factor_instructor_aritmetico = round($instructor_promedio / $tam_coordinacion,2);
-        $factor_coordinacion_aritmetico = round($coordinacion_promedio / $tam_coordinacion,2);
-        $factor_recomendacion_aritmetico = round($factor_recomendacion_promedio / $tam_coordinacion,2);
+        $factor_contenido_aritmetico = round($contenido_promedio / $num_cursos,2);
+        $factor_instructor_aritmetico = round($instructor_promedio / $num_cursos,2);
+        $factor_coordinacion_aritmetico = round($coordinacion_promedio / $num_cursos,2);
+        $factor_recomendacion_aritmetico = round($factor_recomendacion_promedio / $num_cursos,2);
 
         $aritmetico = [$factor_contenido_aritmetico,$factor_instructor_aritmetico,$factor_coordinacion_aritmetico,$factor_recomendacion_aritmetico];
         return $aritmetico;
@@ -1450,7 +1432,6 @@ class CoordinadorController extends Controller
         $coordinacion_promedio = 0;
         $factor_recomendacion_promedio = 0;
         $tam_coordinacion = 0;
-
 
         //Iteramos cada curso del área seleccionada
         foreach($cursos as $curso){
@@ -1728,8 +1709,6 @@ class CoordinadorController extends Controller
             }
         }
 
-        //return $coordinaciones;
-
         return view('pages.global_fecha')
             ->with('coordinaciones',$coordinaciones)
             ->with('fechas',$fechas)
@@ -1817,8 +1796,6 @@ class CoordinadorController extends Controller
     }
 
     public function enviarArea(Request $request){
-
-        //return 'Hola';
         //Obtenemos la fecha y la coordinacion seleccionadas por el usuario
         $semestre = $request->get('semestre');
         $fecha = explode('-',$semestre);
