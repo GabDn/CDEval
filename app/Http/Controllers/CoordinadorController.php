@@ -462,8 +462,23 @@ class CoordinadorController extends Controller
             $cont_curso = 0;
             $tam_curso = 0;
 
+            $min = 100;
+            $min2 = 100;
+            $min3 = 100;
+
+            $max = 0;
+            $max2 = 0;
+            $max3 = 0;
+
             foreach($curso as $evaluacion){
 
+                $temp_1 = 0;
+                $temp_2 = 0;
+                $temp_3 = 0;
+
+                $tam_1 = 0;
+                $tam_2 = 0;
+                $tam_3 = 0;
 
                 $tupla = array();
 
@@ -642,6 +657,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor1 += $evaluacion->p4_1;
                     $instructor_1++;
+                    $temp_1 += $evaluacion->p4_1;
+                    $tam_1++;
                     if($evaluacion->p4_1 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -652,6 +669,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor1 += $evaluacion->p4_2;
                     $instructor_1++;
+                    $temp_1 += $evaluacion->p4_2;
+                    $tam_1++;
                     if($evaluacion->p4_2 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -662,6 +681,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor1 += $evaluacion->p4_3;
                     $instructor_1++;
+                    $temp_1 += $evaluacion->p4_3;
+                    $tam_1++;
                     if($evaluacion->p4_3 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -672,6 +693,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor1 += $evaluacion->p4_4;
                     $instructor_1++;
+                    $temp_1 += $evaluacion->p4_4;
+                    $tam_1++;
                     if($evaluacion->p4_4 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -682,6 +705,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor1 += $evaluacion->p4_5;
                     $instructor_1++;
+                    $temp_1 += $evaluacion->p4_5;
+                    $tam_1++;
                     if($evaluacion->p4_5 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -692,6 +717,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor1 += $evaluacion->p4_6;
                     $instructor_1++;
+                    $temp_1 += $evaluacion->p4_6;
+                    $tam_1++;
                     if($evaluacion->p4_6 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -702,6 +729,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor1 += $evaluacion->p4_7;
                     $instructor_1++;
+                    $temp_1 += $evaluacion->p4_7;
+                    $tam_1++;
                     if($evaluacion->p4_7 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -712,6 +741,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor1 += $evaluacion->p4_8;
                     $instructor_1++;
+                    $temp_1 += $evaluacion->p4_8;
+                    $tam_1++;
                     if($evaluacion->p4_8 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -722,6 +753,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor1 += $evaluacion->p4_9;
                     $instructor_1++;
+                    $temp_1 += $evaluacion->p4_9;
+                    $tam_1++;
                     if($evaluacion->p4_9 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -732,6 +765,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor1 += $evaluacion->p4_10;
                     $instructor_1++;
+                    $temp_1 += $evaluacion->p4_10;
+                    $tam_1++;
                     if($evaluacion->p4_10 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -742,6 +777,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor1 += $evaluacion->p4_11;
                     $instructor_1++;
+                    $temp_1 += $evaluacion->p4_11;
+                    $tam_1++;
                     if($evaluacion->p4_11 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -755,6 +792,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor2 += $evaluacion->p5_1;
                     $instructor_2++;
+                    $temp_2 += $evaluacion->p5_1;
+                    $tam_2++;
                     if($evaluacion->p5_1 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -765,6 +804,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor2 += $evaluacion->p5_2;
                     $instructor_2++;
+                    $temp_2 += $evaluacion->p5_2;
+                    $tam_2++;
                     if($evaluacion->p5_2 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -775,6 +816,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor2 += $evaluacion->p5_3;
                     $instructor_2++;
+                    $temp_2 += $evaluacion->p5_3;
+                    $tam_2++;
                     if($evaluacion->p5_3 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -785,6 +828,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor2 += $evaluacion->p5_4;
                     $instructor_2++;
+                    $temp_2 += $evaluacion->p5_4;
+                    $tam_2++;
                     if($evaluacion->p5_4 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -795,6 +840,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor2 += $evaluacion->p5_5;
                     $instructor_2++;
+                    $temp_2 += $evaluacion->p5_5;
+                    $tam_2++;
                     if($evaluacion->p5_5 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -805,6 +852,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor2 += $evaluacion->p5_6;
                     $instructor_2++;
+                    $temp_2 += $evaluacion->p5_6;
+                    $tam_2++;
                     if($evaluacion->p5_6 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -815,6 +864,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor2 += $evaluacion->p5_7;
                     $instructor_2++;
+                    $temp_2 += $evaluacion->p5_7;
+                    $tam_2++;
                     if($evaluacion->p5_7 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -825,6 +876,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor2 += $evaluacion->p5_8;
                     $instructor_2++;
+                    $temp_2 += $evaluacion->p5_8;
+                    $tam_2++;
                     if($evaluacion->p5_8 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -835,6 +888,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor2 += $evaluacion->p5_9;
                     $instructor_2++;
+                    $temp_2 += $evaluacion->p5_9;
+                    $tam_2++;
                     if($evaluacion->p5_9 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -845,6 +900,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor2 += $evaluacion->p5_10;
                     $instructor_2++;
+                    $temp_2 += $evaluacion->p5_10;
+                    $tam_2++;
                     if($evaluacion->p5_10 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -855,6 +912,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor2 += $evaluacion->p5_11;
                     $instructor_2++;
+                    $temp_2 += $evaluacion->p5_11;
+                    $tam_2++;
                     if($evaluacion->p5_11 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -868,6 +927,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor3 += $evaluacion->p6_1;
                     $instructor_3++;
+                    $temp_3 += $evaluacion->p6_1;
+                    $tam_3++;
                     if($evaluacion->p6_1 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -878,6 +939,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor3 += $evaluacion->p6_2;
                     $instructor_3++;
+                    $temp_3 += $evaluacion->p6_2;
+                    $tam_3++;
                     if($evaluacion->p6_2 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -888,6 +951,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor3 += $evaluacion->p6_3;
                     $instructor_3++;
+                    $temp_3 += $evaluacion->p6_3;
+                    $tam_3++;
                     if($evaluacion->p6_3 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -898,6 +963,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor3 += $evaluacion->p6_4;
                     $instructor_3++;
+                    $temp_3 += $evaluacion->p6_4;
+                    $tam_3++;
                     if($evaluacion->p6_4 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -908,6 +975,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor3 += $evaluacion->p6_5;
                     $instructor_3++;
+                    $temp_3 += $evaluacion->p6_5;
+                    $tam_3++;
                     if($evaluacion->p6_5 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -918,6 +987,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor3 += $evaluacion->p6_6;
                     $instructor_3++;
+                    $temp_3 += $evaluacion->p6_6;
+                    $tam_3++;
                     if($evaluacion->p6_6 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -928,6 +999,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor3 += $evaluacion->p6_7;
                     $instructor_3++;
+                    $temp_3 += $evaluacion->p6_7;
+                    $tam_3++;
                     if($evaluacion->p6_7 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -938,6 +1011,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor3 += $evaluacion->p6_8;
                     $instructor_3++;
+                    $temp_3 += $evaluacion->p6_8;
+                    $tam_3++;
                     if($evaluacion->p6_8 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -948,6 +1023,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor3 += $evaluacion->p6_9;
                     $instructor_3++;
+                    $temp_3 += $evaluacion->p6_9;
+                    $tam_3++;
                     if($evaluacion->p6_9 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -958,6 +1035,8 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor3 += $evaluacion->p6_10;
                     $instructor_3++;
+                    $temp_3 += $evaluacion->p6_10;
+                    $tam_3++;
                     if($evaluacion->p6_10 >= 80){
                         $positivas++;
                         $positivas_curso++;
@@ -968,10 +1047,32 @@ class CoordinadorController extends Controller
                     $preguntas_curso++;
                     $desempenioProfesor3 += $evaluacion->p6_11;
                     $instructor_3++;
+                    $temp_3 += $evaluacion->p6_11;
+                    $tam_3++;
                     if($evaluacion->p6_11 >= 80){
                         $positivas++;
                         $positivas_curso++;
                     }
+                }
+
+                if(($temp_1/$tam_1)>$max){
+                    $max = round($temp_1/$tam_1,2);
+                }elseif(($temp_1/$tam_1)<$min){
+                    $min = round($temp_1/$tam_1,2);
+                }
+                if($temp_2>0){
+                    if(($temp_2/$tam_2)>$max2){
+                        $max2 = round($temp_2/$tam_2,2);
+                    }elseif(($temp_2/$tam_2)<$min2){
+                        $min2 = round($temp_2/$tam_2,2);
+                    }   
+                }
+                if($temp_3>0){
+                    if(($temp_3/$tam_3)>$max3){
+                        $max3 = round($temp_3/$tam_3,2);
+                    }elseif(($temp_3/$tam_3)<$min3){
+                        $min3 = round($temp_3/$tam_3,2);
+                    }   
                 }
             }
 
@@ -1007,22 +1108,38 @@ class CoordinadorController extends Controller
             //Si un curso obtiene calificacion >= 80 en cada uno de los tres factores sus profesores se vuelven a contratar
             if($factor_calidad_curso >= 80 && $factora_acreditacion >= 80 && $factor_recomendacion_curso >= 80){
                 //Obtenemos los datos de los profesores del curso
+                $inList = 0;
                 foreach($profesores as $profesors){
                     $profesor = DB::table('profesors')
                         ->where('id',$profesors->profesor_id)
                         ->get();
-                    $inList = False;
-                    //Buscamos no repetir profesores en la lista
-                    foreach($profesoresRecontratar as $profesores){
-                        if($profesores->id == $profesor[0]->id){
-                            $inList = True;
-                            break;
-                        }
-                    }
+                    
                     //Guardamos los profesores en una lista a retornar
-                    if($inList == false){
-                        array_push($profesoresRecontratar,$profesor[0]);
+                    if($inList == 0){
+                        $profesor_valores = array();
+                        array_push($profesor_valores,$profesor[0]);
+                        array_push($profesor_valores,$min);
+                        array_push($profesor_valores,$max);
+                        array_push($profesor_valores,round($desempenioProfesor1/$instructor_1,2));
+                        array_push($profesoresRecontratar,$profesor_valores);
                     }
+                    if($inList == 1){
+                        $profesor_valores = array();
+                        array_push($profesor_valores,$profesor[0]);
+                        array_push($profesor_valores,$min2);
+                        array_push($profesor_valores,$max2);
+                        array_push($profesor_valores,round($desempenioProfesor2/$instructor_2,2));
+                        array_push($profesoresRecontratar,$profesor_valores);
+                    }
+                    if($inList == 2){
+                        $profesor_valores = array();
+                        array_push($profesor_valores,$profesor[0]);
+                        array_push($profesor_valores,$min3);
+                        array_push($profesor_valores,$max3);
+                        array_push($profesor_valores,round($desempenioProfesor3/$instructor_3,2));
+                        array_push($profesoresRecontratar,$profesor_valores);
+                    }
+                    $inList++;
                 }
 
             }
@@ -1094,6 +1211,7 @@ class CoordinadorController extends Controller
                 ->get();
         }
 
+        //return $profesoresRecontratar;
         //Retornamos la vista correspondiente (seleccionados por fecah o seleccionados por fecha y coordinacion) con los datos calculados
         return view($lugar)
             ->with('nombres',$nombresCursos)
