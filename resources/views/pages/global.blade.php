@@ -214,25 +214,32 @@
 
 		</table> 
         <br>
-        <table style="width: 100%">
+        <table width="100%">
             <tr>
-                <th class="titulos" align= "left" >7. INSTRUCTORES QUE SE VOLVERÍAN A CONTRATAR</th>
+                <th>INSTRUCTORES QUE SE VOLVERÍAN A CONTRATAR</th>
+                <th>Mínimo Evaluación</th>
+                <th>Máximo Evaluación</th>
+                <th>Promedio Evaluación</th>
             </tr>
-            <tr>
-                <td class="margen">
-                    <!--<ol type=”A”>-->
-                        <?php 
-                            $num = 1;
-                            foreach($profesors as $profesor){
-                                echo "<dd style=\"line-height:1.3\">&nbsp;$num. $profesor->nombres $profesor->apellido_paterno $profesor->apellido_materno</dd>";
-                                $num++;
-                            }
-                        ?>
-                    <!--</ol>-->
-                </td>
-            </tr>
-
-		</table> 
+            <?php
+                foreach($profesors as $profesor){
+                    echo "<tr>";
+                        echo "<td style=\"border: 0px solid white;\">";
+                            echo $profesor[0]->apellido_paterno." ".$profesor[0]->apellido_materno." ".$profesor[0]->nombres;
+                        echo "</td>";
+                        echo "<td style=\"border: 0px solid white; text-align: center;\">";
+                            echo $profesor[1];
+                        echo "</td>";
+                        echo "<td style=\"border: 0px solid white; text-align: center;\">";
+                            echo $profesor[2];
+                        echo "</td>";
+                        echo "<td style=\"border: 0px solid white; text-align: center;\">";
+                            echo $profesor[3];
+                        echo "</td>";
+                    echo "</tr>";
+                }
+            ?>
+       </table> 
         <br>
 
         <table style="width: 100%">
@@ -338,37 +345,26 @@
                 $calif_coordinacion_aritmetico = $aritmetico_coordinacion;
                 $calif_recomendacion = $factor_recomendacion;
                 $calif_recomendacion_aritmetico = $aritmetico_recomendacion;
-                $calif = [$contenido, $aritmetico_contenido, $instructor, $aritmetico_instructor,$coordinacion,$aritmetico_coordinacion,$factor_recomendacion,$aritmetico_recomendacion];
-                $masAltos = [0];
-                $alto = $contenido;
-                for($i=1; $i<8; $i++){
-                    if($calif[$i] > $alto){
-                        $masAltos = [$i];
-                        $alto = $calif[$i];
-                    }else if($calif[$i] == $alto){
-                        array_push($masAltos,$i);
-                    }
+                if($contenido > $aritmetico_contenido){
+                    $calif_contenido = strval($contenido).' *';
+                }else{
+                    $calif_contenido_aritmetico = strval($aritmetico_contenido).' *';
                 }
-                foreach($masAltos as $altos){
-                    if($altos == 0){
-                        $calif_contenido = strval($contenido).' *';
-                    }else if($altos == 1){
-                        $calif_contenido_aritmetico = strval($aritmetico_contenido).' *';
-                    }else if($altos == 2){
-                        $calif_instructor = strval($instructor).' *';
-                    }else if($altos == 3){
-                        $calif_instrcutor_aritmetico = strval($aritmetico_instructor).' *';
-                    }else if($altos == 4){
-                        $calif_coordinacion = strval($coordinacion).' *';
-                    }else if($altos == 5){
-                        $calif_coordinacion_aritmetico = strval($aritmetico_coordinacion).' *';
-                    }else if($altos == 6){
-                        $calif_recomendacion = strval($factor_recomendacion).' *';
-                    }else{
-                        $calif_recomendacion_aritmetico = strval($aritmetico_recomendacion).' *';
-                    }
+                if($instructor > $calif_instrcutor_aritmetico){
+                    $calif_instructor = strval($instructor).' *';
+                }else{
+                    $calif_instrcutor_aritmetico = strval($aritmetico_instructor).' *';
                 }
-                
+                if($coordinacion > $aritmetico_coordinacion){
+                    $calif_coordinacion = strval($coordinacion).' *';
+                }else{
+                    $calif_coordinacion_aritmetico = strval($aritmetico_coordinacion).' *';
+                }
+                if($factor_recomendacion > $aritmetico_recomendacion){
+                    $calif_recomendacion = strval($factor_recomendacion).' *';
+                }else{
+                    $calif_recomendacion_aritmetico = strval($aritmetico_recomendacion).' *';
+                }
             ?>
             <tr>
                 <th colspan="3" class="titulos" align= left >11. CRITERIOS DE ACEPTACIÓN DE LOS CURSOS</th>
