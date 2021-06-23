@@ -215,23 +215,32 @@
 
 		</table> 
         <br>
-        <table style="width: 100%">
+        <table width="100%">
             <tr>
-                <th class="titulos" align= left >7. INSTRUCTORES QUE SE VOLVERÍAN A CONTRATAR</th>
+                <th class="titulos" align= left >INSTRUCTORES QUE SE VOLVERÍAN A CONTRATAR</th>
+                <th class="titulos" align= left >Mínimo Evaluación</th>
+                <th class="titulos" align= left >Máximo Evaluación</th>
+                <th class="titulos" align= left >Promedio Evaluación</th>
             </tr>
-            <tr>
-                <td class="margen">
-                     <?php 
-                        $num = 1;
-                        foreach($profesors as $profesor){
-                            echo "<dd style=\"line-height:1.3\">&nbsp;$num. $profesor->nombres $profesor->apellido_paterno $profesor->apellido_materno</dd>";
-                            $num++;
-                        }
-                    ?>
-                </td>
-            </tr>
-
-		</table> 
+            <?php
+                foreach($profesors as $profesor){
+                    echo "<tr>";
+                        echo "<td style=\"border: 0px solid white;\">";
+                            echo $profesor[0]->apellido_paterno." ".$profesor[0]->apellido_materno." ".$profesor[0]->nombres;
+                        echo "</td>";
+                        echo "<td style=\"border: 0px solid white; text-align: center;\">";
+                            echo $profesor[1];
+                        echo "</td>";
+                        echo "<td style=\"border: 0px solid white; text-align: center;\">";
+                            echo $profesor[2];
+                        echo "</td>";
+                        echo "<td style=\"border: 0px solid white; text-align: center;\">";
+                            echo $profesor[3];
+                        echo "</td>";
+                    echo "</tr>";
+                }
+            ?>
+       </table> 
         <br>
 
         <table style="width: 100%">

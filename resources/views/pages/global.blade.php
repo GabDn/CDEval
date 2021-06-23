@@ -216,10 +216,10 @@
         <br>
         <table width="100%">
             <tr>
-                <th>INSTRUCTORES QUE SE VOLVERÍAN A CONTRATAR</th>
-                <th>Mínimo Evaluación</th>
-                <th>Máximo Evaluación</th>
-                <th>Promedio Evaluación</th>
+                <th class="titulos" align= left >INSTRUCTORES QUE SE VOLVERÍAN A CONTRATAR</th>
+                <th class="titulos" align= left >Mínimo Evaluación</th>
+                <th class="titulos" align= left >Máximo Evaluación</th>
+                <th class="titulos" align= left >Promedio Evaluación</th>
             </tr>
             <?php
                 foreach($profesors as $profesor){
