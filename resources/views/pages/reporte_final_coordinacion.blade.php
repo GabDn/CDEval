@@ -139,23 +139,32 @@ body {
         </table>
         <br> <hr>
 
-       <table width="100%">
+        <table width="100%">
             <tr>
                 <th>INSTRUCTORES QUE SE VOLVERÍAN A CONTRATAR</th>
+                <th>Mínimo Evaluación</th>
+                <th>Máximo Evaluación</th>
+                <th>Promedio Evaluación</th>
             </tr>
-            <tr>
-                <td style="border: 0px solid white;">
-                    <ul>
-                        <?php
-                        
-                                foreach($profesors as $profesor){
-                                    echo "<li>$profesor->nombres $profesor->apellido_paterno $profesor->apellido_materno</li>";
-                                }
-                        ?>
-                    </ul>
-                </td>
-            </tr>
-       </table>
+            <?php
+                foreach($profesors as $profesor){
+                    echo "<tr>";
+                        echo "<td style=\"border: 0px solid white;\">";
+                            echo $profesor[0]->apellido_paterno." ".$profesor[0]->apellido_materno." ".$profesor[0]->nombres;
+                        echo "</td>";
+                        echo "<td style=\"border: 0px solid white; text-align: center;\">";
+                            echo $profesor[1];
+                        echo "</td>";
+                        echo "<td style=\"border: 0px solid white; text-align: center;\">";
+                            echo $profesor[2];
+                        echo "</td>";
+                        echo "<td style=\"border: 0px solid white; text-align: center;\">";
+                            echo $profesor[3];
+                        echo "</td>";
+                    echo "</tr>";
+                }
+            ?>
+       </table> 
         <br> <hr>
         <table width="100%">
             <tr>

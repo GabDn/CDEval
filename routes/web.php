@@ -48,7 +48,7 @@ Route::get('enviarFecha/{profesor_id}',"EvaluacionController@redirigirAEnviar")-
 Route::post('enviarFechaArchivo/{profesor}',"EvaluacionController@enviarClaveFecha")->name('evaluacion.enviarClaveFechaArchivo');
 Route::get('admin/{profesor_id}',"EvaluacionController@admin")->name('evaluacion.admin');
 
-Route::post('/area/pdf','CoordinadorController@enviarArea')->name('enviar.area.pdf');
+Route::post('/area/pdf/','CoordinadorController@enviarArea')->name('enviar.area.pdf');
 /*Route::post('/area/pdf/{$coordinacion_id}',function($coordinacion_id){
     return 'Hola '.$coordinacion_id;
 })->name('enviar.area');*/

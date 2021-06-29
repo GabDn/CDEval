@@ -38,6 +38,7 @@ class EvaluacionController extends Controller{
 	public function index($profesor_id, $curso_id, $catalogoCurso_id){
 		$profesor = Profesor::find($profesor_id);
 		$curso = Curso::find($curso_id);
+		$cursos = ParticipantesCurso::where('profesor_id', $profesor_id)->select('curso_id')->get();
 		$catalogoCurso = CatalogoCurso::find($curso->catalogo_id);
 		$count = ProfesoresCurso::select($curso_id)
 			->where('curso_id',$curso_id)
@@ -104,7 +105,8 @@ class EvaluacionController extends Controller{
 			->with('count',$count)
 			->with('evaluaciones',$evaluacion_x_curso)
 			->with('final',$evaluacion_final_curso)
-			->with('curso_id',$curso_id);
+			->with('curso_id',$curso_id)
+			->with('cursos',$cursos);
 	  
 	}
 		
@@ -145,8 +147,9 @@ class EvaluacionController extends Controller{
 	 */
 	public function enviarCorreo($profesor_id, $curso_id, $catalogoCurso_id, $eval_curso, $lugar, $salon, $numero_horas){
 		//Si el formulario no fue rellenado por un profesor, no hace falta enviar el correo
-		if (Session::has('coordinador_id') or Session::has('superadmin'))
-			return
+		if (Session::has('coordinador_id') or Session::has('superadmin')){
+			return;
+		}
 
 		$profesor = Profesor::find($profesor_id);
 		$curso = CatalogoCurso::find($curso_id);
@@ -156,7 +159,7 @@ class EvaluacionController extends Controller{
 		);
 		
 		//Obtenemos el pdf de los datos
-		$pdf = PDF::loadView($lugar,array('curso' => $curso,'profesor'=>$profesor,'semestre'=>$semestre,'evaluacion'=>$eval_curso,'salon'=>$salon,'numero_horas'=>$numero_horas));	
+		$pdf = PDF::loadView($lugar,array('curso' => $curso,'profesor' => $profesor,'semestre'=>$semestre,'evaluacion'=>$eval_curso,'salon'=>$salon,'numero_horas'=>$numero_horas));	
 		  
 		$content = $pdf->download()->getOriginalContent();
 
@@ -191,7 +194,7 @@ class EvaluacionController extends Controller{
 	 * @return La vista donde se realizará la evaluación
 	 */
 	public function evaluacionPorSesion($profesor_id, $curso_id, $catalogoCurso_id, $count){
-		 
+		$cursos = 0;
 		$profesor = Profesor::find($profesor_id);
 		$curso = Curso::find($curso_id);
 		$catalogoCurso = CatalogoCurso::find($catalogoCurso_id);
@@ -1317,7 +1320,7 @@ $promedio_p4=[
 	public function reporteFinalInstructor($profesor_id,$curso_id,$catalogoCurso_id,$eval_id){
 		//Si el formulario no fue rellenado por un profesor, no hace falta enviar el correo
 		if (Session::has('coordinador_id') or Session::has('superadmin'))
-			return
+			return;
 
 		//Obtenemos el curso evaluado
 		$curso = DB::table('cursos')

@@ -297,6 +297,9 @@ class CoordinadorController extends Controller
         $semestre = explode('-',$fecha);
         $periodo = $request->get('periodo');
         
+        if(!array_key_exists(1,$semestre))
+            return redirect()->back();
+
         //Obtenemos los cursos correspondientes al semestre elegido por el usuario
         $cursos = DB::table('cursos')
             ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]],['cursos.semestre_si',$periodo]])
@@ -1521,10 +1524,14 @@ class CoordinadorController extends Controller
 
                 //Aritmetico promedio de los primedios a cada instructor (se obtienen individualmente el de cada instructor de cada curso), ponderado promedio de los cursos (se promedian todos los instructores de cada curso)
                 //Juicio Sumario B es promedio de los tres factores y que sea mayor o igual a 80
-                $contenido_promedio += $contenido_curso/$tam_contenido;
-                $instructor_promedio += ((($instructor_curso_1/($tam1))+($instructor_curso_2/($tam2))+($instructor_curso_3/($tam3)))/$divisor);
-                $coordinacion_promedio += ($coordinacion_curso/$tam_coord);
-                $factor_recomendacion_promedio += ($factor_recomendacion_curso*100/$tam_recomendacion);
+                if($tam_contenido != 0)
+                    $contenido_promedio += $contenido_curso/$tam_contenido;
+                if($tam1 != 0)
+                    $instructor_promedio += ((($instructor_curso_1/($tam1))+($instructor_curso_2/($tam2))+($instructor_curso_3/($tam3)))/$divisor);
+                if($tam_coord != 0)
+                    $coordinacion_promedio += ($coordinacion_curso/$tam_coord);
+                if($tam_recomendacion != 0)
+                    $factor_recomendacion_promedio += ($factor_recomendacion_curso*100/$tam_recomendacion);
             }
         }
 
@@ -1778,10 +1785,14 @@ class CoordinadorController extends Controller
                 $divisor = 3;
             }
 
-            $contenido_promedio += $contenido_curso/($tam_contenido);
-            $coordinacion_promedio += $coordinacion_curso/($tam_coord);
-            $instructor_promedio += (($instructor_1/($tam1))+($instructor_2/($tam2))+($instructor_3/($tam3)))/$divisor;
-            $factor_recomendacion_promedio += ($factor_recomendacion_curso*100)/$tam_curso;
+            if($tam_contenido != 0)
+                $contenido_promedio += $contenido_curso/($tam_contenido);
+            if($tam_coord != 0)
+                $coordinacion_promedio += $coordinacion_curso/($tam_coord);
+            if($tam1 != 0)
+                $instructor_promedio += (($instructor_1/($tam1))+($instructor_2/($tam2))+($instructor_3/($tam3)))/$divisor;
+            if($tam_curso != 0)
+                $factor_recomendacion_promedio += ($factor_recomendacion_curso*100)/$tam_curso;
 
         }
 

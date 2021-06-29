@@ -19,6 +19,8 @@ class ProfesorController extends Controller
 		$profesor = Profesor::findOrFail($id);
 		$cursos = ParticipantesCurso::where('profesor_id', $id)->select('curso_id')->get();
 		$cursos = Curso::whereIn('id',$cursos)->get();
+		Session::forget('superadmin');
+		Session::forget('coordinador_id');
 		return view('pages.admin')
 			->with("profesor",$profesor)
 			->with("cursos", $cursos);

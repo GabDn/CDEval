@@ -1,5 +1,8 @@
 <!-- Guardado en resources/views/layouts/principal.blade.php -->
-
+<?php
+    $encargado = session()->get('coordinador_id');
+    $var = ['id'=>$encargado,'message'=>'0'];
+?>
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
@@ -45,11 +48,11 @@
             <li class="nav-header">
                 <div class="link"><i class="fa fa-list-alt"></i>Cursos<i class="fa fa-chevron-down"></i></div>
                 <ul class="submenu">
-                
-                    <li><a href="{{ route('cursos.coordinacion',[$encargado,'0'] ) }}">Evaluaciones</a></li>
+
+                    <li><a href="{{ route('cursos.coordinacion',['id'=>$encargado,'message'=>'0'] ) }}">Evaluaciones</a></li>
                 
                 </ul>
-            </li>
+            </li> 
     
         </ul>
     </aside>
