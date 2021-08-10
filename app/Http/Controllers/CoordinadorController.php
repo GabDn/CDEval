@@ -1113,6 +1113,7 @@ class CoordinadorController extends Controller
                 //Obtenemos los datos de los profesores del curso
                 $inList = 0;
                 foreach($profesores as $profesors){
+
                     $profesor = DB::table('profesors')
                         ->where('id',$profesors->profesor_id)
                         ->get();
